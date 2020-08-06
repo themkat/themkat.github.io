@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+	<head>
+		<!-- TODO:
+		   - search using Lunr: https://lunrjs.com/guides/getting_started.html
+		   - Print functionality
+		   - mobi export functionality?
+		   - export fragments (footers etc.) into includes maybe?
+		   -->
+		<!-- TODO: search engine opttimization -->
+		<meta charset="utf-8">
+		<meta name="description" content="A blog about computers, math and other things that interest me">
+		<meta name="keywords" content="programming,retro,computing,math">
+		<meta name="author" content="Marie Katrine Ekeberg">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
+
+		<!-- TODO: should mathjax and highlight probably just be loaded for articles? see if this is necessary -->
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+		<link rel="stylesheet"
+				   href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+
+		<title>{{ page.title }} - {{ site.title }}</title>
+	</head>
+	<body>
+		<img  class="banner" src="" alt="" />
+		<div class="menu">
+			<nav>
+				<a href="#">Home</a>
+				<a class="active" href="#">Blog</a>
+				<a href="#">Projects</a>
+				<a href="#">About me</a>
+
+				<a class="search" href="#search" style="display: none;">&#x1f50d;</a>
+			</nav>
+		</div>
+		
+		<div class="content">
+			{{ content}}
+		</div>
+
+		<div class="footer">
+			<hr />
+			
+			<div class="info">
+				Made by Marie K. Ekeberg. Ugly design, but hope you enjoy the articles :)
+			</div>
+
+			<!-- TODO: make these as a list on the left side. Name + icon (link) -->
+			<div class="external-links">
+				<a href="http://github.com/markydawn">Github <img src="github.png" /></a>
+				<a href="http://youtube.com">Youtube <img src="github.png" /></a>
+			</div>
+		</div>
+	</body>
+</html>
