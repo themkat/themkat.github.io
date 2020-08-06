@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<p class="downloads" style="display: none;"><a href="#">print</a> <a href="#">e-book</a></p>
+<h2>{{page.title}}</h2>
+<span class="timestamp">Published {{page.date | date: "%a %b %d %Y"}}</span>
+<p class="tags">Tags:
+	{%for tag in post.tags %}
+	<a href="#">tag</a>
+	{%endfor%}
+</p>
+<hr />
+
+{{content}}
