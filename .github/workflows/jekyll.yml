@@ -23,7 +23,7 @@ jobs:
       - name: Publish new files if any
         run: |
           git config --local user.email "action@github.com" && \
-          git config --local user.name "GitHub Action" && \ 
+          git config --local user.name "GitHub Action" && \
           git commit -am "[NEW CONTENT] New org mode articles and/or tags" && \
           git push
     
