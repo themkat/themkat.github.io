@@ -31,11 +31,26 @@
 		<img  class="banner" src="" alt="" />
 		<div class="menu">
 			<nav>
-				<a class="active" href="#">Home</a>
-				<a  href="#">Tech posts</a>
-				<a  href="#">Math posts</a>
-				<a href="#">Projects</a>
-				<a href="#">About me</a>
+				<a {% if page.tab == "home" %}
+				   class="active"
+				   {% endif %}
+				   href="/">Home</a>
+				<a {% if page.tab == "tech" %}
+				   class="active"
+				   {% endif }
+				   href="#">Tech posts</a>
+				<a {% if page.tab == "math" %}
+				   class="active"
+				   {% endif }
+				   href="#">Math posts</a>
+				<a {% if page.tab == "projects" %}
+				   class="active"
+				   {% endif }
+				   href="projects.html">Projects</a>
+				<a {% if page.tab == "about" %}
+				   class="active"
+				   {% endif %}
+				   href="about.html">About me</a>
 
 				<a class="search" href="#search" style="display: none;">&#x1f50d;</a>
 			</nav>
