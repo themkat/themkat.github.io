@@ -7,8 +7,5 @@ title: Main page
 <!-- TODO: all the tags on the page with links -->
 
 {% for post in site.posts %}
-<div class="blogpost" href="post.url">
-	<h2>post.title</h2>
-	<p>post.excerpt</p>
-</div>
+{% include postlisting.html title=post.title date=post.date url=post.url excerpt=post.excerpt %}
 {% endfor %}
