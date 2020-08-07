@@ -1,0 +1,12 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: default
+tab: about
+title: About me
+---
+#+END_EXPORT
+
+Here I will write a little text about myself, probably not too far into the future...
