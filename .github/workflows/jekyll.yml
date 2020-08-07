@@ -1,0 +1,39 @@
+name: Jekyll site CI. Publishes org mode to html, create tag pages, push, and build jekyll.
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  setupsite:
+    # [NEW CONTENT] will be my tag for content that is ready to build without preprocessing
+    if: "!contains(github.event.head_commit.message, '[NEW CONTENT]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: purcell/setup-emacs@v2.0
+        with:
+          version: 26.1
+      - name: Run Emacs Org mode publish to convert Org mode files to HTML
+        run: ./emacs_headless_publish.sh
+      - name: Setup new tags if any
+        run: ./create_tag_pages.sh
+      - name: Publish new files if any
+        run: git config --local user.email "action@github.com" && \
+          git config --local user.name "GitHub Action" && \ 
+          git commit -am "[NEW CONTENT] New org mode articles and/or tags" && \
+          git push
+    
+  build:
+    if: "contains(github.event.head_commit.message, '[NEW CONTENT]')"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the site in the jekyll/builder container
+      run: |
+        docker run \
+        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+        jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
