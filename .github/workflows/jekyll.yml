@@ -8,8 +8,8 @@ on:
 
 jobs:
   setupsite:
-    # [NEW CONTENT] will be my tag for content that is ready to build without preprocessing
-    if: "!contains(github.event.head_commit.message, '[NEW CONTENT]')"
+    # [SKIP] Tag to skip Emacs org mode to html and tag generation
+    if: "!contains(github.event.head_commit.message, '[SKIP]')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -29,7 +29,6 @@ jobs:
           git push
     
   build:
-    if: "contains(github.event.head_commit.message, '[NEW CONTENT]')"
     runs-on: ubuntu-latest
 
     steps:
