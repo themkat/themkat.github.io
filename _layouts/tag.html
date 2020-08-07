@@ -1,0 +1,9 @@
+---
+layout: default
+---
+
+<h1>Posts with tag: {{page.tag}}</h1>
+<hr />
+{% for post in site.tags[page.tag] %}
+{% include postlisting.html title={{post.title}} url={{post.url}} excerpt={{post.excerpt}} %}
+{% endfor %}
