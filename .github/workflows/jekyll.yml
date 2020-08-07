@@ -21,7 +21,8 @@ jobs:
       - name: Setup new tags if any
         run: ./create_tag_pages.sh
       - name: Publish new files if any
-        run: git config --local user.email "action@github.com" && \
+        run: |
+          git config --local user.email "action@github.com" && \
           git config --local user.name "GitHub Action" && \ 
           git commit -am "[NEW CONTENT] New org mode articles and/or tags" && \
           git push
