@@ -4,8 +4,26 @@ tab: home
 title: Main page
 ---
 
-<!-- TODO: all the tags on the page with links -->
+<!-- collecting all tags to make links to tag pages.
+   Wish I could make it  in a more functional style :( I miss you map, filter and friends :( -->
+{% assign tags =  "" | split: "," %}
+{% for post in site.posts %}
+{% assign tags = tags | concat: post.tags %}
+{% endfor %}
+{% assign tags = tags | uniq %}
 
+<!-- Print tags with links -->
+<h3>Tags:
+{% for tag in tags%}
+<a href="tags/{{tag}}.html">{{tag}}</a>
+{% endfor %}
+</h3>
+
+<br />
+<hr />
+
+<!-- TODO: should we show the tags for each post here as well? or is it enough to show it for  -->
 {% for post in site.posts %}
 {% include postlisting.html title=post.title date=post.date url=post.url excerpt=post.excerpt %}
+<hr />
 {% endfor %}
