@@ -128,6 +128,11 @@ body {
 	width: auto;
 }
 
-.blogpost {
+.bloglisting {
 	padding-bottom: 1vh;
+}
+
+.bloglisting h2 a {
+	text-decoration: none;
+	color: black;
 }
