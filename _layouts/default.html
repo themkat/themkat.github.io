@@ -23,7 +23,9 @@
 		<link rel="stylesheet"
 				   href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
-		<script>hljs.initHighlightingOnLoad();</script>
+		<script>
+		 hljs.initHighlightingOnLoad();
+		</script>
 
 		<title>{{ page.title }} - {{ site.title }}</title>
 	</head>
@@ -72,5 +74,14 @@
 				<a href="http://github.com/themkat">Github <img src="{{ "assets/img/github.png" | relative_url }}" /></a>
 			</div>
 		</div>
+
+		<!-- Highlight Org mode exported source code blocks if any -->
+		<script>
+		 document.addEventListener('DOMContentLoaded', (event) => {
+			 document.querySelectorAll('pre.src').forEach((block) => {
+				 hljs.highlightBlock(block);
+			 });
+		 });
+		</script>
 	</body>
 </html>
