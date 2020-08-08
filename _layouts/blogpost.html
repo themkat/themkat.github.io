@@ -6,7 +6,7 @@ layout: default
 <span class="timestamp">Published {{page.date | date: "%a %b %d %Y"}}</span>
 <p class="tags">Tags:
 	{%for tag in page.tags %}
-	<a href="tags/{{tag}}.html">{{tag}}</a>
+	<a href="{{ "tags" | relative_url }}/{{tag}}.html">{{tag}}</a>
 	{%endfor%}
 </p>
 <hr />
