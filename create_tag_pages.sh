@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TAGS=$(cat _posts/*.org | grep tags | sed -E 's/tags: (.)/\1/' | tr ',' '\n' | sort -u)
+TAGS=$(cat _posts/*.html | grep tags | sed -E 's/tags: (.)/\1/' | tr ',' '\n' | sort -u)
 
 for tag in $TAGS
 do
