@@ -30,8 +30,9 @@
 		<title>{{ page.title }} - {{ site.title }}</title>
 	</head>
 	<body>
-		<img  class="banner" src="" alt="" />
-		<div class="menu">
+		<img  class="banner" src="{{ "/assets/img/banner.png" | relative_url }}" alt="" />
+		<div class="mobile-menu-toggle" onclick="toggleHamburgerMenu()">&#9776;</div>
+		<div class="menu" id="menu">
 			<nav>
 				<a {% if page.tab == "home" %}
 				   class="active"
@@ -48,11 +49,11 @@
 				<a {% if page.tab == "projects" %}
 				   class="active"
 				   {% endif %}
-				   href="projects.html">Projects</a>
+				   href="{{"projects.html" | relative_url}}">Projects</a>
 				<a {% if page.tab == "about" %}
 				   class="active"
 				   {% endif %}
-				   href="about.html">About me</a>
+				   href="{{"about.html" | relative_url}}">About me</a>
 
 				<a class="search" href="#search" style="display: none;">&#x1f50d;</a>
 			</nav>
@@ -76,13 +77,27 @@
 			</div>
 		</div>
 
-		<!-- Highlight Org mode exported source code blocks if any -->
 		<script>
+		 // Highlight Org mode exported source code blocks if any
 		 document.addEventListener('DOMContentLoaded', (event) => {
 			 document.querySelectorAll('pre.src').forEach((block) => {
 				 hljs.highlightBlock(block);
 			 });
 		 });
+
+		 // hamburger menu helper for mobile phones
+		 function toggleHamburgerMenu() {
+			 // super quick and ugly code...
+			 const menu = document.getElementById('menu');
+			 if(menu.classList.length > 1) {
+				 menu.classList.remove('active');
+			 }
+			 else {
+				 menu.classList.add('active');
+			 }
+		 }
+
+		 console.log('Hello there');
 		</script>
 	</body>
 </html>

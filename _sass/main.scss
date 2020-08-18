@@ -5,6 +5,7 @@ $menuMainColor: #FFCCE6;
 $menuHoverColor: #FF99CE;
 $menuActiveColor: #BF6091;
 
+
 body {
 	background: $backgroundColor;
 	color: $bodyColor;
@@ -14,11 +15,15 @@ body {
 }
 
 .banner {
-	max-height: 30vh;
-	height: 30vh;
+	height: auto;
 	width: 100%;
 	float: left;
 	background-color: $menuMainColor;
+}
+
+// only display for mobiles
+.mobile-menu-toggle {
+	display: none;
 }
 
 .menu {
@@ -73,6 +78,49 @@ body {
 	margin-top: 8vh;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+// fixing various settings for mobile devices
+@media only screen and (max-width: 600px) {
+
+	.mobile-menu-toggle {
+		display: block;
+		font-size: 2em;
+		background-color: $menuMainColor;
+		color: black;
+	}
+
+	.menu {
+		display: none;
+	}
+	
+	.menu.active {
+		top: 0;
+		position: relative;
+		display: block;
+		border-radius: 0;
+	}
+
+	.menu nav a {
+		font-size: 1.5em;
+		display: block;
+	}
+	
+	.content {
+		width: 90%;
+		box-shadow: none;
+		font-size: 1.25em;
+		margin: auto;
+		padding-top: 1vh;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.footer {
+		margin-left: 0;
+		margin-right: 0;
+		margin-top: 4vh;
+	}
 }
 
 .content .downloads {
