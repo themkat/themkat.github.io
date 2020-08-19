@@ -1,0 +1,189 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Toolblocks for Domain Specific Languages (DSLs) in Kotlin
+tags: kotlin, dsl
+---
+#+END_EXPORT
+Domain Specific Languages can be used for a lot of different problems. ...example.. In this article we will take a look at how we can create DSLs in a very simple way that make for highly readable and expressive code. At the end we will look at an example from an open source testing library (Spek). There are many other libraries using these techniques, in which TornadoFX is an example.
+
+We will not look at DSLs and their design in general in this article, but we will see how creating fluent, expressive DSLs are a piece of cake in Kotlin compared to other languages. 
+
+I have played a bit with DSLs in Kotlin, and they continue to excite me! I am by no means an expert, and this article is only based on playing with the concepts and smaller play-projects. Sadly I have not found an excuse to use it at bigger projects or at work...
+
+
+* What are DSLs?
+DSLs are languages created to solve problems within a particular domain. Popular domains include testing, website creation, database operations (Jooq comes to mind),
+
+Kotlin even has a DSL for HTML that you should check out called Kotlinx.html. 
+https://github.com/Kotlin/kotlinx.html
+
+You can think of DSLs as languages we design to solve a particular problem. Notable examples include Gherkin (language used to write specifications in Cucumber), HTML, Unix shell scripts, and SQL.
+
+Some people even consider COBOL to be a domain specific language for programming business applications (think about it and it's syntax, and it makes sense!). 
+
+Many languages make it simple to extend the language to fit your domain. Many Lisp languages (e.g, Scheme, Clojure, Common Lisp, Emacs Lisp) have macros which makes it easy to create new syntax to solve problems in the languages. Ruby has powerful meta-programming abilities, which makes it easy to extend anything in the language (a separate article could probably be made about that). 
+
+If you want to create a completely new language, there are several ways as well, ranging from making it from scratch using somthing like Antlr for parsing and writing the language in your language of choice, to something like JetBrains MPS. 
+
+So now that we know the basics of what DSLs are; what makes Kotlin suited for making them?
+
+
+TODO: read Martin Fowlers article for more depth: https://martinfowler.com/bliki/DomainSpecificLanguage.html
+
+TODO: insert various examples of domain specific languages
+
+TODO: mention that normal functions and fluent naming can take you a long way, but these few tricks will take you the extra mile!
+
+
+TODO: maybe just repeat extension functions? then tell about the block stuff next? or is this even necessary
+
+
+* Simple lambdas 
+TODO: should we keep it simple before introducing extension functions?
+One very cool feature of Kotlin is that if the last argument of a function is lambda function, then you could write it in a special syntax
+#+BEGIN_SRC kotlin
+fun Number.doTimes(func: (Number) -> Unit) {
+    for (i in 1..this) {
+        func(i)
+    }
+}
+#+END_SRC
+
+How will this look then used? Isn't this simply =10.doTimes({ funcbody })=? Yes, but in Kotlin you can write this in a special way:
+#+BEGIN_SRC kotlin
+10.doTimes {
+     println("Iteration number: $it")
+}
+#+END_SRC
+
+Is this a DSL?!? Technically it is. In a way we create a new mini language that defines an extra operation for string. That can easily be used for
+
+When using extension functions like this, you can see that we can easily make DSLs with this functionality alone. What comes next takes this concept a step further!
+
+What could we use this for in a "real" DSL context? Maybe you  have a function doing database operations with JDBCTemplate? Then that function could for example be 
+TODO: link to JDBCTemplate
+
+So you see here that in a way, we are creating something that looks like custom codeblocks. 
+
+How can this be used for DSLs? 
+
+TODO: more DSL specific things
+
+
+* Functions in the scope of a class
+This is probably the cherry on top of this article. When I saw this I was awed, and thought about this particular concept for at least a few days afterwards. 
+
+The key concept here the way a function is represented. 
+
+
+Let's make a simple Stack of numbers just to show you the concept. 
+
+#+BEGIN_SRC kotlin
+// simple stack that takes in initial values
+// TODO: wrap some more logic so it doesnt seem like a wasteful wrap
+class Stack() {
+    private val stack = mutableListOf<Number>()
+
+    fun pop() : Number { 
+        // TODO: something to make the popping seem less wasteful?
+        return stack.removeFirst()
+    } 
+
+    fun push(num: Number) = stack.add(num)
+
+    fun length() = stack.length()
+}
+
+fun withStack(body : Stack.() -> Unit) {
+    val stack = Stack()
+    stack.body()
+}
+#+END_SRC
+
+Now we have seen what kind of code is needed, let's see it in action!
+
+#+BEGIN_SRC kotlin
+withStack {
+    push(3)
+    push(2)
+    println("The stack now has ${length()} elements")
+    val poppedVal = pop()
+    println("Popped value: $poppedVal")
+}
+#+END_SRC
+
+
+This example is made simple so it is easy for you to understand the concept without too much extra clutter. Instead of constructing more examples, let's look at some actual open source code next :) 
+
+TODO: mention that you could make the withStack as advanced as you want! Want to send arguments to the constructor? Or call some functions before your code block body is executed? What about doing something after? You can do all of these! The sky is the limit! If you have cool code projects that uses these functionalities, please free to post it in the comment section below! Then me and other readers can get inspired :) 
+
+
+* Example: Spek
+(examples are used for illustrative purposes only!!! All rights to the code are on the team developing Spek. All links to code on Github is given below. I take NO ownership of this code at all.)
+
+This is probably where I learned about the prievous type of DSL. When I saw it for the first time, my mind was blown. The possibilities seemed endless. After working with Java, I was so happy to finally see a JVM language that flows like natural language. (Groovy might come to mind for some, but I think Kotlin is an improvement in many ways). 
+
+Let's take a look at Spek:
+https://github.com/spekframework/spek/
+
+Let's see how Spek is used with a simple example:
+#+BEGIN_SRC kotlin
+object MySpec : Spek({
+    group("My group of tests") {
+        test("should return 4") {
+            // assertions
+            // can use JUnit assertions, AssertJ/AssertK, or whatever else you may want
+        }
+    }
+})
+#+END_SRC
+
+You may be confused on the way Spek actually works. Is this a function/lambda passed as a parameter to the super class??!?! Yes, it indeed is! This is how Speks way of doing testing works. 
+
+So how is this actually made? Those of you who guessed that Spek would be an abstract class are right :)
+https://github.com/spekframework/spek/blob/7d751e88d1bb59ecfa0aaa987ef9275ebe64e10d/spek-dsl/src/commonMain/kotlin/org/spekframework/spek2/Spek.kt
+#+BEGIN_SRC kotlin
+abstract class Spek(val root: Root.() -> Unit)
+#+END_SRC
+
+That was pretty easy, but how does the Root class and its main dependents work?
+https://github.com/spekframework/spek/blob/7d751e88d1bb59ecfa0aaa987ef9275ebe64e10d/spek-dsl/src/commonMain/kotlin/org/spekframework/spek2/dsl/dsl.kt
+
+#+BEGIN_SRC kotlin
+interface Root : GroupBody {
+    fun registerListener(listener: LifecycleListener)
+    fun include(spek: Spek) = spek.root(this)
+}
+
+interface GroupBody : LifecycleAware, TestContainer {
+    fun group(description: String, skip: Skip = Skip.No, defaultCachingMode: CachingMode = CachingMode.INHERIT, preserveExecutionOrder: Boolean = false, failFast: Boolean = false, body: GroupBody.() -> Unit)
+}
+
+interface TestContainer {
+    var defaultTimeout: Long
+
+    fun test(description: String, skip: Skip = Skip.No, timeout: Long = defaultTimeout, body: suspend TestBody.() -> Unit)
+}
+#+END_SRC
+
+(TODO: mention that a lot of internal Spek functionality is removed and we have keeped the bare essentials to show the example. Also mention that testbody is just a normal body of code with some Spek internal stuff on top.)
+
+The most important parts here is is the GroupBody and TestContainer. These shows the main part of the code
+
+In this example, we see all of the topics from this article applied. Last lambda-argument of a function makes a code block, and we use functions in the scope of a class to make keywords within code blocks.
+
+See how simple it is to create something that looks like completely new syntax? Now you can let your imagination run free :) 
+
+The rest of Speks inner workings are beyond the scope of this article. The main  points of interest is that it uses JUnit 5s engine, some annotations and otgher functionality from there to evaluate your test code. I urge you to have a look if you think this sounds interesting :) 
+
+
+
+
+* Additional reading
+If this was your first time reading about DSLs, then you will probably feel a little inspired. As well as checking out the languages and tools mentioned, I think you should read Martin Fowlers article on Domain Specific Languages.
+
+Other resources? 
