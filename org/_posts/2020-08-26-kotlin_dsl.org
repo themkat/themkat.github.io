@@ -8,43 +8,54 @@ title: Toolblocks for Domain Specific Languages (DSLs) in Kotlin
 tags: kotlin, dsl
 ---
 #+END_EXPORT
-Domain Specific Languages can be used for a lot of different problems. ...example.. In this article we will take a look at how we can create DSLs in a very simple way that make for highly readable and expressive code. At the end we will look at an example from an open source testing library (Spek). There are many other libraries using these techniques, in which TornadoFX is an example.
+Domain Specific Languages (DSLs) can be used to solve a lot of different problems (more on that shortly!). In this article we will take a look at how we can create DSLs in a very simple way that make for highly readable and expressive code. I will not go through general DSL creation, only the building blocks unique to Kotlin. At the end we will look at an example from an open source testing library (Spek).
 
-We will not look at DSLs and their design in general in this article, but we will see how creating fluent, expressive DSLs are a piece of cake in Kotlin compared to other languages. 
-
-I have played a bit with DSLs in Kotlin, and they continue to excite me! I am by no means an expert, and this article is only based on playing with the concepts and smaller play-projects. Sadly I have not found an excuse to use it at bigger projects or at work...
+I have played a bit with DSLs in Kotlin, and they continue to excite me! I am by no means an expert, and this article is only based on playing with the concepts and smaller play-projects. Sadly I have not found an excuse to use it at bigger projects or at work. 
 
 
 * What are DSLs?
-DSLs are languages created to solve problems within a particular domain. Popular domains include testing, website creation, database operations (Jooq comes to mind),
+DSLs are languages created to solve problems within a particular domain. Popular domains include testing, website creation, database operations (JOOQ comes to mind).
 
-Kotlin even has a DSL for HTML that you should check out called Kotlinx.html. 
-https://github.com/Kotlin/kotlinx.html
-
-You can think of DSLs as languages we design to solve a particular problem. Notable examples include Gherkin (language used to write specifications in Cucumber), HTML, Unix shell scripts, and SQL.
-
-Some people even consider COBOL to be a domain specific language for programming business applications (think about it and it's syntax, and it makes sense!). 
+You can think of DSLs as languages designed to solve a particular problem. Notable examples include Gherkin (language used to write specifications in Cucumber), HTML, Unix shell scripts, JOOQ (database operations in Java), and SQL. Some people even consider COBOL to be a domain specific language for programming business applications (think about its syntax, and it will make sense. A lot of general purpose problems, including recursion is weird in something like COBOL!). 
 
 Many languages make it simple to extend the language to fit your domain. Many Lisp languages (e.g, Scheme, Clojure, Common Lisp, Emacs Lisp) have macros which makes it easy to create new syntax to solve problems in the languages. Ruby has powerful meta-programming abilities, which makes it easy to extend anything in the language (a separate article could probably be made about that). 
 
 If you want to create a completely new language, there are several ways as well, ranging from making it from scratch using somthing like Antlr for parsing and writing the language in your language of choice, to something like JetBrains MPS. 
 
-So now that we know the basics of what DSLs are; what makes Kotlin suited for making them?
-
-
-TODO: read Martin Fowlers article for more depth: https://martinfowler.com/bliki/DomainSpecificLanguage.html
-
-TODO: insert various examples of domain specific languages
-
-TODO: mention that normal functions and fluent naming can take you a long way, but these few tricks will take you the extra mile!
-
-
-TODO: maybe just repeat extension functions? then tell about the block stuff next? or is this even necessary
+So now that we know the basics of what DSLs are; what makes Kotlin suited for making them? While Kotlin does not have powerful building blocks like Lisp style macros or Ruby style metaprogramming, we still have some powerful features! Remember that in languages like Java, methods with good naming and fluent style can take you a long way. That is off course applicable to Kotlin as well! In this article, I will focus on what makes Kotlin unique. If you want a guide on fluent naming, function chains and other techniques (that also work in Java, C++ and other languages), then I can recommend [[https://www.infoq.com/articles/internal-dsls-java/][this InfoQ article]].
 
 
 * Simple lambdas 
-TODO: should we keep it simple before introducing extension functions?
-One very cool feature of Kotlin is that if the last argument of a function is lambda function, then you could write it in a special syntax
+One very cool feature of Kotlin is that if the last argument of a function is lambda function, then you can write it in a special syntax. Let's make a very simple function to illustrate this concept:
+#+BEGIN_SRC kotlin
+fun doTimes(numTimes : Number, func: (Number) -> Unit) {
+    for (i in 1..numTimes) {
+        func(i)
+    }
+}
+#+END_SRC
+
+This function takes in a number and calls the input function that number of times, each time with the current iteration number. Your first guess if you haven't seen this before is probably that we call this function this way:
+#+BEGIN_SRC kotlin
+doTimes(10, {
+    println("Iteration number: $it")
+})
+#+END_SRC
+
+Like mentioned earlier, the last lambda argument of a function actually has a unique syntax:
+#+BEGIN_SRC kotlin
+doTimes(10) {
+    println("Iteration number: $it")
+}
+#+END_SRC
+
+That is actually pretty nice, but we can improve it even further! In Kotlin we can create functions to extend the functionality of existing classes, and these functions are known as extension functions.
+
+(Note: Remember that extension functions in Kotlin are compiled down to something similar to classes with static methods in the bytecode. That means you won't have access to private members or methods)
+
+I will not go through extension functions in detail here, so if something is unclear I urge you to read [[https://kotlinlang.org/docs/reference/extensions.html][the official documentation]]. To some of you, it may already be clear that we can simplify the above function definition to:
+
+
 #+BEGIN_SRC kotlin
 fun Number.doTimes(func: (Number) -> Unit) {
     for (i in 1..this) {
@@ -53,25 +64,18 @@ fun Number.doTimes(func: (Number) -> Unit) {
 }
 #+END_SRC
 
-How will this look then used? Isn't this simply =10.doTimes({ funcbody })=? Yes, but in Kotlin you can write this in a special way:
+Then the usage looks like:
 #+BEGIN_SRC kotlin
 10.doTimes {
      println("Iteration number: $it")
 }
 #+END_SRC
 
-Is this a DSL?!? Technically it is. In a way we create a new mini language that defines an extra operation for string. That can easily be used for
+That looks really cool, right? We have extended the language using an extension function, and our function argument (aka lambda) looks just like a code block!
 
-When using extension functions like this, you can see that we can easily make DSLs with this functionality alone. What comes next takes this concept a step further!
+TODO: should I go into detail about any more stuff? maybe like an example on how you could use this alone? JDBCTemplate wrapper or extension function?
 
-What could we use this for in a "real" DSL context? Maybe you  have a function doing database operations with JDBCTemplate? Then that function could for example be 
-TODO: link to JDBCTemplate
-
-So you see here that in a way, we are creating something that looks like custom codeblocks. 
-
-How can this be used for DSLs? 
-
-TODO: more DSL specific things
+When using extension functions, you can see that we can easily make DSLs with this functionality alone. What comes next takes this concept a step further!
 
 
 * Functions in the scope of a class
@@ -123,12 +127,11 @@ TODO: mention that you could make the withStack as advanced as you want! Want to
 
 
 * Example: Spek
-(examples are used for illustrative purposes only!!! All rights to the code are on the team developing Spek. All links to code on Github is given below. I take NO ownership of this code at all.)
+*(examples are used for illustrative purposes only!!! All rights to the code are on the team developing Spek. All links to code on Github is given below. I take NO ownership of this code at all!)*
 
 This is probably where I learned about the prievous type of DSL. When I saw it for the first time, my mind was blown. The possibilities seemed endless. After working with Java, I was so happy to finally see a JVM language that flows like natural language. (Groovy might come to mind for some, but I think Kotlin is an improvement in many ways). 
 
-Let's take a look at Spek:
-https://github.com/spekframework/spek/
+Let's take a look at [[https://github.com/spekframework/spek/][Spek]].
 
 Let's see how Spek is used with a simple example:
 #+BEGIN_SRC kotlin
@@ -144,7 +147,7 @@ object MySpec : Spek({
 
 You may be confused on the way Spek actually works. Is this a function/lambda passed as a parameter to the super class??!?! Yes, it indeed is! This is how Speks way of doing testing works. 
 
-So how is this actually made? Those of you who guessed that Spek would be an abstract class are right :)
+So how is this actually made? Those of you who guessed that Spek would be an abstract class are right.
 https://github.com/spekframework/spek/blob/7d751e88d1bb59ecfa0aaa987ef9275ebe64e10d/spek-dsl/src/commonMain/kotlin/org/spekframework/spek2/Spek.kt
 #+BEGIN_SRC kotlin
 abstract class Spek(val root: Root.() -> Unit)
@@ -184,6 +187,11 @@ The rest of Speks inner workings are beyond the scope of this article. The main 
 
 
 * Additional reading
-If this was your first time reading about DSLs, then you will probably feel a little inspired. As well as checking out the languages and tools mentioned, I think you should read Martin Fowlers article on Domain Specific Languages.
+If this was your first time reading about DSLs, then you will probably feel a little inspired. As well as checking out the languages and tools mentioned, I think you should read [[https://martinfowler.com/bliki/DomainSpecificLanguage.html][Martin Fowlers article on Domain Specific Languages]].
 
-Other resources? 
+Kotlin even has a DSL for HTML that you should check out called [[https://github.com/Kotlin/kotlinx.html][Kotlinx.html]]. 
+
+[[https://tornadofx.io/][TornadoFx]] uses the techniques described in this article to create a powerful DSL for GUIs.
+
+
+Hope you enjoyed this look into DSLs in Kotlin. Feel free to share your own thoughts in the comments :)
