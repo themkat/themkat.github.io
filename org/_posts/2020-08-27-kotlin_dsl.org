@@ -4,7 +4,7 @@
 #+BEGIN_EXPORT html
 ---
 layout: blogpost
-title: Toolblocks for Domain Specific Languages (DSLs) in Kotlin
+title: Building blocks for Domain Specific Languages (DSLs) in Kotlin
 tags: kotlin dsl
 ---
 #+END_EXPORT
