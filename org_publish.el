@@ -3,6 +3,7 @@
 (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")
                          ("org"   . "https://orgmode.org/elpa/")))
+(package-initialize)
 (package-refresh-contents)
 (package-install 'org)
 (package-install 'htmlize)
