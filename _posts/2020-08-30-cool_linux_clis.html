@@ -1,0 +1,93 @@
+---
+layout: blogpost
+title: Cool command line tools
+tags: linux cli
+---
+<p>
+There are a lot of cool CLIs in Unix and GNU/Linux based operating systems to check out. Here we will look at some very useful ones, and one very fun one at the end. None of them will be standard tools that is already installed on your Mac OS X or GNU/Linux setup by default! This article would be very boring if I just listed some tools, so I include some screenshots :) 
+</p>
+
+
+<div id="outline-container-org00310a4" class="outline-2">
+<h2 id="org00310a4">bat</h2>
+<div class="outline-text-2" id="text-org00310a4">
+<p>
+You have probably used cat, which can be a useful tool for viewing the content of files (but mostly for use in piping them to other programs!). Think of bat as a sort of cat, less and syntax highlighter hybrid. If that sounds awesome, it is because it is! You may wonder how it is a hybrid between cat and less? Is it like cat or is it like less?!? It can't be both, can it? Yes, it can. If the file is too big for your screen (terminal window), it will work more like less and let you navigate the contents. If it is just big enough, the content will just be printed to your terminal. Let's see some screenshots!
+</p>
+
+<p>
+Let's see the behavior when viewing a file that fits our terminal window (<code>bat hello.go</code>):
+</p>
+<img class="blogpostimg" src="{{ "assets/img/linuxcli/bat_gohelloworld.png" | relative_url}}" />
+<p>
+This is just showing hello world code in Golang, so nothing interesting. What we see is the similarities with cat! 
+</p>
+
+
+<p>
+Let's take a look at the similarities with less (<code>bat ID_VH.C</code>):
+</p>
+<img class="blogpostimg" src="{{ "assets/img/linuxcli/bat_fizzlefade.png" | relative_url}}" />
+<p>
+Slightly more interesting example, as this is part of <a href="https://github.com/id-Software/wolf3d">the Wolfenstein 3D source code</a>. This exact code is the "Fizzle Fade" code which clears the screen pixel by pixel using a Linear Feedback Shift Register (maybe a topic for a future article? ;) ). Back to the topic at hand&#x2026; Here we can see that the interface is slightly different, more like less. It navigates like less too!
+</p>
+
+
+<p>
+Did I mentioned that like cat, you can open multiple files at the same time? It will just print all listings. Running <code>bat hello*</code> gives us:
+</p>
+<img class="blogpostimg" src="{{ "assets/img/linuxcli/bat_multiple.png" | relative_url}}" />
+<p>
+Just the Hello World Exercism task with Prolog. Did it as part of the Grox.io exercises for Prolog earlier this year. The syntax highlighting here is not awesome, but we see clearly bat's behavior with multiple files as input.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org3181878" class="outline-2">
+<h2 id="org3181878">jq and yq - JSON and YAML querying</h2>
+<div class="outline-text-2" id="text-org3181878">
+<p>
+JSON and YAML are very common dataformats these days. If you use a REST API with curl, you might want to parse the data to view the parts you are interested in. If you use something like Spring or Kubernetes, you might want to look at parts of your YAML properties. These types of problems can easily be solved by jq (JSON) and yq (yaml). Viewing in this sense can also mean processing the data to formats you want them in, so they are more than simple viewers! While they have a different set of commands, I think they are similar enough to be mentioned in the same section.
+</p>
+
+<p>
+The best resources for these tools are off course the man pages, but I have found <a href="https://mosermichael.github.io/jq-illustrated/dir/content.html">a more visual guide for jq</a> to be of great use as well. For yq, I have found <a href="https://mikefarah.gitbook.io/yq/commands/read">the official documentation</a> to be the best resource. Because these are programs with a bit more advanced syntax (with a need for some good examples!), I will not give screenshots here. I urge you to check out the aforementioned guides and documentation if you think these tools sound interesting. 
+</p>
+
+<p>
+While powerful, I must say that there are long times between my usage of them, so documentation to freshen up sure comes in handy.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org42e28e4" class="outline-2">
+<h2 id="org42e28e4">mc - Midnight Commander</h2>
+<div class="outline-text-2" id="text-org42e28e4">
+<p>
+Do you miss file managers like Norton Commander from the DOS era? Then you might be pleased to know that Midnight Commander exists! It works exactly the same as Norton Commander used to, but with some additional features. Not my most used program, but comes in handy sometimes.  
+</p>
+<img class="blogpostimg" src="{{ "assets/img/linuxcli/mc.png" | relative_url}}" />
+<p>
+(here you get a sneak peek on how this site is created :) Jekyll + Github pages. There is also the blogging from Org mode in Emacs part which I plan to cover in a future article.)
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgef23a36" class="outline-2">
+<h2 id="orgef23a36">lolcat</h2>
+<div class="outline-text-2" id="text-orgef23a36">
+<p>
+Let's finish with a less useful, but fun command line tool. lolcat is probably not something you will have much use for, but it will spice up your terminal with rainbow colors. You can use it like you use cat, but I think the most fun use of it is to pipe some fun input to it.
+</p>
+
+<img class="blogpostimg" src="{{ "assets/img/linuxcli/lolcat.png" | relative_url}}" />
+
+
+<p>
+You can probably make a cool welcome-message in your shell with it!
+</p>
+</div>
+</div>
