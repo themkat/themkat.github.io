@@ -25,7 +25,7 @@
 
 		("resources"
          :base-directory "org"
-         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
          :publishing-directory "."
          :recursive t
          :publishing-function org-publish-attachment)
