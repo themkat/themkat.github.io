@@ -1,0 +1,169 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Books to boost your programming career
+tags: java books enterprise
+---
+#+END_EXPORT
+
+In this article I will share some books that has helped me most in my professional career. Even though I have programmed in my spare time for many years before getting a job, I think that programming in an enterprise is much different! Learning to cooperate with more people, reviewing code, seeing patterns in code, tools and technologies that you may not use on your own, and so on! The books I will share are mostly technology agnostic, as I think patterns help way more than learning specific libraries. Learning about design patterns, how to write clean code, and how to write maintainable code are far more useful than learning many different tools and libraries. Why? Because when you learn patterns, you will see these patterns in many new libraries and tools you learn, and thereby learn them faster! I will also say that learning to think differently can help a lot, because it makes it easier for you to learn new things in the future.
+
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/books/mykindle.jpg" | relative_url }}" class="blogfloatrightimg" />
+#+END_EXPORT
+
+Do reading the books help? Yes, I would say so. Some of these books at least helped me to go from "coding in moms basement" to professional programming. I got good feedback fast in my career, and got to do things like architecture quickly. People also seem to want my opinion on different topics, and I get good feedback when I do talks. These are just quick examples, but I think reading the books on this list can help you grow much faster than if you did not.
+
+This is by no means an exhaustive list with all books, but is meant as a list to get you started boosting your career. There may be future more advanced book lists if people are interested. That list would contain more architecture books, patterns, books about useful tools and methodologies and so on. 
+
+
+# Just getting some more space :)
+#+BEGIN_EXPORT html
+<br />
+<br />
+#+END_EXPORT
+
+
+* Clean Code by Robert C. Martin (aka Uncle Bob)
+Most of you have probably heard [[https://amzn.to/35aa4j7][this book]] mentioned before, as it has become one of those books that everyone mentions. The author has also become quite a legend in the software development world with his books, courses and long career. 
+
+#+BEGIN_EXPORT html
+<a target="_blank"  href="https://www.amazon.com/gp/product/B001GSTOAM/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B001GSTOAM&linkCode=as2&tag=themkat-20&linkId=fcc8c2509df9487e9831cafcffdf62eb"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B001GSTOAM&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat-20" class="blogfloatleftimg" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=themkat-20&l=am2&o=1&a=B001GSTOAM" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+#+END_EXPORT 
+
+** What is it about, and why should you read it?
+With a title like "Clean Code", you know what you are going to get! In this book, you are presented with guidelines for how to write beautiful expressive code that is easy to maintain. Ugly code is hard to understand, while clean code will be easier to understand. While the book is focused on Java, I think the tips are useful for almost any language. 
+
+
+Learning to write code that is easy to read for others is paramount in an enterprise. Code is often maintained and revised for years after it was initially written. 
+
+** What does it help with in your career?
+When you write code that is easier to read, it will be easier for others to read. As well as yourself the next time you  revisit your older code! That way you can work more effective with other people, and we can write code faster and enjoy working with it. 
+
+
+Maybe just something like: I can recommend [[https://amzn.to/2QW5eOi][Clean Coder]] as well on what it takes to be a professional programmer (according to the author), but it did not make as much as an impact on me as Clean Code. That being said, I still VERY much recommend reading it! It gives you much insight on what you should know if you want a professional career in software development.
+
+
+# Just getting some more space :)
+#+BEGIN_EXPORT html
+<br />
+#+END_EXPORT
+
+* Design Patterns: Elements of Reusable Object-Oriented Software by Eric Gamma, Richard Helm, Ralph Johnson and John Vlissides
+
+I know [[https://amzn.to/358RaJy][this book has a long name and many authors]], but don't be scared! While some of the patterns in this book might be outdated by now, a lot of them are still useful today. Many of the patterns might not be something you write yourself a lot of the time, but you will find them in libraries and code generators that you use today. Notable example of patterns in use in modern projects include Lombok (Builder, UtilityClass for static factory method, and more), Spring Framework (Singleton, Factory, Proxy etc.) and the SDK for Android development (Adapter and more).
+
+
+#+BEGIN_EXPORT html
+<a target="_blank"  href="https://www.amazon.com/gp/product/B000SEIBB8/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B000SEIBB8&linkCode=as2&tag=themkat-20&linkId=15de5c19f7935ba7de160a1070d64aae"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B000SEIBB8&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat-20" class="blogfloatleftimg" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=themkat-20&l=am2&o=1&a=B000SEIBB8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+#+END_EXPORT 
+
+
+** What is it about, and why should you read it?
+A collection of many design patterns, which are common solutions to small problems, to assist you while designing new software. These come in several categories: behaviorial, constructors, etc. While many of them are not so relevant anymore, it is still a useful read to see how different subproblems can be solved (e.g, object creation and work delegation). Some of the patterns are still found in modern software, and have clearly influenced their design (see introduction for examples).
+
+
+** What does it help with in your career?
+You will recognize patterns
+
+
+# Just getting some more space :)
+#+BEGIN_EXPORT html
+<br />
+#+END_EXPORT
+
+
+* Effective Java by Joshua Bloch
+
+Together with the next entry, [[https://amzn.to/35aacz7][Effective Java]] of the more practical books on the list. It shows you in essence how to write good Java code, and code you should avoid writing. Another bonus is that it is written by one of the original authors of the Java standard library; Joshua Bloch himself! If you need a book with code examples and practical tips, I highly recommend this one!
+
+#+BEGIN_EXPORT html
+<a target="_blank"  href="https://www.amazon.com/gp/product/B078H61SCH/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B078H61SCH&linkCode=as2&tag=themkat-20&linkId=4926509b3694bbd6ebaa6a24cd9dc1a2"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B078H61SCH&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat-20" class="blogfloatleftimg" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=themkat-20&l=am2&o=1&a=B078H61SCH" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+#+END_EXPORT
+
+
+
+** What is it about, and why should you read it?
+More effective ways of working with the Java programming language. This includes both effective for readability and for performance. In general the book contains many tips and tricks for working with Javas library and many features. 
+
+** What does it help with in your career?
+If you don't ever use Java (or another JVM language), it won't.. But if you do it will give you value on what GOOD Java code actually is. Should you always use lambdas? (NO!). How should serialization be used? As a book about Java at a technical level, this is probably the book I have had most use for in that regard. 
+
+# Just getting some more space :)
+#+BEGIN_EXPORT html
+<br />
+#+END_EXPORT
+
+
+* Structure and Interpretations of Computer Programs (SICP) by Harold Ableson, Gerald Sussman and Julie Sussman
+
+The obligatory "think differently" book on this list! [[https://amzn.to/356dyDo][SICP]] is a classic book, and for good reason. Many developers today are mostly familiar with object oriented languages like Java, C# and C++, so learning a more functional language like Scheme can help broaden your horizons. (it is not a language that only supports functional programming like Haskell though...). 
+
+
+This book can also be [[https://mitpress.mit.edu/sites/default/files/sicp/index.html][read for free online at MITs webpages]], which is a bonus!
+
+
+#+BEGIN_EXPORT html
+<a target="_blank"  href="https://www.amazon.com/gp/product/0262510871/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=0262510871&linkCode=as2&tag=themkat-20&linkId=d5fcc1981fff52213f8512f629c2fab9"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=0262510871&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat-20" class="blogfloatleftimg" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=themkat-20&l=am2&o=1&a=0262510871" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+#+END_EXPORT
+
+
+
+** What is it about, and why should you read it?
+In essence: Thinking differently and learning a new language. In this book you will learn to think in a more functional way, learn to think in different concepts, implement various algorithms and more! One very peculiar highlight is Church Numerals (only a few exercises, but still fun!). Church Numerals is basically treating numbers as functions instead of plain numbers, so they are in a way a method of encoding numbers (and you  can indeed convert them to numbers). 
+
+That being said, do you need to read everything? This book is quite old? Is everything still relevant? I would say that most of it is very useful to learn, but you may not use it at your job. I would say read at least the first 4 chapters (up to and including the Meta-Circular Evaluator where you make your own Scheme/Lisp!). A lot of the ideas you learn will help you think differently about future tasks you may have at work.
+
+** What does it help with in your career?
+If you use Java, Kotlin, C# or some other language that has streams or higher-order functions (functions that return functions or take functions as arguments), then the topics in this book will prove useful! (even better if you use functional languages like Haskell, Clojure, Elm or something else!). In Java you have streams, in which you can directly use much of what you learn in this book. 
+
+
+# Just getting some more space :)
+#+BEGIN_EXPORT html
+<br />
+#+END_EXPORT
+
+
+
+* Release It!: Design and Deploy Production-Ready Software by Michael T. Nygard
+So you have written your code, and everything has gone well during testing. Now we are ready for production! Wait, are we really? [[https://amzn.to/3i5yuxY][Release It!]] is a book about what you should make sure of before doing to production, as well as common pitfalls.
+
+
+#+BEGIN_EXPORT html
+<a target="_blank"  href="https://www.amazon.com/gp/product/B079YWMY2V/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B079YWMY2V&linkCode=as2&tag=themkat-20&linkId=127a0bf06fcb0d877b7a47f60201d102"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B079YWMY2V&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat-20" class="blogfloatleftimg" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=themkat-20&l=am2&o=1&a=B079YWMY2V" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+#+END_EXPORT 
+
+
+** What is it about, and why should you read it?
+Releasing and maintaining code, but also the steps up to doing it. 
+
+Going from writing software to getting it in production is an important step. How do you know that your software is easy to maintain? And what do you do if you get problems? This book gives you
+
+** What does it help with in your career?
+
+- Things you should always remember like timeouts. 
+- How firewalls can cause a lot of unknown problems
+- Antipatterns that are security short-comings and stability errors... 
+- Also includes testing to get away the most serious mistakes. Quickly introduces chaos engineering. 
+
+# Just getting some more space :)
+#+BEGIN_EXPORT html
+<br />
+#+END_EXPORT
+
+
+* Bonus: The Pragmatic Programmer by Dave Thomas and Andy Hunt
+I would have gotten a lot of complaints from now until eternity if I did not include this title on this list! It is a classic within the niche of software development books, and for good reason. It contains a mix of practical skills you should learn, as well as how you should think about many different topics. It even includes some tips on what you should do to improve your skills. The older edition is called [[https://amzn.to/3i5Mbgo][The Pragmatic Programmer: From Journeyman to Master]], and the newer 20th anniversary edition is called [[https://amzn.to/2Zc65i6][The Pragmatic Programmer: your journey to mastery]]. I would probably recommend that you choose the newer edition, but I'm mentioning the older one as that is the one I have read (I have sadly not read the newest edition). 
+
+
+# Just getting some more space :)
+#+BEGIN_EXPORT html
+<br />
+#+END_EXPORT
+
+* Bonus 2: Clean Architecture by Robert C. Martin (aka Uncle Bob)
+
+[[https://amzn.to/324Jztr][Clean Architecture]] is mainly about [[https://en.wikipedia.org/wiki/Software_architecture][software architecture]] and structure, with the angle on making it easy to work with and maintainable. While I think the architecture presented is interesting, I think the best parts of this book is the summary of the SOLID principles and of general architecture concepts. SOLID principles are useful to know for structuring object oriented software, as well as understanding how different libraries and frameworks are structured. Enterprise architectures can get so much more massive than software you make on your own.

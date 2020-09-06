@@ -190,3 +190,26 @@ body {
 	margin: auto;
 	display: block;
 }
+
+// TODO: any way to combine these two that I'm forgetting? :(
+// TODO: do these need to be changed a bit for mobile devices? Maybe ditch the float?
+.blogfloatrightimg {
+	max-width: 20%;
+	max-height: auto;
+	display: block;
+	margin-left: 1vw;
+	margin-bottom: 1vh;
+	border-style: solid;
+	float: right;
+}
+
+.blogfloatleftimg {
+	max-width: 20%;
+	max-height: auto;
+	display: inline-block;
+	white-space:  nowrap;
+	margin-right: 2vw;
+	margin-bottom: 1vh;
+	border-style: solid;
+	float: left;
+}
