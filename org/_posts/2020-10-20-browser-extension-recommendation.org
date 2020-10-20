@@ -1,0 +1,72 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Browser extension recommendation - Vimium
+tags: web-browsers
+---
+#+END_EXPORT
+
+Don't know about you, but using the mouse all the time to browse the web has always really bothered me. The mouse has its uses, but I think it is overused on computers in this day and age. Web browsing turns very slow and annoying when using it for everything. Having my fingers leave the keyboard while doing research online annoys me. I feel like I can do things more effectively and faster with the keyboard than I can ever do with a mouse.
+
+I have tried several keyboard-driven browsers and browser extensions over the years, but none of them worked as well for me as Vimium so far. Ranging from Lynx in the terminal to [[http://conkeror.org/][Conkeror]] as a full GUI browser. I really expected to enjoy Conkeror for its Emacs-inspired key bindings, but I did not... I found it to feel un-intuitive for me (hey, it may work better for you! So check it out if you are curious). Another reason might be that I use EXWM (Emacs Window Manager) which picks up many of the keybindings before the browser has a chance to do so, so a Vim inspired browser works better in conjunction with that. 
+
+So what makes Vimium a great choice?
+
+
+* What is it?
+Vimium is an extension for Chromium/Google Chrome, and has also been implemented for Firefox. The implementation is entirely JavaScript (with HTML and CSS), like (almost) all other browser extenions, and loads on browser startup. If you have many startup tabs, then Vimium may be late to start, so you may have to refresh the page to get Vimium started. 
+
+
+* What makes it great?
+I don't often say that a browser extension has changed my life, but this one has! Surfing the web with only the keyboard is really comfortable! And having it work in harmony with EXWM makes it really great to use. 
+
+Let's use clicking links as an example. Are you just supposed to know cryptic commands for everything? Well, no. The command for clicking a link (and opening in the same tab) is "f", and when you press it, each link will get its own "hot key" on the page. Let's show this visually:
+
+#+BEGIN_EXPORT html
+<img class="blogpostimg" src="{{ "assets/img/browserext/vimiumclick.png" | relative_url}}" />
+#+END_EXPORT
+
+If you type uppercase "D", you will click the link to the Java tag page on the website. As you can see, not a lot of cryptic commands. 
+
+
+
+These types of commands may seem easy to forget, but Vimium has a clever solution. Forgot one? Just type "?" on your keyboard, and a helper menu will show! Want to close it? Just type "?" again! 
+
+#+BEGIN_EXPORT html
+<img class="blogpostimg" src="{{ "assets/img/browserext/vimiumhelp.png" | relative_url}}" />
+#+END_EXPORT
+
+
+Some of you may think it is weird that I enjoy Vim keybindings, but... Hey! I'm allowed to enjoy both Vim and Emacs :) 
+
+
+Does that mean I never use the mouse? Well no. Some websites just work better with a mouse, but most of the time I don't really use it that much. Using the keyboard just works better when it is an option!
+
+
+* My setup
+Surprisingly, I don't really need much special setup with this. The only thing I missed in the beginning is that some websites have their own commands (e.g, YouTube or BitBucket). Vimium picks these up by default, so one command I wanted was to be able to send the keyboard commands to the website. Usually these website commands are single characters, so all I needed was a key mapping to send the next command to the website: =map e passNextKey=. If I type "e" and then "f", then "f" will be sent to the website (e.g, to enable fullscreen on YouTube). That is all I need :) 
+
+
+I can mention that my most used commands are:
+- *f* - click link (described above)
+- *F* - click link and open in new tab
+- *t* - open new tab
+- *T* - open a searchable list of tabs
+- *H* / *L* - go back/forward in history
+- *j* / *k* scroll up/down
+
+
+* Summary
+So how would I summarize the key points of what makes Vimium the best keyboard-driven browsing experience (for me)? I would summarize it in these three points:
+- Intuitive commands (based on Vim), and not too many.
+- Easy to access help menu
+- Commands not picked up by EXWM or OS functionality
+
+
+Some of this article may seem like a salespitch, but I do not make any money on this at all if you suspected that. I'm also not in any way affiliated with the creator of Vimium. I just love it, so this article is just me being nice and sharing info about my favorite browser extension for free :) 
+
+
+Do you have a favorite keyboard driven browsing experience? Or some other browser extension you can't live without? Feel free to mention it in the comment section below :) 
