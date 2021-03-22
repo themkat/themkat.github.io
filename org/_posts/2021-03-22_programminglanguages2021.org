@@ -8,31 +8,25 @@ title: Which programming language should you learn in 2021?
 ---
 #+END_EXPORT
 
-# TODO: mention one widely used useful language. One fun to learn to do things in a different ways. 
+New year, new programming languages to learn! It is overwhelming though... With so many languages to choose from, it can be hard to select what to learn. Sometimes it is easy, we might want to accomplish certain tasks. Other times you may want to learn to think in new ways, as a fun challenge. 
 
-New year, new programming languages to learn! 
 
-languages that I know that I would recommend that others look into.
+In this article I will show you 3 possible choices of languages to learn, with three different angles. Two of them, you will (most likely) not use in your career, but that should not be too important. Remember to follow your passion, and learn what you find most interesting. If you have learned to think in different paradigms, learning new syntax is way easier (remember: the most important part of programming is the way we think, not memorizing syntax!). So without further ado, let's present some fun languages you can take a look at! 
 
-# TODO: mention that there are MANY langauges I will not mention here. This is not meant to be my favourite languages of all time, but a mix of fun and useful languages to learn.
-
-# TODO. maybe have max 3 categories or choices? 
-
-# TODO: mention: remember, the most important part of learning new programming languages (at least in different language families) isn't to memorize syntax, but to learn different ways of thinking. Solving problems in different ways can be a lot of fun :D 
 
 
 ** Kotlin - The all-rounder
-
+Kotlin is probably a language no one will be shocked to see on this list. The language is both used a lot in the industry these days to replace Java (as well as [[https://developer.android.com/kotlin][the official language for Android development]]), but is also fun to program in! While Java is known to be very verbose and rigid in ways to do things, Kotlin is not! Kotlin doesn't force you to be object oriented, or functional (as in functional programming), you can do things the way you want (within reason). 
 
 # TODO: mention the part that Kotlin is embraced by many companies now. If you look for a language that will give you some advantages in the job market in the coming years, Kotlin might be a good choice. 
 
-# TODO: should I maybe link to other websites to support my view here? 
 
-# TODO: probably also mention that you should never pick out a language just for the possibility to get a job. Think about what you are passionate about learning first. Remember that if you are well-versed in many different ways of thinking, learning the syntax of a new language is not really that hard. 
+** Scheme - The Wizards choice
+Scheme is probably my favorite language if we just think of the syntax and feeling you get when coding in it. 
 
-
-** Crystal - a gem for the ???
-# TOdO: is there another language I could maybe recommend that is non-standard? Or is Crystal a good choice here? 
+#+BEGIN_SRC scheme
+(display "test")
+#+END_SRC
 
 
 ** Prolog - the logical choice
@@ -48,7 +42,7 @@ Learning to solve problems in different ways, is in my view one of the most impo
 
 
 ** "I know all the above!!!"
-If you know all the languages I have listed above, then you will have to find something new. Maybe Common Lisp will interest you? Or Haskell? Maybe scripting with Rexx is more your thing? Several of these might be topics for future blog posts. What do I want to look into in the near future? My plan as of now is to look more into Pony (ponylang), While the language has a weird name, it also have some interesting properties relating to concurrency. One of the main goals of the language is to have compile-time protection against deadlocks and other issues relating to concurrency. Maybe I will feel inspired to write an article about it in the future?
+If you know all the languages I have listed above, then you will have to find something new. Maybe [[https://en.wikipedia.org/wiki/Common_Lisp][Common Lisp]] will interest you? Or Haskell? Maybe scripting with [[https://en.wikipedia.org/wiki/Rexx][Rexx]] is more your thing? Several of these might be topics for future blog posts. What do I want to look into in the near future? My plan as of now is to look more into [[https://www.ponylang.io/][Pony (ponylang)]], While the language has a weird name, it also have some interesting properties relating to concurrency. One of the main goals of the language is to have compile-time protection against deadlocks and other issues relating to concurrency. Maybe I will feel inspired to write an article about it in the future?
 
 
 What would you recommend others learn this year? Any languages you have learned that really expanded your mind? Feel free to share in the comments below! 
