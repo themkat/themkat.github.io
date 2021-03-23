@@ -5,6 +5,7 @@
 ---
 layout: blogpost
 title: Which programming language should you learn in 2021?
+tags: kotlin scheme lisp prolog programming
 ---
 #+END_EXPORT
 
