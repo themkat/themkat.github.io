@@ -22,7 +22,8 @@ Want to play around with the language quickly? The official websites has [[https
 
 
 ** Scheme - The Wizards choice
-Scheme is probably my favorite language if we just think of the syntax and feeling you get when coding in it. 
+Scheme is probably my favorite language if we just think of the syntax and feeling you get when coding in it. You have probably heard about the Lisp-family of programming languages, which is one of the oldest and most iconic families of programming languages. S-expressions (aka sexps, symbolic expressions etc.) are a central concept of the syntax, which is used for both data and code. Think of it in over-simplified terms as a way to write code using polish notation (operator at the beginning like this =(+ x y)= instead of the classical =x + y=) and doing it with parenthesis in a way that make tree-structures. Let's do an example: =(+ (* 2 10) (- 10 5))= which obviously evaluates to =25=. What's the big whoop, you may ask? By itself this may not seem like much. Add the possibility to evaluate code during runtime with the eval-function, [[http://www.shido.info/lisp/scheme_syntax_e.html][creating new syntax for the language using macros]], encapsulation and more, and you will start to feel more impressed. Like [[https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book.html][the book SICP]] (which I recommend every programmer read!!!) alludes to in the first chapter, when writing programs (using Scheme) it feels like "The programs we use to conjure processes are like a sorcerer's spells".
+
 
 
 ** Prolog - the logical choice
