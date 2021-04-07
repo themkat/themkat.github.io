@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: themkat.net
+Token: 6157d3ed1fe5ae95f1e1ff3eb698e1479cd1a85fbb16f9dac050fc8f8d02a397
