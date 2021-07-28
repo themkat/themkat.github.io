@@ -37,6 +37,10 @@
 				   class="active"
 				   {% endif %}
 				   href="/">Home</a>
+				<a {% if page.url == "/tags/books.html" %}
+				   class="active"
+				   {% endif %}
+				   href="{{"tags/books.html" | relative_url }}">Book recommendations</a>
 				<a {% if page.tab == "tech" %}
 				   class="active"
 				   {% endif %}
