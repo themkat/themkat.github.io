@@ -24,6 +24,7 @@ To me, this book is two things: A history book about the early pioneers in softw
 # Just getting some more space :)
 #+BEGIN_EXPORT html
 <br />
+<br />
 #+END_EXPORT
 
 
@@ -37,6 +38,7 @@ Love older game engines? Or maybe you are just fascinated with the early days of
 
 # Just getting some more space :)
 #+BEGIN_EXPORT html
+<br />
 <br />
 #+END_EXPORT
 
@@ -55,6 +57,7 @@ I'm not a marine-biologist, but have always been fascinated by the ocean. Whales
 
 # Just getting some more space :)
 #+BEGIN_EXPORT html
+<br />
 <br />
 #+END_EXPORT
 
