@@ -70,6 +70,7 @@ body {
 .content {
 	width: 70vw;
 	box-shadow: 0 0 1em gray;
+	border-radius: 0.25em;
 	padding-left: 5vw;
 	padding-right: 5vw;
 	padding-top: 4vh;
@@ -145,6 +146,12 @@ body {
 
 .content code {
 	border-style: solid;
+}
+
+// TODO: any way to make this count for all heasders? Probably forgetting something here :P (the [class^=h] solution seems like it may cover too much in the future. Maybe overthinking it xD
+.content h2 a {
+	text-decoration: none;
+	color: black;
 }
 
 .footer {
