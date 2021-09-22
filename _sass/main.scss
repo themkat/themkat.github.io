@@ -81,6 +81,12 @@ body {
 	margin-right: auto;
 }
 
+.content .verse {
+	margin-left: 2vw;
+	font-style: italic;
+	// TODO: see if this has issues with some browsers
+	font-family: ui-rounded;
+}
 // fixing various settings for mobile devices
 @media only screen and (max-width: 600px) {
 
@@ -150,7 +156,7 @@ body {
 
 // TODO: any way to make this count for all heasders? Probably forgetting something here :P (the [class^=h] solution seems like it may cover too much in the future. Maybe overthinking it xD
 .content h2 a {
-	text-decoration: none;
+	text-decoration: underline;
 	color: black;
 }
 
