@@ -3,3 +3,5 @@ baseurl: ""
 title: "TheMKat's blog" 
 include: [".well-known"]
 exclude: ["org"] 
+plugins:
+  - jekyll-sitemap
