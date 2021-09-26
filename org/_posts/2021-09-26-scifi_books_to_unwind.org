@@ -28,6 +28,12 @@ A spacecraft (first mistaken as an asteroid) is slowly entering our solar system
 
 In my view, this is probably my favorite of Arthur C. Clarkes books. The exploration of the unknown, the possible dangers, the mythology of the Techno-Christers, as well as the different reactions we have to the unknown, are very interesting themes. In addition, people were inspired by the fictional Project Spaceguard (to identify asteroids and other objects), and [[https://en.wikipedia.org/wiki/Rendezvous_with_Rama#Non-fictional_aspects][created a real-life equivalent]] with Clarkes blessing.
 
+# Just getting some more space :)
+#+BEGIN_EXPORT html
+<br />
+<br />
+#+END_EXPORT
+
 
 * 2. [[https://amzn.to/3ERFOZU][Do Androids dream of electric sheep (aka Blade Runner) by Philip K. Dick]]
 #+BEGIN_EXPORT html
@@ -35,6 +41,12 @@ In my view, this is probably my favorite of Arthur C. Clarkes books. The explora
 #+END_EXPORT
 
 This book is very different to the movies, but follows the same character. Rick Deckard is a bounty hunter set to kill six androids (replicants in the movies) in a post-apocalyptic San Fransisco. Most animals are either extinct or close to it. I think the less said, the better here. The book makes us think what it really does mean to be human, and other topics as well. These include off-world colonies on Mars, virtual reality and its role in our life, endangered animals as status symbols, and the human condition (in a depressing way) to mention a few things. Read it for yourself, I would spoil too much by mentioning more :) 
+
+# Just getting some more space :)
+#+BEGIN_EXPORT html
+<br />
+<br />
+#+END_EXPORT
 
 
 * 3. [[https://amzn.to/3lTaiBS][Starship Troopers by Robert Heinlein]]
