@@ -1,0 +1,48 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Science fiction books to read to unwind and relax
+tags: books
+---
+#+END_EXPORT
+
+Sometimes we all need a break from computers, no matter how passionate we are about it. This is true for other hobbies as well, as well as our work. All of us (probably) need to relax, dream and feel refreshed and inspired to continue our other efforts. For me, one of my favorite ways to unwind is to read books (which you can probably tell from many of my earlier articles) or listen to audio books. In this article I will recommend three science fiction books you can read (or listen to) to relax, and maybe to feel inspired. 
+
+
+If you have any suggestions for science fiction and fantasy books, feel free to share them in the comments! :) 
+
+
+(Amazon links in headings and images below, for your convenience. Paid links/Affiliate! See the bottom of the page for an Audible trial)
+
+
+* 1. [[https://amzn.to/39BBWO3][Rendevouz with Rama by Arthur C. Clarke]]
+#+BEGIN_EXPORT html
+<a target="_blank"  href="https://www.amazon.com/gp/product/B07XD75HGV/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07XD75HGV&linkCode=as2&tag=themkat09-20&linkId=dfef542ae2cc8159f63e65003e2e2c1c"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B07XD75HGV&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat09-20" ></a>
+#+END_EXPORT
+
+A spacecraft (first mistaken as an asteroid) is slowly entering our solar system. What is it? Why is it here? These are the questions that a team of explorers on the ship Endeavour are set out to find as they are set to explore this seemingly unmanned vessel. Some believe it is our new Ark that will take us to God, and these are called Techno-Christers (who believe God and Jesus are from space). Others wonder if it is hostile vessel. What is it? What is this ship dubbed Rama?
+
+
+In my view, this is probably my favorite of Arthur C. Clarkes books. The exploration of the unknown, the possible dangers, the mythology of the Techno-Christers, as well as the different reactions we have to the unknown, are very interesting themes. In addition, people were inspired by the fictional Project Spaceguard (to identify asteroids and other objects), and [[https://en.wikipedia.org/wiki/Rendezvous_with_Rama#Non-fictional_aspects][created a real-life equivalent]] with Clarkes blessing.
+
+
+* 2. [[https://amzn.to/3ERFOZU][Do Androids dream of electric sheep (aka Blade Runner) by Philip K. Dick]]
+#+BEGIN_EXPORT html
+<a target="_blank"  href="https://www.amazon.com/gp/product/B000SEGTI0/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B000SEGTI0&linkCode=as2&tag=themkat09-20&linkId=211375435a3da4c16194ff13397a112c"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B000SEGTI0&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat09-20" ></a>
+#+END_EXPORT
+
+This book is very different to the movies, but follows the same character. Rick Deckard is a bounty hunter set to kill six androids (replicants in the movies) in a post-apocalyptic San Fransisco. Most animals are either extinct or close to it. I think the less said, the better here. The book makes us think what it really does mean to be human, and other topics as well. These include off-world colonies on Mars, virtual reality and its role in our life, endangered animals as status symbols, and the human condition (in a depressing way) to mention a few things. Read it for yourself, I would spoil too much by mentioning more :) 
+
+
+* 3. [[https://amzn.to/3lTaiBS][Starship Troopers by Robert Heinlein]]
+#+BEGIN_EXPORT html
+<a target="_blank"  href="https://www.amazon.com/gp/product/B004EYTK2C/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B004EYTK2C&linkCode=as2&tag=themkat09-20&linkId=9292bcee05c6aaf05a9102e3c139f68e"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B004EYTK2C&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat09-20" ></a>
+#+END_EXPORT
+
+Some people might notice that this book has the same title as [[https://www.imdb.com/title/tt0120201/][a famous movie franchise]], and the movie is indeed based (very loosely) on the book. The book is about a future America, ruled by a military elite. People who have served in the military gain the right to vote, and get other special privileges. The story follows Johnny Rico, a young recruit progressing through the ranks of the Mobile Infantry (equipped with the now infamous powered armor). The most famous part of the story is the war between the "Bugs"/"Arachnids" of the planet Klendathu, but that is in many ways only a backdrop. The main part of the book (in my view) is the discussion of socio-politic themes, such as capital punishment, suffrage/voting rights and more. The themes are not without controversy, as a lot of people think it promotes militarism. 
+
+
+If you wonder if Heinlein promoted a military state as in Starship Troopers, then the answer is no based on my understanding. While he had a great appreciation for the military through his political views shifted throughout his life. For most of it he described himself as a libertarian, and promoted equality and liberation for all (the main character of Starship Troopers is Filipino, and the book was written during the civil rights era). He is known for wanting to take it to the limits, and has once been credited as saying "Ayn Rand is a bloody socialist compared to me" ([[https://themkat.net/2021/09/22/essential_ayn_rand.html][see my earlier article to learn more about Ayn Rand]]).  
