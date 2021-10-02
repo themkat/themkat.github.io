@@ -87,6 +87,7 @@ body {
 	// TODO: see if this has issues with some browsers
 	font-family: ui-rounded;
 }
+
 // fixing various settings for mobile devices
 @media only screen and (max-width: 600px) {
 
@@ -232,4 +233,29 @@ body {
 
 .amazonbanners {
 	margin-top: 5vh;
+}
+
+
+// Simple NOTE! Box for blog articles where I want a gotcha or something similar as we would have in a book!
+.notebox {
+	border: 1px solid black;
+	width: 80%;
+	align-self: center;
+	margin: auto;
+}
+
+.notebox-content {
+	padding-left: 1vw;
+	padding-right: 1vw;
+	padding-bottom: 1vh;
+	padding-top: 1vh;
+	background-color: #f2f3f4;
+}
+
+.notebox-heading {
+	background-color: #909090;
+	padding-top: 1vh;
+	padding-bottom: 1vh;
+	padding-left: 1vw;
+	font-size: 1.5em;
 }
