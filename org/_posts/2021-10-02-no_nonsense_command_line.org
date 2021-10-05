@@ -209,7 +209,7 @@ The simplest way to view a file is the cat command. cat simply prints the conten
 A slightly more advanced way of viewing files is to use the command called less. less let's us navigate our file and view it as well. For one of my files (my default layout for this blog) it looks like this:
 
 #+BEGIN_EXPORT html
-<img class="blogpostimg" src="{{ "assets/img/bash101/less.png" | relative_url}}" />
+<img class="blogpostimg" src="{{ "assets/img/cmdline/less.png" | relative_url}}" />
 #+END_EXPORT
 
 Some people may wonder how to navigate in less, and how to exit? You can exit with q and navigate with the error keys. That is the most important things to know. You can also navigate with PageUp/PageDown if you want to, or the hjkl-keys (h = left, j = up, k = down and l = right).
