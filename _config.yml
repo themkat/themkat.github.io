@@ -1,7 +1,9 @@
 url: "https://themkat.net" 
 baseurl: ""
 title: "TheMKat's blog" 
+paginate: 5
 include: [".well-known"]
 exclude: ["org"] 
 plugins:
   - jekyll-sitemap
+  - jekyll-paginate

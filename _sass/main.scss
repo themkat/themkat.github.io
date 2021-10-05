@@ -259,3 +259,18 @@ body {
 	padding-left: 1vw;
 	font-size: 1.5em;
 }
+
+.page-navigation {
+	font-size: 1.25em;
+	width: 100%;
+	margin: auto;
+	text-align: center;
+}
+
+.page-navigation a {
+	text-decoration: none;
+}
+
+.page-navigation pre {
+	display: inline-block;
+}

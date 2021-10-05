@@ -15,17 +15,27 @@ title: Main page
 <!-- Print tags with links -->
 <h3>Tags:
 	{% for tag in tags%}
-	<a href="tags/{{tag}}.html">{{tag}}</a>&nbsp;
+	<a href="/tags/{{tag}}.html">{{tag}}</a>&nbsp;
 	{% endfor %}
 </h3>
 
 <br />
 <hr />
 
-<!-- TODO: should we show the tags for each post here as well? or is it enough to show it for  -->
-{% for post in site.posts %}
+<!-- Posts  -->
+{% for post in paginator.posts %}
 {% include postlisting.html title=post.title date=post.date url=post.url excerpt=post.excerpt %}
 <hr />
 {% endfor %}
+
+<br />
+<br />
+
+<!-- Next page navigation -->
+<div class="page-navigation">
+	{% if 1 != paginator.page  %}<a href="{{paginator.previous_page_path}}">&#8592;</a>{% endif %}
+	<pre>  {{paginator.page}} / {{paginator.total_pages}}  </pre>
+	{% if paginator.total_pages != paginator.page  %}<a href="{{paginator.next_page_path}}">&#8594;</a>{% endif %}
+</div>
 
 <script src="https://cdn.commento.io/js/count.js"></script>
