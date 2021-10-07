@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: Summer book recommendations 2021
-tags: books
+tags: books retro-computing
 ---
 #+END_EXPORT
 

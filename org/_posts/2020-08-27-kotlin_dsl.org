@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: Building blocks for Domain Specific Languages (DSLs) in Kotlin
-tags: kotlin dsl
+tags: kotlin dsl programming
 ---
 #+END_EXPORT
 Domain Specific Languages (DSLs) can be used to solve a lot of different problems (more on that shortly!). In this article we will take a look at how we can create DSLs in a very simple way that make for highly readable and expressive code. I will not go through general DSL creation, only the building blocks unique to Kotlin. At the end we will look at an example from an open source testing library (Spek).
