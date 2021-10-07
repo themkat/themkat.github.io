@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: Essential software for Mac OS X
-tags: macosx
+tags: macosx emacs
 ---
 #+END_EXPORT
 
