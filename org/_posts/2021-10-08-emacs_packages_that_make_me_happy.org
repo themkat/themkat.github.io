@@ -1,0 +1,98 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Emacs packages that make me happy (and hopefully make you happy as well!)
+tags: emacs editor
+---
+#+END_EXPORT
+
+Today we are going to look at fun packages for Emacs that makes me happy! These packages may not be the most useful, but add the extra flare to make your editor feel more like home. This might not come as a shock, but I'm a big fan of individualized solutions instead of the classical "one size fits all" approach like many big IDEs have (e.g, IntelliJ IDEA, Eclipse). Customizing, even if it's just smaller things, can make your experience more personal and make you more productive. I feel almost naked when I try to use some other editor than Emacs, as nothing even come close. Emacs can be configured the way I want it, in other words: a setup that works for ME, and not necessarily someone else. (My love for individualism may not come as a shock after [[https://themkat.net/2021/09/22/essential_ayn_rand.html][my longer article on Ayn Rand]]).
+
+
+All Emacs setups may be different, so you may not even enjoy the packages below. There was once a joke going around that two people who both used Emacs, would never be able to use each others setup or even enjoying it. (overriding the built in hotkeys is way more common than you might think...)
+
+
+*NB! I will also cover installs and other info where relevant (mostly where the github repos don't cover it well) to get you started if you are new to Emacs. If you are an experienced user you will probably skim through these sections.*
+
+
+* [[https://github.com/iqbalansari/emacs-emojify][Emojify]]
+This is probably the most useless, but fun package that I use daily. What it does is simple: show emojis in code comments, text (like Org-Mode), and other places you (may) want them. To get started with [[https://github.com/iqbalansari/emacs-emojify][Emojify]] you install it based upon the guides on their github repo. The first time you use it, it will download a set of emojis for you (github emojis if I remember correctly, so many flags, smileys, snake, fruits, etc.). If you are the adventurous type, [[https://github.com/iqbalansari/emacs-emojify#custom-emojis][you can even add your own]] (sadly I have not done this).
+
+
+*Fun fact:* When writing my blog posts, I use [[https://orgmode.org/manual/Comment-Lines.html][org mode comments]] (to create todos) with emojis a lot. Livens up the text and makes it fun to work on! Did I mention that I write ALL of my blog posts from within Emacs? ;) 
+#+BEGIN_EXPORT html
+<img class="blogpostimg" src="{{ "assets/img/emacsfun/emojify.png" | relative_url}}" />
+#+END_EXPORT
+
+(you can do exactly the same in your code comments!)
+
+* [[https://github.com/emacsmirror/rainbow-mode][rainbow-mode]]
+This is probably the most useful package in this article, especially when doing web development (CSS or other stylesheets especially!). What it does is show color codes (hexadecimal, literals etc.) highlighted with the color they are describing. How does it look? It looks pretty neat! Let's take an example from the main [[https://sass-lang.com/][SASS]] (CSS extension language) stylesheet for this blog:
+#+BEGIN_EXPORT html
+<img class="blogpostimg" src="{{ "assets/img/emacsfun/rainbow-mode.png" | relative_url}}" />
+#+END_EXPORT
+
+To get this nice highlights when you type a color, you just need to install rainbow-mode (which is sadly not covered on its github page, so covering it here) and add a hook for it. This can be done with the [[https://www.emacswiki.org/emacs/InstallingPackages][traditional package.el]] or with use-package, so covering both:
+
+#+BEGIN_SRC lisp
+  ;; traditional install with package.el and activation
+  (package-install 'rainbow-mode)
+  (add-hook 'prog-mode-hook 'rainbow-mode)
+
+  ;; use-package version
+  (use-package rainbow-mode
+    :hook prog-mode)
+#+END_SRC
+(if you only want it for css-mode or scss-mode, replace prog-mode above with those! I activate it for all programming modes, because I suddenly remember other modes it can be useful for...)
+
+That's it! Now you will have fancy highlighted colors as well!
+
+
+* [[https://github.com/emacs-dashboard/emacs-dashboard][dashboard]]
+[[https://github.com/emacs-dashboard/emacs-dashboard][dashboard]] replaces the old boring startup screen with a personalized dashboard. This includes a banner, your latest projects (if [[https://github.com/bbatsov/projectile][Projectile]] is used), latest files worked on, and more depending on your likings. All of it can be configured as you want it. Want to only show 5 latest projects and 10 last worked on files? With a picture of your level 60 shaman as a banner? You do you! If you are nice and structured, then you can show [[https://orgmode.org/manual/Agenda-Views.html][org-agenda]] (todos, diary etc.) items too.
+
+
+*Protip:* Have to add that [[https://themkat.net/2021/09/13/recommended_emacs_packages.html][using Helm gives a nice experience with nice navigatable menus]], for both your projects and files. In that case, just navigate to them with the arrow keys and hit enter, and you will browse your projects in a much better way! The project parts are all thanks to the helm-projectile integration, when using projectile as mentioned above. 
+
+
+There are even several extensions you can use to add more functionality to it, with one of my favorites being [[https://github.com/hyakt/emacs-dashboard-hackernews][dashboard-hackernews]] (which adds a number of the top news from [[https://news.ycombinator.com/][hackernews aka news.ycombinator.com]]). 
+
+
+Most people close the startup screen almost immediately (or disable it), so some of you may not understand why you would want a screen like this. I have my Emacs session open almost all the time, and the only reason to close it is if I for some reason need to restart it or my computer. Why would I ever get back to the dashboard? Because all the information can be refreshed by typing g! Then my recent projects, files, and news from hackernews are updated. 
+
+
+Installation guides are included in the links above (with standard built-in package.el operations), but for reference, here is my setup using [[https://github.com/jwiegley/use-package][use-package]]:
+#+BEGIN_SRC lisp
+  ;; Getting pretty icons 
+  (use-package all-the-icons)
+
+  (use-package dashboard
+    :after (all-the-icons dashboard-hackernews)
+    :init
+    (dashboard-setup-startup-hook)
+    (setq dashboard-banner-logo-title "Welcome my queen! Make some kewl stuff today!"
+          dashboard-startup-banner 'logo
+          dashboard-center-content t
+          dashboard-set-heading-icons t
+          dashboard-set-file-icons t
+          dashboard-items '((projects . 5)
+                            (recents . 5)
+                            (hackernews . 5))))
+  (use-package dashboard-hackernews)
+#+END_SRC
+(use-package and why I use it might be a future post!)
+
+As I sometimes work on personal files (and them showing up in projects and recents), you will have to look into the official repo above to see some screenshots. Sorry for being boring here :) 
+
+
+#+BEGIN_EXPORT html
+<br />
+<hr />
+<br />
+#+END_EXPORT
+
+
+Do you have any Emacs packages that add that extra flare to your configuration? Feel free to share them in the comments below :) 
