@@ -274,3 +274,9 @@ body {
 .page-navigation pre {
 	display: inline-block;
 }
+
+.org-src-container {
+	pre {
+		white-space: pre-wrap;
+	}
+}

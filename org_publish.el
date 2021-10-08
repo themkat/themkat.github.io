@@ -8,6 +8,7 @@
 (package-install 'org)
 (package-install 'htmlize)
 
+(setq org-html-htmlize-output-type `nil)
 
 (setq org-publish-project-alist
       '(("main-site"
