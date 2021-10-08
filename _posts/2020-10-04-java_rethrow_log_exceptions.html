@@ -14,19 +14,19 @@ Exceptions should contain enough information for you to be able to see the reaso
 </p>
 
 
-<div id="outline-container-orga12ffd7" class="outline-2">
-<h2 id="orga12ffd7">Rethrow/wrap exceptions</h2>
-<div class="outline-text-2" id="text-orga12ffd7">
+<div id="outline-container-orge607331" class="outline-2">
+<h2 id="orge607331">Rethrow/wrap exceptions</h2>
+<div class="outline-text-2" id="text-orge607331">
 <p>
 Rethrow/wrap in this case means to throw a new exception with the original as the cause (in other words: passing it to the constructor of our new exception). To see why this is useful, let's take a look at an example. The example might seem stupid, and I somewhat agree as I usually prefer to write code in a more functional way. That being said, it was picked out because it can throw a few different exceptions. Without further ado, let's take a look at the code:
 </p>
 
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">try</span> {
-    listOfNames.set(3, <span style="font-style: italic;">"John Carmack"</span>);
-} <span style="font-weight: bold;">catch</span>(<span style="font-weight: bold; text-decoration: underline;">Exception</span> <span style="font-weight: bold; font-style: italic;">e</span>) {
-    <span style="font-weight: bold;">throw</span> <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">RuntimeException</span>(<span style="font-style: italic;">"Could not insert element!"</span>);
+<pre class="src src-java">try {
+    listOfNames.set(3, "John Carmack");
+} catch(Exception e) {
+    throw new RuntimeException("Could not insert element!");
 }
 </pre>
 </div>
@@ -37,7 +37,7 @@ As we can see we try to set the value of index 3 in our list of names to be John
 
 <div class="org-src-container">
 <pre class="src src-text">java.lang.RuntimeException: Could not insert element!
-        at net.themkat.blog.exceptionarticle.SimpleTest.test(SimpleTest.java:23)
+	at net.themkat.blog.exceptionarticle.SimpleTest.test(SimpleTest.java:23)
 </pre>
 </div>
 
@@ -47,10 +47,10 @@ If this is all you see in a log file (maybe this runs in production for some rea
 
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">try</span> {
-    listOfNames.set(3, <span style="font-style: italic;">"John Carmack"</span>);
-} <span style="font-weight: bold;">catch</span>(<span style="font-weight: bold; text-decoration: underline;">Exception</span> <span style="font-weight: bold; font-style: italic;">e</span>) {
-    <span style="font-weight: bold;">throw</span> <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">RuntimeException</span>(<span style="font-style: italic;">"Could not insert element!"</span>, e);
+<pre class="src src-java">try {
+    listOfNames.set(3, "John Carmack");
+} catch(Exception e) {
+    throw new RuntimeException("Could not insert element!", e);
 }
 </pre>
 </div>
@@ -60,12 +60,12 @@ How does this differ? Let's us pretend the exception happens again:
 </p>
 <div class="org-src-container">
 <pre class="src src-text">java.lang.RuntimeException: Could not insert element!
-        at net.themkat.blog.exceptionarticle.SimpleTest.test(SimpleTest.java:23)
+	at net.themkat.blog.exceptionarticle.SimpleTest.test(SimpleTest.java:23)
 ...
 Caused by: java.lang.UnsupportedOperationException
-        at java.util.Collections$UnmodifiableList.set(Collections.java:1313)
-        at net.themkat.blog.exceptionarticle.SimpleTest.test(SimpleTest.java:21)
-        ... 65 more
+	at java.util.Collections$UnmodifiableList.set(Collections.java:1313)
+	at net.themkat.blog.exceptionarticle.SimpleTest.test(SimpleTest.java:21)
+	... 65 more
 </pre>
 </div>
 
@@ -86,9 +86,9 @@ This is probably a simple example, but I think it proves the point.
 </div>
 
 
-<div id="outline-container-orgb21649e" class="outline-2">
-<h2 id="orgb21649e">Logging exceptions</h2>
-<div class="outline-text-2" id="text-orgb21649e">
+<div id="outline-container-orgc773450" class="outline-2">
+<h2 id="orgc773450">Logging exceptions</h2>
+<div class="outline-text-2" id="text-orgc773450">
 <p>
 Sometimes you may choose to log it instead of rethrowing. I prefer that approach if I don't want to throw a new exception, but just return a default value or similar. Your preference may be different. Why log the exception in this case, you may ask? We may want to know in our logs for debugging potential issues. What if the default value is returned each time? Then we might want to investigate and see what caused our original operation to fail (external endpoint down? Issue like in the previous section? Something else?). 
 </p>
@@ -99,11 +99,11 @@ Let's use a REST GET operation as an example; fetching a person object. In this 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="font-weight: bold;">try</span> {
-    <span style="font-weight: bold;">return</span> restTemplate.getForObject(url, Person.<span style="font-weight: bold;">class</span>);
-} <span style="font-weight: bold;">catch</span> (<span style="font-weight: bold; text-decoration: underline;">RestClientException</span> <span style="font-weight: bold; font-style: italic;">e</span>) {
-    log.error(<span style="font-style: italic;">"Could not communicate with external api, {}"</span>, e);
-    <span style="font-weight: bold;">return</span> <span style="font-weight: bold; text-decoration: underline;">null</span>;
+<pre class="src src-java">try {
+    return restTemplate.getForObject(url, Person.class);
+} catch (RestClientException e) {
+    log.error("Could not communicate with external api, {}", e);
+    return null;
 }
 </pre>
 </div>
