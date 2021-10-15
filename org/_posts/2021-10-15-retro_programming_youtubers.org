@@ -1,0 +1,35 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Retro programming (mostly games) Youtubers you shoud check out!
+tags: retro-computing programming youtube
+---
+#+END_EXPORT
+
+Todays post will be a bit shorter and different. We all need some inspiration sometimes, and I think there are few things more inspiring than the tricks used in older video games as well as the hardware that made them possible. From the clever BSP (Binary Space Partitioning) tree rendering algorithm in Doom, to the clever $\frac{1}{\sqrt(x)}$ algorithm in Quake 3, there are tons of interesting tricks used in games out there! (know I only mentioned id Software now, but what can I say, I LOVE them! Also I wouldn't want to spoil what is coming from TT below). Sometimes I just enjoy watching some videos about these clever tricks, and also how the hardware worked on these systems. In this post I will share with you two of my favorite Youtubers, and also some notable interesting videos from them. Maybe you will be inspired too, and maybe you will also learn something!
+
+
+* [[https://www.youtube.com/channel/UCkY047vYjF92-8HcoVTXAOg][Coding Secrets - Tricks from older TT games and more!]]
+These tricks truly show you how clever animations, interrupts and various other effects can produce quite interesting imagery!
+- [[https://www.youtube.com/watch?v=fV9BqqU17DM][How the rotating tower in Mickey Mania was done]] (Sega Genesis / MegaDrive)
+- [[https://www.youtube.com/watch?v=96DO4V8qrR0][3D effects in Toy Story]] (Sega Genesis / MegaDrive)
+- [[https://www.youtube.com/watch?v=iEQLbbyToxw][Rendering a sh*tload of triangles for a particle system (used in Crash Bandicoot games and Lego Star Wars)]] (PlayStation 2)  
+
+  
+* [[https://www.youtube.com/channel/UCjFaPUcJU1vwk193mnW_w1w][Modern Vintage Gamer - Programming, gaming hardware and more!]]
+MVG does a lot of new development, but is also experienced with homebrew development for the original Xbox and modern platforms like the Nintendo Switch. He also have videos about the hardware of various systems that are easy to follow! (and have fun historical tidbits as well! Making them great even when you know hardware details!)
+- [[https://www.youtube.com/watch?v=FzPTK91EJY8][Learn to write modern games for the original GameBoy]] (modern as in modern tooling and libraries)
+- [[https://www.youtube.com/watch?v=mpNWEbZdXNw][How graphics worked on the GameBoy Advance]]
+- [[https://www.youtube.com/watch?v=eZRzaGFWoz8][Shantae re-release for the Nintendo Switch, and how it was done]]
+  
+
+#+BEGIN_EXPORT html
+<br />
+<hr />
+<br />
+#+END_EXPORT
+
+Hope you enjoy these kind of videos as much as me! If you have any favorites yourself, feel free to share them in the comments! I might not know about them (yet) :)  
