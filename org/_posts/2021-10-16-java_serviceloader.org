@@ -1,0 +1,239 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Java ServiceLoader - The super simple "dependency injection"ish feature you may not know about!
+tags: java programming
+---
+#+END_EXPORT
+
+ServiceLoader (aka Service Provider) is a feature that has been in Java since Java 1.3, but many people still don't know about it. The reason I think most people don't know about it, is that they use various dependency injection frameworks for the same kinds of problems. ServiceLoader can supplement these kinds of problems, or be used in addition to them, you decide based upon the problem you are solving. Think of ServiceLoader as another tool in your toolbox. Some people like to think of it as a built in very simplistic dependency injection system.
+
+
+** Simple example: A service with a single implementation
+
+Let's start with the most simple example possible to show the basic functionality. Later we will see a more useful example, but it's always useful to see the complete basics first. 
+
+
+The first step is to create an interface:
+
+#+BEGIN_SRC java
+  package net.themkat.serviceloader.demo.simple;
+
+  public interface Service {
+      void sayHello();
+  }
+#+END_SRC
+
+
+Interfaces are not useful without an implementation, so let's create one:
+
+#+BEGIN_SRC java
+  package net.themkat.serviceloader.demo.simple;
+
+  public class ServiceImpl implements Service {
+      @Override
+      public void sayHello() {
+          System.out.println("Hello!");
+      }
+  }
+#+END_SRC
+
+Now, what's the next step for the ServiceLoader functionality to work? We have to create a file specifying which implementations exist for the interface we want to load. This file needs to have the same name as the package and name of the interface and reside in the ==src/main/resources/META-INF/services==-directory. In our example this will be =src/resources/META-INF/services/net.themkat.serviceloader.demo.simple.Service=. The contents will be the fully qualified name (name including package) of the implementation classes, in our example only our implementation class from above:
+
+#+BEGIN_SRC text
+  net.themkat.serviceloader.demo.simple.ServiceImpl
+#+END_SRC
+
+Now we can load our implementation class using the ServiceLoader functionality:
+
+#+BEGIN_SRC java
+  ServiceLoader<Service> loader = ServiceLoader.load(Service.class);
+  Service myService = loader.findFirst().orElse(null);
+  myService.sayHello();
+#+END_SRC
+
+
+Now this is pretty simple, but shows the basic mechanics of a "dynamic" loading of the implementation class without hardcoding it (loose coupling, yay!). Wouldn't it be fun to extend it with more implementation classes? ...
+
+
+** Taking it a bit further: CurrencyProvider
+Let's go a step further with another toy example, that may seem a little bit more useful, and show what ServiceProvider is capable of. CurrencyProvider will be an interface for services/implementations providing the default currency for the area they are in. We will create implementations for Norway, EU and the US. In the real world, this might be a little more advanced (using real ISO standard country codes consistently etc.), but let's keep it simple for the sake of the example.
+
+
+The first part is off course creating the interface, which will be a little more advanced this time:
+#+BEGIN_SRC java
+  package net.themkat.serviceloader.demo.currency;
+
+  import java.util.Iterator;
+  import java.util.ServiceLoader;
+
+  public interface CurrencyProvider {
+      // the method we use the provider for
+      // Returns the official currency of the country it is implemented for
+      String currencyCode();
+
+      // helper for our serviceloader code below
+      boolean supportsCountry(String countryCode);
+
+      // serviceloader code that fetches an implementation
+      // (without the interface needing to know about the implementations!)
+      static CurrencyProvider getCurrencyProvider(String countryCode) {
+          ServiceLoader<CurrencyProvider> loader = ServiceLoader.load(CurrencyProvider.class);
+          Iterator<CurrencyProvider> iterator = loader.iterator();
+          while (iterator.hasNext()) {
+              CurrencyProvider provider = iterator.next();
+              if (provider.supportsCountry(countryCode)) {
+                  return provider;
+              }
+          }
+
+          // return null for simplicity.
+          // We could also return a default implementation, or throw an exception of some kind
+          return null;
+      }
+  }
+#+END_SRC
+
+There are comments in-line explaining each section, but the most important addition this time is the helper-method supportsCountry and the method to fetch an implementation (a static method in the interface, something that has been allowed since Java 8). Here we isolate the fetching of the implementation to the interface, so no other parts of the code need to do the ServiceLoader implementations. They only need to call =CurrencyProvider.getCurrencyProvider= with a country code of their choice. This makes the code needing to fetch a currency based upon a country quite short and clean.
+
+We will create three implementations. First out, CurrencyProvider for Norway:
+#+BEGIN_SRC java
+  package net.themkat.serviceloader.demo.currency.impl;
+
+  import net.themkat.serviceloader.demo.currency.CurrencyProvider;
+
+  public class NorwayCurrencyProvider implements CurrencyProvider {
+
+      @Override
+      public String currencyCode() {
+          return "NOK";
+      }
+
+      @Override
+      public boolean supportsCountry(String countryCode) {
+          return "NO".equals(countryCode);
+      }    
+  }
+#+END_SRC
+
+Next out, CurrencyProvider for the EU:
+#+BEGIN_SRC java
+  package net.themkat.serviceloader.demo.currency.impl;
+
+  import net.themkat.serviceloader.demo.currency.CurrencyProvider;
+
+  public class EUCurrencyProvider implements CurrencyProvider {
+
+      @Override
+      public String currencyCode() {
+          return "EU";
+      }
+
+      @Override
+      public boolean supportsCountry(String countryCode) {
+          // add EU countries. Just adding a few I remember off my head
+          return "FRA".equals(countryCode) || "DEU".equals(countryCode) ||
+              "BEL".equals(countryCode) || "ITA".equals(countryCode);
+      }    
+  }
+#+END_SRC
+
+Last out, our CurrencyProvider for the US:
+#+BEGIN_SRC java
+  package net.themkat.serviceloader.demo.currency.impl;
+
+  import net.themkat.serviceloader.demo.currency.CurrencyProvider;
+
+  public class USCurrencyProvider implements CurrencyProvider {
+
+      @Override
+      public String currencyCode() {
+          return "USD";
+      }
+
+      @Override
+      public boolean supportsCountry(String countryCode) {
+          return "US".equals(countryCode);
+      } 
+  }
+#+END_SRC
+
+Now we have a few implementation classes to play with, so let's create our service information file =src/main/resources/META-INF/services/net.themkat.serviceloader.demo.currency.CurrencyProvider=:
+#+BEGIN_SRC text
+  net.themkat.serviceloader.demo.currency.impl.NorwayCurrencyProvider
+  net.themkat.serviceloader.demo.currency.impl.EUCurrencyProvider
+  net.themkat.serviceloader.demo.currency.impl.USCurrencyProvider
+#+END_SRC
+
+We can now try to fetch some implementations:
+#+BEGIN_SRC java
+  System.out.println("Norway currency: " + CurrencyProvider.getCurrencyProvider("NO").currencyCode());
+  System.out.println("EU currency: " + CurrencyProvider.getCurrencyProvider("ITA").currencyCode());
+  System.out.println("US currency: " + CurrencyProvider.getCurrencyProvider("US").currencyCode());
+  System.out.println("Unknown currency: " + CurrencyProvider.getCurrencyProvider("XX").currencyCode());
+#+END_SRC
+
+The last line will cause a null pointer, so in a real world code base you should probably use a default/dummy implementation instead (which can be hardcoded in your code, and does not need to be in the meta-inf services file!). Or at least some null checking, but that is probably common sense if you have programmed in Java beyond basic examples. You can make a default implementation as a fun exercise to play with the concept if you like :)
+
+
+You can also use other data types like enums, or make the loading of implementations as simple or complex as you like. The limit here is your imagination! (or at least close)
+
+
+** Making it simpler: Maven plugin
+Maybe you have a big project with many implementations to a service? Or you just hate creating the text files describing implementations. There is (shockingly not) a Maven plugin for that! With this Maven plugin you can generate the services files. Let's see how that would look for our CurrencyProvider example above:
+#+BEGIN_SRC xml
+  <build>
+      <plugins>
+          <plugin>
+              <groupId>eu.somatik.serviceloader-maven-plugin</groupId>
+              <artifactId>serviceloader-maven-plugin</artifactId>
+              <version>1.3.1</version>
+              <configuration>
+                  <services>
+                      <param>net.themkat.serviceloader.demo.currency.CurrencyProvider</param>
+                  </services>
+              </configuration>
+              <executions>
+                  <execution>
+                      <goals>
+                          <goal>generate</goal>
+                      </goals>
+                  </execution>
+              </executions>
+          </plugin>
+      </plugins>
+  </build>
+#+END_SRC
+
+
+*NB! you should probably delete the old file we created manually above first!*
+
+Pretty simple! With this plugin you can add new implementation with ease, and not get any issues if you forget any "manual additions" beyond the implementation class. If we create a JapanCurrencyProvider or similar, we don't need any manual additions, the plugin will add it automatically for us. Neat!
+
+
+There are more functionality you might want to check out for this plugin, so check out the documentation at [[https://github.com/francisdb/serviceloader-maven-plugin][the projects Github repo]].
+
+
+Want to get better at using Maven from the command line? Feel free to [[https://themkat.net/2021/10/11/become_a_maven_ninja.html][check out my earlier Maven ninja article!]]
+
+** Final remarks
+Maybe you are still unsure what kind of problems to use it for? Here are a few examples:
+- Very simplistic dependency injection
+- Language specific implementations (tax rules, currency, social security numbers etc.)
+- Other parameter based implementations (tax rules based upon age, credit scores based upon age in countries where appropriate, etc.)
+- Use system properties or something else to load different implementations at run-time. (Same implementation as the previous bullet point, just send in the System.getProperty or similar result into the method used to fetch the implementation)
+
+
+Some of you may wonder why we should not use something like Spring to do the above?
+- More light-weight. Spring and other dependency injection engines often load implementations at run time and scan packages. SeriveLoader does not, as it simply loads implementations from a file (generated at compile time)
+- No need to load additional dependencies if not necessary
+
+
+
+As always, you should have [[https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html][the API docs]] handy (as you would with all other Java libraries you use!). 
+
+
+Hope that made ServiceLoader (aka Service Provider) more easy to understand for some of you. Remember that you can use this from Kotlin and other JVM languages as well. If something was not clear, feel free to ask a question in the comment section!
