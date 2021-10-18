@@ -9,7 +9,7 @@ tags: java programming
 ---
 #+END_EXPORT
 
-ServiceLoader (aka Service Provider) is a feature that has been in Java since Java 1.3, but many people still don't know about it. The reason I think most people don't know about it, is that they use various dependency injection frameworks for the same kinds of problems. ServiceLoader can supplement these kinds of problems, or be used in addition to them, you decide based upon the problem you are solving. Think of ServiceLoader as another tool in your toolbox. Some people like to think of it as a built in very simplistic dependency injection system.
+ServiceLoader (aka Service Provider) is a feature that has been in Java since Java 1.3, but many people still don't know about it. The reason I think most people don't know about it, is that they use various dependency injection frameworks for the same kinds of problems. ServiceLoader can supplement these kinds of solutions, or be used as a replacement, you decide based upon the problem you are solving. Think of ServiceLoader as another tool in your toolbox. Some people like to think of it as a built in very simplistic dependency injection system.
 
 
 ** Simple example: A service with a single implementation
