@@ -1,0 +1,82 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: The only book on classic JavaScript you'll ever neeed!
+tags: javascript books programming
+---
+#+END_EXPORT
+
+Today JavaScript (JS) has evolved a lot and has many modern features we associate with other programming languages (according to the ECMAScript standards), like classes. In the beginning these features were transpiled (like compilation, but translated from one language to another) to classic JavaScript (due to browsers and other engines not having implemented the features). If you were like me, you wondered how this was done at the time (and you may even have had some ideas). Or you may be in the other camp, and think that it's not always necessary to use big transpilers and heavy features to solve simple problems. While JavaScript has evolved, I think there is a lot of fun and advantages to knowing more about the core language that started it all! JavaScript: The Good Parts by Douglas Crockford is the best book to learn about all that!
+
+
+What I refer to as classic JavaScript is the basic language before classes and other modern features. A lot of these older features still exists, so it is useful to know them if you program in JavaScript (JS). Some things might be obsolete, but it can't hurt knowing more about the core language.
+
+
+*NB! Post contains Amazon Affiliate links.*
+
+#+BEGIN_EXPORT html
+<br />
+<br />
+#+END_EXPORT
+
+* [[https://amzn.to/3mfPDth][JavaScript: The Good Parts by Douglas Crockford]]
+
+#+BEGIN_EXPORT html
+<a target="_blank"  href="https://www.amazon.com/gp/product/B0026OR2ZY/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B0026OR2ZY&linkCode=as2&tag=themkat09-20&linkId=690d0e7ce645989eca086b50ce5d9dec"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B0026OR2ZY&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat09-20" ></a>
+#+END_EXPORT
+
+[[https://amzn.to/3mfPDth][JavaScript: The Good Parts]] is an older book by todays standard, so you might wonder if it can help you in the ever changing web development landscape? It might or it might not. To me it helps to know a lot about the core language to find clever solutions and to see patterns in the libraries I might use. I also think it is useful for learning small tips and tricks for smaller inline scripts on websites. You might just think it is a deprecated book, like some Amazon reviewers certainly does. 
+
+
+So what kinds of topics does it cover?
+- Basic datatypes (number, string and so on)
+- Good programming style for (classic) JavaScript
+- Prototypes and prototype chain (see below if this is a foreign concept to you)
+- Arrays and objects, how do they work? How can we work more effectively with them?
+- Regular expressions. Goes into detail here!
+- Various standard methods included in the language (list is a bit outdated now, but still some useful nuggets of information)
+
+
+
+* Prototypes???
+Some of you may have programming in modern JavaScript without knowing anything about prototypes. This may lead you to think "wtf, is this even the same language I use?!?", but fear not. Here is a little teaser to show you the basics of how it works. If you are interested in learning more, I recommend picking up the above book, as prototypes can be a powerful concept! :) Prototypes, if we over-simplify a bit, is a style of object oriented programming where objects have prototypes they inherit methods from. Might seem abstract, so let's show an example.
+
+Let us create two objects, with the first using the constructor pattern. One with a method addToX and one with just a property x:
+#+BEGIN_SRC javascript
+  var adderObject = {
+      addToX: function(y) { this.x = this.x + y; }
+  }; 
+
+  function SimpleObject() {
+      this.x = 0;
+  }
+#+END_SRC
+
+This might seem weird. I have created one object that can be instantiated like a normal class with the new keyword, and a plain object with a method. Let us see prototype based inheritance in action:
+#+BEGIN_SRC javascript
+  // set the prototype of our SimpleObject 
+  SimpleObject.prototype = adderObject;
+
+  // create a new instance and call our prototype method
+  var myObject = new SimpleObject();
+  myObject.addToX(10);
+#+END_SRC
+
+This might just seem like a complex way of doing object orientation to you, or it might seem like a cool alternative way of doing it. If you structure it right you can have prototypes or prototypes and so on. The difference is mostly in way of thinking (class vs prototype). In modern JavaScript, there aren't really any big difference in doing prototypes vs classes. Still fun to learn and play with? Yes! The real fun with this, is in my view, to know of different syntactical ways object orientation is achieved. It might also get you interested in learning more about [[https://en.wikipedia.org/wiki/Prototype-based_programming#Languages_supporting_prototype-based_programming][other languages that use prototypes]]. 
+
+
+* Who should read this book?
+I think there are several types of people who might get some useful tips and joy out of this book:
+- Coders who want to learn more about the core JavaScript (JS) language and why it behaves weird at times (scopes and so on). This also includes the b
+- People interested in different paradigms and ways languages work. JavaScript uses the prototype based programming style of object oriented programming (OOP)
+- Programming historians who want to see how JS programming was done before the age of all the weird JS frameworks we use today
+- Retro programming enthusiasts who want to do coding for older web browsers (earlier Windows, Amiga etc.) that might not support many modern JS features. 
+
+
+The people who will probably *NOT* like this book are people who want to learn the latest web framework of the week/year/month. This book is for classic JavaScript mostly, though a lot of it is useful if you want to be an expert in how the language behaves. Some of the older tricks are still useful to create minimal, possibly inline, scripts for web pages that does not need advanced features. 
+
+
+Maybe this book is a bit outdated by modern standards, but that can still be fun! I know I had great fun when reading through it many years ago, and skimming through it recently :) What do you think? Am I too nostalgic about the older versions of JavaScript, or do you also still find the book useful for newer JavaScript developers? Share your thoughts in the comments! 
