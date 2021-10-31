@@ -8,7 +8,7 @@
 		   - export fragments (footers etc.) into includes maybe?
 		   -->
 		<meta charset="utf-8">
-		<meta name="description" content="{{page.excerpt | strip_html | default: "A blog about computers, math and other things that interest me."}}">
+		<meta name="description" content="{{page.excerpt | strip_html | strip_newlines | escape | default: "A blog about computers, math and other things that interest me."}}">
 		<meta name="keywords" content="programming,retro,computing,math,commodore,books,{{page.tags | join: ","}}">
 		<meta name="author" content="Marie Katrine Ekeberg">
 		<meta name="viewport" content="width=device-width, initial-scale=1">

@@ -24,7 +24,7 @@ This is probably the most useless, but fun package that I use daily. What it doe
 
 *Fun fact:* When writing my blog posts, I use [[https://orgmode.org/manual/Comment-Lines.html][org mode comments]] (to create todos) with emojis a lot. Livens up the text and makes it fun to work on! Did I mention that I write ALL of my blog posts from within Emacs? ;) 
 #+BEGIN_EXPORT html
-<img class="blogpostimg" src="{{ "assets/img/emacsfun/emojify.png" | relative_url}}" />
+<img class="blogpostimg" alt="emojify mode" src="{{ "assets/img/emacsfun/emojify.png" | relative_url}}" />
 #+END_EXPORT
 
 (you can do exactly the same in your code comments!)
@@ -32,7 +32,7 @@ This is probably the most useless, but fun package that I use daily. What it doe
 * [[https://github.com/emacsmirror/rainbow-mode][rainbow-mode]]
 This is probably the most useful package in this article, especially when doing web development (CSS or other stylesheets especially!). What it does is show color codes (hexadecimal, literals etc.) highlighted with the color they are describing. How does it look? It looks pretty neat! Let's take an example from the main [[https://sass-lang.com/][SASS]] (CSS extension language) stylesheet for this blog:
 #+BEGIN_EXPORT html
-<img class="blogpostimg" src="{{ "assets/img/emacsfun/rainbow-mode.png" | relative_url}}" />
+<img class="blogpostimg" alt="rainbow mode" src="{{ "assets/img/emacsfun/rainbow-mode.png" | relative_url}}" />
 #+END_EXPORT
 
 To get this nice highlights when you type a color, you just need to install rainbow-mode (which is sadly not covered on its github page, so covering it here) and add a hook for it. This can be done with the [[https://www.emacswiki.org/emacs/InstallingPackages][traditional package.el]] or with use-package, so covering both:

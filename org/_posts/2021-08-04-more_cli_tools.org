@@ -18,7 +18,7 @@ Working with github a lot? Miss doing more from the command line instead of visi
 
 An example of viewing a Github Actions workflow with =gh run watch= on this blog (which uses Github Actions if you didn't know!):
 #+BEGIN_EXPORT html
-<img class="blogpostimg" src="{{ "assets/img/linuxcli2/gh.png" | relative_url}}" />
+<img class="blogpostimg" alt="gh screenshot" src="{{ "assets/img/linuxcli2/gh.png" | relative_url}}" />
 #+END_EXPORT
 (if there are more runs, you get a selection list. If you prefer, you can also give the numeric id as an argument like this =gh run watch 123456=)
 
@@ -39,7 +39,7 @@ Some people might feel like this is mundane and boring, but here goes... =tree= 
 
 An article like this would be boring without a screenshot, right? Here I demonstrate the number of levels =-L= option, by only printing the current directory (top level of this blog). 
 #+BEGIN_EXPORT html
-<img class="blogpostimg" src="{{ "assets/img/linuxcli2/tree.png" | relative_url}}" />
+<img class="blogpostimg" alt="tree screenshot" src="{{ "assets/img/linuxcli2/tree.png" | relative_url}}" />
 #+END_EXPORT
 
 
