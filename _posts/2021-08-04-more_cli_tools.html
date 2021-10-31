@@ -10,9 +10,9 @@ A while ago, I made an article on cool command line tools. Maybe you got inspire
 </p>
 
 
-<div id="outline-container-org635ff4a" class="outline-2">
-<h2 id="org635ff4a">gh</h2>
-<div class="outline-text-2" id="text-org635ff4a">
+<div id="outline-container-org508b906" class="outline-2">
+<h2 id="org508b906">gh</h2>
+<div class="outline-text-2" id="text-org508b906">
 <p>
 Working with github a lot? Miss doing more from the command line instead of visiting the website? (actions, issues etc.). Then <code>gh</code> is the tool for you! You can clone your repos, list issues, see workflows (Github Actions) and more. My favorite feature is to be able to see Actions runs directly in my terminal, which I find way more easy on the eyes than the web browser&#x2026;
 </p>
@@ -20,7 +20,7 @@ Working with github a lot? Miss doing more from the command line instead of visi
 <p>
 An example of viewing a Github Actions workflow with <code>gh run watch</code> on this blog (which uses Github Actions if you didn't know!):
 </p>
-<img class="blogpostimg" src="{{ "assets/img/linuxcli2/gh.png" | relative_url}}" />
+<img class="blogpostimg" alt="gh screenshot" src="{{ "assets/img/linuxcli2/gh.png" | relative_url}}" />
 <p>
 (if there are more runs, you get a selection list. If you prefer, you can also give the numeric id as an argument like this <code>gh run watch 123456</code>)
 </p>
@@ -33,9 +33,9 @@ Check <a href="https://cli.github.com/">the official site</a> for a demonstratio
 </div>
 
 
-<div id="outline-container-org0299e0d" class="outline-2">
-<h2 id="org0299e0d">fuck/thefuck</h2>
-<div class="outline-text-2" id="text-org0299e0d">
+<div id="outline-container-orgbbf5521" class="outline-2">
+<h2 id="orgbbf5521">fuck/thefuck</h2>
+<div class="outline-text-2" id="text-orgbbf5521">
 <p>
 Often misspell commands? You are not alone. There is actually a command line application to help you, with the fitting name <code>fuck</code>! Wrote a command wrong? Just type <code>fuck</code>, and it will be corrected and run. The first few times you run it, you will be prompted for suggestions (mostly correct the first time). This is probably just to set up rules based on your usage. There are even some default correction rules. Install it, type a command wrong (e.g, <code>got commit</code>), type <code>fuck</code>, and it will run the correctly spelled one (<code>git commit</code>).
 </p>
@@ -48,9 +48,9 @@ The <a href="https://github.com/nvbn/thefuck">f**king github repo</a> (sorry for
 </div>
 
 
-<div id="outline-container-orgbf90a72" class="outline-2">
-<h2 id="orgbf90a72">tree</h2>
-<div class="outline-text-2" id="text-orgbf90a72">
+<div id="outline-container-org2c64095" class="outline-2">
+<h2 id="org2c64095">tree</h2>
+<div class="outline-text-2" id="text-org2c64095">
 <p>
 Some people might feel like this is mundane and boring, but here goes&#x2026; <code>tree</code> is included in many GNU/Linux distros, but not all. I used to believe that this is a tool everybody use, but I keep getting surprised that people don't know about it. So what is <code>tree</code>? Simply put, it prints the directory structure (including files) to the terminal (in pure text off course). That's it! You can pipe it, use it directly or whatever you want to do with it! There are several options, including filesizes, levels down, and so on. Many directories are big, and for that I sometimes pipe the output with <code>less</code> like so <code>tree | less</code>.
 </p>
@@ -59,7 +59,7 @@ Some people might feel like this is mundane and boring, but here goes&#x2026; <c
 <p>
 An article like this would be boring without a screenshot, right? Here I demonstrate the number of levels <code>-L</code> option, by only printing the current directory (top level of this blog). 
 </p>
-<img class="blogpostimg" src="{{ "assets/img/linuxcli2/tree.png" | relative_url}}" />
+<img class="blogpostimg" alt="tree screenshot" src="{{ "assets/img/linuxcli2/tree.png" | relative_url}}" />
 
 
 <p>
