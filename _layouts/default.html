@@ -24,8 +24,8 @@
 				   href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/sunburst.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/languages/lisp.min.js" integrity="sha512-/opdFSi4yauKgOKsTeN7MPbPp2QnhX2y7WvaS682VYwmtSsTwM1qsePlN1Vn+iTWL3PvXI5vtFQFPLNrPphBJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-		<title>{{ page.title }} - {{ site.title }}</title>
+		
+		<title>{{ page.title | default: site.title }}</title>
 	</head>
 	<body>
 		<img  class="banner" src="{{ "/assets/img/banner.jpg" | relative_url }}" alt="" />
