@@ -1,0 +1,107 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Programming Kotlin in Emacs (including KScript!)
+tags: programming kotlin emacs editor
+---
+#+END_EXPORT
+
+Some people, including myself, grudgingly used IntellIJ IDEA for Kotlin programming for a long time, maybe because we didn't think the Emacs tooling was up to speed. Well, it is, and we can finally use the best editor of all time (Emacs) to do Kotlin programming! Today I'm going to show you basic setup (and share some links), so you can also use Emacs for Kotlin programming! I made the switch this summer (reasons for waiting so long below), will you make the switch too?
+
+
+* Quick recap: What is LSP
+LSP is an acronym for [[https://microsoft.github.io/language-server-protocol/][Language Server Protocol]]. It's a common JSON-RPC protocol used to create servers for different languages. This makes it possible to create tooling in all editors that use these servers to provide IDE functionality (i.e, not editor specific tooling). There are LSP modes to use these servers for VSCode, Vim, Emacs and more! It was developed by Microsoft, but later standardized. Great to have a standard way of making these servers, as it is now much easier to create completions in most editors with less custom code!
+
+
+* Kotlin Language Server
+We have talked about LSP and what it is, so the next question you might ask is what LSP server we use for Kotlin? The answer is [[https://github.com/fwcd/kotlin-language-server][Kotlin Language Server]]. Global completions (e.g, from other files or Maven dependencies) were added this summer, so now it has the complete functionality we would need to write Kotlin code. (understandable that it took some time, as the issue was a little tricky to solve, and there are few people working on this project. Kudos to the developers, you guys are awesome! <3).
+
+
+Just build it and include the result (server/build/install/server/bin) in your path.
+
+
+*NB! Make sure the binaries that were generated during build (server/build/install/server/bin) is included in your PATH variable so Emacs can find it. We need this for lsp-mode (if you don't want to hardcode paths in your Emacs config, which I don't.*
+If Emacs for some reason won't include your PATH variable from your shell, you can use exec-path-from-shell, like I do with this [[https://github.com/jwiegley/use-package][use-package]] configuration:
+#+BEGIN_SRC lisp
+   (use-package exec-path-from-shell
+      :init
+      (when (memq window-system '(mac ns x))
+        (exec-path-from-shell-initialize)))
+#+END_SRC
+
+
+* lsp-mode
+[[https://github.com/emacs-lsp/lsp-mode][lsp-mode]] is my favorite LSP mode in Emacs (you also have Eglot and others), and it's continually being developed and maintained. The last few years all of the early bugs were fixed, and now it is close to perfect (might also be that newer versions of Emacs has solved some of them as well).
+
+I will not go into much detail on basic LSP setup here, but with [[https://github.com/jwiegley/use-package][use-package]] it is very minimal (comments below to show what each part does):
+#+BEGIN_SRC lisp
+  (use-package company
+    :init
+    (global-company-mode)
+
+    ;; set the completion to begin at once. Not needed, but handy!
+    (setq company-idle-delay 0
+          company-echo-delay 0
+          company-minimum-prefix-length 1)
+
+    ;; Not strictly necessary. Just gives a hotkey to complete when it doesnt start automatically
+    :bind
+    ([(control return)] . company-complete))
+
+  ;; Red lines and similar below syntax errors to make them visible
+  (use-package flycheck)
+
+  (use-package lsp-mode)
+
+  ;; helper boxes and other nice functionality (for other servers like the jdt one for Java, whit include Javadoc popups)
+  (use-package lsp-ui)
+
+  ;; I use Kotlin mode, not perfect, but works. Just start LSP when Kotlin mode starts.
+  ;; hook keyword replaces (add-to-list 'kotlin-mode-hook 'lsp)
+  ;; You can omit the hook and start lsp manually with M-x lsp if you want.
+  (use-package kotlin-mode
+    :hook
+    (kotlin-mode . lsp))
+#+END_SRC
+
+As you can see, there are not a lot of stuff you need to get started. LSP-mode will automatically find your Kotlin Language Server as long as you have it in your PATH variable. Then you can get fancy auto completion like you are used to in IntellIJ with Company Mode (using company-capf underneath), which makes auto completions a breeze! Only thing I really  miss in the Kotlin functionality, compared to the Java JDT server, is documentation popups. But those we have online documentation for anyway, so not that big of a deal. 
+
+Screenshot that shows syntax error checking and auto completion:
+#+BEGIN_EXPORT html
+<img class="blogpostimg" alt="Emacs in Kotlin, syntax checking and auto completion" src="{{ "assets/img/emacskotlin/lspscreenshot.png" | relative_url}}" />
+#+END_EXPORT
+(just a random Spring Boot I generated to create more a interesting example)
+
+
+You might want to add  dap-mode to get a debugging interface, but I have not experimented too much with that. Have to admit that I prefer knowing the code intimately instead of using debuggers that much ([[https://lkml.org/lkml/2000/9/6/65][Linus Torvalds go one step beyond me and dislikes them]]), though I sometimes use them when I feel really stuck. (sadly with IntelliJ IDEA because dap-mode takes some getting used to).
+
+
+Feel free to check out the pages for [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]] and [[https://github.com/fwcd/kotlin-language-server][Kotlin Language Server]] for more features, settings and more!
+
+
+* KScript?
+Before we get started, why do I use [[https://github.com/holgerbrandl/kscript][KScript]]? Why not just pure Kotlin Script (that is included by default). This is because the built in version is missing some features like Maven dependencies, file inclusions and more. KScript gives us all of these. Now back on topic...
+
+
+So you have done the above, and you open a Kotlin script you want to work on. No auto completion or features? What is happening? Cryptic errors?!? The Kotlin Language Server expects a project structure from what I can see, and a single script does not include that. 
+
+
+Fortunately, KScript has a tool for this we can use. This might be news to you, but [[https://github.com/holgerbrandl/kscript#boostrap-idea-from-a-kscriptlet][KScript can give us a temporary project structure]]! The script file in the temporary project is symlinked with the project file from your original directory, so the original script file is edited when you edit the one in the temporary project. When reading the docs you might be disappointed that it only seem to cover IntelliJ IDEA, but there is a clever workaround for this issue. KScript supports giving the path to our IDEA install using an environment variable KSCRIPT_IDEA_COMMAND. This makes it possible to open Emacs with the generated temporary project!
+#+BEGIN_SRC bash
+  # If you use server-start in your Emacs config. Then it will open in the current Emacs session
+  KSCRIPT_IDEA_COMMAND="emacsclient -n" kscript --idea myfile.kts
+
+  # Open in a new Emacs session
+  KSCRIPT_IDEA_COMMAND="emacs" kscript --idea myfile.kts
+#+END_SRC
+
+It would be tedious to set this environment variable every time, so you should probably set it in your bashrc/zshrc/otherrc file.
+
+
+Now you can enjoy all the features the Kotlin Language Server for scripts, [[https://github.com/holgerbrandl/kscript#script-configuration][including dependencies in KScript using the gradle-style locators]]! (not tried the @file directives that much as I could never get them working). (NB! you might have to generate a new temporary project after adding lines like these as a new build.gradle describing dependencies needs to be generated)
+
+
+I'm rarely using pure Kotlin Script, but I guess those might suffer some of the same problems as I do with KScript.
