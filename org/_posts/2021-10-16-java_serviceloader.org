@@ -4,7 +4,7 @@
 #+BEGIN_EXPORT html
 ---
 layout: blogpost
-title: Java ServiceLoader - The super simple "dependency injection"ish feature you may not know about!
+title: Java ServiceLoader - The super simple dependency injection-like feature you may not know about!
 tags: java programming
 ---
 #+END_EXPORT
