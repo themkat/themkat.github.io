@@ -1,0 +1,101 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Scripting on the JVM?!? JBang and Kscript!
+tags: programming kotlin java emacs
+---
+#+END_EXPORT
+ 
+Did you know that you can use Java and Kotlin for scripting? In this post I will introduce you to my favorite ways of doing scripting on the Java Virtual Machine (JVM), which is JBang and KScript. Some people may not enjoy Java projects as much because of all the verbosity (big project structures), so  small scripts may make the languages more approachable and less intimidating. Being able to easily handle all external dependencies in the same file (no extra configuration files!) is also a big bonus. Lately I've heard from several people that they did not know about JBang, so I guess that might be true for KScript as well. Hope this post will provide you with some information on them, as well as good links to get started!
+
+
+
+First, let's summarize some big benefits of scripting in Java and Kotlin:
+- *Minimalism.* Why create big project structures when one or two files are needed? All dependencies handled in-file instead of external files. For smaller problems, this can make for more readable projects. I really dislike having to create huge structures for smaller projects with a few dependencies. Just setup all dependencies you need with some directives desquised as comments in the code instead!
+- *Huge set of dependencies we can use!* Want to process images? Or write JSON? Or maybe read some data from a database and write a report? All possible to do quickly with the huge set of Maven dependencies available
+- *Compile-time syntax checking*, so you avoid those pesky errors happening in the middle of your script being run. The script execution is done in two stages: compilation and running, so if the code fails to compile, your script doesn't run.
+- *More readable code*, at least compared to some bash syntax, perl etc. Some people will probably still prefer Python for scripting tasks, as it is nice and readable as well.
+
+
+The big drawback is off course the longer execution time due to having to compile and possibly fetch the dependencies first. I don't see this as a big problem, dependending on the problem you are solving with your script. Quick string replacements are probably better done with bash combined with sed or awk, but image processing or producing Excel reports (I know, but some people enjoy getting their reports these way and we comply to be cooperative) might be a better fit for something like a JVM language. It all depends on how fast the machine that is running the code is, and your time requirements for your code. Maybe you still prefer JVM scripting instead of the alternatives, in spite of the minor extra time taken? :) 
+
+
+* JBang
+Java has always known to be very big and verbose, with the need to many project structures and more to get in dependencies in a clean way. [[https://www.jbang.dev/][JBang]] makes this way easier by making it possible to run Java code like a script. Just but the [[https://en.wikipedia.org/wiki/Shebang_(Unix)][shebang]] on the top of the file, and it will run like any other script! Java doesn't recognize the standard one, so JBang has a comment style one that still works like any other script in a Unix-like system. Let's show a simple example on how this looks:
+#+BEGIN_SRC java
+  ///usr/bin/env jbang "$0" "$@" ; exit $?
+
+  public class test {
+
+      public static void main(String... args) {
+          System.out.println("HI! I am a script!");
+          // Awesome stuff being done in Java
+      }
+  }
+
+#+END_SRC
+(sorry for boring example here, we will do something more interesting below with KScript, which I use way more!)
+
+Like you see above, just regular Java code in a script! [[https://www.jbang.dev/documentation/guide/latest/dependencies.html][Adding dependencies]] is as simple as a comment. Check the rest of the documentation for the rest of the awesome stuff you can do with it. The most important thing is off course to know how to program in Java :) 
+
+
+Some of my favorite features:
+- [[https://www.jbang.dev/documentation/guide/latest/exporting.html#exporting-to-maven-repository][One-file Maven dependency]]
+- [[https://www.jbang.dev/documentation/guide/latest/install.html][Put your application directly in PATH with no hazzle!]]
+- [[https://www.jbang.dev/documentation/guide/latest/templates.html][Script templates]]
+  
+
+It would be awful if we couldn't edit our code in Emacs right? To have to use IntellIJ IDEA or Eclipse just to have auto completion and other IDE-like functionality would be a nightmare! I personally use [[https://github.com/emacs-lsp/lsp-java][lsp-java]] for Java IDE-like features in Emacs. It's nice, and provides a lot of features including popup Javadoc information while you code! Neat! Like many other Java IDEs, it works best with a project structure (example: it doesn't understand the comment style dependencies out of the box!). Fortunately, JBang can provide us with a temporary project here. Emacs setup is not documented that well on their website, so I found my own way. I use it like this:
+#+BEGIN_SRC bash
+  # Emacs server started
+  emacsclient -n $(jbang edit --no-open myfile.java)
+
+  # Just start a new Emacs session
+  emacs $(jbang edit --no-open myfile.java)
+#+END_SRC
+
+Then Emacs opens up in that temporary project, and we don't need to navigate to it ourselves. Just open the Java file and start LSP, and you are all set :) You can get some issues with dependencies not being loaded, so make sure you set the project root correctly when importing projects (the top level, not just the src-folder). Try deleting the generated JBang projects in its cache (in your home-directory in .jbang/cache/projects) if you get issues, and generate the project using the commands above again. If auto complete suggestions doesn't show up at once, try writing the beginning of the name, save your file, and start the completion again. A little bit finicky, but I've only experienced this with smaller gradle projects like this. For Maven projects, I have always found lsp-java to work like a charm :) 
+
+
+* KScript
+Kotlin already has [[https://kotlinlang.org/docs/command-line.html#run-scripts][scripting functionality built-in]], so why would we need something like KScript? [[https://github.com/holgerbrandl/kscript][KScript]] gives us a lot of extra functionality that proves quite useful, like including Maven dependencies and additional files. Let's start with a cool little example (notice the shebang at the top):
+#+BEGIN_SRC kotlin
+  #!/usr/bin/env kscript
+
+  //DEPS com.sksamuel.scrimage:scrimage-core:4.0.22
+
+  import java.io.File
+  import com.sksamuel.scrimage.ImmutableImage
+  import com.sksamuel.scrimage.nio.PngWriter
+
+
+  if(2 > args.size) {
+      println("Not enough arguments!")
+  }
+
+  val backgroundFilename = args[0]
+  val watermarkFilename = args[1]
+
+  val background = ImmutableImage.loader().fromFile(backgroundFilename)
+  val watermark = ImmutableImage.loader().fromFile(watermarkFilename)
+
+  background.overlay(watermark).output(PngWriter.MaxCompression, File("outfile.png"))
+#+END_SRC
+(this is off course just a simplified example, and there are many improvements you can do. These range from specifying output file, to making sure the image is the correct format to not cause overlay errors, like having them in a float format instead of integer format. Let's keep it simple for the sake of example)
+
+
+In the above example we use [[https://sksamuel.github.io/scrimage/][Scrimage]] for image processing. We see that KScript support the same comment style dependencies as JBang does. [[https://github.com/holgerbrandl/kscript#script-configuration][KScript also support other directives for including files, compiler options etc]]. The most important thing here is still knowing the Kotlin language, because as we can see above, the code is just Kotlin with some added trinkets :) 
+
+
+Some cool features:
+- [[https://github.com/holgerbrandl/kscript#treat-yourself-a-repl-with---interactive][Getting a REPL with the functions and variables from your script, using the --interactive option.]] If you have used Python before, this is the same as the -i option used there.
+- [[https://github.com/holgerbrandl/kscript#deploy-scripts-as-standalone-binaries][Packaging scripts to standalone binaries]].
+
+
+After seeing all these cool features, the most important question you have is probably: How can I edit this code in Emacs with nice auto completion and IDE-like features? [[https://themkat.net/2021/11/03/kotlin_in_emacs.html][I recently wrote an article about just that]]. To summarize, KScript has an --idea option to open IntelliJ IDEA, but we can override it by using the environment variable KSCRIPT_IDEA_COMMAND. Set it to emacs or "emacsclient -n" (if you have started Emacs server), and it will open in Emacs. You then get a temporary project setup with a build.gradle, that the lsp-mode with Kotlin Language Server talks nice to :) 
+
+
+While JBang is great, I prefer Kotlin as a language and therefore use KScript way more. Maybe you are different? Share your opinions in the comments below!
