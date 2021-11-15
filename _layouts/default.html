@@ -46,6 +46,10 @@
 				   class="active"
 				   {% endif %}
 				   href="/">Home</a>
+				<a {% if page.url == "/tags/emacs.html" %}
+				   class="active"
+				   {% endif %}
+				   href="{{"tags/emacs.html" | relative_url }}">Emacs articles</a>
 				<a {% if page.url == "/tags/books.html" %}
 				   class="active"
 				   {% endif %}
