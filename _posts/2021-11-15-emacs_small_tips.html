@@ -1,0 +1,115 @@
+---
+layout: blogpost
+title: Small tips for a better Emacs experience
+tags: emacs
+---
+
+<p>
+There are many small tricks that can make your Emacs experience better, and in this article I will show you some of my favorites. To make it short and easy for beginners to experiment with, I will keep them simple. Don't let that fool you, these can really improve you experience (even if you have been using Emacs for a while!). Maybe you will find something that you really enjoy here? 
+</p>
+
+
+<div id="outline-container-org7c4ec27" class="outline-2">
+<h2 id="org7c4ec27">emacsclient and server</h2>
+<div class="outline-text-2" id="text-org7c4ec27">
+<p>
+I usually have my Emacs session open for days (or weeks? months?), and rarely close it unless I have to. Therefore it does not come naturally to me to close my session and open a file in it from the command line. Sometimes we may just want to open a file in our current Emacs session directly from the command line. This is where emacsclient comes in! The word client is used, so there must be a server, right? Yes. In your .emacs config (or just a scratch buffer) you can start a server using:
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp">(server-start)
+</pre>
+</div>
+<p>
+(you can also run M-x server-start in your session)
+</p>
+
+
+<p>
+Now that you have started the server, you can use <code>emacsclient -n myfile.c</code> to open myfile.c from your command line (or another file, or multiple files!).
+</p>
+
+
+<p>
+There are many more things emacsclient can be used for than this simple example, so feel free to check out <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Invoking-emacsclient.html">the documentation</a> if the concept intrigues you.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgb591b62" class="outline-2">
+<h2 id="orgb591b62">exec-path-from-shell</h2>
+<div class="outline-text-2" id="text-orgb591b62">
+<p>
+It can be quite tedious if your PATH variables aren't included into Emacs when running it. Using exec-path-from-shell fixes that, and can be activated like I do here with this <a href="https://github.com/jwiegley/use-package">use-package</a> configuration:
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp">(use-package exec-path-from-shell
+   :init
+   (when (memq window-system '(mac ns x))
+     (exec-path-from-shell-initialize)))
+</pre>
+</div>
+
+<p>
+(you can also use the built in package-install to install it, and use the when-block afterwards)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0c787a5" class="outline-2">
+<h2 id="org0c787a5">un-clutter the UI and show battery percentage</h2>
+<div class="outline-text-2" id="text-org0c787a5">
+<p>
+By default when starting a GUI session in Emacs, there are menu bars, tool bars and scroll bars. In my opinion, these clutter the UI, and take the focus away from the contents of the buffer. When running a graphical session (i.e, not a terminal session using -nw or over SSH without an X-server), I prefer to remove those. Showing the battery status in the modeline can also be very useful. I do all of the above using the following small snippet:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(if (display-graphic-p)
+    (progn
+      ;; Removed annoying UI elements
+      (menu-bar-mode -1)
+      (tool-bar-mode -1)
+      (scroll-bar-mode -1)
+
+      ;; show battery status
+      (display-battery-mode 1)))
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orge89402e" class="outline-2">
+<h2 id="orge89402e">show-paren-mode</h2>
+<div class="outline-text-2" id="text-orge89402e">
+<p>
+show-paren-mode is one of my favorite little nuggets of built-in Emacs goodness! What it does is highlight parenthesis (including brackets/braces), namely the beginning and end tags associated with each other, based upon your text cursor position. This functionality is best illustrated with a series of screenshots, here using the previous code block (removing UI clutter):
+</p>
+
+<img class="blogpostimg" alt="show-paren-mode lisp usage animation" src="{{ "assets/img/emacstips/showparen.gif" | relative_url}}" />
+
+<p>
+Works with other modes as well, including the obvious C-like languages (C, Java, Kotlin etc.). Configuring it is easy as pie:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(show-paren-mode 1)
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgbfd0ef9" class="outline-2">
+<h2 id="orgbfd0ef9">Others?</h2>
+<div class="outline-text-2" id="text-orgbfd0ef9">
+<p>
+There might be other bigger changes you may want to do, including big changes to navigation. I covered some in an article on <a href="https://themkat.net/2021/09/13/recommended_emacs_packages.html">recommended Emacs packages</a> earlier.
+</p>
+
+
+<p>
+Do you have any small tricks to improve your experience? Feel free to share them in the comments below :) 
+</p>
+</div>
+</div>
