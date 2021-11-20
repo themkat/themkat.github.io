@@ -1,0 +1,35 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Emacs package highlight - Try
+tags: emacs
+---
+#+END_EXPORT
+
+Today I'm going to do something slightly different, focus on one Emacs package at a time! I want to highlight one of my most used packages; Try. At first glance, Try might seem like a weird package to feature. It let's you try an Emacs package. So what? Doesn't just using M-x package-install or use-package in a scratch buffer let me do the same? Not exactly. Those will also download the files to your .emacs/elpa (or similar directory). Then they are persistent between runs, and you have by definition installed them, not tried them. What Try does different is download to a temporary directory, which is deleted once you exit your current Emacs session. That means it won't slow down your Emacs startup, or take up your "valuable" disk space.
+
+
+It might as always be useful to check out [[https://github.com/larstvei/Try][the Github repo that documents the usage]]. I will mainly focus on using Try with package names here, but you can also use URLs (which is pretty neat!). The creator, Lars, is way more knowledgeable than me when it comes to Emacs. He gave me tips on packages and configuration the short time we were colleagues, and I wholeheartedly recommend peeking at [[https://github.com/larstvei/dot-emacs][his .emacs.d-config]] for inspiration (and his other Emacs package in his Github repo!).
+
+
+When is Try useful?
+- When you want to try an Emacs package and see if it does what you want it to. Maybe you don't know if you want lsp-mode as a permanent part of your setup, and want to try it first? Or some other package?
+- When you don't use a package often enough to warrant having in your config. Then it might be useful to just try the package. I did this with restclient for too long...
+
+
+Let's do a quick example in case you are new to Emacs. If you are experienced, you might skip this part (or skim it for package recommendations). 
+
+
+* Example: Try'ing a theme
+Let's say you want to try a theme, maybe [[https://github.com/kuanyui/moe-theme.el][moe-theme]]? Trying it is as a simple as doing M-x try (M means the meta key, usually ALT or Escape). Then type moe-theme, and hit enter. Now you can load it with standard settings using (in a scratch buffer or Emacs lisp buffer, eval with C-x C-e):
+#+BEGIN_SRC lisp
+  (load-theme 'moe-light t)
+#+END_SRC
+
+To load the light version of the theme. there is also a moe-dark. If you want to customize it you can follow the steps on the github page (lisp function moe-theme-select-color seems to have changed to moe-theme-apply-color). Maybe try a M-x moe-theme-select-color and choose purple? Looks quite nice, doesn't it? Maybe you have now found your new theme? Or maybe you trying Emacs packages in a simple way has just started?
+
+
+Other good theme packages are [[https://github.com/hlissner/emacs-doom-themes][doom-themes]] or [[https://github.com/fniessen/emacs-leuven-theme][leuven]] (especially if you use org-mode a lot!).
