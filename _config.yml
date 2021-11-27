@@ -7,3 +7,4 @@ exclude: ["org"]
 plugins:
   - jekyll-sitemap
   - jekyll-paginate
+  - jekyll-feed
