@@ -1,0 +1,37 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Coding themed Advent calendars
+tags: programming
+---
+#+END_EXPORT
+
+Counting down the days to Christmas is a fun tradition, done with everything from chocolate advent calendars, TV shows to now coding themed Advent calendars! Holidays can mean much more than reading coding books, or getting/giving computer/technology inspired presents now!
+
+
+[[https://en.wikipedia.org/wiki/Advent_calendar][If you aren't familiar with the concept of Advent calendars, i suggest taking a look at the wiki pedia article]].
+
+
+If you have any others you enjoy, feel free to share them in the comments! This post will be very short, as my main objective is just to guide you to other places to have fun at. Hope you enjoy these unique countdowns to the holidays as much as I do! :) 
+
+
+* Advent of Code
+[[https://adventofcode.com/][Advent of Code]] has been around for many years now. Each day you are served a story, and with it a task that is best solved by coding. This can be everything from finding the maximum number in a file, to paths in graphs. Might sound boring to some, but it makes for fun programming tasks to sometime twist your brain (and sometimes not). Being part of a small Christmas inspired story feels fun as well!
+
+* Bekk - blog calendar
+Bekk has had a tradition for a few years to make [[https://www.bekk.christmas/post/2021][a blog-calendar with daily articles on various subjects]]. In earlier years there have been several calendars relating to both JavaScript, React, Kotlin, Machine Learning, UX and more. This year it seems like there will still be many different topics each day, but not separate calendars for each topic. I can understand that, but will probably miss the Kotlin calendar! Hope we will still see some entries on Kotlin before Christmas!
+
+
+This one has a few posts in Norwegian, but it seems like a lot of them will be in English as well. Hopefully my international readers can find some fun in it as well! :) 
+
+
+* KnowIt Julekalender (Norwegian)
+This one is my favorite! Daily small coding tasks, where you give an answer as either a text or number (not unlike [[https://projecteuler.net/][Project Euler]] in that regard). Each day is a separate task with its own text, and not relate to each other. Fun, and not hard to just jump into one even if you missed the earlier ones.  
+
+
+* Others in Norwegian?
+There are several others in Norwegian as well, and you can [[https://www.kode24.no/artikkel/her-er-arets-julekalendere-for-utviklere-jula-2021/74768728][read more about them at Kode24]] (the Norwegian web based newspaper for software development). I like to keep my blog posts open to an international audience as well, but know that I have some Norwegian readers. The Norwegian ones (like the one from PST ) are often really good! Highly recommended to my Norwegian readers!
+
