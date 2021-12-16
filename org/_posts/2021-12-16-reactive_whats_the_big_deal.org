@@ -9,26 +9,18 @@ tags: programming kotlin java
 ---
 #+END_EXPORT
 
-# TODO: at first glance, reactive doesnt seem to be anything special. Async stream processing seems nice, but is that all? Fortunatly, the answer is no! Reactive also includes nonblocking IO, which makes resource utilization better. If you have never heard any of these terms before, it may just seem like a word-soup. Don't worry! We will explain the terms below, so you can understand the big deal with reactive. 
+Reactive is a buzzword thrown around a lot, but what is it really? At first glance, reactive doesn't seem to be anything special. Asynchronous stream processing seems nice, but is that all? Fortunately, the answer is no! Reactive also includes nonblocking IO, which makes resource utilization better. If you have never heard any of these terms before, it may just seem like a word-soup. Don't worry! We will explain the terms below, so you can understand the big whoop with reactive. Getting an overview of the concepts will be the main goal here, but I will provide links for further reading. Some oversimplification may happen, but I hope that it will help you understand concepts without being boggled in buzzwords and lots of pre-requisite knowledge.
 
-# TODO: mention that the overview will be the focus here. Links will be given to future research, libraries to check out etc. 
-
-
-# TODO: make it clear that this article is made to express what the big whoop is. It will by no means cover everything. A complete guide to distributed systems is beyond this article. At the end I will suggest some additional resources to read and look into. Oversimplifications will happen!
 
 
 * What is Reactive? - The original definition
 If we visit [[https://reactivex.io/][the ReactiveX website]], we see the following definition:
 "ReactiveX is a combination of the best ideas from the Observer pattern, the Iterator pattern, and functional programming"
 
-
-# TODO: double check the patterns to make sure I'm right. 
 Breaking down this original definition can be something like the following:
-- Observer pattern: We are observing a stream of data. The observer function (the function we give) is called for each element.
-- Iterable. We are iterating through data.
-- Functional programming. We are using higher order functions (i.e, functions taking functions as parameters, or functions returning new functions). People often think of map, filter, reduce etc. here.
-  # todo: should I include this as well? 
-  Another point of functional programming reactive embraces is that a function returns the same thing each time it is called (not depending on anything else than input or output).  
+- *Observer pattern*: We are observing a stream of data. The observer function (the function we give) is called for each element.
+- *Iterable*: We are iterating through streams of data element by element. (haven't seen any deeper meaning than this)
+- *Functional programming*: We are using higher order functions (i.e, functions taking functions as parameters, or functions returning new functions). People often think of map, filter, reduce etc. here. For functions not interacting with external sources (IO like databases or messages), we prefer them to be purely functional (i.e, return the same result each time given the same input). Not always possible, but functions should at least NOT depend on global state. 
 
 
 This definition is quite hard to grasp at first glance. Your first thought might be "Say whaaaat?". First, let us create a better, more clear definition (stolen from [[https://developers.redhat.com/blog/2017/06/30/5-things-to-know-about-reactive-programming][a RedHat article that also contains code examples]]): "Reactive programming is working with asynchronous streams". That makes it a little more clear what the above says, right? 
@@ -67,22 +59,26 @@ The =getNextEvent= function can be blocking and wait for an event to exist, no n
 One famous example of this is [[https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select][non blocking sockets (using select) in C]], which is essentially the above. When a socket connects, we don't do much, just see that a connect event happens. When a socket is ready to send or receive data, we do that based upon the event type. No waiting for the socket to do all its work before the thread can do something else. 
 
 
-How is this possible? Now instead of your own code, the magic happens in your OS. Your OS has an event queue, taking in requests, and notifying the requester once their task is done. That way the thread is not just waiting for something to happen, but can be used for other things. This functionality has been part of Linux and other operating systems for a while now, and can be used by using the relevant system calls. This is something your DB driver or similar have to take advantage of it they want the operations to be nonblocking.
+How is this possible? Now instead of your own code, the magic happens in your OS. Your OS has an event queue, taking in requests, and notifying the requester once their task is done. That way the thread is not just waiting for something to happen, but can be used for other things. This functionality has been part of Linux and other operating systems for a while now, and can be used by using the relevant system calls. This is something your IO driver (e.g, database) or similar have to take advantage of it they want the operations to be nonblocking.
 
 
-
-# TODO: graphic describing a classical blocking DB access, and a nonblocking variant
 Let's use database access as an example, because that is something you will probably do anyway. In a blocking client, your thread utilization will look something like this:
-# TODO: graphis showing db blocking client
+#+BEGIN_EXPORT html
+<img alt="Blocking DB call" src="{{ "assets/img/reactive/blocking_db.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
 
-As you can see, the thread just waits for the database to return the results before it can continue. Now you might wonder what a nonblocking client looks like?
-# TODO: graphic showing db nonblocking client 
 
+As you can see, the thread just waits for the database to return the results before it can continue. Now you might wonder what a nonblocking client looks like? 
+#+BEGIN_EXPORT html
+<img alt="Nonblocking DB call" src="{{ "assets/img/reactive/nonblocking_db.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+(In many instances we don't return the data in a big bang fashion to your program. We can return chunks of data one by one, so we don't get a big block of code processing a lot of data at a time!)
+
+
+As we can see, the thread is used for other things while we wait for the data to be returned. This is all because of the event queue in your OS. Once the database call is done, it will send an event, and a callback function will be executed. The order of the tasks being processed will off course depend on the time the read call take. Task 2 might have a very short effective SQL, and Task 1 might have a more time consuming one. Then the order will probably be different. The main point above is to maximally use the threads. 
 
 
 Many databases these days have reactive clients, including PostgreSQL, Oracle, MongoDB, Redis, Neo4J etc. (so for all of your relational database, document database and graph database needs!)
-# TODO: links to the various stuff to make it easier for people to research?
-
 
 
 #+BEGIN_EXPORT html
