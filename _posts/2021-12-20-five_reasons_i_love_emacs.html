@@ -1,0 +1,91 @@
+---
+layout: blogpost
+title: 5 reasons I LOVE Emacs
+tags: emacs editor
+---
+
+<p>
+Maybe you have seen Emacs articles around the internet, and wondered "why do people love this editor so much?". I can't answer for everyone, but in this post I will give you some of my reasons. Emacs is almost a way of life for me, and I have it open and use it every day. To make this article short and sweet, I will limit it to 5 reasons. Maybe you will end up starting your Emacs journey?
+</p>
+
+
+
+<p>
+As these reasons are my personal reasons, some people may read this article as rambling. Hope you at least have fun while reading it!
+</p>
+
+
+<div id="outline-container-orgde9c62a" class="outline-2">
+<h2 id="orgde9c62a">1. An all-purpose editor</h2>
+<div class="outline-text-2" id="text-orgde9c62a">
+<p>
+A lot of people I met use all sorts of different editors or IDEs for different tasks. IntelliJ IDEA for Java and Kotlin, Android Studio for Android programming, Visual Studio for C#, Notepad++ for scripts, Microsoft Word to create documents, and the list goes on! Each of these editors will off course have to be configured to your liking, and work in different ways. Emacs is the opposite, and can be used for anything. I use Emacs to code in all sorts of languages (C, Java, Kotlin, Emacs Lisp, Bash and more!), write these blog posts (using <a href="https://orgmode.org/">Org Mode</a>), write all sorts of documents (you can even replace Excel in Org Mode, though I only have minimal experience with that), see <a href="https://news.ycombinator.com/">the latest HackerNews articles</a> (in dashboard) and more! If I need something done where text is a central component, I always see if I can use Emacs for it.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgcc972a7" class="outline-2">
+<h2 id="orgcc972a7">2. Individualism</h2>
+<div class="outline-text-2" id="text-orgcc972a7">
+<p>
+Emacs can be configured exactly like you want (within reason). Want Nyan cat to show you the position in the current buffer as a progress bar? <a href="https://github.com/TeMPOraL/nyan-mode">Do it!</a> Want colors showing you the HTML color codes directly in the source file? Rainbow-mode got you covered! Or for Emacs to use espeak or say to welcome you as Batman when you open it? Use hooks and the shell-command function and you are all set! The point here is that you can customize Emacs to your liking. You can even override ALL of the standard keybindings if you want. All of these reasons are the reasons that Emacs users often can't even use each others setup. Because we should that be a goal? <b>YOUR WISHES</b> are the most important when it comes to your editor. Emacs is NOT a one-size-fits-all editor, and that is an amazing thing.  
+</p>
+
+
+<p>
+Some people might wonder how they can do classic pair programming in an editor like this? (switch between coder/navigator and use the same computer). You probably to teach the other person how your editor works. But.. <b>WHY</b> should another person ever touch your computer? I know some workplaces think pair programming is good, but it is hell for introverts like myself. <b>FUCK pair programming!</b> (that being said, looking at code together is good, I just hate the classic pair programming where you code together on the same computer)
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org4e88c24" class="outline-2">
+<h2 id="org4e88c24">3. Configured by code (Lisp!!!)</h2>
+<div class="outline-text-2" id="text-org4e88c24">
+<p>
+You can easily create code to extend the behavior of Emacs. This is done in a dialect of Lisp called Emacs Lisp, and is the language all of those cool packages are written in. If you have never seen this before, here we create a new interactive function that can be invoked with M-x:
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp">(defun say-hi ()
+  (interactive)
+  (message "Hi!!! Look at this cool function"))
+</pre>
+</div>
+
+<p>
+Try this in the scratch buffer in Emacs, and use C-x C-e with your cursor after the last parenthesis. Then try M-x say-hi. You will now see the message above in your minibuffer! If all of these terms sound foreign, you should <a href="http://www.jesshamrick.com/2012/09/10/absolute-beginners-guide-to-emacs/">look at a tutorial</a>. I assure you, you won't regret beginning your Emacs journey if what I'm telling you here sounds exciting :) 
+</p>
+
+
+<p>
+If you want to see how configurations usually look, you can have <a href="https://github.com/themkat/.emacs.d/tree/improvement2021">a look at mine</a>, or easily find some around the internet. A suggestion is <a href="https://github.com/larstvei/dot-emacs">Lars Tveitos setup</a> which has inspired me in several ways (packages to try, writing my setup in Org Mode and more!).
+</p>
+
+
+
+<p>
+<b>You may wonder;</b> What is some advantages to saving it in text instead of all of this GUI menus like IDEs like IntelliJ does? (probably saves it in some text format, but good luck finding it and using it as easily as Emacs!). Well, with a text file that is easy to find, you can easily commit it to version control (e.g, Git). Than you will always have it handy even if you buy a new computer. Just clone it, open Emacs, and you will have the same setup. There is also off course the creation of advanced logic as part of your setup, which code is the logical building block for! 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org3446350" class="outline-2">
+<h2 id="org3446350">4. Great community producing amazing packages!</h2>
+<div class="outline-text-2" id="text-org3446350">
+<p>
+I briefly touched on this in reason 2 with some package links. There are all sorts of packages created by amazing people out there. I have covered some of these in <a href="https://themkat.net/tags/emacs.html">my other Emacs articles</a>. Not really much to be said here, except thanks to all the amazing Emacs users out there making awesome packages! You give me a smile on my face every time I open your repos or use your packages! :) 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgda02c6b" class="outline-2">
+<h2 id="orgda02c6b">5. You can read the source code! (and contribute)</h2>
+<div class="outline-text-2" id="text-orgda02c6b">
+<p>
+GNU Emacs is free software, and many amazing people contribute. Thanks to all of you! You make our lives better with the new features, bug fixes etc.
+</p>
+</div>
+</div>
