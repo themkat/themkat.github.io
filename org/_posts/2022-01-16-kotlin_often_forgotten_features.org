@@ -1,0 +1,219 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Often forgotten features in Kotlin
+tags: programming kotlin
+---
+#+END_EXPORT
+
+This time we will look at features in Kotlin that are often overlooked in walktroughs or other places, but are still cool and can be useful! Some are features some of us might know of, but often forget exist. Others are features we forget exist untill we see them mentioned, probably because we don't use them as often (or very rarely). Hopefully you will see at least one feature you have forgotten existed! 
+
+
+* Inline objects
+The most known usage of inline/anonymous objects in Kotlin is in places where we need to send in an object (in the Java sense of the word) that implements an interface, the particular object is only needed once in your code, and a lambda won't suffice (because the interface is not functional, i.e, it has several methods). That was probably a bit confusing if you haven't seen it before. It's hard finding good examples of this, as it doesn't happen that often (probably happens more often on Android with its click handlers and more). Let us just use Runnable as a quick example, even though you could easily have used a lambda: 
+#+BEGIN_SRC kotlin
+  val myThread = Thread(object : Runnable {
+      override fun run() {
+          println("Using an anonymous inner class/object")
+      }
+  })
+#+END_SRC
+
+Now you may ask: how is this a forgotten feature? It's not like seeing this is rare! You are right, that's why I started this section with "the most known usage of...". Now to the feature we often forget is possible. You can actually create variables that are just objects, almost just like you are used to in JavaScript!
+
+#+BEGIN_SRC kotlin
+      val myObj = object {
+          val name = "somename"
+          val pair = getRandomPoint()
+          val somelist = listOf("Element", "Another element")
+      }
+	
+      println(myObj.name)
+      println(myObj.pair)
+      println(myObj.somelist)
+#+END_SRC
+
+You can also have functions, but if you don't implement an interface, those methods won't be visible outside the object. The exceptions to this rules are the methods you find in the Any class, which you can also override inside the inline/anonymous object (e.g, toString). There are a few other limitations as well. One particular, frustrating one, was that I could not destructure the pair above, and access the elements:
+
+#+BEGIN_SRC kotlin
+  val myObj = object {
+      val (x,y) = getRandomPoint()
+  }
+
+  // NOT ALLOWED! :( 
+  println(myObj.x)
+  println(myObj.y)
+#+END_SRC
+
+This may be fixed in future versions of Kotlin. You also can't use inline objects at the top level in a file, and they have to be used inside a function or class. (at least from my experience in scripts using KScript).
+
+
+Now you may ask: Where is this last feature useful? It might be useful as return values in private methods of classes, or as working storage for variables to group them. I think in general we should avoid this for bigger projects, as it may hinder readability a bit as the project grows. For scripts in Kotlin on the other hand, I think it can prove useful to keep the code concise and create logical groupings. That is where I see the biggest use for it. 
+
+
+* tailrec
+Let's start with the simplest recursive implementation of factorial:
+#+BEGIN_SRC kotlin
+  fun factorial(n : Int) : Int {
+      if(n <= 0) {
+          return 1
+      }
+
+      return n*factorial(n-1)
+  }
+#+END_SRC
+
+Remember that every time a recursive call is done, a new stack page is created with the values of the variables (here the new value of n) which consumes more memory. In the above implementation, we see that there will be many such new stack pages depending on the value of n. We also need to backtrack once the recursive calls have finished (i.e, reached the base case in the if-check) and calculate the multiplications.
+
+
+How can we improve? With the concept of tail recursion. What is tail recursion? Tail recursion is a compiler optimization (or in other languages like Scheme, interpreter optimization) that is done to reuse the stack page each time, and avoid the backtracking needed by classic recursive functions. When these conditions are met, you don't get a recursive process anymore, but an iterative one (just like for regular loops). Sounds awesome right? You will *NEED* to write your functions in a way that they don't need backtracking for this to work, so a lot of the responsibility is on YOU! After you have written your function in such a way, you can use the tailrec keyword. One way of implementing factorial this way is by using a optional argument with a default value (maybe write in docs how this works, especially if it is meant to be used by others!):
+
+#+BEGIN_SRC kotlin
+    tailrec fun factorial(n : Int, sum : Int = 1) : Int {
+        if(n <= 0) {
+            return sum
+        }
+
+        return factorial(n-1, sum*n)
+    }
+#+END_SRC
+
+This is only one possible way, and you can probably find some better ways of solving this. 
+
+
+You may wonder; what happens if I use the tailrec keyword without meeting the condition above, in that the last call is a tail call (i.e, no backtracking needed). You will get a compiler warning saying that the recursive call is not a tail call, simple as that :)
+
+
+* Extension functions to lambdas
+Lambdas are instances of classes behind the scenes, which means that you can create extension functions on them! If you never thought about it, this may seem confusing. What would the class name look like? Let's create one type of lambda (taking in two integers, and returning a new integer), and then later creating an extension function for it. First a simple add function:
+
+#+BEGIN_SRC kotlin
+  val add : (Int,Int) -> (Int) = { num1,num2 ->
+      num1 + num2
+  }
+#+END_SRC 
+
+Take a close look at the type of the add-function. That is the class we can create extension functions for! Let's create a new extension function that returns the same function, but the execution will start with a simple print statement:
+
+#+BEGIN_SRC kotlin
+  fun ((Int,Int) -> (Int)).logged() : ((Int,Int) -> (Int)) {
+      return { num1,num2 ->
+          println("Calling function ${this.toString()}")
+          this(num1,num2)
+      }
+  }
+#+END_SRC
+
+Now we can see it in use:
+#+BEGIN_SRC kotlin
+var addLogged = add.logged()
+println("2+3 = ${addLogged(2,3)}")
+#+END_SRC
+
+
+As you can guess, the output will be:
+#+BEGIN_SRC text
+  Calling function (kotlin.Int, kotlin.Int) -> kotlin.Int
+  2+3 = 5
+#+END_SRC
+
+This was a very simple example, and there are more fun things you can do with this functionality. Maybe you want to create a memoized version of your function? Or create compositions of functions (e.g, create a =f(g(x))= function for two functions f and g)? Look around, especially in the realm of functional programming, and you might find more interesting use cases.
+
+
+* Delegation of properties/variables
+** Recap of delegation in classes
+Most people know of the class-level delegation, but in case you don't, let's do a very quick recap. When extending a class or implementing an interface, the relationship is of type "is a" (e.g, a Toyota is a Car, a Siberian Husky is a Dog etc.). Composition, storing the relationship in a variable, is of the type "has a" (e.g, Manager manages/has a programmer do work for them, Cat has a human which gives them food etc.). Delegation is a special case of composition where we delegate work to another class. You probably don't want your Cat to implement the Human interface just to be able to get Food...? You want to delegate the work to the cats servant/owner. How do this look in Kotlin? 
+#+BEGIN_SRC kotlin
+  interface Human {
+      // usually the implementation would be implementation specific
+      fun getFood() {
+          println("Getting food")
+      }
+  }
+  // implementations that in the real world probably implements their own getFood
+  class GrownUp : Human
+
+  class Cat(val name : String, servant : Human) : Human by servant
+
+
+  // usage
+  val me = GrownUp()
+  val myCat = Cat("Mittens", me)
+  myCat.getFood()
+#+END_SRC
+
+This looks just like the Cat implements the Human interface, but behind the scenes it delegates the work to a Human. That is the power of delegation for classes, and why it is often called a special form of composition (as the usage is a bit different then basic composition).
+
+*NB!* Just to make it clear. The example above is very simple to illustrate the point. If you still feel unsure about it and want to see more examples, I suggest [[https://kotlinlang.org/docs/delegation.html][looking into the official documentation]]. This was only meant as a recap to prepare you for the main point, so I assumed you just needed a refresher :) 
+
+
+** properties/variables
+The delegation example above was probably familiar to you, as it is presented clearly in many Kotlin texts. Did you know that you can use delegates on properties/variables as well? This is a simple way of adding some extra functionality around the given type. Let's say you want a variable with a number, but it can only be even. Or a string that can only be lower case. Let's see how a stupid example like that can be implemented:
+
+#+BEGIN_SRC kotlin
+  // Even number
+  class EvenNumber(private var num : Int) {
+      operator fun getValue(thisRef : Any?, prop : KProperty<*>) : Int {
+          return num
+      }
+
+      operator fun setValue(thisRef: Any?, prop : KProperty<*>, newValue : Int) {
+          if(newValue % 2 == 0) {
+              num = newValue
+          } else {
+              num = newValue - 1
+          }
+      }
+  }
+
+  var evenNum : Int by EvenNumber(23)
+  println(evenNum)
+  evenNum = 11
+  println(evenNum)
+  evenNum = 2
+  println(evenNum)
+
+  // string always lower case
+  class LowerCaseString(private var str : String) {
+      operator fun getValue(thisRef : Any?, prop : KProperty<*>) : String {
+          return str
+      }
+
+      operator fun setValue(thisRef: Any?, prop : KProperty<*>, newValue : String) {
+          str = newValue.lowercase()
+      }
+  }
+
+  var myStr : String by LowerCaseString("Hello there")
+  println(myStr)
+  myStr = "hi"
+  println(myStr)
+  myStr = "MY HANDS ARE TYPING WORDS"
+  println(myStr)
+#+END_SRC
+
+You may notice that the delegates don't need to implement an interface, but they still need to implement the above methods (values/vals probably don't need the setter). 
+
+
+Now let us see what the output looks like:
+#+BEGIN_SRC text
+  23
+  10
+  2
+  Hello there
+  hi
+  my hands are typing words
+#+END_SRC
+
+*NB!* You may notice that the setValue is not invoked on the constructor, which is something I want you to be cautious of. If you want to enforce it at that point, I would suggest using a explicit constructor or a init-block.
+
+These examples are a little bit stupid on purpose, but they show some simple validation use cases for delegates. Now that you know how they work, you can probably think of more fun stuff to use it for :) 
+
+
+* Honorable mention
+
+** Referential equality using =====
+Let's say you have implemented the equals method, and it checks for structural equality (e.g, the fields are equal to each other). What if you want to check that they are the same object, do we need to remove the equals-method? NO! You can use ===== instead, and you check if the objects are the same objects in memory (i.e, same reference).
