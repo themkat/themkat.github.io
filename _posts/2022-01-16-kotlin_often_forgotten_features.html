@@ -1,0 +1,307 @@
+---
+layout: blogpost
+title: Often forgotten features in Kotlin
+tags: programming kotlin
+---
+
+<p>
+This time we will look at features in Kotlin that are often overlooked in walktroughs or other places, but are still cool and can be useful! Some are features some of us might know of, but often forget exist. Others are features we forget exist untill we see them mentioned, probably because we don't use them as often (or very rarely). Hopefully you will see at least one feature you have forgotten existed! 
+</p>
+
+
+<div id="outline-container-org75c537c" class="outline-2">
+<h2 id="org75c537c">Inline objects</h2>
+<div class="outline-text-2" id="text-org75c537c">
+<p>
+The most known usage of inline/anonymous objects in Kotlin is in places where we need to send in an object (in the Java sense of the word) that implements an interface, the particular object is only needed once in your code, and a lambda won't suffice (because the interface is not functional, i.e, it has several methods). That was probably a bit confusing if you haven't seen it before. It's hard finding good examples of this, as it doesn't happen that often (probably happens more often on Android with its click handlers and more). Let us just use Runnable as a quick example, even though you could easily have used a lambda: 
+</p>
+<div class="org-src-container">
+<pre class="src src-kotlin">val myThread = Thread(object : Runnable {
+    override fun run() {
+	println("Using an anonymous inner class/object")
+    }
+})
+</pre>
+</div>
+
+<p>
+Now you may ask: how is this a forgotten feature? It's not like seeing this is rare! You are right, that's why I started this section with "the most known usage of&#x2026;". Now to the feature we often forget is possible. You can actually create variables that are just objects, almost just like you are used to in JavaScript!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-kotlin">val myObj = object {
+    val name = "somename"
+    val pair = getRandomPoint()
+    val somelist = listOf("Element", "Another element")
+}
+
+println(myObj.name)
+println(myObj.pair)
+println(myObj.somelist)
+</pre>
+</div>
+
+<p>
+You can also have functions, but if you don't implement an interface, those methods won't be visible outside the object. The exceptions to this rules are the methods you find in the Any class, which you can also override inside the inline/anonymous object (e.g, toString). There are a few other limitations as well. One particular, frustrating one, was that I could not destructure the pair above, and access the elements:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-kotlin">val myObj = object {
+    val (x,y) = getRandomPoint()
+}
+
+// NOT ALLOWED! :( 
+println(myObj.x)
+println(myObj.y)
+</pre>
+</div>
+
+<p>
+This may be fixed in future versions of Kotlin. You also can't use inline objects at the top level in a file, and they have to be used inside a function or class. (at least from my experience in scripts using KScript).
+</p>
+
+
+<p>
+Now you may ask: Where is this last feature useful? It might be useful as return values in private methods of classes, or as working storage for variables to group them. I think in general we should avoid this for bigger projects, as it may hinder readability a bit as the project grows. For scripts in Kotlin on the other hand, I think it can prove useful to keep the code concise and create logical groupings. That is where I see the biggest use for it. 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org0b499c7" class="outline-2">
+<h2 id="org0b499c7">tailrec</h2>
+<div class="outline-text-2" id="text-org0b499c7">
+<p>
+Let's start with the simplest recursive implementation of factorial:
+</p>
+<div class="org-src-container">
+<pre class="src src-kotlin">fun factorial(n : Int) : Int {
+    if(n &lt;= 0) {
+	return 1
+    }
+
+    return n*factorial(n-1)
+}
+</pre>
+</div>
+
+<p>
+Remember that every time a recursive call is done, a new stack page is created with the values of the variables (here the new value of n) which consumes more memory. In the above implementation, we see that there will be many such new stack pages depending on the value of n. We also need to backtrack once the recursive calls have finished (i.e, reached the base case in the if-check) and calculate the multiplications.
+</p>
+
+
+<p>
+How can we improve? With the concept of tail recursion. What is tail recursion? Tail recursion is a compiler optimization (or in other languages like Scheme, interpreter optimization) that is done to reuse the stack page each time, and avoid the backtracking needed by classic recursive functions. When these conditions are met, you don't get a recursive process anymore, but an iterative one (just like for regular loops). Sounds awesome right? You will <b>NEED</b> to write your functions in a way that they don't need backtracking for this to work, so a lot of the responsibility is on YOU! After you have written your function in such a way, you can use the tailrec keyword. One way of implementing factorial this way is by using a optional argument with a default value (maybe write in docs how this works, especially if it is meant to be used by others!):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-kotlin">tailrec fun factorial(n : Int, sum : Int = 1) : Int {
+    if(n &lt;= 0) {
+	return sum
+    }
+
+    return factorial(n-1, sum*n)
+}
+</pre>
+</div>
+
+<p>
+This is only one possible way, and you can probably find some better ways of solving this. 
+</p>
+
+
+<p>
+You may wonder; what happens if I use the tailrec keyword without meeting the condition above, in that the last call is a tail call (i.e, no backtracking needed). You will get a compiler warning saying that the recursive call is not a tail call, simple as that :)
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org5d2e9f8" class="outline-2">
+<h2 id="org5d2e9f8">Extension functions to lambdas</h2>
+<div class="outline-text-2" id="text-org5d2e9f8">
+<p>
+Lambdas are instances of classes behind the scenes, which means that you can create extension functions on them! If you never thought about it, this may seem confusing. What would the class name look like? Let's create one type of lambda (taking in two integers, and returning a new integer), and then later creating an extension function for it. First a simple add function:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-kotlin">val add : (Int,Int) -&gt; (Int) = { num1,num2 -&gt;
+    num1 + num2
+}
+</pre>
+</div>
+
+<p>
+Take a close look at the type of the add-function. That is the class we can create extension functions for! Let's create a new extension function that returns the same function, but the execution will start with a simple print statement:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-kotlin">fun ((Int,Int) -&gt; (Int)).logged() : ((Int,Int) -&gt; (Int)) {
+    return { num1,num2 -&gt;
+	println("Calling function ${this.toString()}")
+	this(num1,num2)
+    }
+}
+</pre>
+</div>
+
+<p>
+Now we can see it in use:
+</p>
+<div class="org-src-container">
+<pre class="src src-kotlin">var addLogged = add.logged()
+println("2+3 = ${addLogged(2,3)}")
+</pre>
+</div>
+
+
+<p>
+As you can guess, the output will be:
+</p>
+<div class="org-src-container">
+<pre class="src src-text">Calling function (kotlin.Int, kotlin.Int) -&gt; kotlin.Int
+2+3 = 5
+</pre>
+</div>
+
+<p>
+This was a very simple example, and there are more fun things you can do with this functionality. Maybe you want to create a memoized version of your function? Or create compositions of functions (e.g, create a <code>f(g(x))</code> function for two functions f and g)? Look around, especially in the realm of functional programming, and you might find more interesting use cases.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org813962d" class="outline-2">
+<h2 id="org813962d">Delegation of properties/variables</h2>
+<div class="outline-text-2" id="text-org813962d">
+</div>
+<div id="outline-container-orgea87f55" class="outline-3">
+<h3 id="orgea87f55">Recap of delegation in classes</h3>
+<div class="outline-text-3" id="text-orgea87f55">
+<p>
+Most people know of the class-level delegation, but in case you don't, let's do a very quick recap. When extending a class or implementing an interface, the relationship is of type "is a" (e.g, a Toyota is a Car, a Siberian Husky is a Dog etc.). Composition, storing the relationship in a variable, is of the type "has a" (e.g, Manager manages/has a programmer do work for them, Cat has a human which gives them food etc.). Delegation is a special case of composition where we delegate work to another class. You probably don't want your Cat to implement the Human interface just to be able to get Food&#x2026;? You want to delegate the work to the cats servant/owner. How do this look in Kotlin? 
+</p>
+<div class="org-src-container">
+<pre class="src src-kotlin">interface Human {
+    // usually the implementation would be implementation specific
+    fun getFood() {
+	println("Getting food")
+    }
+}
+// implementations that in the real world probably implements their own getFood
+class GrownUp : Human
+
+class Cat(val name : String, servant : Human) : Human by servant
+
+
+// usage
+val me = GrownUp()
+val myCat = Cat("Mittens", me)
+myCat.getFood()
+</pre>
+</div>
+
+<p>
+This looks just like the Cat implements the Human interface, but behind the scenes it delegates the work to a Human. That is the power of delegation for classes, and why it is often called a special form of composition (as the usage is a bit different then basic composition).
+</p>
+
+<p>
+<b>NB!</b> Just to make it clear. The example above is very simple to illustrate the point. If you still feel unsure about it and want to see more examples, I suggest <a href="https://kotlinlang.org/docs/delegation.html">looking into the official documentation</a>. This was only meant as a recap to prepare you for the main point, so I assumed you just needed a refresher :) 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org5cfe529" class="outline-3">
+<h3 id="org5cfe529">properties/variables</h3>
+<div class="outline-text-3" id="text-org5cfe529">
+<p>
+The delegation example above was probably familiar to you, as it is presented clearly in many Kotlin texts. Did you know that you can use delegates on properties/variables as well? This is a simple way of adding some extra functionality around the given type. Let's say you want a variable with a number, but it can only be even. Or a string that can only be lower case. Let's see how a stupid example like that can be implemented:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-kotlin">// Even number
+class EvenNumber(private var num : Int) {
+    operator fun getValue(thisRef : Any?, prop : KProperty&lt;*&gt;) : Int {
+	return num
+    }
+
+    operator fun setValue(thisRef: Any?, prop : KProperty&lt;*&gt;, newValue : Int) {
+	if(newValue % 2 == 0) {
+	    num = newValue
+	} else {
+	    num = newValue - 1
+	}
+    }
+}
+
+var evenNum : Int by EvenNumber(23)
+println(evenNum)
+evenNum = 11
+println(evenNum)
+evenNum = 2
+println(evenNum)
+
+// string always lower case
+class LowerCaseString(private var str : String) {
+    operator fun getValue(thisRef : Any?, prop : KProperty&lt;*&gt;) : String {
+	return str
+    }
+
+    operator fun setValue(thisRef: Any?, prop : KProperty&lt;*&gt;, newValue : String) {
+	str = newValue.lowercase()
+    }
+}
+
+var myStr : String by LowerCaseString("Hello there")
+println(myStr)
+myStr = "hi"
+println(myStr)
+myStr = "MY HANDS ARE TYPING WORDS"
+println(myStr)
+</pre>
+</div>
+
+<p>
+You may notice that the delegates don't need to implement an interface, but they still need to implement the above methods (values/vals probably don't need the setter). 
+</p>
+
+
+<p>
+Now let us see what the output looks like:
+</p>
+<div class="org-src-container">
+<pre class="src src-text">23
+10
+2
+Hello there
+hi
+my hands are typing words
+</pre>
+</div>
+
+<p>
+<b>NB!</b> You may notice that the setValue is not invoked on the constructor, which is something I want you to be cautious of. If you want to enforce it at that point, I would suggest using a explicit constructor or a init-block.
+</p>
+
+<p>
+These examples are a little bit stupid on purpose, but they show some simple validation use cases for delegates. Now that you know how they work, you can probably think of more fun stuff to use it for :) 
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org9a0f61a" class="outline-2">
+<h2 id="org9a0f61a">Honorable mention</h2>
+<div class="outline-text-2" id="text-org9a0f61a">
+</div>
+<div id="outline-container-orga5ae78e" class="outline-3">
+<h3 id="orga5ae78e">Referential equality using <code>===</code></h3>
+<div class="outline-text-3" id="text-orga5ae78e">
+<p>
+Let's say you have implemented the equals method, and it checks for structural equality (e.g, the fields are equal to each other). What if you want to check that they are the same object, do we need to remove the equals-method? NO! You can use <code>===</code> instead, and you check if the objects are the same objects in memory (i.e, same reference).
+</p>
+</div>
+</div>
+</div>
