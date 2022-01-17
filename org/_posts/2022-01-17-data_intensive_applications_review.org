@@ -1,0 +1,67 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Should you read Designing Data-Intensive Applications? - A short book review
+tags: programming kotlin java books
+---
+#+END_EXPORT
+
+You may have seen the book Designing Data-Intensive Applications mentioned several places, and wondered if you should read it. I have to admit I bought it years ago, and read parts of it (got side-tracked and researched graph databases further, and read something else). Last Christmas holiday I picked it up again, and this time I finished it. It covers many topics, ranging from how databases are designed, to how we can design good stream processing systems. Should you read it? Continue reading the review to find out!
+
+
+*NB! This post contains paid links, aka Amazon Affiliate links. Required to tell you...*
+
+
+* What is it about?
+
+#+BEGIN_EXPORT html
+<a href="https://www.amazon.com/dp/B06XPJML5D?&linkCode=li3&tag=themkat09-20&linkId=72e3eb6eb37da8a6300f3c1e9ccf1042&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B06XPJML5D&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat09-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat09-20&language=en_US&l=li3&o=1&a=B06XPJML5D" width="1" height="1" border="0"  class="blogfloatleftimg" alt="" style="border:none !important; margin:0px !important;" />
+#+END_EXPORT
+
+I shortened the name in the title, or else the complete one would probably be several lines(!!). The complete title is: [[https://amzn.to/3Kk4TiL][Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems, and it is written by Martin Kleppmann]]. Quite a mouthful! Like the name implies, the book is a about designing applications where the way we handle data is the main challenge, NOT how compute intensive they are. The title describes it pretty well. Reliability, Scalability and Maintainability are key concepts. In short the books main goal is to guide you in the topic of data systems, especially the design of them at extreme scales (think Amazon/Google/Facebook/Microsoft and bigger companies).
+
+
+The book is split into 3 parts:
+- *Part I: Foundations of data systems*. Goes through different types of databases, different ways to represent data, query languages, the basics of how databases are built and more.
+- *Part II: Distributed data*. Goes into challenges of distributed data systems, and distributed systems in general.
+- *Part III: Derived data*. Covers batch processing using MapReduce, as well as some general information on the problems relating to distributed file systems. Also covers stream processing, and some thoughts on the future from the author.
+
+  
+Some highlights in my view are the different databases covered; from relational- and document databases to graph databases. If you have only seen the classical relational databases, then seeing NoSQL databases like document and graph databases can be very interesting. We also see how a lot of these databases work under the hood, with BTrees or key-value string files (logs). Some databases are (oversimplified). Then we see how systems like these extend to distributed versions (multi node, multi datacenter etc.) with replication, partitioning, transactions and more. Using the data is also covered, and so are many issues with designing distributed systems. If you want to research further, there are references you can check out. Almost everything you might want to know about data systems is covered (except very implementation specific details and code). 
+
+
+
+The explanations are good, and I rarely had to look up any concepts to understand them (with the exception being [[https://accelazh.github.io/storage/Linearizability-Vs-Serializability-And-Distributed-Transactions-Copy][linearizability vs serializability]]). It is well written, and the only real drawback for me is that it covers a lot of information that was not as relevant for me (see a recommendation on what to read based upon who are in the next section!). It is 1051 pages after all, and I think it is quite a feat covering all these topics. There is a reason I dub this book "The bible of data handling applications".
+
+
+If you expect many lines of code, you will be dissapointed. These are general concepts that you should know to implement data intensive systems. This book is about patterns, and those patterns can be used for different frameworks/libraries. You should not in any way be dissapointed, and learning patterns is in most cases more useful than reading code. I've met many people who read code, but the patterns and concepts go over their head (e.g, not recognizing dependency injection in general, but memorizing Spring framework functionality). Reading general concepts, patterns etc. are very good for you! Don't be too obsessed with the technology without reading the concepts it is based on, and you will learn new technologies easier. Not saying this to be mean to anyone, I was like this myself when I was younger :) 
+
+
+*Bonus:* There are some golden nuggets like the following quote in there:
+
+#+BEGIN_SRC text
+  However, a real implementation may still have to include code to handle the case where something happens that was assumed to be impossible, even if that handling boils down to printf("Sucks to be you") and exit(666)—i.e., letting a human operator clean up the mess. (This is arguably the difference between computer science and software engineering.)
+#+END_SRC
+
+
+
+* Should you read it?
+I think a lot of people can get some joy out of reading this book, but how you should read it depend a lot on who you are. The software engineers wanting to learn about different ways of handling data, getting an overview of how databases work etc. might get the most out of reading it this way:
+- Read part I
+- Part II: Skim through the transactions chapter and Distributed Systems chapters.
+- Skim Part III based upon interest. There is a lot of value in Chapter 11 (Stream processing), and it is easier to read if you skim through Chapter 10 beforehand because of references. 
+
+Then pick up the other chapters when the need arises, or if you are just curious. Skimming through them can give a great deal of knowledge, but might just be too much information you don't feel you have the need to know.
+  
+  
+I would include architects in most companies (like here in Norway, where we in 99 % of cases don't need to think super-scale) fall into this group as well. The exception is off course if you design software for a very big scale (across datacenters). That is the only group I think will get value out of all the chapters in this book. If you design multi-datacenter applications, then I think this book is a must read! Maybe you already know of some of these issues, but you might also learn something new. If I'm wrong, feel free to tell me I'm an idiot in the comments :) 
+
+
+Another group who will get value out of this book is off course the curious people who wonder how scale on a big level is achieved. I'm mostly in that category, and off course in the first category of people wanting an overview. To me, I think I would have gotten as much value out of this book if I skimmed a lot of the chapters. There are a lot of value here, but there is also a lot I don't think I will ever need to use (which makes part of the book a bit dry to me). Most companies don't make software that need to scale that much. That being said, if I ever  come in that situation, I know just the book to pick up again to refresh concepts :) 
+
+
+
+*Summarized: Should you read it?* Probably yes, but how much of it depends on your topics of interest. If you think how we handle data is your main interest, then I would say this book is a must read!
