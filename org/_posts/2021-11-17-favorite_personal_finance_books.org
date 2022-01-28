@@ -40,10 +40,10 @@ If you need some more inspiration to improve yourself, I think [[https://themkat
  
 
 
-* [[https://amzn.to/3kJ7Azg][Rich Dad Poor Dad by Robert Kiyosaki]]
+* [[https://amzn.to/3u96xhv][Rich Dad Poor Dad by Robert Kiyosaki]]
 
 #+BEGIN_EXPORT html
-<a target="_blank"  href="https://www.amazon.com/gp/product/B07C7M8SX9/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07C7M8SX9&linkCode=as2&tag=themkat09-20&linkId=9f2c12b3a74c009f322a4293144ab4a3"><img border="0" class="blogfloatleftimg"  src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B07C7M8SX9&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat09-20" ></a>
+<a target="_blank"  href="https://www.amazon.com/gp/product/B07C7M8SX9/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07C7M8SX9&linkCode=as2&tag=themkat01-20&linkId=a6a0b910e701e04c46ccb250915de09c"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B07C7M8SX9&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat01-20" ></a>
 #+END_EXPORT
 
 
@@ -62,10 +62,10 @@ Later books in the Rich Dad series also talks about the topic of good debt vs ba
 <br />
 #+END_EXPORT
 
-* [[https://amzn.to/3qDV7ke][The Millionaire Next Door by William Danko and Thomas Stanley]]
+* [[https://amzn.to/3ACVNJC][The Millionaire Next Door by William Danko and Thomas Stanley]]
 
 #+BEGIN_EXPORT html
-<a target="_blank"  href="https://www.amazon.com/gp/product/B07XB487HP/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07XB487HP&linkCode=as2&tag=themkat09-20&linkId=1c2798b547965bc3dd1005ee69b63d99"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B07XB487HP&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat09-20" ></a>
+<a target="_blank"  href="https://www.amazon.com/gp/product/B07XB487HP/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07XB487HP&linkCode=as2&tag=themkat01-20&linkId=1db99fd31d40b5030dc2426b5d413700"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B07XB487HP&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat01-20" ></a>
 #+END_EXPORT
 
 Some people think that the rich are rich because they exploit workers or whatever. These people should especially read The Millionaire Next Door! The book busts a lot of myths many people have about millionaires. In the book you will learn that:
@@ -80,10 +80,10 @@ Some people think that the rich are rich because they exploit workers or whateve
 #+END_EXPORT
 
 
-* [[https://amzn.to/3nkyore][The 4 Hour Workweek by Timothy Ferriss]]
+* [[https://amzn.to/3ILuWh9][The 4 Hour Workweek by Timothy Ferriss]]
 
 #+BEGIN_EXPORT html
-<a target="_blank"  href="https://www.amazon.com/gp/product/B002WE46UW/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B002WE46UW&linkCode=as2&tag=themkat09-20&linkId=80bb21fd7e05d67aa3320d8bd96ce8df"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B002WE46UW&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat09-20" ></a>
+<a target="_blank"  href="https://www.amazon.com/gp/product/B002WE46UW/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B002WE46UW&linkCode=as2&tag=themkat01-20&linkId=9d896eb31c441c74b76cfb8c63944fc1"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B002WE46UW&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat01-20" ></a>
 #+END_EXPORT
 
 The 4 Hour Workweek presents different ways of living than the standard life we have all been sold. Timothy Ferriss travels a lot, and does new things all the time, and so can you! Key take aways:
