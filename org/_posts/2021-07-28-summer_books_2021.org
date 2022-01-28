@@ -46,8 +46,6 @@ Love older game engines? Or maybe you are just fascinated with the early days of
 ** [[https://amzn.to/3g69wPD][Spying on Whales]]
 
 #+BEGIN_EXPORT html
-<a target="_blank"  href="https://www.amazon.com/gp/product/B076GPY9LT/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B076GPY9LT&linkCode=as2&tag=themkat09-20&linkId=f550d007d123587d7f64abc476472789" class="blogfloatleftimg" style="border:none !important; margin:0px !important;"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B076GPY9LT&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat09-20" ></a>
-
 <a target="_blank"  href="https://www.amazon.com/gp/product/B076GPY9LT/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B076GPY9LT&linkCode=as2&tag=themkat01-20&linkId=9783c33f20cb9a7ff3dd6f9848740956"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B076GPY9LT&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat01-20" ></a>
 #+END_EXPORT
 
