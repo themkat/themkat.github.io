@@ -4,7 +4,7 @@
 #+BEGIN_EXPORT html
 ---
 layout: blogpost
-title: A non-nonsense beginner guide to the command line
+title: A no-nonsense beginner guide to the command line
 tags: cli linux macosx
 ---
 #+END_EXPORT
