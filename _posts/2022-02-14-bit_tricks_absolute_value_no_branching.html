@@ -1,0 +1,193 @@
+---
+layout: blogpost
+title: Bit tricks - Absolute value without branching
+tags: programming retro-computing
+---
+
+<p>
+Bit trickery is always interesting! Sometimes you can use them to avoid branching (like if-checks), other times they are useful to save a few CPU cycles to avoid expensive operations. The absolute value trick I will show you here, is mostly to avoid branching. Why would you want to avoid branching? Many newer processors, from the mid 90s and onward, do something called <a href="https://en.wikipedia.org/wiki/Instruction_pipelining">pipelining</a> to achieve a form of instruction level parallelism. While a classic processor fetch an instruction, decode it, then execute, a pipelined processor can fetch the next instruction while the previous one is decoded. You can have multiple operations like this almost in parallel. If we have to branch, like for an if-check, we might not have fetched the correct next instruction anymore, and might have to fetch new ones (for the whole pipeline). This can be an expensive operation. Calculating absolute values is a problem where we often have to have a branch (an if-check for smaller than 0).
+</p>
+
+
+<p>
+It should be noted that modern computers like the X86, modern phones, modern ARM processors (like the ones in M1 Macs) etc. have branch prediction and are very fast. This makes bit trickery like the ones in this article unnecessary, and it will have little to no effect. The same is true for the Java Virtual Machine (JVM) which already does a lot of optimizations for you.
+</p>
+
+
+
+<p>
+Hopefully you remember what the absolute value is. It is simply a positive representation of the value, in other words it's the value without its sign. -10 will be 10, and 10 will still be 10. Mathematically we can define it like this:
+</p>
+
+\begin{equation}
+|x| = \begin{cases}
+  x & \text{if } x \geq 0  \\
+  -x & \text{if } x < 0
+\end{cases}
+\end{equation}
+
+
+<div id="outline-container-org9894f8c" class="outline-2">
+<h2 id="org9894f8c">Naive implementation with branching</h2>
+<div class="outline-text-2" id="text-org9894f8c">
+<p>
+We can implement the mathematical formula above directly:
+</p>
+<div class="org-src-container">
+<pre class="src src-c">int absoluteValue(int input) {
+  if(input &lt; 0) {
+    return -input;
+  }
+  else {
+    return input;
+  }
+}
+</pre>
+</div>
+<p>
+(we could also have used the ternary operator above, but decided to use a plain if for clarity)
+</p>
+
+
+<p>
+The implementation explains itself. Now onto the clever trick!
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org2a5f05f" class="outline-2">
+<h2 id="org2a5f05f">The bit trick</h2>
+<div class="outline-text-2" id="text-org2a5f05f">
+<p>
+For integers, the trick can be described like this: 
+</p>
+<div class="org-src-container">
+<pre class="src src-c">int absoluteValue(int input) {
+  int mask = input &gt;&gt; 31;
+  return (input ^ mask) - mask;
+}
+</pre>
+</div>
+<p>
+(can be done inline if you prefer to. Useful if you want to avoid the stack page for the function call. You might have a clever compiler already doing this for you though&#x2026;)
+</p>
+
+
+<p>
+<b>Note! If you are compiling for multiple processors, with different bit sizes for int, you can use sizeof to calculate the byte-size of int and use the result to calculate the bit shift length (remember to subtract 1 from the total size!).</b>
+</p>
+
+
+<p>
+But wait&#x2026; How does it work? First of all, let's note that we work with signed integers here, which means that the bit shift preserves the sign bit (0 for positive, 1 for negative). 
+</p>
+
+
+<p>
+Let's see what happens for a positive number (and also 0):
+</p>
+<ul class="org-ul">
+<li>Mask becomes 0 (sign bit is propagated down to the lowest bit place)</li>
+<li>Input XOR 0 becomes the input itself.</li>
+<li>The input minus 0, is still the input itself.</li>
+</ul>
+
+
+<p>
+Now let's take a negative number:
+</p>
+<ul class="org-ul">
+<li>Mask becomes -1 (bit shift 31 places. Sign bit propagated, so the new empty places to the left is filled with the sign bit 1). This is the same as 1111 1111 1111 1111 1111 1111 1111 1111 for the integer above. (Read up on <a href="https://en.wikipedia.org/wiki/Two's_complement">two complement</a> and how negative numbers are handled if this seems foreign to you).</li>
+<li>Input XOR -1 becomes the (bit-)negated version of the input (the same as using the NOT operator on the input)</li>
+<li>The result of the previous operation minus -1, which is the same as adding 1, becomes the same as multiplying the input variable by -1. Remember that negated value + 1 is how we get the negative version of our current number in the two complement system.</li>
+</ul>
+
+
+<p>
+You might now see the pattern here. For positive numbers (and 0), nothing happens, we just return the input number. For negative numbers, we negate them and add 1, which is the same as creating the negative version of our number in the two complement system.
+</p>
+
+
+<p>
+If that still sounds like magic to you, let's break it down further! You can probably skip these sections if you understand the trick already. 
+</p>
+</div>
+
+
+<div id="outline-container-orgf449e0c" class="outline-3">
+<h3 id="orgf449e0c">(Bit) Negation if negative number</h3>
+<div class="outline-text-3" id="text-orgf449e0c">
+<p>
+All bits in the mask will either be 0 or 1, so let's take a look at a XOR table for a single mask bit:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border" align="center" class="blogpost-table">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">A</th>
+<th scope="col" class="org-right">B</th>
+<th scope="col" class="org-right">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0</td>
+<td class="org-right">0</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">0</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Let's say B is the mask in this case. Take a close look. For 0 mask, the input (A) stays the same, while for the 1 mask it is negated! (in other words: imagine using the NOT operator on A only when B is 1). 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgd07f5ac" class="outline-3">
+<h3 id="orgd07f5ac">Two complement</h3>
+<div class="outline-text-3" id="text-orgd07f5ac">
+<p>
+We can easily see that for a positive number, we get the same number back (positive number XOR 0 - 0 is still the same number). What happens for negative ones? The number is first negated, then we subtract negative one. Wait a minute&#x2026; This is the same as negating and then adding one! Which is how we negate a number in the two complement system. This is how negative numbers are represented. That's the magic of this trick :)
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgbe4322a" class="outline-2">
+<h2 id="orgbe4322a">Where can this be useful?</h2>
+<div class="outline-text-2" id="text-orgbe4322a">
+<p>
+While not super useful for modern high powered hardware, it might be useful in other contexts. Some of these are low power microcontrollers, retro computers and retro console programming. Some processors in these sort of devices are low powered, and sometimes we might need some clever tricks. The absolute value trick might prove useful where we simply want to avoid the extra cycles the jump call and conditional require, even though it shines the brightest in cases of pipelined processors. 
+</p>
+</div>
+</div>
