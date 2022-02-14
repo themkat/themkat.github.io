@@ -1,0 +1,100 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Bit tricks - Absolute value without branching
+tags: programming retro-computing
+---
+#+END_EXPORT
+
+Bit trickery is always interesting! Sometimes you can use them to avoid branching (like if-checks), other times they are useful to save a few CPU cycles to avoid expensive operations. The absolute value trick I will show you here, is mostly to avoid branching. Why would you want to avoid branching? Many newer processors, from the mid 90s and onward, do something called [[https://en.wikipedia.org/wiki/Instruction_pipelining][pipelining]] to achieve a form of instruction level parallelism. While a classic processor fetch an instruction, decode it, then execute, a pipelined processor can fetch the next instruction while the previous one is decoded. You can have multiple operations like this almost in parallel. If we have to branch, like for an if-check, we might not have fetched the correct next instruction anymore, and might have to fetch new ones (for the whole pipeline). This can be an expensive operation. Calculating absolute values is a problem where we often have to have a branch (an if-check for smaller than 0).
+
+
+It should be noted that modern computers like the X86, modern phones, modern ARM processors (like the ones in M1 Macs) etc. have branch prediction and are very fast. This makes bit trickery like the ones in this article unnecessary, and it will have little to no effect. The same is true for the Java Virtual Machine (JVM) which already does a lot of optimizations for you.
+
+
+
+Hopefully you remember what the absolute value is. It is simply a positive representation of the value, in other words it's the value without its sign. -10 will be 10, and 10 will still be 10. Mathematically we can define it like this:
+
+\begin{equation}
+|x| = \begin{cases}
+  x & \text{if } x \geq 0  \\
+  -x & \text{if } x < 0
+\end{cases}
+\end{equation}
+
+
+* Naive implementation with branching
+We can implement the mathematical formula above directly:
+#+BEGIN_SRC c
+  int absoluteValue(int input) {
+    if(input < 0) {
+      return -input;
+    }
+    else {
+      return input;
+    }
+  }
+#+END_SRC
+(we could also have used the ternary operator above, but decided to use a plain if for clarity)
+
+
+The implementation explains itself. Now onto the clever trick!
+
+
+* The bit trick
+For integers, the trick can be described like this: 
+#+BEGIN_SRC c
+  int absoluteValue(int input) {
+    int mask = input >> 31;
+    return (input ^ mask) - mask;
+  }
+#+END_SRC
+(can be done inline if you prefer to. Useful if you want to avoid the stack page for the function call. You might have a clever compiler already doing this for you though...)
+
+
+*Note! If you are compiling for multiple processors, with different bit sizes for int, you can use sizeof to calculate the byte-size of int and use the result to calculate the bit shift length (remember to subtract 1 from the total size!).*
+
+
+But wait... How does it work? First of all, let's note that we work with signed integers here, which means that the bit shift preserves the sign bit (0 for positive, 1 for negative). 
+
+
+Let's see what happens for a positive number (and also 0):
+- Mask becomes 0 (sign bit is propagated down to the lowest bit place)
+- Input XOR 0 becomes the input itself.
+- The input minus 0, is still the input itself.
+
+  
+Now let's take a negative number:
+- Mask becomes -1 (bit shift 31 places. Sign bit propagated, so the new empty places to the left is filled with the sign bit 1). This is the same as 1111 1111 1111 1111 1111 1111 1111 1111 for the integer above. (Read up on [[https://en.wikipedia.org/wiki/Two%27s_complement][two complement]] and how negative numbers are handled if this seems foreign to you).
+- Input XOR -1 becomes the (bit-)negated version of the input (the same as using the NOT operator on the input)
+- The result of the previous operation minus -1, which is the same as adding 1, becomes the same as multiplying the input variable by -1. Remember that negated value + 1 is how we get the negative version of our current number in the two complement system.
+
+
+You might now see the pattern here. For positive numbers (and 0), nothing happens, we just return the input number. For negative numbers, we negate them and add 1, which is the same as creating the negative version of our number in the two complement system.
+
+
+If that still sounds like magic to you, let's break it down further! You can probably skip these sections if you understand the trick already. 
+
+
+** (Bit) Negation if negative number
+All bits in the mask will either be 0 or 1, so let's take a look at a XOR table for a single mask bit:
+#+ATTR_HTML: :border 2 :rules all :frame border :align center :class blogpost-table
+| A | B | Result |
+|---+---+--------|
+| 0 | 0 |      0 |
+| 1 | 0 |      1 |
+| 0 | 1 |      1 |
+| 1 | 1 |      0 |
+
+Let's say B is the mask in this case. Take a close look. For 0 mask, the input (A) stays the same, while for the 1 mask it is negated! (in other words: imagine using the NOT operator on A only when B is 1). 
+
+
+** Two complement 
+We can easily see that for a positive number, we get the same number back (positive number XOR 0 - 0 is still the same number). What happens for negative ones? The number is first negated, then we subtract negative one. Wait a minute... This is the same as negating and then adding one! Which is how we negate a number in the two complement system. This is how negative numbers are represented. That's the magic of this trick :)
+
+
+* Where can this be useful?
+While not super useful for modern high powered hardware, it might be useful in other contexts. Some of these are low power microcontrollers, retro computers and retro console programming. Some processors in these sort of devices are low powered, and sometimes we might need some clever tricks. The absolute value trick might prove useful where we simply want to avoid the extra cycles the jump call and conditional require, even though it shines the brightest in cases of pipelined processors. 

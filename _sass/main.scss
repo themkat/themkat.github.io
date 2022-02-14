@@ -289,3 +289,14 @@ body {
 		white-space: pre-wrap;
 	}
 }
+
+.blogpost-table {
+	width: 50%;
+
+	thead {
+		background-color: gray;
+	}
+	tbody {
+		text-align: center;
+	}
+}
