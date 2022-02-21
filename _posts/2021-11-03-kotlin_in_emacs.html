@@ -9,9 +9,9 @@ Some people, including myself, grudgingly used IntellIJ IDEA for Kotlin programm
 </p>
 
 
-<div id="outline-container-org3685f75" class="outline-2">
-<h2 id="org3685f75">Quick recap: What is LSP</h2>
-<div class="outline-text-2" id="text-org3685f75">
+<div id="outline-container-org66676c4" class="outline-2">
+<h2 id="org66676c4">Quick recap: What is LSP</h2>
+<div class="outline-text-2" id="text-org66676c4">
 <p>
 LSP is an acronym for <a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a>. It's a common JSON-RPC protocol used to create servers for different languages. This makes it possible to create tooling in all editors that use these servers to provide IDE functionality (i.e, not editor specific tooling). There are LSP modes to use these servers for VSCode, Vim, Emacs and more! It was developed by Microsoft, but later standardized. Great to have a standard way of making these servers, as it is now much easier to create completions in most editors with less custom code!
 </p>
@@ -19,9 +19,9 @@ LSP is an acronym for <a href="https://microsoft.github.io/language-server-proto
 </div>
 
 
-<div id="outline-container-org972a6c9" class="outline-2">
-<h2 id="org972a6c9">Kotlin Language Server</h2>
-<div class="outline-text-2" id="text-org972a6c9">
+<div id="outline-container-orgbb7f730" class="outline-2">
+<h2 id="orgbb7f730">Kotlin Language Server</h2>
+<div class="outline-text-2" id="text-orgbb7f730">
 <p>
 We have talked about LSP and what it is, so the next question you might ask is what LSP server we use for Kotlin? The answer is <a href="https://github.com/fwcd/kotlin-language-server">Kotlin Language Server</a>. Global completions (e.g, from other files or Maven dependencies) were added this summer, so now it has the complete functionality we would need to write Kotlin code. (understandable that it took some time, as the issue was a little tricky to solve, and there are few people working on this project. Kudos to the developers, you guys are awesome! &lt;3).
 </p>
@@ -47,9 +47,9 @@ If Emacs for some reason won't include your PATH variable from your shell, you c
 </div>
 
 
-<div id="outline-container-org839fadb" class="outline-2">
-<h2 id="org839fadb">lsp-mode</h2>
-<div class="outline-text-2" id="text-org839fadb">
+<div id="outline-container-orga2f1d6a" class="outline-2">
+<h2 id="orga2f1d6a">lsp-mode</h2>
+<div class="outline-text-2" id="text-orga2f1d6a">
 <p>
 <a href="https://github.com/emacs-lsp/lsp-mode">lsp-mode</a> is my favorite LSP mode in Emacs (you also have Eglot and others), and it's continually being developed and maintained. The last few years all of the early bugs were fixed, and now it is close to perfect (might also be that newer versions of Emacs has solved some of them as well).
 </p>
@@ -113,9 +113,9 @@ Feel free to check out the pages for <a href="https://github.com/emacs-lsp/lsp-m
 </div>
 
 
-<div id="outline-container-org200ce01" class="outline-2">
-<h2 id="org200ce01">KScript?</h2>
-<div class="outline-text-2" id="text-org200ce01">
+<div id="outline-container-orgdd7ac8b" class="outline-2">
+<h2 id="orgdd7ac8b">KScript?</h2>
+<div class="outline-text-2" id="text-orgdd7ac8b">
 <p>
 Before we get started, why do I use <a href="https://github.com/holgerbrandl/kscript">KScript</a>? Why not just pure Kotlin Script (that is included by default). This is because the built in version is missing some features like Maven dependencies, file inclusions and more. KScript gives us all of these. Now back on topic&#x2026;
 </p>
