@@ -1,0 +1,18 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: default
+title: Privacy policy
+---
+#+END_EXPORT
+
+This site by itself does not collect any data about users. There are some minor exceptions:
+
+- Amazon uses cookies to track purchases if you click any affiliate links.
+- Google uses cookies to serve ads based on your prior visits to this website or other websites.
+- Google's use of advertising cookies enables it and its partners to serve ads based on your visit to this site and/or other sites on the Internet.
+- Users may opt out of personalized advertising by Google by visiting [[https://www.google.com/settings/ads][Ads Settings]].
+
+
