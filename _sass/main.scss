@@ -235,9 +235,12 @@ body {
 	float: left;
 }
 
-.amazonbanners {
+.adbanners {
 	margin-top: 5vh;
-
+	margin-left: auto;
+	margin-right: auto;
+	width: 80vw;
+	
 	.aligncenter * {
 		margin-left: auto;
 		margin-right: auto;
