@@ -1,0 +1,95 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Why and how to use Github Actions
+tags: programming devops automation
+---
+#+END_EXPORT
+
+Automating repetitive tasks is great! My favorite tool these days for automating operations relating to code and development, is Github Actions. I even use it for this site! I have used Github Actions both for work and spare time for some time. Sadly the work stuff is proprietary (yes, organisations can be private on Github), so I have less examples to show here. Wonder why you should consider automating more? Or consider using Github Actions for your next project? Then continue reading!
+
+
+This article will focus on the complete basics, and not be too long. Links to documentation and other further reading are included. There might also be some future articles from me on more advanced Github Actions usage. 
+
+
+* Why automate?
+Are you still doing releases and other manual tasks manually? Think that a lot of automation is something just big organizations gets benefits from? Think again, everyone can reap the benefits of automating tasks. Startups, lone wolf coders etc. Automation pipelines (of tasks) saves a lot of time compared to doing things manually. Even when each task only takes you a couple of minutes, it will eventually stack up to longer periods of time.  If you don't have to do it manually, you might also do it more often (we are lazy and want to avoid manual work). This empowers you to do releases, builds etc. even more often, and it becomes less scary to do so (humans makes mistakes more often than you might like, and if we have to do it manually, the probability of doing something wrong increases).
+
+
+The big added benefit of not doing this on one persons computer is also that you get less issues of the "works on my machine"-type...
+
+
+Some examples of tasks you can automate in a pipeline include (this is common for all kinds of tools, NOT just Github Actions): 
+- Building, running tests, linting, code formatting etc.
+- Release in a consistent automated way. Saves time instead of doing it locally on a machine and pushing to a package archive (Github has [[https://docs.github.com/en/actions/security-guides/encrypted-secrets][Secrets]], so you can save tokens for your package archives or other keys you don't want to be public). This may also include tagging git commits or similar.
+- Deployments to cloud providers (Azure, Linode, AWS etc.), on-prem servers etc.
+- Publish documentation (api documentation, webpages etc.) to Github Pages or other documentation website.
+- Sending Slack messages on build failures and similar issues.
+- Scheduled tasks on your repo (checking for older PRs, issues etc.). If you use older deployment methods (not Kubernetes, and not automated starts on crashes), you can check if applications are running and restart if necessary. Checks for virtual machine updates and update periodically using something like Ansible Playbooks.
+- Keeping dependencies up-to-date. [[https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically][Easy on Github with Dependabot]] (useful, but not covered in this article). See documentation for more details. [[https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/enabling-and-disabling-dependabot-version-updates][Simple YAML file with config]]. (not technically Github Actions, but still a useful automation tool!)  
+
+
+
+* Why Github Actions?
+You may ask: Why Github Actions? Why not Jenkins, Travis, CircleCI etc.? There are several reasons, each depending on the tool. For Jenkins primarily, one of the main reasons is the loss of control you sometimes get. Administrators have to install plugins, and in some organizations, the users don't have access to install them or play around with new ones. Github Actions on the other hand, makes it easy to try new things. Some of these things have improved by using Docker containers, but you will then have to do more yourself. Using a ready-made action (e.g, setup Java, setting up Kubernetes etc.) makes creating automation pipelines quicker and simpler. The added bonus is the readability by using reusable chunks (actions).  
+
+
+In addition, Github Actions gives the following benefits:
+- Easy to edit YAML syntax. YAML has its own issues, but works great when the mandatory keywords are simple and to the point. If you often screw up indentations and similar things, consider [[https://github.com/adrienverge/yamllint][using yamllint to validate your yaml files]] :)
+- Integrated into the Github ecosystem. If you use Github, then using Actions will easily work with the rest of the Github tools. 
+- Works great in [[https://cli.github.com/][the Github CLI]]! Probably considered part of the previous point, but is its own selling point for me. [[https://themkat.net/2021/08/04/more_cli_tools.html][Viewing a Github actions run was actually covered in an earlier article]]. 
+
+  
+* Basics of Github Actions
+Github Actions uses a simple YAML syntax. To not bore you with minor details, let's just look at a very simple pipeline that can be copy-pasted and used (put into the .github/workflows directory). The following workflow/action builds your Maven project, as well as setting up the necessary configuration (checking out code and having JDK and Maven available).
+
+#+BEGIN_SRC yaml
+  name: Build a Maven project
+
+  on: [push, pull_request]
+
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-java@v2
+          with:
+            distribution: 'temurin'
+            java-version: '17'
+        - name: Build and run tests
+          run: |
+            mvn clean install
+#+END_SRC
+
+As you can see:
+- Your workflow/action has a name (in this case "Build a Maven project")
+- It is ran on pushes and pull requests
+- It contains one job called build. This build runs on Ubuntu ([[https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners][read the documentation to see the available runners]]) and contains 1 step and 2 ready made actions (checkout and making command line tools available). uses means we are using a ready-made action, while the run keyword is used to run shell commands (you can use scripts as well!). The ready made actions may be one or several steps, as you will see when running the actions. It makes also contain tear-down operations (e.g, memory cleanup, shutdown of Docker containers etc.) when the workflow is done. The action names map directly to repositories, and the version after the @-symbol is the tag or commit version. 
+
+*Note! A good understanding of the command line can be beneficial in some cases. [[https://themkat.net/2021/10/02/no_nonsense_command_line.html][Read my beginners guide]] if you are unsure about command lines.*
+
+
+You may ask: Can I have multiple jobs in one file? Yes! [[https://docs.github.com/en/actions/using-workflows/advanced-workflow-features#creating-dependent-jobs][You can have multiple jobs running in parallel, jobs can depend on each other and more]]. 
+
+
+
+* Available actions and further reading
+So where can I find available Actions? Github makes this easy with [[https://github.com/marketplace?type=actions][its Marketplace]] (don't be fooled by the name, almost all are free! Consider sponsoring the developers if you really love their work though!). Some useful ones include:
+
+- [[https://github.com/actions/checkout][checkout]] (probably the most used one. Checks out your code)
+- [[https://github.com/actions/setup-java][setup-java]]
+- [[https://github.com/actions/setup-python][setup-python]]
+- [[https://github.com/hashicorp/setup-terraform][setup-terraform]] (used to set up the Terraform CLI on the Github Actions runner)
+- [[https://github.com/purcell/setup-emacs][setup-emacs]] (To use Emacs in a pipeline, used in this blog to make HTML files for use with Jekyll from my Org mode files. LOVE It!)
+- [[https://github.com/Azure/k8s-deploy][deploy Kubernetes resources]]
+  
+
+
+Want something more custom, or for a program you can't seem to find an action for? [[https://docs.github.com/en/actions/creating-actions][Then you can create your own]]! Templates exists for JavaScript, TypeScript, and custom Docker container based ones! So you can do almost anything you'd like here! Feel like you are repeating the same sequence of actions in almost every build you make? [[https://docs.github.com/en/actions/creating-actions/creating-a-composite-action][Then you can make a composite action]]!
+
+
+Piqued your interest? Then I would recommend checking out [[https://github.com/sdras/awesome-actions][the Awesome Actions repo]] for a great amount of links to actions, tutorials and other articles about Github Actions. I also found [[https://posthog.com/blog/automating-a-software-company-with-github-actions][a great article]] with a massive amount of examples for various use cases, where the focus is automating your software development company. 
