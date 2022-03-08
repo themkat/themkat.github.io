@@ -25,8 +25,12 @@ Ansible is often described as a configuration management tool, but solves severa
   
 So instead of using different tools to solve these problems, we can use Ansible for all of them (at least the first two!). Pretty neat!
 
+# TODO: why ansible? No daemon etc. 
+# TODO: mentioned the stateless parts. No extra state files, daemons or other things are needed on the machines. Just Python (3). Puppet, Chef etc. needs software on the servers to run... 
+
 
 # TODO: assumptions like: assume you have a vm or environment to run these against. Can be Docker containers, Virtual machines (what i use), phycsical machines etc.
+#      if you follow the examples I also assume you have installed Ansible on a machine, the machine you are going to administer the other machines from.
 
 # TODO: is a heading like this necessary?
 * What can Ansible be used for?
@@ -51,22 +55,54 @@ So instead of using different tools to solve these problems, we can use Ansible 
 # TODO: examples of different tasks in each category?
 * Basics of Ansible
 # TODO: the basics concepts like inventories etc.
+We have already introduced Ansible as a configuration management system, but what more do we need to know before using it for something? The most important file we need is something called an inventory file.
 
-# TODO: why ansible? No daemon etc. 
-# TODO: mentioned the stateless parts. No extra state files, daemons or other things are needed on the machines. Just Python (3). Puppet, Chef etc. needs software on the servers to run... 
+An inventory file describes the machines we will connect to, as well as information on them like user names, SSH key to use (on your local filesystem) and more depending on your needs. ([[https://docs.ansible.com/ansible/latest/reference_appendices/config.html][there are also more ways to configure that you can look into]], but for now we will keep it simple).
 
-# TODO: mention idempotency here...?
+Divided into groups....
 
-# TODO: jinja2 mentioned somewhere?
-#       link to some playbooks by Jeff that uses more advanced jinja features somewhere?
+These files can be ini or yaml files, but I usually make ini-configuration files. One possible example can look like this:
+# TODO: single one.
+#+BEGIN_SRC text
+  [ubuntu]
+  192.168.111.2 ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/ubuntu/parallels/private_key
+#+END_SRC
+	
+  Or with multiple machines and groups:
+#+BEGIN_SRC text
+  [server]
+  192.168.111.2 ansible_user=server ansible_ssh_private_key_file=server_ssh_key
+
+  [worker]
+  192.168.111.3 
+  192.168.111.4
+
+  [worker:vars]
+  ansible_user=worker
+  ansible_ssh_private_key_file=worker_ssh_key
+#+END_SRC
+
+# TODO: find a place to link to the reference on variables
+#       https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+Here you also see a new concept of variables in action. Because both the worker machines share the same information, we can define them in a common variable section.
+
 
 * Ad-hoc tasks execution
 # TODO: should modules be explained here? or maybe in the previous section
+We have an inventory file, we so we can finally start using Ansible for something! Using it for ad-hoc task execution can be a very handy way of running commands on multiple machines. Let us look at some examples. 
+
+
+A common task is to check the free/available RAM on each machine. Usually we would log into each machine with SSH, but with Ansible we can run it on all our machines at the same time thanks to the inventory file!
+#+BEGIN_SRC bash
+ansible -i inventory.ini all -a "free -m"
+#+END_SRC
+
 
 # TODO: what examples to do?
 #    - the classic one: check free ram
 #    - installing a package
-#    - 
+#    -
+
 
 * Configuration management - Playbooks
 # TODO: mention why playbooks? Avoiding unicorn servers? 
@@ -83,10 +119,15 @@ So instead of using different tools to solve these problems, we can use Ansible 
 
 # TODO: introduce modules. have some examples with useful ones? or just link to some? lineinfile, template, slurp, file, package (apt and yum as well), 
 
+# TODO: mention idempotency here...?
+
+# TODO: jinja2 mentioned somewhere?
+#       link to some playbooks by Jeff that uses more advanced jinja features somewhere?
 
 
 # TODO: mention that some examples are constructed, others can be found in my repo
 ** Example: Installing Emacs and setting up my configuration
+For our first example, let's do the most important initial setup I do on new computers: installing and configuring Emacs!
 
 # TODO: should we add the debian part? 
 #+BEGIN_SRC yaml
@@ -162,7 +203,11 @@ So instead of using different tools to solve these problems, we can use Ansible 
 ** Roles and collections
 # TODO: should I mention that i'm bad at using them, and focus mostly on the features above?
 
+# TODO: introduce Ansible Galaxy here?
+
 Roles, collection of tasks we can import. Or is that too oversimplifiged.
+Think of it as include_tasks on steroids!  A role we use can have its own variables, files, templates etc., making it a powerful way of making the closest thing we have to "Ansible packages".
+# TODO: how far should I go here? simple usage and thats it? link to some examples?
 
 Collections, plugins, roles, similar. As in the name: collection. How to explain that in a good way?
 
