@@ -34,25 +34,19 @@ So instead of using different tools to solve these problems, we can use Ansible 
 
 # TODO: is a heading like this necessary?
 * What can Ansible be used for?
+We mentioned configuration management and deployments, so it can obviously be used to manage your machines (physical, virtual etc.). You might just brush this off, but think of some possible use cases (some are not obvious) first:
+
+- Setting up each machine in an infrastructure. Sometimes the cloud provider doesn't have exactly what we want, and we want to set up a virtual machine (VM). All of the big cloud providers give you an option to set up your own VM.
+- Some organizations may not be able to use public clouds, and may need to set up things themselves by running different commands on their servers. Ansible is great for this.
+- Setting up Raspberry Pis (or other small computers) to do what you want (Kubernetes clusters, databases, dashboards, DNS servers, web servers, other setups of various tools)
+- Your own local setup. Each time you have to reinstall your OS, it is a hazzle to set up everything. There is always some tool you forget at the beginning. What about setting up an Ansible playbook for it? I found [[https://github.com/geerlingguy/mac-dev-playbook][this inspiring playbook to set up a Mac]].
+- [[https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/][Building containers for Docker]] (or other container runtimes).
+- [[https://sdk.operatorframework.io/docs/building-operators/ansible/quickstart/][Writing Kubernetes operators using the Operator SDK]].
+- Ad-hoc execution of commands on all the computers you are handling (to check available ram etc.). Useful for extra monitoring where needed (obviously you have dashboards and tools most of the time, but it can still prove useful).
+  
+So if you still thought of Ansible as a boring configuration tool before this list, you have hopefully changed your mind now ;)
 
 
-# TODO: mention different things we can use Ansible for?
-#   - setting up each machine in an infrastructure. Sometimes the cloud provider doesn't have exactly what we want, and we want to set up a VM
-#   - Some organizations may not be able to use public clouds, and may need to set up things locally by running different commands. Ansible is great for this.
-#   - Your own local setup. Each time you have to reinstall your OS, it is a hazzle to set up everything. There is always some tool you forget at the beginning. What about setting up an Ansible playbook for it?
-#   - Building containers for Docker etc.
-#   - setting up Raspberry Pis (or other small computers) to do what you want (kubernetes clusters, dashboard, other setups of various tools)
-#   - Ad-hoc running commands on all the computers you are handling (to check available ram etc.).
-#   - writing Kubernetes operators using the SDK (link pl0x) https://sdk.operatorframework.io/docs/building-operators/ansible/quickstart/
-# -
-
-# TODO: depressing.. will public clouds just consume everything? Maybe a "fun" research topic?
-
-# docker images (useful or not?):
-# https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/
-
-
-# TODO: examples of different tasks in each category?
 * Basics of Ansible
 # TODO: the basics concepts like inventories etc.
 We have already introduced Ansible as a configuration management system, but what more do we need to know before using it for something? The most important file we need is something called an inventory file.
@@ -88,7 +82,6 @@ Here you also see a new concept of variables in action. Because both the worker 
 
 
 * Ad-hoc tasks execution
-# TODO: should modules be explained here? or maybe in the previous section
 We have an inventory file, we so we can finally start using Ansible for something! Using it for ad-hoc task execution can be a very handy way of running commands on multiple machines. Let us look at some examples. 
 
 
@@ -97,25 +90,45 @@ A common task is to check the free/available RAM on each machine. Usually we wou
 ansible -i inventory.ini all -a "free -m"
 #+END_SRC
 
+If we wanted to run it only on the worker group from the inventory file above, we would use worker in place of all:
 
-# TODO: what examples to do?
-#    - the classic one: check free ram
-#    - installing a package
-#    -
+#+BEGIN_SRC bash
+ansible -i inventory.ini worker -a "free -m"
+#+END_SRC
+
+
+What about installing a program like git on all servers, and making sure it's the latest version?
+#+BEGIN_SRC bash
+  ansible -i inventory.ini all -m package -a "name=git state=latest"
+#+END_SRC
+
+
+The -m option denotes the module we run, which is by default the command module. We will dive deeper into modules in the next section on playbooks.
+
+
+If you run the above commands, you will see some hosts giving a status of changed and some giving a status of ok. This is meant to signal if the state on the server was changed or not. If you just run shell commands directly, it will always report changed (as Ansible has no chance to know if state was changed or not). The modules, like package, on the other hand will report this correctly (e.g, if package is already the latest version, you will see ok as the status). 
 
 
 * Configuration management - Playbooks
 # TODO: mention why playbooks? Avoiding unicorn servers? 
+While running commands on the server ad-hoc is great, the main strength of Ansible is its playbooks. Why? When we run commands on various servers, we can quickly make unicorn servers. A unicorn server is a server we can't reproduce quickly if something goes wrong (trust me, you will quickly forget a step or two you did manually). Automating the setup, and maintenance of servers, will avoid this problems and make them easier for you to handle.
 
-# TODO: some intro on playbooks describing the general structure
 
-# TODO: parts of a play file:
-#        - plays
-#        - tasks
-#       
+# TODO: mention the handlers etc. as well?
+A playbook contains one or more plays, where a play is a series of tasks.
+#+BEGIN_SRC yaml
+  ---
+  - hosts: host-group
+    # tasks, handlers, roles and more
 
-# TODO: show the basic structure of a playbook file. 
+  - name: Runs on all hosts
+    hosts: all
+    # tasks, handlers, roles and more
+#+END_SRC
 
+As you can see, the names are optional. We will see examples on the content of the plays in the example sections. I always learn best from examples, so hopefully you do too.
+
+# TODO: running a playbook...
 
 # TODO: introduce modules. have some examples with useful ones? or just link to some? lineinfile, template, slurp, file, package (apt and yum as well), 
 
@@ -123,6 +136,7 @@ ansible -i inventory.ini all -a "free -m"
 
 # TODO: jinja2 mentioned somewhere?
 #       link to some playbooks by Jeff that uses more advanced jinja features somewhere?
+# https://jinja.palletsprojects.com/en/3.0.x/
 
 
 # TODO: mention that some examples are constructed, others can be found in my repo
@@ -180,7 +194,7 @@ For our first example, let's do the most important initial setup I do on new com
 # TODO: find a good link to a basic no nonsense introduction to using ansible vault
 (a better way to handle the password would be to use something like Ansible Vault)
 
-  The playbook we have 
+You might wonder how the tasks from the import_tasks operation looks like? Just a lists of tasks to do:
 #+BEGIN_SRC yaml
   ---
   - name: Install vsftpd
@@ -190,13 +204,46 @@ For our first example, let's do the most important initial setup I do on new com
     service: name=vsftpd state=started enabled=true
 #+END_SRC
 
+# TODO: explain the gather facts stuff
+You might have noticed the variable ansible_os_family above. How do Ansible know which operating system family their hosts have? Do you have to set it yourself? No, you don't! If you have tried running a playbook, you might have noticed a stage called gather facts. In this stage, Ansible collects facts about your system and populates various variables. You can also run this step manually using [[https://docs.ansible.com/ansible/latest/collections/ansible/builtin/setup_module.html][the setup module]] and see all the information Ansible collects in this stage:
+
+#+BEGIN_SRC bash
+  ansible -i inventory.ini mygroup -m setup 
+#+END_SRC
+
+
+** Example:
+# TODO: one example with loops
+
+** Modules and extra tools to make playbooks
+
 # TODO: example with import_playbook? or links to documentation?
 # TODO: blocks?
 
-# TODO: explain the gather facts stuff
 
+There are [[https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html][many Ansible modules you can use]], and if you don't find what you need you will probably find it in a collection (see below). Some useful highlights include:
+- package, apt, yum
+- file
+- lineinfile
+- template
+- get_uri
+- k8s and k8s_info
+- 
+
+# 
 
 # TODO: example with environment variables? or is that something that is covered okay by reading about it? 
+
+** Inventory plugins
+Maybe you manage a lot of computers, create new ones quickly, and find it tedious to update your inventory file? It grows big too! Do I really need to write all my IPs/hostnames in a file? No! There are actually [[https://docs.ansible.com/ansible/latest/collections/community/general/index.html#inventory-plugins][plugins that can help you dynamically fetch the inventory]] based on certain parameters. Also, [[https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html][AWS EC2 plugin]], [[https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_inventory.html][Azure plugin]], and many more exists, even if you sometimes have to use [[https://docs.ansible.com/ansible/latest/galaxy/user_guide.html][ansible-galaxy to install them]]. Maybe you have tagged your virtual machine or something similar to identify them? Then use those specific tags to put them into host groups, and you are all set!
+
+
+** Testing playbooks?
+There are indeed tools you can use to test your playbooks, and to work in a more test driven approach. My approach so far has been the following:
+1. Use a virtual machine to define the basic setup. Here I use [[https://github.com/adrienverge/yamllint][yamllint]] and [[https://github.com/ansible-community/ansible-lint][ansible-lint]] to fix basic best practices and possible issues (ansible-lint is quite clever here!).
+2. Use [[https://github.com/ansible-community/molecule][Molecule]] to write basic tests, fix idempotency issues missed earlier, make sure that setup works possibly more bare bones setups than the VMs etc. Molecule config is YAML, and the tests themselves are written in Ansible Playbook syntax. You may wonder what the it tests your playbooks on? You can choose VMs (using Vagrant), containers (using Docker) or probably something else. I use Docker for my tests, and it works great. 
+
+Testing playbooks is a topic in itself, so to not clutter up the entire article we will save that for a possible later article :) I will say that [[https://github.com/adrienverge/yamllint][yamllint]] and [[https://github.com/ansible-community/ansible-lint][ansible-lint]] together filters out the worst syntax related mistakes, and ansible-lint also checks for some best practices that can help you avoid mistakes. 
 
 
 # TODO: should collections and roles be explained quickly? Maybe with a link to reading more. Or can creating a plugin for something be a future article?
@@ -205,35 +252,14 @@ For our first example, let's do the most important initial setup I do on new com
 
 # TODO: introduce Ansible Galaxy here?
 
-Roles, collection of tasks we can import. Or is that too oversimplifiged.
-Think of it as include_tasks on steroids!  A role we use can have its own variables, files, templates etc., making it a powerful way of making the closest thing we have to "Ansible packages".
+Roles are "packages" of tasks we can import. Think of it as include_tasks on steroids!  A role we use can have its own variables, files, templates etc., making it a powerful way of making the closest thing we have to "Ansible packages".
 # TODO: how far should I go here? simple usage and thats it? link to some examples?
 
-Collections, plugins, roles, similar. As in the name: collection. How to explain that in a good way?
 
-
-** Inventory plugins
-Maybe you manage a lot of computers, create new ones quickly, and find it tedious to update your inventory file? It grows big too! Do I really need to write all my IPs/hostnames in a file? No! There are actually [[https://docs.ansible.com/ansible/latest/collections/community/general/index.html#inventory-plugins][plugins that can help you dynamically fetch the inventory]] based on certain parameters. Also, [[https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html][AWS EC2 plugin]], [[https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_inventory.html][Azure plugin]], and many more exists, even if you sometimes have to use [[https://docs.ansible.com/ansible/latest/galaxy/user_guide.html][ansible-galaxy to install them]]. Maybe you have tagged your virtual machine or something similar to identify them? Then use those specific tags to put them into host groups, and you are all set!
-
-
-** Testing playbooks?
-# TODO: mention molecule and testing somewhere? linting with various tools etc.?
-There are indeed tools you can use to test your playbooks, and to work in a more test driven approach. My approach so far has been the following:
-1. Use a virtual machine to define the basic setup. Here I use yamllint and ansible-lint to fix basic best practices and possible issues (ansible-lint is quite clever here!).
-2. Use Molecule to write basic tests, fix idempotency issues missed earlier, make sure that setup works possibly more bare bones setups than the VMs etc.
-
-Testing playbooks is a topic in itself, so to not clutter up the entire article we will save that for a possible later article :)
-
-* Still relevant in a cloud native world?
-# Last: Is Ansible still relevant in a Kubernetes, cloud native world? yes. Short discussion, link to Geerlingguys excellent summary article. making containers etc.
-#       any other points to mention? 
+Collections are, like the name suggests, collections of roles, plugins, modules and similar. Why do we need it when we have roles? Roles can have plugins included after all... Well, roles are not really made for that, but are made for executing tasks (i.e, it happens at default when importing roles in a playbook). Collections, on the other hand, makes including different resource types easier. If that sounds interesting, I suggest [[https://docs.ansible.com/ansible/latest/user_guide/collections_using.html][reading the documentation]]. Collections, like roles, is a topic in itself, and I would not make it justice in a single blog article.
 
 * Further reading and resources
-
-# Jeff Geerlings Ansible 101 video series (covers almost everything you would like to know):
-# https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN
-
-# geerlings book Ansible for Devops:
-# https://www.ansiblefordevops.com/
+Hopefully you now know the basics of Ansible, and have some links to gain more knowledge. To learn Ansible, I think the best resource is [[https://www.ansiblefordevops.com/][Jeff Geerling's book Ansible for Devops]]. If you prefer videos, he has also done a [[https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN][Ansible 101 video series]]. These resources covers almost everything you would like to know. To really learn Ansible you have to play around with it as well off course.
 
 
+Some of you may be asking: Is Ansible still useful in a cloud native environment? Do we still need to manage computers? Jeff Geerling has also written [[https://www.ansible.com/blog/how-useful-is-ansible-in-a-cloud-native-kubernetes-environment][a very interesting article on that]]. The answer is yes! You may not always get what you need from managed services on cloud platforms, and may need to set things up yourself in virtual machines. Ansible can also be used to manage your own Kubernetes clusters, create container images, make operators and more. So even if you are not maintaining your own machines, there are use cases for it in this cloud native world.
