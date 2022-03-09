@@ -9,14 +9,12 @@ tags: cli devops automation
 ---
 #+END_EXPORT
 
-More automation!
+# TODO: see if we/I way of writing needs to be changed up a bit.
 
-# TODO: mention that I put off looking into Ansible for the longest time, because I underestimated how powerful it is. 
+More automation! Ansible is a great tool to automate the configuration and handling of your computers. I have to admit I put off looking into Ansible for the longest time, simply because I underestimated how powerful it is! At the surface it seems like just another configuration management tool, but it is not just a way of running shell scripts like some may get you to believe. It comes with great tooling, and have great features that help you get going fast. In this article I will focus on the complete basics to get you started, and there will be features I won't cover here. Hopefully you will be aqainted with a few terms, and get some links that will help you explore these features further. Are you ready to learn the best automation tool for setting up computers?
 
-# TODO: mention that we will focus on the complete basics to get you started, and that there are several features we won't be able to cover. Hopefully you will be aqainted with a few terms, and get some links that will help you explore these features further. Maybe also future articles if I feel like I can explain something better. Further reading at the end? Jeff Geerlings video series and book. 
-# TODO: mention that I link to blog articles or similar if I feel like it is more straight to the point and explains better than the official documentation.
 
-# TODO: mention the 3 things Ansible can be used for and which tools it can replace:
+
 Ansible is often described as a configuration management tool, but solves several problems:
 - Ad-hoc task execution, usually done by logging into each server using SSH and executing tasks.
 - Deployments and configuration management, as mentioned. Deploying server software and configuring it. I usually put all of these in the configuration management umbrella when done together like with Ansible. Used to be solved with tools like Puppet, Chef and Fabric.
@@ -25,16 +23,15 @@ Ansible is often described as a configuration management tool, but solves severa
   
 So instead of using different tools to solve these problems, we can use Ansible for all of them (at least the first two!). Pretty neat!
 
-# TODO: why ansible? No daemon etc. 
-# TODO: mentioned the stateless parts. No extra state files, daemons or other things are needed on the machines. Just Python (3). Puppet, Chef etc. needs software on the servers to run... 
+
+Some of you may wonder, why not use Puppet or Chef instead for at least some of  these tasks? The answer for me is simple, Ansible doesn't require anything to be on the hosts you are interacting with, except Python 3. No daemon, which both Puppet and Chef requires.
 
 
-# TODO: assumptions like: assume you have a vm or environment to run these against. Can be Docker containers, Virtual machines (what i use), phycsical machines etc.
-#      if you follow the examples I also assume you have installed Ansible on a machine, the machine you are going to administer the other machines from.
+If you want to play with Ansible, I can recommend running it against a virtual machine either locally or from a cloud provider. The easiest way locally is to use Vagrant, which is what I'm using. You can also use a physical machine you have available. The most important aspect is that you have access via SSH. 
 
-# TODO: is a heading like this necessary?
+
 * What can Ansible be used for?
-We mentioned configuration management and deployments, so it can obviously be used to manage your machines (physical, virtual etc.). You might just brush this off, but think of some possible use cases (some are not obvious) first:
+We mentioned configuration management and deployments, so it can obviously be used to manage your machines (physical, virtual etc.). You might just brush this off, but think of some possible use cases first (some are not obvious):
 
 - Setting up each machine in an infrastructure. Sometimes the cloud provider doesn't have exactly what we want, and we want to set up a virtual machine (VM). All of the big cloud providers give you an option to set up your own VM.
 - Some organizations may not be able to use public clouds, and may need to set up things themselves by running different commands on their servers. Ansible is great for this.
@@ -56,13 +53,12 @@ An inventory file describes the machines we will connect to, as well as informat
 Divided into groups....
 
 These files can be ini or yaml files, but I usually make ini-configuration files. One possible example can look like this:
-# TODO: single one.
 #+BEGIN_SRC text
   [ubuntu]
   192.168.111.2 ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/ubuntu/parallels/private_key
 #+END_SRC
 	
-  Or with multiple machines and groups:
+Or with multiple machines and groups:
 #+BEGIN_SRC text
   [server]
   192.168.111.2 ansible_user=server ansible_ssh_private_key_file=server_ssh_key
@@ -76,9 +72,8 @@ These files can be ini or yaml files, but I usually make ini-configuration files
   ansible_ssh_private_key_file=worker_ssh_key
 #+END_SRC
 
-# TODO: find a place to link to the reference on variables
-#       https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
-Here you also see a new concept of variables in action. Because both the worker machines share the same information, we can define them in a common variable section.
+
+Here you also see a new concept of variables in action, which we will see more of in later sections. Because both the worker machines share the same information, we can define them in a common variable section.
 
 
 * Ad-hoc tasks execution
@@ -110,7 +105,6 @@ If you run the above commands, you will see some hosts giving a status of change
 
 
 * Configuration management - Playbooks
-# TODO: mention why playbooks? Avoiding unicorn servers? 
 While running commands on the server ad-hoc is great, the main strength of Ansible is its playbooks. Why? When we run commands on various servers, we can quickly make unicorn servers. A unicorn server is a server we can't reproduce quickly if something goes wrong (trust me, you will quickly forget a step or two you did manually). Automating the setup, and maintenance of servers, will avoid this problems and make them easier for you to handle.
 
 
@@ -129,10 +123,19 @@ A playbook contains one or more plays, where a play is a series of tasks.
 As you can see, the names are optional. We will see examples on the content of the plays in the example sections. I always learn best from examples, so hopefully you do too.
 
 # TODO: running a playbook...
+A playbook is run with the ansible-playbook command:
+#+BEGIN_SRC bash
+  ansible-playboook -i inventory.ini playbook.yml
+#+END_SRC
+
+Where playbook.yml is our playbook file and inventory.ini is our inventory configuration.
+
+
 
 # TODO: introduce modules. have some examples with useful ones? or just link to some? lineinfile, template, slurp, file, package (apt and yum as well), 
 
-# TODO: mention idempotency here...?
+# TODO: better way to explain it?
+A best practice for Ansible playbooks is to build them idempotent. Idempotency simply means that running something multiple times should have the same result as running it once. No failures the second time, no changes etc. Testing tools, which I will briefly explain later, test for this being the case.
 
 # TODO: jinja2 mentioned somewhere?
 #       link to some playbooks by Jeff that uses more advanced jinja features somewhere?
@@ -212,8 +215,41 @@ You might have noticed the variable ansible_os_family above. How do Ansible know
 #+END_SRC
 
 
-** Example:
-# TODO: one example with loops
+You might also notice that we declare a username variable above? [[https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html][Ansible provides many different ways of creating and interacting with variables]].
+
+
+** Example: Setting up user accounts and Emacs for each, variable amount of users
+#+BEGIN_SRC yaml
+   ---
+   - hosts: all
+     become: true
+
+     vars:
+       users:
+         - themkat
+         - arttheclown
+         - leatherface
+   
+     tasks:
+       - name: Make sure Emacs is installed
+         package: 
+           name:
+             - emacs
+             - git
+            state: present
+
+        - name: set up users
+          user:
+            name: "{{ item }}"
+          with_items: "{{ users }}"
+          
+        - name: Download Emacs  config
+          git:
+            repo: https://github.com/themkat/.emacs.d.git
+            dest: "/home/{{ item }}.emacs.d"
+          with_items: "{{ users }}"
+#+END_SRC
+
 
 ** Modules and extra tools to make playbooks
 
