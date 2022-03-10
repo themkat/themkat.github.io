@@ -1,0 +1,476 @@
+---
+layout: blogpost
+title: Introduction to Ansible
+tags: cli devops automation
+---
+
+<p>
+More automation! Ansible is a great tool to automate the configuration and handling of your computers. I have to admit I put off looking into Ansible for the longest time, simply because I underestimated how powerful it is! At the surface it seems like just another configuration management tool, but it is not just a way of running shell scripts like some may get you to believe. It comes with great tooling, and have great features that help you get going fast. In this article I will focus on the complete basics to get you started, and there will be features I won't cover here. Hopefully you will be aqainted with a few terms, and get some links that will help you explore these features further. Are you ready to learn the best automation tool for setting up computers?
+</p>
+
+
+
+<p>
+Ansible is often described as a configuration management tool, but solves several problems:
+</p>
+<ul class="org-ul">
+<li>Ad-hoc task execution, usually done by logging into each server using SSH and executing tasks.</li>
+<li>Deployments and configuration management, as mentioned. Deploying server software and configuring it. I usually put all of these in the configuration management umbrella when done together like with Ansible. Used to be solved with tools like Puppet, Chef and Fabric.</li>
+<li>Infrastructure as code (IaC), thanks to some plugins (e.g, <a href="https://www.linode.com/docs/guides/deploy-linodes-using-ansible/">Linode</a> and <a href="https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_resource_module.html">Azure</a>). I think other tools like <a href="https://www.terraform.io/">Terraform</a> is best to solve these issues, due to it handling the state for you. As we will come back to later, Ansible is more imperative than declarative. You describe steps it should take, and Ansible make sure those steps are done. No information about the current state (beyond the changes you have executed) is saved on the target computers. Terraform on the other hand is declarative; you describe a certain state you want the infrastructure to be in, and Terraform makes sure it is in that state (deleting resources you remove). It does not solve all the same problems as Ansible though, only the infrastructure part, so the tools can work wonders together! :)</li>
+</ul>
+
+
+<p>
+So instead of using different tools to solve these problems, we can use Ansible for all of them (at least the first two!). Pretty neat!
+</p>
+
+
+<p>
+Some of you may wonder, why not use Puppet or Chef instead for at least some of  these tasks? The answer for me is simple, Ansible doesn't require anything to be on the hosts you are interacting with, except Python 3. No daemon, which both Puppet and Chef requires.
+</p>
+
+
+<p>
+If you want to play with Ansible, I can recommend running it against a virtual machine either locally or from a cloud provider. The easiest way locally is to use Vagrant, which is what I'm using. You can also use a physical machine you have available. The most important aspect is that you have access via SSH. 
+</p>
+
+
+<div id="outline-container-org8bbdb48" class="outline-2">
+<h2 id="org8bbdb48">What can Ansible be used for?</h2>
+<div class="outline-text-2" id="text-org8bbdb48">
+<p>
+We mentioned configuration management and deployments, so it can obviously be used to manage your machines (physical, virtual etc.). You might just brush this off, but think of some possible use cases first (some are not obvious):
+</p>
+
+<ul class="org-ul">
+<li>Setting up each machine in an infrastructure. Sometimes the cloud provider doesn't have exactly what we want, and we want to set up a virtual machine (VM). All of the big cloud providers give you an option to set up your own VM.</li>
+<li>Some organizations may not be able to use public clouds, and may need to set up things themselves by running different commands on their servers. Ansible is great for this.</li>
+<li>Setting up Raspberry Pis (or other small computers) to do what you want (Kubernetes clusters, databases, dashboards, DNS servers, web servers, other setups of various tools)</li>
+<li>Your own local setup. Each time you have to reinstall your OS, it is a hazzle to set up everything. There is always some tool you forget at the beginning. What about setting up an Ansible playbook for it? I found <a href="https://github.com/geerlingguy/mac-dev-playbook">this inspiring playbook to set up a Mac</a>.</li>
+<li><a href="https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/">Building containers for Docker</a> (or other container runtimes).</li>
+<li><a href="https://sdk.operatorframework.io/docs/building-operators/ansible/quickstart/">Writing Kubernetes operators using the Operator SDK</a>.</li>
+<li>Ad-hoc execution of commands on all the computers you are handling (to check available ram etc.). Useful for extra monitoring where needed (obviously you have dashboards and tools most of the time, but it can still prove useful).</li>
+</ul>
+
+<p>
+So if you still thought of Ansible as a boring configuration tool before this list, you have hopefully changed your mind now ;)
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orge76a9ec" class="outline-2">
+<h2 id="orge76a9ec">Basics of Ansible</h2>
+<div class="outline-text-2" id="text-orge76a9ec">
+<p>
+We have already introduced Ansible as a configuration management system, but what more do we need to know before we start using it for something? The most important file we need is something called an inventory file. An inventory file describes the machines we will connect to, as well as information on them like user names, SSH key to use (on your local filesystem) and more depending on your needs. (<a href="https://docs.ansible.com/ansible/latest/reference_appendices/config.html">there are also more ways to configuring Ansible that you can look into</a>, but for now we will keep it simple). The machines are divided into groups, which can contain one or more machines. Groups are what we are working with in Ansible, when describing where to run our commands.
+</p>
+
+
+<p>
+Inventory files can be ini or yaml files, but I usually make ini-configuration files. One possible example can look like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-text">[ubuntu]
+192.168.111.2 ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/ubuntu/parallels/private_key
+</pre>
+</div>
+
+<p>
+Or with multiple machines and groups:
+</p>
+<div class="org-src-container">
+<pre class="src src-text">[server]
+192.168.111.2 ansible_user=server ansible_ssh_private_key_file=server_ssh_key
+
+[worker]
+192.168.111.3 
+192.168.111.4
+
+[worker:vars]
+ansible_user=worker
+ansible_ssh_private_key_file=worker_ssh_key
+</pre>
+</div>
+
+
+<p>
+Here you also see a new concept of variables in action, which we will see more of in later sections. Because both the worker machines share the same information, we can define them in a common variable section.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org550d63d" class="outline-2">
+<h2 id="org550d63d">Ad-hoc tasks execution</h2>
+<div class="outline-text-2" id="text-org550d63d">
+<p>
+We have an inventory file, we so we can finally start using Ansible for something! Using it for ad-hoc task execution can be a very handy way of running commands on multiple machines. Let us look at some examples. 
+</p>
+
+
+<p>
+A common task is to check the free/available RAM on each machine. Usually we would log into each machine with SSH, but with Ansible we can run it on all our machines at the same time thanks to the inventory file!
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">ansible -i inventory.ini all -a "free -m"
+</pre>
+</div>
+
+<p>
+If we wanted to run it only on the worker group from the inventory file above, we would use worker in place of all:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">ansible -i inventory.ini worker -a "free -m"
+</pre>
+</div>
+
+
+<p>
+What about installing a program like git on all servers, and making sure it's the latest version?
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">ansible -i inventory.ini all -m package -a "name=git state=latest"
+</pre>
+</div>
+
+
+<p>
+The -m option denotes the module we run, which is by default the command module. We will dive deeper into modules in the next section on playbooks.
+</p>
+
+
+<p>
+If you run the above commands, you will see some hosts giving a status of changed and some giving a status of ok. This is meant to signal if the state on the server was changed or not. If you just run shell commands directly, it will always report changed (as Ansible has no chance to know if state was changed or not). The modules, like package, on the other hand will report this correctly (e.g, if package is already the latest version, you will see ok as the status). 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org5b18564" class="outline-2">
+<h2 id="org5b18564">Configuration management - Playbooks</h2>
+<div class="outline-text-2" id="text-org5b18564">
+<p>
+While running commands on the server ad-hoc is great, the main strength of Ansible is its playbooks. Why? When we run commands on various servers, we can quickly make unicorn servers. A unicorn server is a server we can't reproduce quickly if something goes wrong (trust me, you will quickly forget a step or two you did manually). Automating the setup, and maintenance of servers, will avoid this problems and make them easier for you to handle.
+</p>
+
+
+<p>
+A playbook contains one or more plays, where a play is a series of tasks. You can also have <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_handlers.html">handlers</a>, which run operations when a change has occurred (usually to restart services when needed or similar. Different types of tasks will be discussed later. For now, let's look at how a playbook is  structured:
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml">---
+- hosts: host-group
+  # tasks, handlers, roles and more
+
+- name: Runs on all hosts
+  hosts: all
+  # tasks, handlers, roles and more
+</pre>
+</div>
+
+<p>
+As you can see, the names are optional. We will see examples on the content of the plays in the example sections. I always learn best from examples, so hopefully you do too.
+</p>
+
+
+<p>
+A playbook is run with the ansible-playbook command:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">ansible-playboook -i inventory.ini playbook.yml
+</pre>
+</div>
+
+<p>
+Where playbook.yml is our playbook file and inventory.ini is our inventory configuration.
+</p>
+
+
+<p>
+A best practice for Ansible playbooks is to build them idempotent. Idempotency simply means that running something multiple times should have the same result as running it once. No failures the second time, no changes etc. Testing tools, which I will briefly explain later, test for this being the case.
+</p>
+
+
+<p>
+Ansible playbooks have expressions like variables, basic string operations etc., and you can also use template files (e.g, for configuration of webservers with dynamic variables). For those operations, <a href="https://jinja.palletsprojects.com/en/3.0.x/">Jinja2 templating</a> is used. Jinja contains many different constructs, which you may get use for, so recommend that you bookmark the documentation for when it may happen :) You may notice these expressions when seeing mustaches <code>{{ }}</code> in the files.
+</p>
+</div>
+
+
+<div id="outline-container-org7efcaf9" class="outline-3">
+<h3 id="org7efcaf9">Example: Installing Emacs and setting up my configuration</h3>
+<div class="outline-text-3" id="text-org7efcaf9">
+<p>
+For our first example, let's do the most important initial setup I do on new computers: installing and configuring Emacs! To make it as simple as possible, let's just assume that package caches are updated and ready for use.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml">---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Make sure Emacs is installed
+      package: 
+	name:
+	  - emacs
+	  - git
+	state: present
+
+    - name: Download Emacs  config
+      become: false
+      git:
+	repo: https://github.com/themkat/.emacs.d.git
+	dest: ~/.emacs.d
+</pre>
+</div>
+<p>
+(this assumes that the user who we have configured in the inventory file is the user who will use the emacs config)
+</p>
+
+<p>
+Here we have two tasks; installing Emacs and Git, and cloning my git config into the users home directory (the user we configured in our inventory). You might notice the <code>become: true</code> and <code>become: false</code>, which denotes if a task should be run as the root user or not (true for root user, false for the normal user). If you don't have password-less sudo access, you will have to run your playbook with the &#x2013;ask-become-pass option.
+</p>
+
+
+<p>
+The two modules used here is <a href="https://docs.ansible.com/ansible/2.9/modules/package_module.html#package-module">package</a> and <a href="https://docs.ansible.com/ansible/2.9/modules/git_module.html#git-module">git</a>, which both have away more options than used here. Package is a generic package management module, that will use the operating systems underlying package manager to do its work. If you need more advanced package management operations that are exclusive to your package manager (updating cache where needed etc.), there are packages for others as well (e.g, <a href="https://docs.ansible.com/ansible/2.9/modules/homebrew_module.html#homebrew-module">homebrew</a>, <a href="https://docs.ansible.com/ansible/2.9/modules/apt_module.html#apt-module">apt</a>, and <a href="https://docs.ansible.com/ansible/2.9/modules/yum_module.html#yum-module">yum</a>). From above we see that, with the current settings, the module makes sure the packages are present on the system. If they are, then we do nothing (i.e, no changes), and if they're not we install them. 
+</p>
+
+
+<p>
+The git module works as you would expect: clones the git repository to the selected destination. If we don't always want the newest version from origin, we could add the <code>update: no</code> option. 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org2a52c50" class="outline-3">
+<h3 id="org2a52c50">Example: FTP server</h3>
+<div class="outline-text-3" id="text-org2a52c50">
+<p>
+Next, let's make it a bit more advanced to introduce more concepts. We'll make a simple FTP server. Let's update package caches if we use a Debian based system (because apt requires that we have updated package archives to install a program). 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml">---
+- hosts: all
+  become: true
+
+  vars:
+    username: ftpuser
+
+  pre_tasks:
+    - name: Update package archives (Debian-based)
+      apt:
+	update_cache: true
+	cache_valid_time: 7200
+      when: ansible_os_family == "Debian"
+
+  tasks:
+    - name: Set up user we want to use for FTP access
+      user:
+	name: "{{ username }}"
+	password: "{{ username | password_hash('sha512', 'saltval') }}"
+	state: present
+
+    - import_tasks: ftp_server_tasks.yml
+</pre>
+</div>
+<p>
+(a better way to handle the password would be to use something like <a href="https://www.redhat.com/sysadmin/introduction-ansible-vault">Ansible Vault</a>)
+</p>
+
+<p>
+You might wonder how the tasks from the import<sub>tasks</sub> operation looks like? Just a lists of tasks to do:
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml">---
+- name: Install vsftpd
+  package: name=vsftpd state=present
+
+- name: Make sure bftpd is started and active at startup
+  service: name=vsftpd state=started enabled=true
+</pre>
+</div>
+
+<p>
+You might have noticed the variable ansible<sub>os</sub><sub>family</sub> above. How do Ansible know which operating system family their hosts have? Do you have to set it yourself? No, you don't! If you have tried running a playbook, you might have noticed a stage called gather facts. In this stage, Ansible collects facts about your system and populates various variables. You can also run this step manually using <a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/setup_module.html">the setup module</a> and see all the information Ansible collects in this stage:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">ansible -i inventory.ini mygroup -m setup 
+</pre>
+</div>
+
+
+<p>
+You might also notice that we declare a username variable above? <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html">Ansible provides many different ways of creating and interacting with variables</a>.
+</p>
+
+
+<p>
+We are also introduced to two new modules above: <a href="https://docs.ansible.com/ansible/2.9/modules/user_module.html#user-module">user</a> and <a href="https://docs.ansible.com/ansible/2.9/modules/service_module.html#service-module">service</a>. The user module handles exactly that, users, and in this case we make sure a user account is present. If it is not, we make it with the given password (here hashed with the password<sub>hash</sub> operation). Service will in the case above make sure the service is started and enabled at startup.
+</p>
+
+
+<p>
+Beyond those features, the other features probably explains themselves. when runs something when a given condition is true, and <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html">Ansible provides you with several such conditional to control the flow of your playbooks</a>. We also see the import<sub>tasks</sub> above, and <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse.html#playbooks-reuse">there are several ways we can put our tasks in separate files</a>. import<sub>tasks</sub> are done during playbook initialization, while include<sub>tasks</sub> are done during execution, so we would use include<sub>tasks</sub> if we depended on dynamic variables above (i.e, created during execution)
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org593a242" class="outline-3">
+<h3 id="org593a242">Example: Setting up user accounts and Emacs for each, variable amount of users</h3>
+<div class="outline-text-3" id="text-org593a242">
+<p>
+So far we've seen a several features, and got them explained briefly. In this section, we will look at a <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html">loop construct</a>, specifically with<sub>items</sub>. In my own playbooks I usually use with<sub>items</sub> or with<sub>indexed</sub><sub>items</sub>, but loop does the same in a more modern way.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml">---
+- hosts: all
+  become: true
+
+  vars:
+    users:
+      - themkat
+      - arttheclown
+      - leatherface
+
+  tasks:
+    - name: Make sure Emacs is installed
+      package: 
+	name:
+	  - emacs
+	  - git
+	 state: present
+
+     - name: set up users
+       user:
+	 name: "{{ item }}"
+       with_items: "{{ users }}"
+
+     - name: Download Emacs  config
+       git:
+	 repo: https://github.com/themkat/.emacs.d.git
+	 dest: "/home/{{ item }}.emacs.d"
+       with_items: "{{ users }}"
+</pre>
+</div>
+
+<p>
+Here we iterate on the users variable, running the module user and git for each of them. The end result is that the users themkat, arttheclown and leatherface all have themkat's Emacs setup ready to be used! (authors remark: I'm indeed very happy I don't share any computers with Art the Clown or Leatherface&#x2026;) 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org3900e93" class="outline-3">
+<h3 id="org3900e93">Modules and extra tools to make playbooks</h3>
+<div class="outline-text-3" id="text-org3900e93">
+<p>
+There are <a href="https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html">many Ansible modules you can use</a>, and if you don't find what you need you will probably find it in a collection (see below). Some useful highlights include:
+</p>
+<ul class="org-ul">
+<li><a href="https://docs.ansible.com/ansible/2.9/modules/package_module.html#package-module">package</a>, <a href="https://docs.ansible.com/ansible/2.9/modules/apt_module.html#apt-module">apt</a>, <a href="https://docs.ansible.com/ansible/2.9/modules/yum_module.html#yum-module">yum</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.9/modules/user_module.html#user-module">user</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.9/modules/file_module.html#file-module">file</a> (creating/touching files, making directory, setting modes etc.)</li>
+<li><a href="https://docs.ansible.com/ansible/2.9/modules/lineinfile_module.html#lineinfile-module">lineinfile</a> (edits single lines in files, and make sure they are at in given state. Uses regular expressions to find the line to edit, and adds it if its not present)</li>
+<li><a href="https://docs.ansible.com/ansible/2.9/modules/template_module.html#template-module">template</a> (make a file from a Jinja2 template. Useful to configure various programs like webservers)</li>
+<li><a href="https://docs.ansible.com/ansible/2.9/modules/get_url_module.html#get-url-module">get<sub>uri</sub></a> (download a file to the server. Can include checksums to validate correctness)</li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html">service</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.9/modules/k8s_module.html#k8s-module">k8s</a> and <a href="https://docs.ansible.com/ansible/2.9/modules/k8s_info_module.html#k8s-info-module">k8s<sub>info</sub></a> (handling of Kubernetes clusters)</li>
+</ul>
+
+
+<p>
+There are one very useful thing we have not covered above: <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_environment.html">setting environment variables</a>. This is quite simple in Ansible, just add a environment section in addition to the name and module, and fill it with the name and values or your environment variables.
+</p>
+
+<p>
+The interested reader might also check out <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_blocks.html">blocks</a>, which provide logical groupings. If you need fault tolerance like rollbacks, they also provide a try-catch-finally like structure to use (i.e, try=try to do something, catch=do if it fails, finally=always do).
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgb3dc524" class="outline-3">
+<h3 id="orgb3dc524">Inventory plugins</h3>
+<div class="outline-text-3" id="text-orgb3dc524">
+<p>
+Maybe you manage a lot of computers, create new ones quickly, and find it tedious to update your inventory file? It grows big too! Do I really need to write all my IPs/hostnames in a file? No! There are actually <a href="https://docs.ansible.com/ansible/latest/collections/community/general/index.html#inventory-plugins">plugins that can help you dynamically fetch the inventory</a> based on certain parameters. Also, <a href="https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html">AWS EC2 plugin</a>, <a href="https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_inventory.html">Azure plugin</a>, and many more exists, even if you sometimes have to use <a href="https://docs.ansible.com/ansible/latest/galaxy/user_guide.html">ansible-galaxy to install them</a>. Maybe you have tagged your virtual machine or something similar to identify them? Then use those specific tags to put them into host groups, and you are all set!
+</p>
+
+
+<p>
+If you can't find what you are looking for somewhere else, you can always <a href="https://www.jeffgeerling.com/blog/creating-custom-dynamic-inventories-ansible">make your own</a>!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org350e302" class="outline-3">
+<h3 id="org350e302">Testing playbooks?</h3>
+<div class="outline-text-3" id="text-org350e302">
+<p>
+There are indeed tools you can use to test your playbooks, and to work in a more test driven approach. My approach so far has been the following:
+</p>
+<ol class="org-ol">
+<li>Use a virtual machine to define the basic setup. Here I use <a href="https://github.com/adrienverge/yamllint">yamllint</a> and <a href="https://github.com/ansible-community/ansible-lint">ansible-lint</a> to fix basic best practices and possible issues (ansible-lint is quite clever here!).</li>
+<li>Use <a href="https://github.com/ansible-community/molecule">Molecule</a> to write basic tests, fix idempotency issues missed earlier, make sure that setup works possibly more bare bones setups than the VMs etc. Molecule config is YAML, and the tests themselves are written in Ansible Playbook syntax. You may wonder what the it tests your playbooks on? You can choose VMs (using Vagrant), containers (using Docker) or probably something else. I use Docker for my tests, and it works great.</li>
+</ol>
+
+<p>
+Testing playbooks is a topic in itself, so to not clutter up the entire article we will save that for a possible later article :) I will say that <a href="https://github.com/adrienverge/yamllint">yamllint</a> and <a href="https://github.com/ansible-community/ansible-lint">ansible-lint</a> together filters out the worst syntax related mistakes, and ansible-lint also checks for some best practices that can help you avoid mistakes. 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgbece56e" class="outline-3">
+<h3 id="orgbece56e">Roles and collections</h3>
+<div class="outline-text-3" id="text-orgbece56e">
+<p>
+Both roles and collection can be installed and handled with <a href="https://docs.ansible.com/ansible/latest/galaxy/user_guide.html">the ansible-galaxy tool</a>.
+</p>
+
+<p>
+Roles are "packages" of tasks we can import. Think of it as include<sub>tasks</sub> on steroids!  A role we use can have its own variables, files, templates etc., making it a powerful way of making the closest thing we have to "Ansible packages". To use a role, we simply install it with ansible-galaxy, and use it like this in our play:
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml">---
+- host: myhost
+
+  roles:
+    - namespace.rolename
+</pre>
+</div>
+
+<p>
+That's it! Then all tasks in the namespace.rolename role will run!
+</p>
+
+
+<p>
+Collections are, like the name suggests, collections of roles, plugins, modules and similar. Why do we need it when we have roles? Roles can have plugins included after all&#x2026; Well, roles are not really made for that, but are made for executing tasks (i.e, it happens at default when importing roles in a playbook). Collections, on the other hand, makes including different resource types easier. If that sounds interesting, I suggest <a href="https://docs.ansible.com/ansible/latest/user_guide/collections_using.html">reading the documentation</a>. Collections, like roles, is a topic in itself, and I would not make it justice in a single blog article.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org899bc83" class="outline-2">
+<h2 id="org899bc83">Further reading and resources</h2>
+<div class="outline-text-2" id="text-org899bc83">
+<p>
+Hopefully you now know the basics of Ansible, and have some links for gaining more knowledge. To learn Ansible, I think the best resource is <a href="https://www.ansiblefordevops.com/">Jeff Geerling's book Ansible for Devops</a>. If you prefer videos, he has also done a <a href="https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN">Ansible 101 video series</a>. These resources covers almost everything you would like to know. To really learn Ansible you have to play around with it as well off course.
+</p>
+
+
+<p>
+Some of you may be asking: Is Ansible still useful in a cloud native environment? Do we still need to manage computers? Jeff Geerling has also written <a href="https://www.ansible.com/blog/how-useful-is-ansible-in-a-cloud-native-kubernetes-environment">a very interesting article on that</a>. The answer is yes! You may not always get what you need from managed services on cloud platforms, and may need to set things up yourself in virtual machines. Ansible can also be used to manage your own Kubernetes clusters, create container images, make operators and more. So even if you are not maintaining your own machines, there are use cases for it in this cloud native world.
+</p>
+</div>
+</div>
