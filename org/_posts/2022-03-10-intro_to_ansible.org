@@ -127,7 +127,7 @@ Where playbook.yml is our playbook file and inventory.ini is our inventory confi
 A best practice for Ansible playbooks is to build them idempotent. Idempotency simply means that running something multiple times should have the same result as running it once. No failures the second time, no changes etc. Testing tools, which I will briefly explain later, test for this being the case.
 
 
-Ansible playbooks have expressions like variables, basic string operations etc., and you can also use template files (e.g, for configuration of webservers with dynamic variables). For those operations, [[https://jinja.palletsprojects.com/en/3.0.x/][Jinja2 templating]] is used. Jinja contains many different constructs, which you may get use for, so recommend that you bookmark the documentation for when it may happen :) You may notice these expressions when seeing mustaches ={{ }}= in the files.
+Ansible playbooks have expressions like variables, basic string operations etc., and you can also use template files (e.g, for configuration of webservers with dynamic variables). For those operations, [[https://jinja.palletsprojects.com/en/3.0.x/][Jinja2 templating]] is used. Jinja contains many different constructs, which you may get use for, so recommend that you bookmark the documentation for when it may happen :) You may notice these expressions when seeing mustaches {{ }} in the files.
 
 
 ** Example: Installing Emacs and setting up my configuration
