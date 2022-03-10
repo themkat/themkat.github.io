@@ -1,4 +1,4 @@
-#+OPTIONS: toc:nil num:nil
+#+OPTIONS: toc:nil num:nil ^:nil
 #+STARTUP: showall indent
 #+STARTUP: hidestars
 #+BEGIN_EXPORT html
