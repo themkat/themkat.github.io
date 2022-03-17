@@ -1,0 +1,239 @@
+---
+layout: blogpost
+title: Creating container images with Ansible (using ansible-bender)
+tags: cli devops automation
+---
+
+<p>
+Did you know that you can use Ansible to make container images? It's actually a very readable way to create images compared to some Dockerfiles you find online (if you don't think so, you have probably never read one that is 100+ lines). In this article we will look at building images using ansible-bender, which makes for a good way to make images with Ansible with minimal fuzz. 
+</p>
+
+
+
+<p>
+Need a refresher on Ansible? <a href="https://themkat.net/2022/03/10/intro_to_ansible.html">It was introduced in the last article, so feel free to read it to refresh the concepts</a>. You probably won't get much use out of ansible-bender without knowing the basics of Ansible first.
+</p>
+
+
+<p>
+In the last article, building container images with Ansible was briefly discussed. <a href="https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/">An external blog article on that very subject was linked to</a>, and if you read it you may have seen a lot of manual steps using Docker- and Buildah-commands. This seems like a lot of boiler plate code just to make container images with Ansible, right? From that idea, <a href="https://ansible-community.github.io/ansible-bender/build/html/index.html">ansible-bender</a> was born! Ansible-Bender uses <a href="https://buildah.io/">Buildah</a> to build your images, and <a href="https://podman.io/">Podman</a> to handle them (some commands like pushing images, build logs, inspecting images etc. are included into Ansible-Bender). Buildah is a container image builder that does not depend on any external programs, and can build containers for any container runtime. A very big downside is that it's only supported on GNU/Linux-based systems, which is bad news if you are using Mac OS X (or god forbid if you are one of the Windows users, ugh). To combat this issue <a href="https://github.com/themkat/dockerfiles/tree/master/ansible-bender">I made a Docker image</a> that includes Buildah and all dependencies, that can be used to run Ansible-Bender on other platforms. Might be a bit slower than just using it on a GNU/Linux-based system, but beats not being able to use it at all!
+</p>
+
+
+
+<p>
+There are obviously some pros and cons relating to using such a tool compared to plain Dockerfiles:
+</p>
+
+
+<p>
+<b>Pros</b>:
+</p>
+<ul class="org-ul">
+<li>Can be way more readable than some Dockerfiles you find around the net. Ansible is beautiful to read, so this is a pretty big benefit in my view. Not hating on Dockerfiles, as I think those are fun to write as well. They just get tedious to write if they get too big.</li>
+<li>Already using Ansible playbooks to build your infrastructure? Then you can consider using those, or parts of those, to write containers.</li>
+<li>Imported roles, playbooks etc. can be tested for correct behaviour using tools like Molecule.</li>
+<li>Imported roles, playbooks etc. from Ansible Galaxy can make building images way faster (depending on the type of image you make off course).</li>
+</ul>
+
+
+<p>
+<b>Cons</b>:
+</p>
+<ul class="org-ul">
+<li>Base images NEEDS to have Python installed. You can do this during runs <a href="https://github.com/ansible-community/ansible-bender/issues/260">by turning off gather_facts and installing it during playbook run</a>.</li>
+<li>Some rough edges, especially with the caching mechanism. Most problems solved by using &#x2013;no-cache if they occur. Not really a show stopper, as those issues can be fixed by contributors in the future. If you feel like you have what it takes, that could maybe be you? :)</li>
+</ul>
+
+
+<p>
+In the end, it comes down to taste. If you really love Ansible and its expressiveness, I think you will enjoy using ansible-bender.
+</p>
+
+
+
+<div id="outline-container-org53615bc" class="outline-2">
+<h2 id="org53615bc">Using ansible-bender</h2>
+<div class="outline-text-2" id="text-org53615bc">
+<p>
+So you have installed ansible-bender, either directly or by using an image like mine above. What's next? If you have installed Buildah and Podman as well, you can actually start using the tool directly! If you want a playbook with ansible-bender specific variables inserted for you, you can use the <code>ansible-bender init</code> command, and a playbook.yml file is created for you. In essence, that is what an ansible-bender playbook really is; a normal Ansible playbook with some special variables. Those special variables are <a href="https://ansible-community.github.io/ansible-bender/build/html/configuration.html">covered in depth in the documentation</a>.
+</p>
+
+
+<p>
+You may wonder: what if I have ansible_bender variables in more than one play, what happens then? Only the variables from the first play is used. Beyond that you are free to have multiple plays. 
+</p>
+
+
+<p>
+Talk is cheap, let's look at some examples!
+</p>
+</div>
+
+
+<div id="outline-container-org0724573" class="outline-3">
+<h3 id="org0724573">Example: Containerized Emacs setup</h3>
+<div class="outline-text-3" id="text-org0724573">
+<p>
+Continuing the trend from the last article! Let's set up an image with my Emacs setup ready to be used. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml">---
+- name: Emacs setup - Containerized 
+  hosts: all
+
+  vars:
+    ansible_bender:
+      base_image: python:3.9-slim-bullseye
+
+      target_image:
+	name: myemacs
+	cmd: bash
+	user: themkat
+	working_dir: /home/themkat
+
+  pre_tasks:
+    - name: Update package archives (Debian-based)
+      apt:
+	update_cache: true
+	cache_valid_time: 7200
+      when: ansible_os_family == "Debian"
+
+  tasks:
+    - name: Make sure Emacs and git is installed
+      package: 
+	name:
+	  - emacs
+	  - git
+	state: present
+
+    - name: Create themkat user
+      user:
+	name: themkat
+	create_home: true
+	state: present
+
+    # had issues with using the home symbol + become_user here. Might be an issue to look out for
+    - name: Download Emacs  config
+      #become_user: themkat
+      git:
+	repo: https://github.com/themkat/.emacs.d.git
+	dest: /home/themkat/.emacs.d
+
+    - name: Make themkat the owner
+      file:
+	path: /home/themkat/.emacs.d
+	owner: themkat
+	recurse: true
+	state: directory
+
+</pre>
+</div>
+
+
+<p>
+<b>NOTE:</b> As you see in the comment above, I have experienced some minor issues with the become_user and home symbol/tilde. These might be bugs in ansible-bender or relating to containers. Have not tested enough to find the culprit yet, so presenting this as something to be aware of. 
+</p>
+
+
+<p>
+How do we build this? Use the command <code>ansible-bender build playbook.yml</code>. You might wonder why we have the "when Debian"-check when it will always be Debian with that base image. The reason is simple: by doing this we keep the setup flexible. If we wanted a Fedora image, we could simple override it from the command line <code>ansible-bender build playbook.yml fedora:35</code>. 
+</p>
+
+
+<p>
+As you can see above, the differences from a plain Ansible playbook to a ansible-bender one used to create images are not that big. Simple some image related variables like the base image, as well as resulting image name, command to be run, user etc. Standard settings we do when making container images in general.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org3e5d3fc" class="outline-3">
+<h3 id="org3e5d3fc">Example: Simple Spring Boot application image</h3>
+<div class="outline-text-3" id="text-org3e5d3fc">
+<p>
+Let's do something slightly different by demonstrating the usage of volumes and Ansible roles during build. It's not unusual to want to package an application into a container, and for simplicity we put it into the same directory as the playbook itself (so we can use the playbook_dir variable). To not make this example too advanced, we simply use a Spring Boot application made from <a href="https://start.spring.io/">Spring Initializr</a> without any changes (<a href="https://github.com/themkat/spring-starter-terminal">if you prefer a terminal UI, there is one for that too</a>). We'll use geerlingguys java role to setup Java to not boggle down the example with Java setup.
+</p>
+
+<p>
+{% raw %}
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml">---
+- name: Containerized Spring Boot app
+  hosts: all
+  vars:
+    ansible_bender:
+      base_image: fedora:35
+      target_image:
+	cmd: java -jar /app/spring-app.jar
+	name: spring-app-example
+      working_container:
+	volumes:
+	- "{{ playbook_dir }}:/src"
+
+  roles:
+    - role: geerlingguy.java
+      java_packages:
+	- java-11-openjdk
+
+  tasks:
+  - name: Make app directory that will include our application
+    file:
+      path: /app
+      state: directory
+
+  - name: Build application
+    command:
+      chdir: /src
+      cmd: ./mvnw clean install
+      creates: /src/target/spring-app-0.0.1-SNAPSHOT.jar
+
+  - name: Copy jar file to app directory
+    copy:
+      remote_src: true
+      src: /src/target/spring-app-0.0.1-SNAPSHOT.jar
+      dest: /app/spring-app.jar
+</pre>
+</div>
+<p>
+{% endraw %}
+</p>
+
+<p>
+To run this one, we will have to use ansible-galaxy to install geerlingguy.java first, either with a requirements file or directly (<code>ansible-galaxy install geerlingguy.java</code>). After that we can simply build our image like in the last example.
+</p>
+
+
+<p>
+What happens here? We build our Maven Spring Boot project, and put the resulting jar file into a app-directory. You may wonder: Shouldn't we delete the contents of src? Won't all the source code and build files be included in the final image? No! When building is done, src is unmounted and the directory is empty. Pretty neat!
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org4027b51" class="outline-3">
+<h3 id="org4027b51">Useful commands</h3>
+<div class="outline-text-3" id="text-org4027b51">
+<p>
+ansible-bender has quite <a href="https://ansible-community.github.io/ansible-bender/build/html/usage.html#getting-logs-of-a-build">a few useful commands beyond just building images</a>. If you want to fetch earlier build logs, that can be done. Inspecting images is simple. But to me, the most useful is probably pushing images. Not necessarily to a central repository or something, but to Docker. I have to admit, I still use Docker. Let's say we have built the myemacs image as in the first example, and want to push it to our docker daemon with the tag 0.1. Then we simply run:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">ansible-bender push docker-daemon:myemacs:0.1
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgbf98670" class="outline-2">
+<h2 id="orgbf98670">Summary</h2>
+<div class="outline-text-2" id="text-orgbf98670">
+<p>
+In summary, ansible-bender seems like a promising tool that definitely have some fun and useful use cases. Making images with Ansible seems like a very readable way to make images, especially for bigger ones. Dockerfiles quickly gets messy, and Ansible might be an antidote for that issue. 
+</p>
+</div>
+</div>
