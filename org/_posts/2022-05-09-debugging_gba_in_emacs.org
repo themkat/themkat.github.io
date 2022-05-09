@@ -1,0 +1,63 @@
+#+OPTIONS: toc:nil num:nil ^:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Debugging GameBoy Advance (GBA) programs/games in Emacs
+tags: retro-computing programming gba emacs
+---
+#+END_EXPORT
+
+There are not many articles on debugging GameBoy Advance C code around the web, and most of them seem to be about debugging in VSCode. While VSCode is good, it is far from the awesomness that is Emacs! Debugging GBA code with Emacs is far easier than you would think, and in this article I wills how you how. 
+
+
+If you have not heard about GDB before, I suggest [[https://en.wikipedia.org/wiki/GNU_Debugger][quickly refreshing the basics]] so you don't get confused each time I mention it below :) 
+
+
+You may already have found some resources related to VSCode around, like [[https://github.com/JamieDStewart/GBA_VSCode_Basic][this repository]] and [[https://www.gamedev.net/blogs/entry/2268899-gameboy-advance-dev-workflow-in-2020/][this article]]. The launch.json files could be adapter to work with dap-launch (more on that later), but would require some manual work because of several smaller issues (one of them being that Emacs does not support VSCode tasks.json files at the moment). Both of them also seem to require you to copy-paste the launch.json files, and edit them with corrected paths each time (see how you can avoid that in Emacs at the end!). 
+
+
+* Basic GBA debug workflow (editor independent)
+No matter which editor you debug in, the workflow is about the same. You will need [[https://devkitpro.org/wiki/Getting_Started][DevkitPro gba-dev]] and an emulator like [[https://mgba.io/][mGBA]]. If you want to familiarize yourself with some C code for GBA, as well as Makefiles with CFlags and other build options, there is [[https://github.com/devkitPro/gba-examples][an example repo you can check out]] :)
+
+
+The process is as follows:
+
+1. Compile with debug symbols (-g in DevkitARM gcc). This will generate two files: an elf-file executable with debug symbols, and a standard gba-file (a "normal" executable for GBA which you can also put on any flash card like the EZFlash).
+2. Start your emulator with gdb debug process. Your emulator will show the visuals here, and will be interacted with using gdb. The best modern emulator in my view is mGBA, where we start the debug process with =mGBA --gdb myfile.gba=.
+3. Attach to the gdb debug process with DevkitARMs gdb executable using the elf-file.
+
+   
+You could just do it like this without any editor, but your debugging will then happen in the command line, and you will have to remember gdbs commands. This is not as tedious as it sounds, but many of us prefer to see the breakpoints happening, as well as the state, directly in our editors. Many editors therefore provide either a gdb interface, or can interact with it using a debug adapter. You can use debug adapters in VSCode through various plugins, in Emacs with [[https://github.com/emacs-lsp/dap-mode][dap-mode]], in Vim with [[https://github.com/puremourning/vimspector][Vimspector]], and probably in other editors as well. What is written here should be transferable to other editors.
+
+
+The above approach should in theory work for both C (and C++) and assembly code, though I have only tried it for C. 
+
+* Adapting it to Emacs with dap-mode
+We will use [[https://github.com/emacs-lsp/dap-mode][dap-mode]] with the dap-gdb-lldb option here. Under the hood, it uses the debug adapter from the [[https://github.com/WebFreak001/code-debug][Native Debug VSCode extension]]. Configuring it is described on [[https://emacs-lsp.github.io/dap-mode/page/configuration/#native-debug-gdblldb][the dap-mode webpages]]. After we have configured dap-mode, we could in theory reuse the launch.json configurations from the VSCode related articles above. That will require that you also use lsp-mode, as dap-launch depends on the lsp-workspace-root function and will not resolve when lsp-mode is not used. I don't use lsp-mode with C (company-clang and company-c-headers provide what I need), so the next logical solution would be to create a debug template ourselves:
+
+#+BEGIN_SRC emacs-lisp
+  (dap-register-debug-template "GBA debug"
+                               (list :name "GBA debug"
+                                     :type "gdbserver"
+                                     :request "attach"
+                                     :gdbpath "/opt/devkitpro/devkitARM/bin/arm-none-eabi-gdb"
+                                     :target ":2345"
+                                     :cwd "/path/to/dir"
+                                     :executable "file.elf"))
+#+END_SRC
+
+Configure cwd and executable to your projects needs, which can also be done by creating one template and configuring it with dap-edit-debug-template. You will off course first need to compile and run your emulator with a gdb process. 
+
+
+No matter which way you start a debug process, it will look about like this with dap-mode and mgba:
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/gbadebug/screenshot.png" | relative_url}}" alt="Emacs GBA debugging screenshot" class="blogpostimg" />
+#+END_EXPORT
+
+(here I have added a few breakpoints, which you can toggle with =M-x dap-breakpoint-toggle=)
+
+
+* Simplifying with gba-debug.el
+The solutions above entails some manual work, and that lead me to automate it. Wouldn't it be nice to just run one simple command, and then everything compiles and your debug process just automatically begin? That's exactly what I was thinking, [[https://github.com/themkat/emacs-gba-debug][so I created a simple Emacs extension]]. If you use a Makefile to build, and configure the path to mGBA and DevkitARMs gdb, you can debug a GBA program directly with =M-x gba-debug-program=. No need to compile manually, run mGBA manually or anything else! 
