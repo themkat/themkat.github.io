@@ -37,7 +37,7 @@ The above approach should in theory work for both C (and C++) and assembly code,
 * Adapting it to Emacs with dap-mode
 We will use [[https://github.com/emacs-lsp/dap-mode][dap-mode]] with the dap-gdb-lldb option here. Under the hood, it uses the debug adapter from the [[https://github.com/WebFreak001/code-debug][Native Debug VSCode extension]]. Configuring it is described on [[https://emacs-lsp.github.io/dap-mode/page/configuration/#native-debug-gdblldb][the dap-mode webpages]]. After we have configured dap-mode, we could in theory reuse the launch.json configurations from the VSCode related articles above. That will require that you also use lsp-mode, as dap-launch depends on the lsp-workspace-root function and will not resolve when lsp-mode is not used. I don't use lsp-mode with C (company-clang and company-c-headers provide what I need), so the next logical solution would be to create a debug template ourselves:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (dap-register-debug-template "GBA debug"
                                (list :name "GBA debug"
                                      :type "gdbserver"
