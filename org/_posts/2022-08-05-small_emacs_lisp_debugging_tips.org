@@ -20,7 +20,7 @@ You have probably gotten one of those weird "wrong type argument" errors, or sim
 There are several ways to activate it. The most common way is to just set Emacs to enter the debugger when an error happen. You can do this by setting the variable =debug-on-error=
  to true (either in your config or just executing it right in your scratch buffer):
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (setq debug-on-error t)
 #+END_SRC
 
@@ -29,7 +29,7 @@ I usually prefer to turn it on by need using M-x instead, =M-x toggle-debug-on-e
 
 Let's show a quick example using a function from [[https://github.com/emacs-lsp/lsp-mode][the lsp-mode codebase]]. Experienced programmers will probably notice the issue right away, but let's see how we will debug it. We are going to assume that we have gotten a hash table that we want to fetch results from called =result-data=. Running it in the scratch buffer will always show a stack trace, so let's make an interactive function we will call using M-x:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (defun my-lsp-mode-fun ()
     (interactive)
     (let* ((my-key "key")
