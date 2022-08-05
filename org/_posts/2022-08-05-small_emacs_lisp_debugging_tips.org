@@ -9,7 +9,7 @@ tags: emacs
 ---
 #+END_EXPORT
 
-Have you ever gotten weird errors in an Emacs Lisp package (your own or downloaded)? Something like "wrong type argument" or similar shown in the minibuffer? At first glance, these seem kind of cryptic. Where do they come from? Can I get a stack trace? What arguments are functions called with? Today I will show you how answer these questions!
+Have you ever gotten weird errors in an Emacs Lisp package? Something like "wrong type argument" or similar shown in the minibuffer? At first glance, these seem kind of cryptic. Where do they come from? Can I get a stack trace? What arguments are functions called with? Today I will show you how to answer these questions!
 
 
 
