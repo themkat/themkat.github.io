@@ -82,12 +82,14 @@
 		</div>
 
 		<div class="content">
-            <div class="searchfield">
+            {% if paginator.page  %}
+            <div class="searchfield" >
                 <h5>Search &#x1f50d;</h5>
                 <script async src="https://cse.google.com/cse.js?cx=83d805bca1b524717">
                 </script>
                 <div class="gcse-searchbox-only"></div>
             </div>
+            {% endif %}
 
 			{{ content}}
 		</div>
