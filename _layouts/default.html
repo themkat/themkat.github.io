@@ -36,6 +36,20 @@
 
 		 gtag('config', 'G-HLD6RM0SP3');
 		</script>
+
+        <!-- Open Graph metadata for social media and other sharing -->
+        <!-- TODO: check if there is a better way to determine if we are inside a blogpost or not -->
+        {% if page.id %}
+        <meta property="og:type" content="article">
+        <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+        {% for tag in page.tags %}
+        <meta property="article:tag" content="{{ tag }}">
+        {% endfor %}
+        <meta property="twitter:label1" content="Estimated reading time">
+        <meta property="twitter:data1" content="{{ page.content | number_of_words | divided_by: 150 }} mins">
+        {% else %}
+        <meta property="og:type" content="website">
+        {% endif %}
 		
 		<title>{{ page.title | default: site.title }}</title>
 	</head>
