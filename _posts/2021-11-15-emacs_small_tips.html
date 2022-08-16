@@ -9,9 +9,9 @@ There are many small tricks that can make your Emacs experience better, and in t
 </p>
 
 
-<div id="outline-container-org892aeb1" class="outline-2">
-<h2 id="org892aeb1">emacsclient and server</h2>
-<div class="outline-text-2" id="text-org892aeb1">
+<div id="outline-container-orgeba7176" class="outline-2">
+<h2 id="orgeba7176">emacsclient and server</h2>
+<div class="outline-text-2" id="text-orgeba7176">
 <p>
 I usually have my Emacs session open for days (or weeks? months?), and rarely close it unless I have to. Therefore it does not come naturally to me to close my session and open a file in it from the command line. Sometimes we may just want to open a file in our current Emacs session directly from the command line. This is where emacsclient comes in! The word client is used, so there must be a server, right? Yes. In your .emacs config (or just a scratch buffer) you can start a server using:
 </p>
@@ -36,9 +36,9 @@ There are many more things emacsclient can be used for than this simple example,
 </div>
 
 
-<div id="outline-container-orgd0f8572" class="outline-2">
-<h2 id="orgd0f8572">exec-path-from-shell</h2>
-<div class="outline-text-2" id="text-orgd0f8572">
+<div id="outline-container-org0b95dd2" class="outline-2">
+<h2 id="org0b95dd2">exec-path-from-shell</h2>
+<div class="outline-text-2" id="text-org0b95dd2">
 <p>
 It can be quite tedious if your PATH variables aren't included into Emacs when running it. Using exec-path-from-shell fixes that, and can be activated like I do here with this <a href="https://github.com/jwiegley/use-package">use-package</a> configuration:
 </p>
@@ -56,9 +56,9 @@ It can be quite tedious if your PATH variables aren't included into Emacs when r
 </div>
 </div>
 
-<div id="outline-container-orgdfb802f" class="outline-2">
-<h2 id="orgdfb802f">un-clutter the UI and show battery percentage</h2>
-<div class="outline-text-2" id="text-orgdfb802f">
+<div id="outline-container-orgc00bc4e" class="outline-2">
+<h2 id="orgc00bc4e">un-clutter the UI and show battery percentage</h2>
+<div class="outline-text-2" id="text-orgc00bc4e">
 <p>
 By default when starting a GUI session in Emacs, there are menu bars, tool bars and scroll bars. In my opinion, these clutter the UI, and take the focus away from the contents of the buffer. When running a graphical session (i.e, not a terminal session using -nw or over SSH without an X-server), I prefer to remove those. Showing the battery status in the modeline can also be very useful. I do all of the above using the following small snippet:
 </p>
@@ -79,9 +79,9 @@ By default when starting a GUI session in Emacs, there are menu bars, tool bars 
 </div>
 
 
-<div id="outline-container-orgad7dbc4" class="outline-2">
-<h2 id="orgad7dbc4">show-paren-mode</h2>
-<div class="outline-text-2" id="text-orgad7dbc4">
+<div id="outline-container-orgf0ffd04" class="outline-2">
+<h2 id="orgf0ffd04">show-paren-mode</h2>
+<div class="outline-text-2" id="text-orgf0ffd04">
 <p>
 show-paren-mode is one of my favorite little nuggets of built-in Emacs goodness! What it does is highlight parenthesis (including brackets/braces), namely the beginning and end tags associated with each other, based upon your text cursor position. This functionality is best illustrated with a series of screenshots, here using the previous code block (removing UI clutter):
 </p>
@@ -100,9 +100,9 @@ Works with other modes as well, including the obvious C-like languages (C, Java,
 </div>
 
 
-<div id="outline-container-orgb38f38d" class="outline-2">
-<h2 id="orgb38f38d">Others?</h2>
-<div class="outline-text-2" id="text-orgb38f38d">
+<div id="outline-container-org4198d99" class="outline-2">
+<h2 id="org4198d99">Others?</h2>
+<div class="outline-text-2" id="text-org4198d99">
 <p>
 There might be other bigger changes you may want to do, including big changes to navigation. I covered some in an article on <a href="https://themkat.net/2021/09/13/recommended_emacs_packages.html">recommended Emacs packages</a> earlier.
 </p>
