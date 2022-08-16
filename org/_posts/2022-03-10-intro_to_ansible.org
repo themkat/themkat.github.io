@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: Introduction to Ansible
-tags: cli devops automation
+tags: cli ansible devops automation
 ---
 #+END_EXPORT
 
