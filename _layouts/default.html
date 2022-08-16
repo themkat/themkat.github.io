@@ -52,6 +52,26 @@
         {% endif %}
         <meta property="og:url" content="{{ page.url | absolute_url }}">
         <meta property="og:site_name" content="TheMkat">
+
+        <!-- Structured data for google. Might help for better previews -->
+        {% if page.id %}
+        <script type="application/ld+json">
+         {
+             "@context": "https://schema.org",
+             "@type": "Article",
+             "headline": "{{ page.title }}",
+             "image": [
+                 "{{ page.preview_image | default: "/assets/img/banner.jpg" | absolute_url }}"
+             ],
+             "datePublished": "{{ page.date | date_to_xmlschema }}",
+             "author": {
+                 "@type": "Person",
+                 "name": "Marie K. Ekeberg",
+                 "url": "https://themkat.net/about.html"
+             }
+         }
+        </script>
+        {% endif %}
 		
 		<title>{{ page.title | default: site.title }}</title>
 	</head>
