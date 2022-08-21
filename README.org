@@ -1,0 +1,16 @@
+* TheMkat.net - my personal blog
+Welcome to the source code for my personal blog!
+
+
+** Technologies used
+One of my main goals from the beginning was to have a simple experience where I could blog directly from Org-Mode inside of Emacs. I found that the easiest way to do this was to use Jekyll, due to Github pages supporting it out of the box. The next step was simply to convert Org-Mode pages to HTML with headers Jekyll could understand :)
+
+
+- [[https://jekyllrb.com/][Jekyll]]
+  - HTML/SASS
+  - Basic JavaScript
+  - [[https://shopify.github.io/liquid/][Liquid Templating]]
+- Emacs
+  - [[https://orgmode.org/][Org-Mode]]
+- Shell scripting
+- Github Actions (to automate blogpost generation from Org-Mode to HTML files, create new tag pages automatically etc.)
