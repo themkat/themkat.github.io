@@ -1,4 +1,4 @@
-* TheMkat.net - my personal blog
+* [[https://themkat.net/][TheMkat.net]] - my personal blog
 Welcome to the source code for my personal blog!
 
 
