@@ -1,0 +1,49 @@
+#+OPTIONS: toc:nil num:nil ^:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Things I wish I did earlier in life
+tags: life-lessons
+---
+#+END_EXPORT
+
+Todays post is going to be a bit more personal than usual, as I'm going to share what I feel like are some of my biggest regrets not starting with earlier. Some of my points may resonate with you, and some won't. These three things are based upon my life. Hopefully some of you will enjoy reading this.
+
+
+* Share (some of) my work online
+Some of you might not know this, but I started to experiment with software development in my early teens. Looking back, I don't really have much to show for it, except some knowledge tucked away in my brain. These days I see a lot of people just starting to learn coding, both young and older, and they share their work almost from day one. From simple Wordpress pages to phone apps. Some end up getting programming jobs just from showing their work, and various opportunities arise. Nothing is guaranteed, but if you are invisible, then no one will know that you exist. At least you open yourself up to opportunities that may not have happened otherwise. One cool example to me is [[https://www.youtube.com/watch?v=eZRzaGFWoz8][the story behind how Modern Vintage Gamer got started working with the Shantae re-releases]].
+
+
+In my case, I started slow by sharing my Emacs config and a bit later this blog. Over the years I have tried contributing more and more to the software I use, and try to help others when I can. Contributing to open source software helps you to get feedback on your code as well, which helps you grow! (the same can be said about putting your work out there, as you probably polish it a bit extra before making it public!). There are still some projects I keep to myself, but I try to share as much as I can. Hopefully I will share more of the retro computing and computer graphics stuff I play with going forward. (Lack of) Self esteem is a weird thing...
+
+
+So have any opportunities arisen for me, or any benefits come from this? Not much, a few donations here and there, plus some positive comments. The inner satisfaction is probably the biggest benefit. Building a presence online takes time. As long as I have fun with what I do, and put myself a bit out there, who knows what the future might bring? :)
+
+
+I can't really end this section without talking about what we are all afraid of; the haters. Some of us were teased as kids, and in my case I had some stubborn people not stopping until my early 20s. In the age of social media, we also see a lot of haters in comment sections, or various forums. Think to yourself for a minute: What have these haters done in their lives? What value have they produced? Have they written a book? A cool piece of software? Something else? The answer is in most cases no. A lot of people who are haters do so because they are bitter about their own lives. Whether it is by hating on people who create various content online, hating on famous people or something else. The people who hate don't really produce anything themselves (though there might be exceptions). Be positive, create your stuff and enjoy your life! Hating on others is a waste of time :)
+
+
+* Don't let mistakes/failures tear you down!
+I have to admit; I've let some of mistakes in life tear me down. To be honest, I think this is common for many of us introverted people who overthinks to the extreme. When we do mistakes, we never stop thinking about them. Whether it's saying something wrong, or failing at something that meant a lot to us. I'm not going to say that it is easy getting rid of the overthinking habit, as I still do it. I will say that knowing that most people will forget about your mistake in a short amount of time helps. Most of us don't have time to judge others based on their mistakes, and we forget they even happened. Now that we have gotten that out of the way, we can talk about the main point here: mistakes/failures can make you learn a lot!!! 
+
+
+Failed or did worse than you hoped in a university course? Now you know what you need to be better at! (given that you are interested in the topic off course).
+
+
+Made a pull request to a project where the maintainer did not want it? Maybe you got some comments you can learn from? If nothing else, at least you made an effort and coded something! Think of it as a little coding exercise! What is the difference between that code and the code you just did as an exercise that you never showed the world anyway?
+
+
+Did worse than you think at a given job? What made it go that way? Were you not prepared enough? Something outside your control like family issues or health? If you don't learn anything programming related, maybe you learn something about yourself. This particular failure happened to me when I was a teaching assistant in a computer graphics course almost a decade ago. A lot happened in my private life regarding health, the professor was not that cooperative with sending me the lab tasks ahead of time, and I did not know some topics as well as I thought. Instead of learning from it at the time, I let it break me down. A few years later I almost stopped doing computer graphics things completely (because of other stuff demotivating me as well, but this was part of it). What could I do instead? I could think about what I mentioned above, and focus on learning the things I feel like I failed at better. Maybe also rethink my teaching methods? The stuff outside my control was also not my fault, without going too much into that.
+
+
+
+Failures and mistakes can be used to make you feel like a failure, or even BETTER; they can be learned from and makes you a more reflected and knowledgeable person.
+
+
+* Invest your money as soon as possible
+By looking at social media, movies etc. you can get the impression that investing means picking a winner stock and getting rich, or by day trading. That is a very rare occurrence, and most people actually lose money on day trading. Investing is not just for the rich and mighty, but can serve everyone well. With inflation going rampant, and bank accounts giving you almost no interest, it can pay off to find out how to get higher interest on your money. Contrary to popular belief, everyone can make money in the market by just being in it for a longer period of time. Just think for a moment; how will my money grow over time when I get interest on the interest I made last year? This is what is known as [[https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/what-compound-interest][compound interest]], or "interest on your interest". It doesn't have to be hard either. Just putting money away in something like an index fund every month (probably) makes for good returns in the long run. There are also many stocks and funds that pay dividends (i.e, distributions of money to you as a shareholder), so if you try to find the perfect time to start you would have missed these payouts.
+
+
+I'm by no means rich, and you should off course do your own research! What I'm saying is that it pays off to think about this early. Staring early to get the compound interest snowball growing can make you lots of extra money in the long run. Combine that with living frugally, and you can make you a lot of money. It doesn't have to be forever either, as some temporary frugality can pay off big time. To be honest, I would rather sacrifice "luxuries" early in life to be able to think less about money as I get older. Maybe you save to have more freedom down the road? Have the ability to take better vacations? Give your kids a better future? Whatever it is, (almost) everyone can benefit from having a bit of extra money.
