@@ -1,0 +1,355 @@
+---
+layout: blogpost
+title: Programming Kotlin in Emacs - Redux 2022
+preview_image: assets/img/emacskotlin2/overridemembers_first.png
+tags: programming kotlin emacs editor
+---
+
+<p>
+Last year I wrote a blog post about the basics of using Kotlin in Emacs. Since then, some new developments have happened, including some new features have been added to the Kotlin langauge server. I also got some questions regarding which Eamcs packages I like using when developing Kotlin code. Let's answer some of the questions not answered last time, and see what Kotlin Language Server and Kotlin Debug Adapter can do!
+</p>
+
+
+<p>
+If you have not read <a href="https://themkat.net/2021/11/03/kotlin_in_emacs.html">my previous article</a> yet, you might still get something useful out of it. It covers the basics, as well as getting <a href="https://github.com/kscripting/kscript">KScript</a> working. The last part I will not cover here, but what we cover will be useful for that use case as well. If you have not yet tried <a href="https://github.com/kscripting/kscript">KScript</a> for scripting, I recommend it as it can be super nice &lt;3
+</p>
+
+
+<p>
+Some people have wondered if I have used Kotlin in Emacs for bigger serious projects, and the answer is yes. I have used it for several open source projects, as well as in my day job (typical enterprise Java environment, but with Kotlin. Probably can't mention much more). Sometimes projects will use some time to load, especially on the first run due to fetching dependencies. Get a coffee, and when you come back you will have a good experience in the best editor there is! Getting to use Emacs for Kotlin instead of IntelliJ IDEA almost feels like a reward in itself &lt;3
+</p>
+
+
+
+<p>
+<b>NOTE!</b> This is NOT in any way an introduction to Emacs in general. If you are new to Emacs, you should familiarize yourself with basic usage and terminology, and then come back. You do not need to be an expert in all things Emacs though, just be familiar with the basics (e.g, not be confused when keybindings like <code>M-x</code>, aka Meta-X, are mentioned). Being really tired of big heavy programs like IntelliJ IDEA also helps :) 
+</p>
+
+
+<div id="outline-container-orge416de9" class="outline-2">
+<h2 id="orge416de9">Recommended packages for working with Kotlin</h2>
+<div class="outline-text-2" id="text-orge416de9">
+<p>
+These are based upon my personal experience, so some of you may have different preferences (e.g, eglot instead of lsp-mode). 
+</p>
+
+
+<p>
+The basics (which we will use in the rest of the article):
+</p>
+<ul class="org-ul">
+<li><a href="https://github.com/Emacs-Kotlin-Mode-Maintainers/kotlin-mode">kotlin-mode</a>: Provides basic syntax highlighting and other minor Kotlin features. This also includes starting a REPL if you like that :)</li>
+<li><a href="https://github.com/company-mode/company-mode">company-mode</a>: Used by lsp-mode to display completions. Might be useful to know about to set completion settings (e.g, minimum number of characters before completion is triggered etc.)</li>
+<li><a href="https://github.com/emacs-lsp/lsp-mode">lsp-mode</a>: Base package that provides the IDE features like completion, code actions, renaming, hovers etc. by communicating with a language server (in our case <a href="https://github.com/fwcd/kotlin-language-server">kotlin-language-server</a>).</li>
+<li><a href="https://github.com/emacs-lsp/lsp-ui">lsp-ui</a>: Provides some nice UI elements to make certain things more clear (code actions etc.)</li>
+<li><a href="https://github.com/emacs-lsp/dap-mode">dap-mode</a> - if you want debugging</li>
+</ul>
+
+<p>
+Provides some extra functionality and a few tweaks to make the experience nicer:
+</p>
+<ul class="org-ul">
+<li><a href="https://github.com/emacs-lsp/lsp-treemacs">lsp-treemacs</a>: Provides a visual menu using treemacs for symbols, errors and more.</li>
+</ul>
+
+
+<p>
+Others (not really kotlin-related per se, but improves your experience in general):
+</p>
+<ul class="org-ul">
+<li><a href="https://github.com/akhayyat/emacs-undo-tree">undo-tree</a>: Tree representation of undo/redo instead of a linear representation. Covered it briefly in <a href="https://themkat.net/2021/09/13/recommended_emacs_packages.html">an earlier article</a>, including a screenshot.</li>
+<li><a href="https://github.com/bbatsov/projectile">projectile</a>: Better project handling in Emacs, especially with helm-projectile. Handles git and other project types. Gives you great searches like <code>projectile-find-file</code> (to search all files within your project) and <code>projectile-find-file-in-known-projects</code> (to search all files in all your known projects).</li>
+<li><a href="https://github.com/magit/magit">magit</a>: Git handling inside Emacs! Gives you a nice frontend with great keybindings.</li>
+<li><a href="https://github.com/emacs-helm/helm">helm</a>: Better menus and navigations inside Emacs.</li>
+<li><a href="https://github.com/sebastiencs/company-box">company-box</a>: Provides a nice frontend for company-mode with</li>
+</ul>
+
+
+<p>
+Some of you will probably wonder about the theme and modeline I use. I use <a href="https://github.com/fniessen/emacs-leuven-theme">leuven-theme</a> and <a href="https://github.com/seagle0128/doom-modeline">doom-modeline</a> respectively. Some of you may wonder why I use Leuven, and the simple explanation is that I use org-mode a lot. Leuven is probably the best theme for org-mode.
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-org87ca34a" class="outline-2">
+<h2 id="org87ca34a">Basic config (relating to Kotlin)</h2>
+<div class="outline-text-2" id="text-org87ca34a">
+<p>
+The config here is truncated a bit to show the most important parts. Some parts of my config are based upon my personal preferences, and not very relevant for an article like this. If you want to take a look at the entire config, you can check out <a href="https://github.com/themkat/.emacs.d">the Github repo</a> (it has a table of contents for easy navigation). There are also links for some ommited packages in the previous section :)
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package kotlin-mode
+  :after (lsp-mode dap-mode)
+  :config
+  (require 'dap-kotlin)
+  ;; should probably have been in dap-kotlin instead of lsp-kotlin
+  (setq lsp-kotlin-debug-adapter-path (or (executable-find "kotlin-debug-adapter") ""))
+  :hook
+  (kotlin-mode . lsp))
+
+
+(use-package company
+  :init
+  (global-company-mode)
+
+  :custom
+  ;; set the completion to begin at once
+  (company-idle-delay 0)
+  (company-echo-delay 0)
+  (company-minimum-prefix-length 1)
+
+  :bind
+  ;; trigger company to see a list of choices even when nothing is typed
+  ([(control return)] . company-complete))
+
+
+(use-package lsp-mode
+  :bind
+  ("M-RET" . lsp-execute-code-action))
+
+(use-package lsp-ui
+  :after lsp-mode
+  :custom
+  (lsp-ui-sideline-show-code-actions t)
+  (lsp-ui-doc-position 'at-point))
+
+
+;; Additional helpers using treemacs
+;; (symbols view, errors, dependencies for Java etc.)
+(use-package lsp-treemacs
+  :after lsp-mode
+  :config
+  (lsp-treemacs-sync-mode 1))
+
+;; debugger component (for the few times I need it)
+(use-package dap-mode
+  :after lsp-mode
+  :init
+  (dap-auto-configure-mode))
+</pre>
+</div>
+
+<p>
+If you are not familiar with use-package, you can think of the <code>:init</code> and <code>:config</code> blocks as the places to run configuration statements (e.g, enabling modes) with some subtle differences. <code>:bind</code> configures keybindings, and <code>:hook</code> configures hooks. <code>:custom</code> is the same as using every statement inside of it as a <code>setq</code>, so simply unwrap each element and put <code>setq</code> at the beginning of each of them to get a non-use-package version. If you want to learn more about it beyond this oversimplification, please refer to the <a href="https://github.com/jwiegley/use-package">use-package repo</a>. Maybe it could be an article for later :) 
+</p>
+
+
+<p>
+If you really wanted to, you could install the packages manually, require them (e.g, <code>(require 'lsp-mode)</code>), and then set your settings using <code>setq</code>, <code>add-hook</code> etc.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org14a69c3" class="outline-2">
+<h2 id="org14a69c3">IDE functionality with the help of kotlin-language-server and kotlin-debug-adapter</h2>
+<div class="outline-text-2" id="text-org14a69c3">
+<p>
+lsp-mode gives you IDE functionality (completions, code actions etc.) for Kotlin using <a href="https://github.com/fwcd/kotlin-language-server">kotlin-language-server</a>, while debugging is provided by dap-mode using <a href="https://github.com/fwcd/kotlin-debug-adapter">kotlin-debug-adapter</a>.
+</p>
+
+
+<p>
+I will not go too much into the basics (completions etc.), but will go through some simple tips and features that are not well documented. Basic functionality is covered in <a href="https://github.com/fwcd/kotlin-language-server">the readme in the kotlin-language-server repo</a>. Completion should work out of the box for most projects. As should hovers, though with some minor bugs. Javadocs from internal libraries (in your project) are shown when you hover with the mouse or use <code>lsp-ui-doc-show</code> (use <code>lsp-ui-doc-hide</code> to hide it again), but the ones from standard library and external projects do not.
+</p>
+
+
+<p>
+One caveat worth mentioning is renaming symbols (<code>lsp-rename</code>). If the symbol you are renaming also exists in other files (e.g, constants), then Emacs will open buffers in the background with these edits (which you have to save). This seems to be universal for all language servers, so this is lsp-mode's behavior.
+</p>
+</div>
+
+
+<div id="outline-container-org2c7912c" class="outline-3">
+<h3 id="org2c7912c">Code actions</h3>
+<div class="outline-text-3" id="text-org2c7912c">
+<p>
+kotlin-language-server provides the following code actions:
+</p>
+<ul class="org-ul">
+<li><b>Add missing import</b>: When you have used something you have forgotten to add an import statement for. (import statements are also added when using them from completions, so you VERY RARELY have to do it manually!).</li>
+<li><b>Implement abstract members</b>: Implement missing abstract methods and variables.</li>
+<li><b>Java to Kotlin</b> (BROKEN): In theory this should convert the marked Java code to Kotlin.</li>
+</ul>
+
+<p>
+(miss any code actions you love in other language servers and IDEs? Suggest them in <a href="https://github.com/fwcd/kotlin-language-server/issues">the language server issue tracker</a>!)
+</p>
+
+
+<p>
+When you first start using Kotlin in Emacs, you may wonder why you are not seeing any code actions. Is something wrong? lsp-ui does not show code actions by default, and I had to activate it like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp">(setq lsp-ui-sideline-show-code-actions t)
+</pre>
+</div>
+
+<p>
+A code action will look like this:
+</p>
+<img src="{{ "assets/img/emacskotlin2/codeaction.png" | relative_url}}" alt="Code action" class="blogpostimg" />
+
+<p>
+Notice the yellow box with the text "Implement abstract members"! The error text simply states that we have unimplemented abstract members. 
+</p>
+
+
+<p>
+Now you can execute a code action with <code>lsp-execute-code-action</code>, which is bound to <code>M-RET</code> in the setup above! 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org306518a" class="outline-3">
+<h3 id="org306518a">Override members</h3>
+<div class="outline-text-3" id="text-org306518a">
+<p>
+You might have a project where you have interfaces with default implementations that you want to override (especially true if you use some Java libraries!). Those are not supported by the code action above as they are not missing an implementation. Do you have to do those manually by reading API docs? No! Thanks to a custom operation (i.e, protocol extension) in the langauge server and lsp-mode, you can simply have your cursor at the class name of your class and run <code>lsp-kotlin-implement-member</code>! You will now be prompted by the open methods and variables not implemented in the class in your file. If you are using Helm, you can select multiple of them with <code>C-SPACE</code>. That looks like this (in a stupid small project :
+</p>
+
+<img src="{{ "assets/img/emacskotlin2/overridemembers_first.png" | relative_url}}" alt="Override members - selecting which one to override" class="blogpostimg" />
+
+<p>
+Then after selection:
+</p>
+<img src="{{ "assets/img/emacskotlin2/overridemembers_second.png" | relative_url}}" alt="Override members - implemented" class="blogpostimg" />
+
+<p>
+Notice that it includes members from base classes like Object and Any as well! :)
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgfa5030e" class="outline-3">
+<h3 id="orgfa5030e">Code lenses (run/debug program)</h3>
+<div class="outline-text-3" id="text-orgfa5030e">
+<p>
+These are not on by default, mostly because not everyone will want to run or debug their programs inside of Eamcs. Some are stubborn and prefer to run it in the terminal etc. (I have to admit that I do that most of the time for tests). You can activate the run/debug code lenses using <code>lsp-kotlin-lens-mode</code> (pro-tip: Put it in a hook in your configuration if you use it often)
+</p>
+
+<p>
+Regular main function:
+</p>
+<img src="{{ "assets/img/emacskotlin2/codelens_main.png" | relative_url}}" alt="Code lens regular main function" class="blogpostimg" />
+
+<p>
+Class variant (is anyone really using this?):
+</p>
+<img src="{{ "assets/img/emacskotlin2/codelens_mainclass.png" | relative_url}}" alt="Code lens main function in class" class="blogpostimg" />
+
+<p>
+(notice the Run/Debug buttons that you can click!)
+</p>
+
+
+<p>
+Debugging main functions (including JVMMain annotated ones) are currently supported. Tests are a bit finicky in the debug adapter at the moment. More on debugging below.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgb52ebff" class="outline-3">
+<h3 id="orgb52ebff">More clear overview with lsp-treemacs</h3>
+<div class="outline-text-3" id="text-orgb52ebff">
+<p>
+lsp-treemacs gives you some handy tools, like seeing a list of errors (like many IDEs have) using <code>lsp-treemacs-errors-list</code>:
+</p>
+
+<img src="{{ "assets/img/emacskotlin2/errorlist.png" | relative_url}}" alt="lsp-treemacs errors list" class="blogpostimg" />
+
+<p>
+or seeing symbols in the current buffer/file with == in a representation like this (requires <a href="https://github.com/domtronn/all-the-icons.el">all-the-icons</a>):
+</p>
+
+<img src="{{ "assets/img/emacskotlin2/symbols.png" | relative_url}}" alt="lsp-treemacs errors list" class="blogpostimg" />
+</div>
+</div>
+
+
+
+<div id="outline-container-org4b6d9b2" class="outline-3">
+<h3 id="org4b6d9b2">Basics of debugging with dap-mode using kotlin-debug-adapter</h3>
+<div class="outline-text-3" id="text-org4b6d9b2">
+<p>
+The debugging support is very bare-bones at the moment. You can only debug using Maven or Gradle projects for the JVM, and there is <a href="https://github.com/fwcd/kotlin-debug-adapter/issues/62">an open issue for debugging standalone JVM applications</a>. If you are not using the code lenses above, you can specify settings yourself in a dap template, or make a <a href="https://code.visualstudio.com/docs/editor/debugging">VSCode launch.json file</a> with the debug specification with the type kotlin. If you want to attach to an already running debug process, you can use the built in dap template called "Kotlin Attach" (just run <code>dap-debug</code> after setting up dap-mode like in the config above!). Attaching is currently the only way to debug tests. In Gradle, you can create a debug test process like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">./gradlew --info cleanTest test --debug-jvm
+</pre>
+</div>
+
+<p>
+For basic usage of dap-mode, like the various commands, refer to <a href="https://emacs-lsp.github.io/dap-mode/">the documentation</a>.
+</p>
+
+
+<p>
+<b>NOTE! Before debugging (or running) your application, you have to build it! This will depend on your build system.</b>
+</p>
+
+
+<p>
+If you are curious on what this looks like, here is a screenshot where we hit a breakpoint:
+</p>
+
+<img src="{{ "assets/img/emacskotlin2/breakpoint.png" | relative_url}}" alt="Hitting a breakpoint in dap-mode using kotlin-debug-adapter" class="blogpostimg" />
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org8e3b561" class="outline-3">
+<h3 id="org8e3b561">Debugging issues with kotlin-language-server and kotlin-debug-adapter</h3>
+<div class="outline-text-3" id="text-org8e3b561">
+<p>
+Something isn't working? Code actions aren't showing up? No completions? Then it's time to look into the <code>*lsp-log*</code>-buffer! If you  want to see more info, like the JSON requests and responses from and to the language server, enable <code>lsp-print-io</code>.
+</p>
+
+
+
+<p>
+Possible existing issues to think about:
+</p>
+<ul class="org-ul">
+<li>Have you waited until the indexing of your project is done? You will see a "Indexing" status in your modeline when this is happening (unless disabled), and you will see a message stating "Updated full symbol index&#x2026;" in <code>*lsp-log*</code> when it is done. (The "Indexing" status will also disappear when it's done)</li>
+<li>Using Gradle and getting tons of errors in your files? Also not getting completions? Check the <code>*lsp-log*</code> buffer for Gradle errors! Dependencies from Gradle are fetched using a custom task from the language server.</li>
+<li>Is your project a Kotlin Multiplatform project? There is only <a href="https://github.com/fwcd/kotlin-language-server/pull/377">experimental support</a> using regular Gradle (not Kotlin DSL) for that so far.</li>
+<li>Not a Maven or Gradle project? Make sure your Kotlin-install (kotlinc etc.) is in the PATH!</li>
+<li>Android project and not getting completions? Check the <code>*lsp-log*</code> buffer and see if there is any output from Gradle! Sometimes you may need to install components manually&#x2026;</li>
+<li>Weird errors in Gradle Kotlin DSL? Be patient and wait for the PRs fixing them to be merged (<a href="https://github.com/fwcd/kotlin-language-server/pull/395">nr 1</a> and <a href="https://github.com/fwcd/kotlin-language-server/pull/394">nr 2</a>) ;)</li>
+</ul>
+
+
+
+<p>
+To debug possible debug errors, the most useful thing to do is print the communication with the debug adapter. This can be done by enabling `dap-print-io` (i.e, <code>(setq dap-print-io t)</code>). Then your <code>*Messages*</code>-buffer will be filled up with the requests and responses. If you are not familiar with how the debug adapter works, this will prove very useful for possible issues reported in the debug adapter repo. 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgb431d2c" class="outline-3">
+<h3 id="orgb431d2c">General tips</h3>
+<div class="outline-text-3" id="text-orgb431d2c">
+<p>
+Sometimes you may encounter weird behavior. Sadly this can happen as kotlin-language-server and kotlin-debug-adapter are projects maintained and contributed to out of love in our spare time. Some possible workarounds: 
+</p>
+<ul class="org-ul">
+<li>Sometimes the language server can appear sluggish (completions not appearing etc.) for some projects after using it for some time. I'm unsure why this happens. I usually just shutdown the server and start it again. Yes, turning it off and on again&#x2026;</li>
+<li>Suddenly not getting completions for something after a dot? Save the file, erase the dot and try invoking completions again!</li>
+<li>Created a new file that the language server seems to ignore for some reason? Save it, and&#x2026; turn the server off and on again!</li>
+</ul>
+</div>
+</div>
+</div>
