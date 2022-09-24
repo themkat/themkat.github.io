@@ -54,7 +54,7 @@ Some of you will probably wonder about the theme and modeline I use. I use [[htt
 The config here is truncated a bit to show the most important parts. Some parts of my config are based upon my personal preferences, and not very relevant for an article like this. If you want to take a look at the entire config, you can check out [[https://github.com/themkat/.emacs.d][the Github repo]] (it has a table of contents for easy navigation). There are also links for some ommited packages in the previous section :)
 
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (use-package kotlin-mode
     :after (lsp-mode dap-mode)
     :config
