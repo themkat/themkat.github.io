@@ -120,6 +120,8 @@ I will not go too much into the basics (completions etc.), but will go through s
 
 One caveat worth mentioning is renaming symbols (=lsp-rename=). If the symbol you are renaming also exists in other files (e.g, constants), then Emacs will open buffers in the background with these edits (which you have to save). This seems to be universal for all language servers, so this is lsp-mode's behavior.
 
+*EDIT: When completing functions, you may notice that the function arguments don't complete like in other packages you are used to (i.e, automatically navigating to the first element, and being able to go to the next argument with TAB). Until today (25th of September 2022), I lived with this slight inconvenience... To get the functionality you are used to, just activate yas-minor-mode for the kotlin-mode buffer you are in!. [[https://github.com/joaotavora/yasnippet][yasnippet is a separate package you can install]]. No more inconvenient editing of arguments! Just complete the function, and then populate each argument by using TAB!*
+
 
 ** Code actions
 kotlin-language-server provides the following code actions:
