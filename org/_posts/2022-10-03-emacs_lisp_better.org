@@ -77,7 +77,7 @@ Like for the other packages, [[https://github.com/rejeep/f.el][f.el provides man
 If you have ever read source code for any of the Emacs packages you use, you may have noticed operations like =-let=, =-map=, =-lambda=, =->=, and similar ones all starting with a dash. These are from dash.el, and provides quite a lot of nice syntax! Ranging from improved usage and pattern matching (if let expressions like in Rust is available!), to Lisp constructs often found in other languages (like the threading operator =->=). Clojure is probably the biggest inspiration, and this package makes list operations as pleasant as they are in Clojure! (LISP stands for LISt Processing after all!). If you have coded in Emacs Lisp for a while, you may have used †he various cl-functions (e.g, cl-map), but with dash you get more clear and pleasant APIs to do the same and more.
 
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   ;; Flatten a list
   (-flatten '((1 2 (3 4))))
   ;; => (1 2 3 4)
@@ -108,7 +108,7 @@ I LOOOOVE the pattern matching in dash! The -let variant in dash is probably the
 * [[https://github.com/Wilfred/ht.el][ht.el]]
 [[https://github.com/Wilfred/ht.el][ht.el]] is a library for managing hash tables. While this can be done with the standard library, ht.el makes the intent more clear. They have also [[https://github.com/Wilfred/ht.el#why][written a bit about the why in their readme]]. Like they mention, more consistent naming, common prefixes and more, makes coding in Emacs Lisp more pleasant. It's easy to sometimes forget the name of a function, and a common prefix makes it easier to find when using auto completion.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   ;; Create a new hash table
   (let ((my-hash-table (ht ("key" "val")
                            ("other key" "other val"))))
