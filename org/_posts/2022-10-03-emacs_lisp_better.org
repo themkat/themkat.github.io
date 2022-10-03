@@ -1,0 +1,122 @@
+#+OPTIONS: toc:nil num:nil ^:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Packages that make Emacs Lisp more pleasant
+tags: emacs programming lisp
+---
+#+END_EXPORT
+
+Emacs Lisp can sometimes seem a little archaic compared to more modern languages. In higher level language we are spoiled with a multitude of easy string handling, list handling, pattern matching and so on. What if I told you that some packages can give you the same ease of use for Emacs Lisp? That they provide more clear APIs, give features you are used to from other languages, and/or abstract away the more tedious details.
+
+
+
+We will mainly look at 3 packages: [[https://github.com/magnars/s.el][s.el]], [[https://github.com/rejeep/f.el][f.el]] and [[https://github.com/magnars/dash.el][dash.el]]. Two of these packages (first and last) are maintained by [[https://github.com/magnars][Magnar Sveen]], who are also known for [[https://emacsrocks.com/][Emacs Rocks]] and [[http://whattheemacsd.com/][What The .emacs.d]] (which are still great resources for learning and finding inspiration for your Emacs configuration!). We will also look at [[https://github.com/Wilfred/ht.el][ht.el]]. These packages are used a lot in many of the Emacs packages you use in a day to day basis, like [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]] and [[https://github.com/brotzeit/rustic][rustic]] just to name a few. As most of these already have tons of examples in their READMEs, my main goal of this article is to inspire you to check them out. Hopefully you will know of one new package after reading this article :) 
+
+
+* [[https://github.com/magnars/s.el][s.el]]
+[[https://github.com/magnars/s.el][s.el]] has a simple mission: to provide more pleasant string handling, and it touts itself as "The long lost Emacs string manipulation library". If you have worked with strings in Emacs Lisp without s.el, it can be a bit tedious. Some functions work like you expect with string inputs, while others expect a list of strings (e.g, string-join). Others have completely different prefixes (e.g, concat). 
+
+Let's look at some examples of operations from s.el:
+
+#+BEGIN_SRC lisp
+  ;; Test if input is a number
+  (s-numeric? "123")
+  ;; => t
+
+  (s-numeric? "ab34")
+  ;; => nil
+
+
+  ;; Get the first or last n characters of a string
+  (s-left 4 "This is a test")
+  ;; => "This"
+
+  (s-right 4 "This is a test")
+  ;; => "test"
+
+
+  ;; Transform to (lower) camel case
+  (s-lower-camel-case "square function")
+  ;; => "squareFunction"
+#+END_SRC
+
+
+There is [[https://github.com/magnars/s.el][a ton more examples in the github repo for s.el]], so I suggest you check it out if you find it interesting! :) Some of the functions are now provided in newer versions of Emacs (with the =string-=-prefix like string-pad-right and string-pad-left), but there are still some operation that Emacs does not provide (e.g, s-left and s-right to get the first or last n characters in a string respectively). 
+
+
+* [[https://github.com/rejeep/f.el][f.el]]
+Yes, you read that right: [[https://github.com/rejeep/f.el][f.el]]! f.el provides many functions for handling files and directories, including paths and content. While it is certainly possible to do some of these operations directly in standard Emacs Lisp, it takes quite a lot more instructions than the simple ones provided by f. f makes it way more readable, and makes the intent more clear.
+
+#+BEGIN_SRC lisp
+  ;; Get the filename of the file (or inner directory)
+  (f-filename "/home/someuser/Programming/Rust/mos/Cargo.toml")
+  ;; => "Cargo.toml"
+
+
+  ;; Create a directory
+  (f-mkdir "Programming" "Emacs")
+  ;; Makes the directories Programming/Emacs
+
+
+  ;; Test if input has a file extension
+  (f-ext-p "/test/test")
+  ;; => nil
+
+  (f-ext-p "Cargo.toml")
+  ;; => t
+#+END_SRC
+
+
+Like for the other packages, [[https://github.com/rejeep/f.el][f.el provides many examples of usage in its readme]].
+
+
+* [[https://github.com/magnars/dash.el][dash.el]]
+If you have ever read source code for any of the Emacs packages you use, you may have noticed operations like =-let=, =-map=, =-lambda=, =->=, and similar ones all starting with a dash. These are from dash.el, and provides quite a lot of nice syntax! Ranging from improved usage and pattern matching (if let expressions like in Rust is available!), to Lisp constructs often found in other languages (like the threading operator =->=). Clojure is probably the biggest inspiration, and this package makes list operations as pleasant as they are in Clojure! (LISP stands for LISt Processing after all!). If you have coded in Emacs Lisp for a while, you may have used †he various cl-functions (e.g, cl-map), but with dash you get more clear and pleasant APIs to do the same and more.
+
+
+#+BEGIN_SRC emacs-lisp
+  ;; Flatten a list
+  (-flatten '((1 2 (3 4))))
+  ;; => (1 2 3 4)
+
+
+  ;; Pattern matched let
+  ;; (my-hash-table is a hash table with keys "name" and "age")
+  (-let [(&hash "name" name "age" age) my-hash-table]
+    (message "Hi %s who is %d years old!" name age))
+  ;; with an example hash table with name=Nils, and age=56, this will print:
+  ;; "Hi Nils who is 56 years old!"
+
+  ;; There are even pattern matched lambda! -lambda
+
+
+  ;; Thread through the chain using the first argument as the last argument in the next function call etc.
+  (->> '((1 2) 3)
+      (-flatten)
+      (message "My list: %S"))
+  ;; prints:
+  ;; "My list: (1 2 3)"
+#+END_SRC
+
+I LOOOOVE the pattern matching in dash! The -let variant in dash is probably the functionality in this article I use the most. Threading is also something that can be really nice, and I should probably use it more in places where I usually collect results with let and =let*=.
+
+[[https://github.com/magnars/dash.el][More examples in the readme]] :) 
+
+* [[https://github.com/Wilfred/ht.el][ht.el]]
+[[https://github.com/Wilfred/ht.el][ht.el]] is a library for managing hash tables. While this can be done with the standard library, ht.el makes the intent more clear. They have also [[https://github.com/Wilfred/ht.el#why][written a bit about the why in their readme]]. Like they mention, more consistent naming, common prefixes and more, makes coding in Emacs Lisp more pleasant. It's easy to sometimes forget the name of a function, and a common prefix makes it easier to find when using auto completion.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Create a new hash table
+  (let ((my-hash-table (ht ("key" "val")
+                           ("other key" "other val"))))
+    ;; add another key
+    (ht-set! my-hash-table "EmacsLisp" "More awesome with these libraries!")
+
+    ;; return the value with the key "MyKey", or "Not found :(" if not found
+    (ht-get my-hash-table "MyKey" "Not found :("))
+#+END_SRC
+
+There are also many more utility function, like accessing nested hash tables, copying hash tables, getting the size and more! Like usual, there are [[https://github.com/Wilfred/ht.el][way more examples in the readme]] :) 
