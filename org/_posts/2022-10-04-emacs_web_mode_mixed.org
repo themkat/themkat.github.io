@@ -41,7 +41,7 @@ In addition, I really enjoy [[https://github.com/sebastiencs/company-box/][compa
 ** Setup with code
 Here is the setup I use in this article. Non-relevant parts are ommited, as is the configuration of 
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (defun themkat/activate-tide ()
     (interactive)
     (tide-setup)
