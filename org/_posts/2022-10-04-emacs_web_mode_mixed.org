@@ -1,0 +1,141 @@
+#+OPTIONS: toc:nil num:nil ^:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Mixed content HTML files in Emacs web-mode with context-aware completion and documentation
+tags: emacs programming
+---
+#+END_EXPORT
+
+Today I'm going to show you my approach to make editing mixed html-files better in Emacs. web-mode is really good for editing mixed html files containing html, css and javascript, but doesn't provide any completion or other helpers like eldoc. In this article I will quickly show you my approach to make it more pleasant to work with.
+
+
+Some of you might be thinking along the lines of "Why not create a page with React?", to which I reply "Why use a excavator when you can use a hammer?". There are times when you don't need big frameworks, like when making templates (like for this blog!), or making static pages for Spring or Quarkus applications. Everything doesn't need to be one of those big web projects. Sometimes it's good to code like it's 2002 :) 
+
+
+* Some alternatives to consider
+Before we go into my approach, let's look at some other alternatives and why I don't use them:
+
+- [[https://emacs-lsp.github.io/lsp-mode/page/lsp-html/][lsp-mode with html-ls]]. Didn't use it because it didn't give intelligent context-aware completion for CSS and JavaScript. Also didn't enjoy the way it handled and completed HTML.
+- lsp-mode with a [[https://emacs-lsp.github.io/lsp-mode/page/lsp-typescript/][javascript]] + [[https://emacs-lsp.github.io/lsp-mode/page/lsp-css/][css]] specific language server. Unsure on how to make it context aware based upon what kind of section of a file I'm editing as both use company-capf to my knowledge.
+ - nothing at all, just use web-mode witout any completion (except maybe company-dabbrev-code?). Have done this for a long time, and it works. Just missing the finer goodies that Emacs can provide for me :) 
+
+Also found [[https://stackoverflow.com/questions/60226463/how-do-i-get-spacemacs-web-mode-autocomplete-to-relax-a-little][a StackOverflow question mentioning Spacemacs and similar functionality that I want]], but couldn't find out what it was using. Still, it is more fun writing your own functionality :) 
+
+Even if I didn't use or enjoy these, feel free to take inspiration from them for your own setup. You might have different wants and needs than me after all :) 
+
+
+* My approach
+** Package summary
+The following packages are used:
+- [[https://github.com/company-mode/company-mode][company-mode]]: General completion engine.
+- [[https://github.com/ananthakumaran/tide][tide]]: Provides JavaScript and TypeScript helpers like completion and eldoc documentation. 
+- [[https://github.com/zenozeng/css-eldoc][css-eldoc]]: Provides CSS documentation using eldoc
+- [[https://github.com/fxbois/web-mode][web-mode]]: Provides syntax highlighting, closing tags, and more for HTML, template languages and more! Also support mixed content like HTML + CSS + JavaScript in the same file with correct highlighting.
+  
+In addition, I really enjoy [[https://github.com/sebastiencs/company-box/][company-box]] as a company-mode frontend. It provides nice icons, and a documentation popup while you complete (which is really handy when you want to freshen up on the specifics without consulting a documentation website!). 
+
+
+** Setup with code
+Here is the setup I use in this article. Non-relevant parts are ommited, as is the configuration of 
+
+#+BEGIN_SRC emacs-lisp
+  (defun themkat/activate-tide ()
+    (interactive)
+    (tide-setup)
+    (eldoc-mode 1)
+    (tide-hl-identifier-mode 1))
+
+  (use-package tide)
+
+  (use-package css-eldoc)
+
+  (defun themkat/complete-web-mode ()
+    (interactive)
+    (let ((current-scope (web-mode-language-at-pos (point))))
+      (cond ((string-equal "javascript" current-scope)
+             (company-tide 'interactive))
+            ((string-equal "css" current-scope)
+             (company-css 'interactive))
+            (t
+             (company-dabbrev-code 'interactive)))))
+
+  (defun themkat/eldoc-web-mode ()
+    (let ((current-scope (web-mode-language-at-pos (point))))
+      (cond ((string-equal "javascript" current-scope)
+             (tide-eldoc-function))
+            ((string-equal "css" current-scope)
+             (css-eldoc-function))
+            (t
+             nil))))
+
+  (defun themkat/setup-web-mode-mixed ()
+    (web-mode)
+    (themkat/activate-tide)
+    (setq-local eldoc-documentation-function #'themkat/eldoc-web-mode))
+
+  (use-package web-mode
+    :after (tide css-eldoc)
+    :custom
+    (web-mode-enable-current-element-highlight t)
+
+    :bind
+    ([(control return)] . themkat/complete-web-mode)
+
+    :mode
+    (("\\.html?$" . themkat/setup-web-mode-mixed)))
+#+END_SRC
+
+
+Most of the magic is done through the function =web-mode-language-at-pos= from web-mode that is used to find out which language context we are currently in.
+
+
+** Basic usage
+Based on what we see in the config above, we can simply open an HTML file and be ready for action! You may notice a message:
+#+BEGIN_SRC text
+  Couldn’t locate project root folder with a tsconfig.json or jsconfig.json file. Using ’/home/.../mysite/’ as project root.
+#+END_SRC
+
+That is not too important, as the basic functionality seems to work anyway.
+
+After the settings above, we can activate completion with CTRL-RET, and eldoc-documentation will show automatically.
+
+
+Just notice that we get completion and documentation (see the minibuffer/echo area!) for CSS:
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/webmode/css.png" | relative_url}}" alt="Emacs web-mode CSS completion and documentation" class="blogpostimg" />
+#+END_EXPORT
+
+Notice that we get different completions in the JavaScript part (from Tide):
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/webmode/js.png" | relative_url}}" alt="Emacs web-mode JavaScript completion and documentation" class="blogpostimg" />
+#+END_EXPORT
+
+(notice that we get JSDoc documentation!)
+
+If you try it out, you will also notice that all occurrences of a variable is highlighted when your cursor hovers it!
+
+
+Regular HTML parts will simply get the regular company-dabbrev-code completions like we are used to, which may just be filled with random text we have written in code. If you want something specific to happen, you can change the company-dabbrev-code line in the themkat/complete-web-mode function.
+
+
+** Drawbacks
+Sadly there are a few drawbacks I still haven't found good solutions to.
+
+- The first one is that the context aware completions only happens when we request it with CTRL-RET (CTRL ENTER). If you have company completions happening automatically, they will not be context aware. They will probably come from Tide. This doesn't bother me that much, as I didn't get context aware completions at all in the past.
+- No flycheck from Tide. Tried and failed to get this working. Probably due to mixed file.
+
+
+Another drawback is that Tide is meant for TypeScript, and interprets almost everything to be of any-type. This means we do not get completions we want sometimes, and HOW would it even know? (you would have no way of knowing unless you knew what you were thinking!).
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/webmode/missing_completion.png" | relative_url}}" alt="Emacs web-mode JavaScript missing completion" class="blogpostimg" />
+#+END_EXPORT
+
+If we give it some hints while we are working, it works much better:
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/webmode/hacky_completion.png" | relative_url}}" alt="Emacs web-mode JavaScript hacky completions" class="blogpostimg" />
+#+END_EXPORT
+
+*NOTE! Remember to remove these "type hints" when you are done. They are not valid JavaScript. Usually they are transpiled after all...*
