@@ -14,9 +14,9 @@ Some of you might be thinking along the lines of "Why not create a page with Rea
 </p>
 
 
-<div id="outline-container-org8e3e334" class="outline-2">
-<h2 id="org8e3e334">Some alternatives to consider</h2>
-<div class="outline-text-2" id="text-org8e3e334">
+<div id="outline-container-org71ebbc7" class="outline-2">
+<h2 id="org71ebbc7">Some alternatives to consider</h2>
+<div class="outline-text-2" id="text-org71ebbc7">
 <p>
 Before we go into my approach, let's look at some other alternatives and why I don't use them:
 </p>
@@ -40,13 +40,13 @@ Even if I didn't use or enjoy these, feel free to take inspiration from them for
 </div>
 
 
-<div id="outline-container-org487f96a" class="outline-2">
-<h2 id="org487f96a">My approach</h2>
-<div class="outline-text-2" id="text-org487f96a">
+<div id="outline-container-org2ec8554" class="outline-2">
+<h2 id="org2ec8554">My approach</h2>
+<div class="outline-text-2" id="text-org2ec8554">
 </div>
-<div id="outline-container-org67201c7" class="outline-3">
-<h3 id="org67201c7">Package summary</h3>
-<div class="outline-text-3" id="text-org67201c7">
+<div id="outline-container-org7d9b58d" class="outline-3">
+<h3 id="org7d9b58d">Package summary</h3>
+<div class="outline-text-3" id="text-org7d9b58d">
 <p>
 The following packages are used:
 </p>
@@ -64,15 +64,15 @@ In addition, I really enjoy <a href="https://github.com/sebastiencs/company-box/
 </div>
 
 
-<div id="outline-container-org237941e" class="outline-3">
-<h3 id="org237941e">Setup with code</h3>
-<div class="outline-text-3" id="text-org237941e">
+<div id="outline-container-org882bff2" class="outline-3">
+<h3 id="org882bff2">Setup with code</h3>
+<div class="outline-text-3" id="text-org882bff2">
 <p>
 Here is the setup I use in this article. Non-relevant parts are ommited, as is the configuration of 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(defun themkat/activate-tide ()
+<pre class="src src-lisp">(defun themkat/activate-tide ()
   (interactive)
   (tide-setup)
   (eldoc-mode 1)
@@ -127,9 +127,9 @@ Most of the magic is done through the function <code>web-mode-language-at-pos</c
 </div>
 
 
-<div id="outline-container-org353c4f1" class="outline-3">
-<h3 id="org353c4f1">Basic usage</h3>
-<div class="outline-text-3" id="text-org353c4f1">
+<div id="outline-container-org0a299fc" class="outline-3">
+<h3 id="org0a299fc">Basic usage</h3>
+<div class="outline-text-3" id="text-org0a299fc">
 <p>
 Based on what we see in the config above, we can simply open an HTML file and be ready for action! You may notice a message:
 </p>
@@ -173,9 +173,9 @@ Regular HTML parts will simply get the regular company-dabbrev-code completions 
 </div>
 
 
-<div id="outline-container-org3901913" class="outline-3">
-<h3 id="org3901913">Drawbacks</h3>
-<div class="outline-text-3" id="text-org3901913">
+<div id="outline-container-org0937728" class="outline-3">
+<h3 id="org0937728">Drawbacks</h3>
+<div class="outline-text-3" id="text-org0937728">
 <p>
 Sadly there are a few drawbacks I still haven't found good solutions to.
 </p>
