@@ -1,0 +1,327 @@
+#+OPTIONS: toc:nil num:nil ^:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: The awesomeness of pattern matching in Rust
+tags: programming rust
+---
+#+END_EXPORT
+
+If you have followed me for a while, you know that I have really started enjoying Rust in the last year. Rust have many great features, and pattern matching is one of them. If you have used other languages like Haskell or Standard ML, you will notice some similarities. Same with the complete basic pattern matching with when in Kotlin (with some minor work). The pattern matching in Rust makes for expressive, readable and clear code. I admit that the Rust way of doing it is my personal favorite. In this article we will take a look at this topic, and maybe you will see why I think it's so great!
+
+
+
+* Basics of patterns
+** Refutable vs irrefutable
+Patterns in Rust come in two types; refutable and irrefutable. Patterns that match conditionally are called refutable, while patterns that match any possible value are called irrefutable. Which one you can use will depend on the context. For example, a let-statement will need a irrefutable pattern, because what would happen if a variable in a let-statement doesn't get a value?
+
+#+BEGIN_SRC rust
+  // Irrefutable patterns
+  let x = 2;
+  let (x, y) = (2, 3);
+
+
+  // WILL NOT COMPILE
+  // let does not allow refutable patterns
+  let Ok(x) = someString.parse::<i32>()
+  // trying to parse a string will return a Result, and can not guarantee that a result and not an Err is returned
+#+END_SRC
+
+"if let"-statements on the other hand can have refutable patterns, as the body is evaluated conditionally:
+#+BEGIN_SRC rust
+  if let Ok(x) = someString.parse::<i32>() {
+      // ... do something if someString can be parsed as a 32 bit integer ...
+  }
+
+  // if let can have a refutable pattern, so we can also use a value for x:
+  if let Ok(64) = someString.parse::<i32>() {
+      // ... do something if someString can be parsed as a 32 bit integer ...
+  }
+#+END_SRC
+
+We will see more examples of these kinds of statements and patterns below. If you still think the topic of "refutable vs irrefutable" is hard, reread this section after reading the rest of the article. [[https://doc.rust-lang.org/book/ch18-02-refutability.html][The Rust documentation]] also has some examples and explanations that can be worth it to check out.
+
+** Destructuring
+Many patterns are patterns that destructure various types, and they can also be mixed and match together. Let's look at some of them.
+
+*** Tuples
+We already saw example of tuple destructuring in the last section, but let's take another look:
+#+BEGIN_SRC rust
+  // myTuple is of type (i32, i32, &str)
+  let my_tuple = (1, 2, "hellothere");
+  let (x, y, my_str) = my_tuple;
+#+END_SRC
+
+Here we see in the last line that my_tuple is destructured into 3 new variables: =x=, =y=, and =my_str=. This can be done for all sorts of tuples, as long as the destructured types match.
+
+
+You can also match elements with =..= (possibly multiple) or =_= (single), which are often used to skip elements:
+#+BEGIN_SRC rust
+  // ignore my_str
+  let (x, y, _) = my_tuple;
+
+  // ignore everything after x
+  let (x, ..) = my_tuple;
+
+
+  // bigger tuple
+  let bigger_tuple = (1, 2, 3, 4, 5);
+
+  // get first and last
+  let (first, .., last) = bigger_tuple;
+
+  // ambiguous! NOT ALLOWED
+  // How would the compiler even know which element you wanted
+  let (.., middle, ..) = bigger_tuple;
+#+END_SRC
+(notice that the patterns have to be unambiguous)
+
+
+You might try the first tuple example above with a tuple struct and get an error message. That is because tuple structs have more in common with struct destructuring, so they require special syntax:
+#+BEGIN_SRC rust
+    // Defining a tuple struct that looks like the tuple in the previous example:
+    struct MyTuple(i32, i32, String);
+
+
+    // Destructure it
+    let my_tuple = TupleStr(1, 2, "hellothere".to_string());
+    let TupleStr(x, y, my_str) = my_tuple;
+#+END_SRC
+
+(notice that we had to change our =&str= type to String, as the compiler can't infer the size of any =&str= we might want to use in our tuple struct. Strings are saved on the heap, so that solves that problem).
+
+
+Tuple structs are technically structs, which brings us to our next type of destructuring...
+
+
+*** Structs
+Structs are not that much different, and an example might show it clearly:
+#+BEGIN_SRC rust
+  // define a simple struct
+  struct Point {
+      x: f32,
+      y: f32,
+      z: f32
+  }
+
+  // create a variable to use
+  let myPoint = Point {
+      x: 1.0,
+      y: 0.5,
+      z: -1.0
+  };
+
+  // destructure it!
+  let Point { x, y, z} = my_point;
+
+  // Maybe we just want x and y?
+  let Point { x, y, .. } = my_point;
+
+  // or maybe just z
+  let Point { z, .. } = my_point;
+#+END_SRC
+
+One thing you should notice when destructuring structs is that the name have to match the one found in the struct, and that =..= have to come last. =..= in this case simply means match the rest and ignore the result.
+
+
+*** Enums
+The simplest case for an enum is simply to match one with no data:
+#+BEGIN_SRC rust
+  // define a simple enum
+  enum Color {
+      Red,
+      Blue,
+      Green
+  }
+
+  // match if our color is green
+  if let Color::Green = my_color {
+      // .. do something is color is green ..
+  }
+#+END_SRC
+
+This is not that interesting, as Rust enums are way more powerful. If you are not familiar with them, they can contain data! Let us see an example:
+#+BEGIN_SRC rust
+  // More advanced enum
+  enum HttpRequest {
+      Get,
+      Post(String)
+  }
+
+  // match the post request
+  if let HttpRequest::Post(data) = my_request {
+      // .. do something with the post request data ...
+  }
+
+  // can also ignore data
+  if let HttpRequest::Post(_) = my_request {
+      // .. do something when post request ...
+  }
+#+END_SRC
+
+If an enum has several arguments, you can do most of what you are used to from tuples above. You can use ranges (e.g, =1..=2=), or skip some elements with =..= by itself (e.g, =MyEnum(firstElem, .., lastElem)=).
+
+*** Combined
+You can also combine all of the above into your own patterns! Structs inside enums, enums inside tuples etc. The list goes on!
+
+#+BEGIN_SRC rust
+  // Define some nested structure
+  enum Color {
+      Red,
+      Blue,
+      Green
+  }
+
+  // imagine old OpenGL from the early 2000s where colors of points were interpolated across the shape
+  struct Point {
+      x: f32,
+      y: f32,
+      z: f32,
+      color: Color
+  }
+
+  struct Triangle(Point, Point, Point);
+
+
+  // A destructuring based upon the data we want
+  // gvet only x for the first point when the first points color is blue
+  if let Triangle(
+      Point {
+          x,
+          color: Color::Blue, ..
+      },
+      ..,
+  ) = my_triangle {
+      // .. do something with the data we wanted for some reason ..
+  }
+#+END_SRC
+
+
+** Other patterns
+There are other types of patterns as well, and these are mostly used with match which you will see more of below. The first one is the or-matcher:
+#+BEGIN_SRC rust
+  // matches 1, 2 or 3
+  1 | 2 | 3
+
+  // Matches one of the strings
+  "first" | "second"
+#+END_SRC
+
+We saw ranges briefly above:
+#+BEGIN_SRC rust
+  // matches 1 to 10 (inclusive)
+  1..=10
+
+  // matches 1 to 10 (non-inclusive)
+  1..10
+#+END_SRC
+(ranges can also be used as indexes for arrays to fetch multiple elements)
+
+
+The last pattern I want to show is one used for testing and capturing values. Yes, you can have both! This functionality is often used for capturing values somewhere inside a pattern that satisfy a given condition, and can be used deep inside the pattern. Let us see an example with ranges:
+#+BEGIN_SRC rust
+  // Integer version of point
+  struct MyData {
+      x: i32,
+      y: i32,
+      z: i32,
+  }
+
+  // Match data x value when it's between 1 and 20 (inclusive)
+  if let MyData {
+      x: my_x @ 1..=20, ..
+  } = my_data
+  {
+      // .. do something with the my_x that is 1<=20 ..
+  }
+#+END_SRC
+(notice that the variable we use is now called =my_x=)
+
+These can be used with if-let and other places that allow refutable patterns, but is mostly used together with other patterns in match. I have rarely, if ever used any of these with if-let (maybe with the exception of ranges). 
+
+
+That should be the most important topics, but there might be things I've missed. Rust is an evolving language after all, and new features may have been added. There might also be features I don't use as much, and therefore forget about. You can see [[https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html][the Rust documentation on this topic]] for more. 
+
+** Caveats
+One minor caveat I have found is that Rust is finicky about floating points in patterns. Not about the capturing part, but if you try to use them in ranges and so on. It warns you that it is not supported. We all know how floating points behave, and that they are very sensitive to different scales and that they are rarely (if ever) exact. That probably explains why they are not recommended to use with more advanced Rust patterns.
+
+
+* Where to use pattern matching? (example time!)
+We have already seen some basic examples above, but let's dive a bit deeper and see how and where to use pattern matching. We have already seen lots of let and if-let statements, so let's look at match and patterns in function signatures!
+
+** match
+This is in my view the switch/case statement you are used to in other languages, but on steroids! match lets you write crazy powerful matchers. We have already looked at all the different patterns above, so let us have some quick examples:
+
+#+BEGIN_SRC rust
+  // A more extensive version of httprequest
+  enum HttpRequest {
+      Get,
+      Post(String),
+      Put(String),
+      Custom,
+      Unknown
+  }
+
+  // a match expression
+  match my_request {
+      Get => {
+          // .. do something with get ..
+      }
+      Post(data) | Put(data) => {
+          // .. do something with the data ..
+      }
+      _ => {}
+  }
+#+END_SRC
+(matches have to be exhaustive, and cover all cases. You see we handle this with the wildcard =_= above. This is also an advantage, as the compiler helps you remember all cases!)
+
+
+match also have another clever thingy called a match guard! It is basically an extra if-sentence inside a case. Let's add it to the second case above:
+
+#+BEGIN_SRC rust
+   match my_request {
+       HttpRequest::Get => {
+           // .. do something with get ..
+       }
+       HttpRequest::Post(data) | HttpRequest::Put(data) if !data.is_empty() => {
+           // .. do something with the data ..
+       }
+       _ => {}
+   };
+#+END_SRC
+
+Here we have added a check to see if the string data sent in is not empty! Pretty nifty!
+
+** functions
+You can use patterns in function definitions! That is really cool, right? You do have to remember that the patterns have to be irrefutable like for let. Don't be sad yet! It still means you can use a lot of destructuring operations we have seen above! Let's look at some examples:
+
+#+BEGIN_SRC rust
+  // test data
+  struct Vector2d {
+      x: f32,
+      y: f32
+  }
+
+  // destructured Vector2d
+  fn length(Vector2d { x, y }: Vector2d) -> f32 {
+      (x.powi(2) + y.powi(2)).sqrt()
+  }
+
+  fn x_val(Vector2d { x, .. }: Vector2d) -> f32 {
+      x
+  }
+#+END_SRC
+
+They can be deep as well if you want to, but remember to not f**k up your code's readability.
+
+
+Feel free to share any clever pattern matchings you have done in your function signatures in the comments! And yes, I know you have them in JavaScript as well. 
+
+
+#+BEGIN_EXPORT html
+<hr />
+#+END_EXPORT
+
+Now you have hopefully seen a little bit of what patterns in Rust can do. If you are new to Rust, maybe it has inspired you to learn the language? :)
