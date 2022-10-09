@@ -46,10 +46,10 @@ This is by no means an exhaustive list with all books, but is meant as a list to
 
 <<Clean Code>>
 * Clean Code by Robert C. Martin (aka Uncle Bob)
-Most of you have probably heard [[https://amzn.to/3g8rVLA][this book]] mentioned before, as it has become one of those books that everyone mentions. The author has also become quite a legend in the software development world with his books, courses and long career. 
+Most of you have probably heard [[https://amzn.to/3Vpxfhg][this book]] mentioned before, as it has become one of those books that everyone mentions. The author has also become quite a legend in the software development world with his books, courses and long career. 
 
 #+BEGIN_EXPORT html
-<a target="_blank" href="https://www.amazon.com/gp/product/B001GSTOAM/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B001GSTOAM&linkCode=as2&tag=themkat01-20&linkId=9934b3e71e4beb0229d3ca337910af16"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B001GSTOAM&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat01-20" ></a>
+<a href="https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship-ebook/dp/B001GSTOAM?_encoding=UTF8&qid=1665312424&sr=1-1&linkCode=li3&tag=themkat05-20&linkId=87cf97167d6d38f09f90f8a7697b1e73&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0"  class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B001GSTOAM&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat05-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat05-20&language=en_US&l=li3&o=1&a=B001GSTOAM" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 #+END_EXPORT 
 
 ** What is it about, and why should you read it?
@@ -62,7 +62,7 @@ Learning to write code that is easy to read for others is paramount in an enterp
 When you write code that is easier to read, it will be easier for others to read. As well as yourself the next time you  revisit your older code! That way you can work more effective with other people, and we can write code faster and enjoy working with it. 
 
 
-I can recommend [[https://amzn.to/3yo5x8N][Clean Coder]] as well on what it takes to be a professional programmer (according to the author), but it did not make as much as an impact on me as Clean Code. That being said, I still VERY much recommend reading it! It gives you much insight on what you should know if you want a professional career in software development.
+I can recommend [[https://amzn.to/3CIAjxp][Clean Coder]] as well on what it takes to be a professional programmer (according to the author), but it did not make as much as an impact on me as Clean Code. That being said, I still VERY much recommend reading it! It gives you much insight on what you should know if you want a professional career in software development.
 
 
 # Just getting some more space :)
@@ -73,16 +73,16 @@ I can recommend [[https://amzn.to/3yo5x8N][Clean Coder]] as well on what it take
 <<Design Patterns>>
 * Design Patterns: Elements of Reusable Object-Oriented Software by Eric Gamma, Richard Helm, Ralph Johnson and John Vlissides
 
-I know [[https://amzn.to/3r8bUvu][this book has a long name and many authors]] (known as the Gang of Four), but don't be scared! While some of the patterns in this book might be outdated by now, a lot of them are still useful today. Many of the patterns might not be something you write yourself from scratch, but you will find them in many libraries and code generators that you use. Notable examples include Lombok (Builder, UtilityClass for static factory method, and more), Spring Framework (Singleton, Factory, Proxy etc.) and the SDK for Android development (Adapter and more).
+I know [[https://amzn.to/3MmlyDJ][this book has a long name and many authors]] (known as the Gang of Four), but don't be scared! While some of the patterns in this book might be outdated by now, a lot of them are still useful today. Many of the patterns might not be something you write yourself from scratch, but you will find them in many libraries and code generators that you use. Notable examples include Lombok (Builder, UtilityClass for static factory method, and more), Spring Framework (Singleton, Factory, Proxy etc.) and the SDK for Android development (Adapter and more).
 
 
 #+BEGIN_EXPORT html
-<a target="_blank"  href="https://www.amazon.com/gp/product/B000SEIBB8/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B000SEIBB8&linkCode=as2&tag=themkat01-20&linkId=ee781e22a24240c11a47d5cfefea9942"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B000SEIBB8&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat01-20" ></a>
+<a href="https://www.amazon.com/Design-Patterns-Object-Oriented-Addison-Wesley-Professional-ebook/dp/B000SEIBB8?keywords=design+patterns&qid=1665312528&qu=eyJxc2MiOiIyLjY4IiwicXNhIjoiMS45NCIsInFzcCI6IjIuMDEifQ%3D%3D&s=digital-text&sprefix=design+p%2Cdigital-text%2C150&sr=1-2&linkCode=li3&tag=themkat05-20&linkId=aa6e5dd93e5cd4b6ab95ff540b4e16ad&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0"  class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B000SEIBB8&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat05-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat05-20&language=en_US&l=li3&o=1&a=B000SEIBB8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 #+END_EXPORT 
 
 
 ** What is it about, and why should you read it?
-A collection of many design patterns, which are repeatable solutions to commonly occurring problems, to assist you while designing new software. These come in several categories: creational (creating objects), structural (e.g, how objects are accessed and used) and behavioral (e.g, interactions between objects). While some of them are not so relevant anymore, it is still a useful to see how different problems can be solved (e.g, object creation and delegation). Many of the patterns are still found in modern software, and have clearly influenced their design (see introduction for examples). I would say skip chapter one, as it is clearly dated. If you think the entire book is dated and hard to read, I have heard that a lot of people enjoy the more modern [[https://amzn.to/3rTHRqC][Head First Design Patterns book]] (not read it myself though).
+A collection of many design patterns, which are repeatable solutions to commonly occurring problems, to assist you while designing new software. These come in several categories: creational (creating objects), structural (e.g, how objects are accessed and used) and behavioral (e.g, interactions between objects). While some of them are not so relevant anymore, it is still a useful to see how different problems can be solved (e.g, object creation and delegation). Many of the patterns are still found in modern software, and have clearly influenced their design (see introduction for examples). I would say skip chapter one, as it is clearly dated. If you think the entire book is dated and hard to read, I have heard that a lot of people enjoy the more modern [[https://amzn.to/3SOrZ50][Head First Design Patterns book]] (not read it myself though).
 
 
 ** What does it help with in your career?
@@ -97,12 +97,11 @@ You will recognize patterns in libraries you learn, frameworks you use and so on
 
 <<Effective Java>>
 * Effective Java by Joshua Bloch
-Together with the next entry, [[https://amzn.to/3Hb9LoB][Effective Java]] is one of the more practical books on the list. It shows you in essence how to write good Java code, and code you should avoid writing. Another selling point is that it is written by one of the original authors of the Java standard library; Joshua Bloch himself! If you need a book with code examples and practical tips, I highly recommend this one!
+Together with the next entry, [[https://amzn.to/3SPKBl1][Effective Java]] is one of the more practical books on the list. It shows you in essence how to write good Java code, and code you should avoid writing. Another selling point is that it is written by one of the original authors of the Java standard library; Joshua Bloch himself! If you need a book with code examples and practical tips, I highly recommend this one!
 
 #+BEGIN_EXPORT html
-<a target="_blank"  href="https://www.amazon.com/gp/product/B078H61SCH/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B078H61SCH&linkCode=as2&tag=themkat01-20&linkId=557e5b56111a8c63be032e40832fbdbf"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B078H61SCH&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat01-20" ></a>
+<a href="https://www.amazon.com/Effective-Java-Joshua-Bloch-ebook/dp/B078H61SCH?crid=1NTEGJJB0YV3K&keywords=effective+java&qid=1665312616&qu=eyJxc2MiOiIxLjMzIiwicXNhIjoiMC43NiIsInFzcCI6IjAuNjEifQ%3D%3D&s=digital-text&sprefix=effective+jav%2Cdigital-text%2C152&sr=1-1&linkCode=li3&tag=themkat05-20&linkId=78f8acbfaee6e253e80de52ff6dfe283&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0"  class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B078H61SCH&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat05-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat05-20&language=en_US&l=li3&o=1&a=B078H61SCH" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 #+END_EXPORT
-
 
 
 ** What is it about, and why should you read it?
@@ -122,16 +121,15 @@ If you don't ever use Java (or another JVM language), it won't... But if you do,
 
 *Update 2022: Seems like the newest edition for sale uses JavaScript instead of Scheme. The MIT website still have the second edition that uses Scheme. Not read the newest JavaScript version (put it in my reading list for now), but the original is fantastic! Might be weird to recommend a very non-Java book on this list, but it teaches you different ways of thinking which are useful no matter what language you end up working in (probably except very low level languages).*
 
-The obligatory "think differently" book on this list! [[https://amzn.to/3g65UNz][SICP]] is a classic book, and for good reason. Many developers today are mostly familiar with object oriented languages like Java, C# and C++, so learning a more functional language like Scheme can help broaden your horizons. (it is not a language that only supports functional programming like Haskell though...). 
+The obligatory "think differently" book on this list! [[https://amzn.to/3rNsJeB][SICP]] is a classic book, and for good reason. Many developers today are mostly familiar with object oriented languages like Java, C# and C++, so learning a more functional language like Scheme can help broaden your horizons. (it is not a language that only supports functional programming like Haskell though...). 
 
 
 This book can also be [[https://mitpress.mit.edu/sites/default/files/sicp/index.html][read for free online at MITs webpages]], which is a bonus!
 
 
 #+BEGIN_EXPORT html
-<a target="_blank"  href="https://www.amazon.com/gp/product/B094X8316F/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B094X8316F&linkCode=as2&tag=themkat01-20&linkId=c3ef59b53bdc9578bf6c95af7ebb9d84"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B094X8316F&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat01-20" ></a>
+<a href="https://www.amazon.com/Structure-Interpretation-Computer-Programs-Engineering-ebook/dp/B09S3V8X48?keywords=structure+and+interpretation+of+computer+programs&qid=1665312681&qu=eyJxc2MiOiIxLjk3IiwicXNhIjoiMS40NyIsInFzcCI6IjEuNjAifQ%3D%3D&s=digital-text&sprefix=structure+and%2Cdigital-text%2C151&sr=1-1&linkCode=li3&tag=themkat05-20&linkId=349b2ee16efe74e3cde7410f79b81ed2&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0"  class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B09S3V8X48&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat05-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat05-20&language=en_US&l=li3&o=1&a=B09S3V8X48" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 #+END_EXPORT
-
 
 
 ** What is it about, and why should you read it?
@@ -152,13 +150,12 @@ If you use any higher level (C level or above) language, and especially those wi
 
 <<ReleaseIt>>
 * Release It!: Design and Deploy Production-Ready Software by Michael T. Nygard
-So you have written your code, and everything has gone well during testing. Now we are ready for production! Wait, are we really? [[https://amzn.to/3HdhAd9][Release It!]] is a book about what you should make sure of before doing to production, as well as common pitfalls.
+So you have written your code, and everything has gone well during testing. Now we are ready for production! Wait, are we really? [[https://amzn.to/3yuAhaa][Release It!]] is a book about what you should make sure of before doing to production, as well as common pitfalls.
 
 
 #+BEGIN_EXPORT html
-<a target="_blank"  href="https://www.amazon.com/gp/product/B079YWMY2V/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B079YWMY2V&linkCode=as2&tag=themkat01-20&linkId=e8283721fc72b8943e2641842f26b928"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B079YWMY2V&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=themkat01-20" ></a>
+<a href="https://www.amazon.com/Release-Design-Deploy-Production-Ready-Software-ebook/dp/B079YWMY2V?crid=1BE0U6OKNNJDV&keywords=release+it&qid=1665312762&qu=eyJxc2MiOiIwLjU3IiwicXNhIjoiMC40OSIsInFzcCI6IjAuNjkifQ%3D%3D&s=digital-text&sprefix=release+it%2Cdigital-text%2C152&sr=1-1&linkCode=li3&tag=themkat05-20&linkId=f7faaaef31f1f8d03e7ec2431c7aa5a7&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0"  class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B079YWMY2V&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat05-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat05-20&language=en_US&l=li3&o=1&a=B079YWMY2V" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 #+END_EXPORT 
-
 
 ** What is it about, and why should you read it? 
 The point of developing software is that is some day will be in production (if it is not a library or framework, then it will be part of other software in production). With this book you can learn some things to check for in your software, how to find errors earlier and what to do when errors happen. Topics includes timeouts, firewall issues, antipatterns for security and more. You will also be introduced to some testing strategies like chaos engineering. As well as stories from the author that are interesting and emphasize the importance of the lessons learned. 
@@ -174,7 +171,7 @@ Going from writing software to getting it in production is an important step. Ho
 
 <<bonus1>>
 * Bonus: The Pragmatic Programmer by Dave Thomas and Andy Hunt
-I would have gotten a lot of complaints from now until eternity if I did not include this title! It is a classic within the niche of software development books, and for good reason. It contains a mix of practical skills you should learn, as well as how you should think about many different topics. It even includes some tips on what you should do to improve your skills. The older edition is called [[https://amzn.to/3HdeGoP][The Pragmatic Programmer: From Journeyman to Master]], and the newer 20th anniversary edition is called [[https://amzn.to/34bnCwp][The Pragmatic Programmer: your journey to mastery]]. I would probably recommend that you choose the newer edition, but I'm mentioning the older one as that is the one I have read (I have sadly not read the newest edition). 
+I would have gotten a lot of complaints from now until eternity if I did not include this title! It is a classic within the niche of software development books, and for good reason. It contains a mix of practical skills you should learn, as well as how you should think about many different topics. It even includes some tips on what you should do to improve your skills. The older edition is called [[https://amzn.to/3CnAv3Q][The Pragmatic Programmer: From Journeyman to Master]], and the newer 20th anniversary edition is called [[https://amzn.to/3RHxwZT][The Pragmatic Programmer: your journey to mastery]]. I would probably recommend that you choose the newer edition, but I'm mentioning the older one as that is the one I have read (I have sadly not read the newest edition). 
 
 
 # Just getting some more space :)
@@ -186,4 +183,4 @@ I would have gotten a lot of complaints from now until eternity if I did not inc
 <<bonus2>>
 * Bonus 2: Clean Architecture by Robert C. Martin (aka Uncle Bob)
 
-[[https://amzn.to/3gbo00s][Clean Architecture]] is mainly about [[https://en.wikipedia.org/wiki/Software_architecture][software architecture]] and structure, with the angle on making it easy to work with and maintainable. While I think the architecture presented is interesting, I think the best parts of this book is the summary of the SOLID principles and of general architecture concepts. SOLID principles (which could probably be the topic of their own article) are useful to know for structuring object oriented software, as well as understanding how different libraries and frameworks are structured. 
+[[https://amzn.to/3rKnpc9][Clean Architecture]] is mainly about [[https://en.wikipedia.org/wiki/Software_architecture][software architecture]] and structure, with the angle on making it easy to work with and maintainable. While I think the architecture presented is interesting, I think the best parts of this book is the summary of the SOLID principles and of general architecture concepts. SOLID principles (which could probably be the topic of their own article) are useful to know for structuring object oriented software, as well as understanding how different libraries and frameworks are structured. 

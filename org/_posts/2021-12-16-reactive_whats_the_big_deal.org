@@ -117,7 +117,7 @@ Hopefully you have now gotten the main points of what Reactive programming is ab
 #+END_EXPORT
 
 
-If you program in Java or Kotlin, and would like to learn more about Reactive with Quarkus, I can recommend the book [[https://amzn.to/3rSmsOA][Reactive Systems in Java: Resilient, Event-Driven Architecture with Quarkus]] (Amazon affiliate link).
+If you program in Java or Kotlin, and would like to learn more about Reactive with Quarkus, I can recommend the book [[https://amzn.to/3MfLYHm][Reactive Systems in Java: Resilient, Event-Driven Architecture with Quarkus]] (Amazon affiliate link).
 
 
 If none of the stuff above seems like the next step, I hope I at least have given you the language you need to find it. Remember that language is power, and knowing the terms above will definitely help you do more effective searches in the Reactive and event driven spaces.
