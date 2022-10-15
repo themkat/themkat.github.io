@@ -26,9 +26,9 @@ Some people have wondered if I have used Kotlin in Emacs for bigger serious proj
 </p>
 
 
-<div id="outline-container-org8186ab7" class="outline-2">
-<h2 id="org8186ab7">Recommended packages for working with Kotlin</h2>
-<div class="outline-text-2" id="text-org8186ab7">
+<div id="outline-container-org0c81e5f" class="outline-2">
+<h2 id="org0c81e5f">Recommended packages for working with Kotlin</h2>
+<div class="outline-text-2" id="text-org0c81e5f">
 <p>
 These are based upon my personal experience, so some of you may have different preferences (e.g, eglot instead of lsp-mode). 
 </p>
@@ -73,9 +73,9 @@ Some of you will probably wonder about the theme and modeline I use. I use <a hr
 
 
 
-<div id="outline-container-org465d37d" class="outline-2">
-<h2 id="org465d37d">Basic config (relating to Kotlin)</h2>
-<div class="outline-text-2" id="text-org465d37d">
+<div id="outline-container-orga1946c8" class="outline-2">
+<h2 id="orga1946c8">Basic config (relating to Kotlin)</h2>
+<div class="outline-text-2" id="text-orga1946c8">
 <p>
 The config here is truncated a bit to show the most important parts. Some parts of my config are based upon my personal preferences, and not very relevant for an article like this. If you want to take a look at the entire config, you can check out <a href="https://github.com/themkat/.emacs.d">the Github repo</a> (it has a table of contents for easy navigation). There are also links for some ommited packages in the previous section :)
 </p>
@@ -145,9 +145,9 @@ If you really wanted to, you could install the packages manually, require them (
 </div>
 
 
-<div id="outline-container-org260674c" class="outline-2">
-<h2 id="org260674c">IDE functionality with the help of kotlin-language-server and kotlin-debug-adapter</h2>
-<div class="outline-text-2" id="text-org260674c">
+<div id="outline-container-org15d34e2" class="outline-2">
+<h2 id="org15d34e2">IDE functionality with the help of kotlin-language-server and kotlin-debug-adapter</h2>
+<div class="outline-text-2" id="text-org15d34e2">
 <p>
 lsp-mode gives you IDE functionality (completions, code actions etc.) for Kotlin using <a href="https://github.com/fwcd/kotlin-language-server">kotlin-language-server</a>, while debugging is provided by dap-mode using <a href="https://github.com/fwcd/kotlin-debug-adapter">kotlin-debug-adapter</a>.
 </p>
@@ -168,9 +168,9 @@ One caveat worth mentioning is renaming symbols (<code>lsp-rename</code>). If th
 </div>
 
 
-<div id="outline-container-orgf51e3af" class="outline-3">
-<h3 id="orgf51e3af">Code actions</h3>
-<div class="outline-text-3" id="text-orgf51e3af">
+<div id="outline-container-org3fb85ae" class="outline-3">
+<h3 id="org3fb85ae">Code actions</h3>
+<div class="outline-text-3" id="text-org3fb85ae">
 <p>
 kotlin-language-server provides the following code actions:
 </p>
@@ -210,9 +210,9 @@ Now you can execute a code action with <code>lsp-execute-code-action</code>, whi
 </div>
 
 
-<div id="outline-container-orgb686d25" class="outline-3">
-<h3 id="orgb686d25">Override members</h3>
-<div class="outline-text-3" id="text-orgb686d25">
+<div id="outline-container-org30c4daa" class="outline-3">
+<h3 id="org30c4daa">Override members</h3>
+<div class="outline-text-3" id="text-org30c4daa">
 <p>
 You might have a project where you have interfaces with default implementations that you want to override (especially true if you use some Java libraries!). Those are not supported by the code action above as they are not missing an implementation. Do you have to do those manually by reading API docs? No! Thanks to a custom operation (i.e, protocol extension) in the langauge server and lsp-mode, you can simply have your cursor at the class name of your class and run <code>lsp-kotlin-implement-member</code>! You will now be prompted by the open methods and variables not implemented in the class in your file. If you are using Helm, you can select multiple of them with <code>C-SPACE</code>. That looks like this (in a stupid small project :
 </p>
@@ -232,9 +232,9 @@ Notice that it includes members from base classes like Object and Any as well! :
 
 
 
-<div id="outline-container-orgf2f1245" class="outline-3">
-<h3 id="orgf2f1245">Code lenses (run/debug program)</h3>
-<div class="outline-text-3" id="text-orgf2f1245">
+<div id="outline-container-org0d3e1bb" class="outline-3">
+<h3 id="org0d3e1bb">Code lenses (run/debug program)</h3>
+<div class="outline-text-3" id="text-org0d3e1bb">
 <p>
 These are not on by default, mostly because not everyone will want to run or debug their programs inside of Eamcs. Some are stubborn and prefer to run it in the terminal etc. (I have to admit that I do that most of the time for tests). You can activate the run/debug code lenses using <code>lsp-kotlin-lens-mode</code> (pro-tip: Put it in a hook in your configuration if you use it often)
 </p>
@@ -261,9 +261,9 @@ Debugging main functions (including JVMMain annotated ones) are currently suppor
 </div>
 
 
-<div id="outline-container-org3d48f12" class="outline-3">
-<h3 id="org3d48f12">More clear overview with lsp-treemacs</h3>
-<div class="outline-text-3" id="text-org3d48f12">
+<div id="outline-container-org02423dd" class="outline-3">
+<h3 id="org02423dd">More clear overview with lsp-treemacs</h3>
+<div class="outline-text-3" id="text-org02423dd">
 <p>
 lsp-treemacs gives you some handy tools, like seeing a list of errors (like many IDEs have) using <code>lsp-treemacs-errors-list</code>:
 </p>
@@ -280,9 +280,9 @@ or seeing symbols in the current buffer/file with == in a representation like th
 
 
 
-<div id="outline-container-org0974cb5" class="outline-3">
-<h3 id="org0974cb5">Basics of debugging with dap-mode using kotlin-debug-adapter</h3>
-<div class="outline-text-3" id="text-org0974cb5">
+<div id="outline-container-org71ba285" class="outline-3">
+<h3 id="org71ba285">Basics of debugging with dap-mode using kotlin-debug-adapter</h3>
+<div class="outline-text-3" id="text-org71ba285">
 <p>
 The debugging support is very bare-bones at the moment. You can only debug using Maven or Gradle projects for the JVM, and there is <a href="https://github.com/fwcd/kotlin-debug-adapter/issues/62">an open issue for debugging standalone JVM applications</a>. If you are not using the code lenses above, you can specify settings yourself in a dap template, or make a <a href="https://code.visualstudio.com/docs/editor/debugging">VSCode launch.json file</a> with the debug specification with the type kotlin. If you want to attach to an already running debug process, you can use the built in dap template called "Kotlin Attach" (just run <code>dap-debug</code> after setting up dap-mode like in the config above!). Attaching is currently the only way to debug tests. In Gradle, you can create a debug test process like this:
 </p>
@@ -313,9 +313,9 @@ If you are curious on what this looks like, here is a screenshot where we hit a 
 
 
 
-<div id="outline-container-org2609d1f" class="outline-3">
-<h3 id="org2609d1f">Debugging issues with kotlin-language-server and kotlin-debug-adapter</h3>
-<div class="outline-text-3" id="text-org2609d1f">
+<div id="outline-container-org089b573" class="outline-3">
+<h3 id="org089b573">Debugging issues with kotlin-language-server and kotlin-debug-adapter</h3>
+<div class="outline-text-3" id="text-org089b573">
 <p>
 Something isn't working? Code actions aren't showing up? No completions? Then it's time to look into the <code>*lsp-log*</code>-buffer! If you  want to see more info, like the JSON requests and responses from and to the language server, enable <code>lsp-print-io</code>.
 </p>
@@ -343,9 +343,9 @@ To debug possible debug errors, the most useful thing to do is print the communi
 </div>
 
 
-<div id="outline-container-orgabfde9d" class="outline-3">
-<h3 id="orgabfde9d">General tips</h3>
-<div class="outline-text-3" id="text-orgabfde9d">
+<div id="outline-container-org0b008a6" class="outline-3">
+<h3 id="org0b008a6">General tips</h3>
+<div class="outline-text-3" id="text-org0b008a6">
 <p>
 Sometimes you may encounter weird behavior. Sadly this can happen as kotlin-language-server and kotlin-debug-adapter are projects maintained and contributed to out of love in our spare time. Some possible workarounds: 
 </p>
