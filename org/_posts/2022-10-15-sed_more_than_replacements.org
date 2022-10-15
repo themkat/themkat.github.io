@@ -5,6 +5,7 @@
 ---
 layout: blogpost
 title: sed - more than replacements
+preview_image: assets/img/sed/vader.jpg
 tags: cli automation
 ---
 #+END_EXPORT
