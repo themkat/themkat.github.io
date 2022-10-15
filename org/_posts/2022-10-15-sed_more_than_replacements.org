@@ -1,0 +1,300 @@
+#+OPTIONS: toc:nil num:nil ^:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: sed - more than replacements
+tags: cli automation
+---
+#+END_EXPORT
+
+sed is a very popular command line program for doing various forms of edits to text input. Most people probably use it for simple replacements, and that is also what the most popular use case is. Did you know that you can use it for way more? Including as a simple grep replacement? Or get a cut portion of a file (e.g, between two timestamps in sorted log files)? In this article we will take a quick look at sed and what you can use it for.
+
+
+
+A few years ago an acquaintance of mine said in a presentation (that was probably about shell commands or something) that sed was almost only good for replacements. My reply was something along the lines of this:
+
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/sed/vader.jpg" | relative_url}}" alt="sed, more than replacements. I find your lack of faith disturibing" class="blogpostimg" />
+#+END_EXPORT
+
+(okay, most of us probably use sed mostly for replacements, but it can do more!)
+
+
+If you need a refresher on other commands, as well as basic command line usage (pipes etc.), I suggest you look at [[https://themkat.net/2021/10/02/no_nonsense_command_line.html][my no-nonsense beginners guide to the command line]]. It will guide you through the basics of navigating the command line, as well as the most important commands and piping. If you need ideas for new commands to try, there are [[https://themkat.net/tags/cli.html][several articles about that]] as well :)
+
+
+* Basics of sed
+sed is an acronym and stands for Stream EDitor. If you have seen [[https://en.wikipedia.org/wiki/Ed_(text_editor)][the line editor ed]] in action, you will recognize many of the commands. (read up on teletypes and computers before the featureful editors we have today if you are curious!). In many ways, I like to think of sed as an automated version of ed. The main difference is that it prints the file to standard output instead of editing the file directly. You give sed commands on how it should edit a given text, and it does exactly that! It can do some more as well, as we will see, like getting only parts of the text back. At its core, sed takes in an address (might be empty  for entire input) and a command. Some examples of addresses:
+
+| *Addressing*         | *Purpose*                                                                                                      |
+|--------------------+--------------------------------------------------------------------------------------------------------------|
+|                    | Entire input                                                                                                 |
+| =n=                  | line n                                                                                                       |
+| =$=                  | last line                                                                                                    |
+| =n,m=                | Lines between n and m (inclusive)                                                                            |
+| =/regex/=            | Line matching regex                                                                                          |
+| =/regex1/,/regex 2/= | Lines between the matching regexes (from first match of the first one, to the first match of the second one) |
+
+
+And some examples of commands:
+| *Command*                                | *Purpose*                                                                                                                                                                         |
+|----------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =s/pattern to replace/replacement text/= | replaces "pattern to replace" with "replacement text". "pattern to replace" is a regular expression pattern Add the g flag to replace all occurrences, not just the first ones. |
+| =y/abc/def/=                             | Transliterate. Replace all a's with d's, all b's with c's etc. (based upon the inputs of abc and def). We will look at this closer down below!                                  |
+| =p=                                      | Print pattern space. Will potentially print the lines twice if you don't use the =-n= option described below.                                                                     |
+| =N=                                      | Append the next line to the current pattern space (including the newline character! Use replacements to replace it!)                                                            |
+| ={command1;command2;...;commandn;}=      | Do multiple commands. Separate them with ;, and end with ; inside the brackets                                                                                                  |
+| =d=                                      | Delete the pattern space and start at the next cycle                                                                                                                            |
+
+So what is this pattern space? At each iteration, sed takes in its input (often line by line), and puts in its pattern space. You can think of the pattern space as the data you are working on in sed in each iteration. By default sed will echo the content of its pattern space to standard output in each iteration, but this behavior can be suppressed by the command line option =-n=.
+
+
+As you can see from the addresses and commands above, sed makes heavy use of [[https://en.wikipedia.org/wiki/Regular_expression][regular expressions]] (denoted as regex above). If you are not familiar with regex, especially the ones sed supports, I have summarized a few important ones in the table below:
+| *Regular expression* | *Purpose*                                                                                                                                                                                                         |
+|--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =[list]=             | Match characters in the list (examples below).                                                                                                                                                                  |
+| =[^list]=            | Match characters NOT in the list                                                                                                                                                                                |
+| =[0-9]=              | A digit                                                                                                                                                                                                         |
+| =[^0-9]=             | Not a digit                                                                                                                                                                                                     |
+| =[a-z]=              | A lowercase character between a and z (inclusive)                                                                                                                                                               |
+| =[A-Z]=              | A uppercase character between A and Z (inclusive)                                                                                                                                                               |
+| =[0-9A-Za-z+]=       | Match a digit, a to z, A to Z and plus character. You probably get the gist of list matches now?                                                                                                                |
+| =.=                  | Any possible symbol                                                                                                                                                                                             |
+| =*=                  | 0 or more of the previous pattern                                                                                                                                                                               |
+| =\{n\}=              | Matches n occurrences of the previous pattern                                                                                                                                                                   |
+| =\{n,m\}=            | Matches between n and m occurrences of the previous pattern (inclusive)                                                                                                                                         |
+| =^=                  | Beginning of pattern space (usually the current line)                                                                                                                                                           |
+| =$=                  | End of pattern space (usually the current line)                                                                                                                                                                 |
+| =(regex)=            | A regex group. I often use this in extended regex mode (sed with -r option). With replace you can capture a group and refer to it in the replacement text using =\n= where n is the group number starting from 1. |
+
+If you want to match a character that is used by a regex pattern, for example =*=, you can escape it with =\=. For =*= you escape it like this =\*=. 
+
+
+You can see more patterns that sed supports, as well as which ones that are extensions to the GNU version of sed, [[https://www.gnu.org/software/sed/manual/html_node/Regular-Expressions.html][in the GNU sed documentation]]. There are small differences between BSD sed (included on Mac OS X) and GNU sed (the ones usually included in GNU/Linux distros), but usually you don't notice them that much. As I mostly use BSD sed, I have not included GNU sed extensions in the list above. There are almost always a way to achieve the same results no matter the version you use, just with different regular expression syntax.
+
+
+
+sed can work with input piped into it, or you can supply a file as input. We will mostly work with files in this article, but at the end I will show you a quick example of piping.
+
+
+
+There is off course much more advanced things you can do by combining the various addressing, command line options and so on that sed provides. I recommend reading the man-pages to get information on all the options you have for using sed (i.e, run =man sed=). If you want more examples and explanations to dive deeper into sed (and text editing in scripts) after reading this article, I suggest reading the book [[https://amzn.to/3CZc3Y8][sed and awk: UNIX Power Tools]] (*Amazon affiliate link, so I will earn a commission on qualified purchases*). The book will also teach you awk, which is a small scripting language for editing text files, and might be a topic for a future article on this blog :) 
+
+
+* Simple replacements
+The most common usage of sed is to do replacements. Replacements are done using the command =s/pattern to replace/replacement text/=, using regular expressions. Refer to the description of commands and regular expressions above if something is unclear. To have some data to test with, we will use an extract of [[https://www.gnu.org/fun/jokes/eternal-flame.html][the song Eternal Flame by Bob Kanefsky and Julia Ecklar]] saved in a file called godwroteinlisp.txt:
+
+#+BEGIN_SRC text
+  Now, some folks on the Internet put their faith in C++.
+  They swear that it's so powerful, it's what God used for us.
+  And maybe it lets mortals dredge their objects from the C.
+  But I think that explains why only God can make a tree.
+
+  For God wrote in Lisp code
+  When he filled the leaves with green.
+  The fractal flowers and recursive roots:
+  The most lovely hack I've seen.
+  And when I ponder snowflakes, never finding two the same,
+  I know God likes a language with it's own four-letter name.
+#+END_SRC
+
+  (if you want to listen to the song, [[https://www.youtube.com/watch?v=WZCs4Eyalxc][Julia Ecklar released a previously unreleased live recording of the song last year]]!)
+
+
+  Now we can do some simple replacements! Let's say we wanted to be SUPER explicit in this song, and wanted every occurrence of "it's" to be replaced with "LISP is". We can do that quite easy:
+  
+#+BEGIN_SRC text
+  $ sed "s/it's/LISP is/g" godwroteinlisp.txt
+  Now, some folks on the Internet put their faith in C++.
+  They swear that LISP is so powerful, LISP is what God used for us.
+  And maybe it lets mortals dredge their objects from the C.
+  But I think that explains why only God can make a tree.
+
+  For God wrote in Lisp code
+  When he filled the leaves with green.
+  The fractal flowers and recursive roots:
+  The most lovely hack I've seen.
+  And when I ponder snowflakes, never finding two the same,
+  I know God likes a language with LISP is own four-letter name.
+#+END_SRC
+
+
+We all know that God hacked most of the universe together with Perl, as stated in [[https://xkcd.com/224/][the famous xkcd comic]]. Let's give it a doubt and say that he used both Lisp and Perl and fix the lyrics. We will now use the groups
+
+#+BEGIN_SRC text
+  $ sed -r 's/(Lisp)/\1 (and Perl)/' godwroteinlisp.txt
+  Now, some folks on the Internet put their faith in C++.
+  They swear that it's so powerful, it's what God used for us.
+  And maybe it lets mortals dredge their objects from the C.
+  But I think that explains why only God can make a tree.
+
+  For God wrote in Lisp (and Perl) code
+  When he filled the leaves with green.
+  The fractal flowers and recursive roots:
+  The most lovely hack I've seen.
+  And when I ponder snowflakes, never finding two the same,
+  I know God likes a language with it's own four-letter name.
+#+END_SRC
+
+
+Let us quickly do an example that uses addressing; we will end lines containing God with a exclamation mark. These lines will possibly contain a dot at the end, so our pattern has to reflect that. In summary, we want to match lines containing God, replacing the end that possibly contains a dot with an exclamation mark. As dot is a symbol with a meaning in regular expressions, we have to escape it with =\=. We end up with the following:
+
+#+BEGIN_SRC text
+  $ sed '/God/ s/\.\{0,1\}$/!/' godwroteinlisp.txt
+  Now, some folks on the Internet put their faith in C++.
+  They swear that it's so powerful, it's what God used for us!
+  And maybe it lets mortals dredge their objects from the C.
+  But I think that explains why only God can make a tree!
+
+  For God wrote in Lisp code!
+  When he filled the leaves with green.
+  The fractal flowers and recursive roots:
+  The most lovely hack I've seen.
+  And when I ponder snowflakes, never finding two the same,
+  I know God likes a language with it's own four-letter name!
+#+END_SRC
+(notice the exclamation marks appearing at the end of lines containing God!)
+
+
+* Editing files by combining lines, deleting etc.
+We can combine multiple lines together by using the =N= command and replace the newline character with an empty string:
+#+BEGIN_SRC text
+  $ sed '{N;s/\n//;}' godwroteinlisp.txt
+  Now, some folks on the Internet put their faith in C++.They swear that it's so powerful, it's what God used for us.
+  And maybe it lets mortals dredge their objects from the C.But I think that explains why only God can make a tree.
+  For God wrote in Lisp code
+  When he filled the leaves with green.The fractal flowers and recursive roots:
+  The most lovely hack I've seen.And when I ponder snowflakes, never finding two the same,
+  I know God likes a language with it's own four-letter name.
+#+END_SRC
+
+If you wonder why your last line may be missing on your machine, it is because you might not have an empty newline at the end. When sed encounters the end of the file, either normally or with =N= it considers itself done and exits.
+
+
+We can also delete lines with the =d= command. Maybe we don't really enjoy God being mentioned all the time in the song? Let's delete all the lines containing God:
+
+#+BEGIN_SRC text
+  $ sed '/God/ d' godwroteinlisp.txt
+  Now, some folks on the Internet put their faith in C++.
+  And maybe it lets mortals dredge their objects from the C.
+
+  When he filled the leaves with green.
+  The fractal flowers and recursive roots:
+  The most lovely hack I've seen.
+  And when I ponder snowflakes, never finding two the same,
+#+END_SRC
+
+
+
+* Transliteration
+Our next topic may be a little bit obscure, but I've met people who didn't know sed could do it! I'm talking about [[https://en.wikipedia.org/wiki/Transliteration][transliteration]]. In a linguistic context, transliteration can be useful for example to transform greek characters into our Latin variant (I guess that is what it is called, I'm not very much into linguistics). One other use I've found for this is obfuscation. Let's do a quick example with replacing every "f" with "l", every "s" with "o", and every "o" with "l":
+
+#+BEGIN_SRC text
+  $ sed "y/fso/lol/" godwroteinlisp.txt
+  Nlw, olme lllko ln the Internet put their laith in C++.
+  They owear that it'o ol plwerlul, it'o what Gld uoed llr uo.
+  And maybe it leto mlrtalo dredge their lbjecto lrlm the C.
+  But I think that explaino why lnly Gld can make a tree.
+
+  Flr Gld wrlte in Liop clde
+  When he lilled the leaveo with green.
+  The lractal lllwero and recuroive rllto:
+  The mlot llvely hack I've oeen.
+  And when I plnder onlwllakeo, never linding twl the oame,
+  I knlw Gld likeo a language with it'o lwn llur-letter name.
+#+END_SRC
+
+Not really the feature I use most in sed, but might come in handy one day! :)
+
+
+* Selecting/cutting content from files
+You might have noticed the addressing type =/regex1/,/regex 2/= above, and wondered why you would want to fetch matches between two regular expression matches? Nifty feature, but where is it useful? My number one place for this is undoubtedly log files! To look into this, let us create a sample log file based upon [[https://www.ibm.com/docs/en/zos/2.1.0?topic=problems-example-log-file][a z/OS example log file from IBM]] that we will call log.txt:
+
+#+BEGIN_SRC text
+  03/22 08:51:01 INFO   :.main: *************** RSVP Agent started ***************
+  03/22 08:51:01 INFO   :..settcpimage: Associate with TCP/IP image name = TCPCS
+  03/22 08:51:02 INFO   :..reg_process: registering process with the system
+  03/22 08:51:02 INFO   :..reg_process: attempt OS/390 registration
+  03/22 08:51:02 INFO   :..reg_process: return from registration rc=0
+  03/22 08:51:06 TRACE  :...read_physical_netif: Home list entries returned = 7
+  03/22 08:51:06 INFO   :...read_physical_netif: index #0, interface VLINK1 has address 129.1.1.1, ifidx 0
+  03/22 09:15:03 INFO   :...read_physical_netif: index #1, interface TR1 has address 9.37.65.139, ifidx 1
+  03/22 09:15:06 INFO   :...read_physical_netif: index #2, interface LINK11 has address 9.67.100.1, ifidx 2
+  03/22 09:15:30 INFO   :...read_physical_netif: index #3, interface LINK12 has address 9.67.101.1, ifidx 3
+  03/22 09:15:54 INFO   :...read_physical_netif: index #4, interface CTCD0 has address 9.67.116.98, ifidx 4
+  03/22 09:16:02 INFO   :...read_physical_netif: index #5, interface CTCD2 has address 9.67.117.98, ifidx 5
+  03/22 09:16:03 INFO   :...read_physical_netif: index #6, interface LOOPBACK has address 127.0.0.1, ifidx 0
+  03/22 09:16:23 INFO   :....mailslot_create: creating mailslot for timer
+  03/22 09:45:43 INFO   :...mailbox_register: mailbox allocated for timer
+  03/22 09:55:23 EVENT  :..mailslot_sitter: process received signal SIGALRM
+  03/22 09:56:00 TRACE  :.....event_timerT1_expire: T1 expired
+  03/22 09:56:30 INFO   :......router_forward_getOI: Ioctl to query route entry successful
+  03/22 09:57:20 TRACE  :......router_forward_getOI:         source address:   9.67.116.98
+  03/22 09:58:34 TRACE  :......router_forward_getOI:         out inf:   9.67.116.98
+  03/22 09:59:00 TRACE  :......router_forward_getOI:         gateway:   0.0.0.0
+  03/22 10:00:01 TRACE  :......router_forward_getOI:         route handle:   7f5251c8
+  03/22 10:00:34 INFO   :......rsvp_flow_stateMachine: state RESVED, event T1OUT
+  03/22 10:00:55 TRACE  :.......rsvp_action_nHop: constructing a PATH
+  03/22 10:02:00 TRACE  :.......flow_timer_start: started T1
+  03/22 10:04:00 TRACE  :......rsvp_flow_stateMachine: reentering state RESVED
+  03/22 11:05:30 TRACE  :.......mailslot_send: sending to (9.67.116.99:0)
+#+END_SRC
+
+(I've modified the timestamps to make it more interesting. The server may seem slow in this log, but that is to make it better show the use case we are looking at!)
+
+
+Let's say we wanted to only see the logs from 8 to the first occurrence at 9:
+
+#+BEGIN_SRC text
+  $ sed -n '/^03\/22 08:.*/,/^03\/22 09:.*/ p' log.txt
+  03/22 08:51:01 INFO   :.main: *************** RSVP Agent started ***************
+  03/22 08:51:01 INFO   :..settcpimage: Associate with TCP/IP image name = TCPCS
+  03/22 08:51:02 INFO   :..reg_process: registering process with the system
+  03/22 08:51:02 INFO   :..reg_process: attempt OS/390 registration
+  03/22 08:51:02 INFO   :..reg_process: return from registration rc=0
+  03/22 08:51:06 TRACE  :...read_physical_netif: Home list entries returned = 7
+  03/22 08:51:06 INFO   :...read_physical_netif: index #0, interface VLINK1 has address 129.1.1.1, ifidx 0
+  03/22 09:15:03 INFO   :...read_physical_netif: index #1, interface TR1 has address 9.37.65.139, ifidx 1
+#+END_SRC
+
+We =-n= to not echo each line, but only print what we tell sed to print. We match the lines starting with the date (22nd of March), and use the beginning of the timestamps. This is very useful for for log-files, especially big ones! Depending on your needs, you can mix and match regex to your hearts content. Combine it with replacements, transliterations or something else, it's up to you. If you wanted to do the same as above, but replace INFO with potato and then print, you could do:
+#+BEGIN_SRC text
+  $ sed -n '/^03\/22 08:.*/,/^03\/22 09:.*/ {s/INFO/potato/;p;}' log.txt
+  03/22 08:51:01 potato   :.main: *************** RSVP Agent started ***************
+  03/22 08:51:01 potato   :..settcpimage: Associate with TCP/IP image name = TCPCS
+  03/22 08:51:02 potato   :..reg_process: registering process with the system
+  03/22 08:51:02 potato   :..reg_process: attempt OS/390 registration
+  03/22 08:51:02 potato   :..reg_process: return from registration rc=0
+  03/22 08:51:06 TRACE  :...read_physical_netif: Home list entries returned = 7
+  03/22 08:51:06 potato   :...read_physical_netif: index #0, interface VLINK1 has address 129.1.1.1, ifidx 0
+  03/22 09:15:03 potato   :...read_physical_netif: index #1, interface TR1 has address 9.37.65.139, ifidx 1
+#+END_SRC
+(notice the brackets to run multiple commands; here a replacement and then print. If we dropped the =-n= option and the print command, it would only replace within the regex bounds and print the entire file).
+
+
+* Example: Simple grep replacement
+In the introduction, I mentioned that we could make a very simple grep replacement with sed. By now you will probably realize that the =-n=
+ option and the =p= commands are part of the solution. By knowing this we can make a function that takes some text as input, and uses sed to print only the lines matching this text:
+
+#+BEGIN_SRC bash
+  function mygrep() {
+	  sed -n "/$1/ p"
+  }
+#+END_SRC
+
+In action this will look like the following:
+
+#+BEGIN_SRC text
+  $ cat godwroteinlisp.txt | mygrep God
+  They swear that it's so powerful, it's what God used for us.
+  But I think that explains why only God can make a tree.
+  For God wrote in Lisp code
+  I know God likes a language with it's own four-letter name.
+#+END_SRC
+
+Here we searched for God (yes, I did it just because of that pun!) in the song lyrics from above. As =mygrep= does not take a file-input, we had to pipe the file to it. Now, you should NOT use this as a replacement for grep! grep provide many other goodies like highlighting, line numbers and more, which makes it way more powerful. 
+
+* In summary
+So as you can see, sed provides many editing utilities that goes beyond "just replacements" :) 
