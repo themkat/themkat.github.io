@@ -28,6 +28,7 @@ If you need a refresher on other commands, as well as basic command line usage (
 * Basics of sed
 sed is an acronym and stands for Stream EDitor. If you have seen [[https://en.wikipedia.org/wiki/Ed_(text_editor)][the line editor ed]] in action, you will recognize many of the commands. (read up on teletypes and computers before the featureful editors we have today if you are curious!). In many ways, I like to think of sed as an automated version of ed. The main difference is that it prints the file to standard output instead of editing the file directly. You give sed commands on how it should edit a given text, and it does exactly that! It can do some more as well, as we will see, like getting only parts of the text back. At its core, sed takes in an address (might be empty  for entire input) and a command. Some examples of addresses:
 
+#+ATTR_HTML: :border 2 :rules all
 | *Addressing*         | *Purpose*                                                                                                      |
 |--------------------+--------------------------------------------------------------------------------------------------------------|
 |                    | Entire input                                                                                                 |
