@@ -40,6 +40,7 @@ sed is an acronym and stands for Stream EDitor. If you have seen [[https://en.wi
 
 
 And some examples of commands:
+#+ATTR_HTML: :border 2 :rules all
 | *Command*                                | *Purpose*                                                                                                                                                                         |
 |----------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | =s/pattern to replace/replacement text/= | replaces "pattern to replace" with "replacement text". "pattern to replace" is a regular expression pattern Add the g flag to replace all occurrences, not just the first ones. |
@@ -53,6 +54,7 @@ So what is this pattern space? At each iteration, sed takes in its input (often 
 
 
 As you can see from the addresses and commands above, sed makes heavy use of [[https://en.wikipedia.org/wiki/Regular_expression][regular expressions]] (denoted as regex above). If you are not familiar with regex, especially the ones sed supports, I have summarized a few important ones in the table below:
+#+ATTR_HTML: :border 2 :rules all
 | *Regular expression* | *Purpose*                                                                                                                                                                                                         |
 |--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | =[list]=             | Match characters in the list (examples below).                                                                                                                                                                  |
