@@ -10,6 +10,12 @@ Last year I wrote a blog post about the basics of using Kotlin in Emacs. Since t
 </p>
 
 
+
+<p>
+<b>EDIT October 17th 2022: There is now <a href="https://youtu.be/J4s3T0dd5CY">a YouTube video about this topic</a>! It doesn't cover everything in this article, but shows off the most important features and recommended packages.</b>
+</p>
+
+
 <p>
 If you have not read <a href="https://themkat.net/2021/11/03/kotlin_in_emacs.html">my previous article</a> yet, you might still get something useful out of it. It covers the basics, as well as getting <a href="https://github.com/kscripting/kscript">KScript</a> working. The last part I will not cover here, but what we cover will be useful for that use case as well. If you have not yet tried <a href="https://github.com/kscripting/kscript">KScript</a> for scripting, I recommend it as it can be super nice &lt;3
 </p>
@@ -26,9 +32,9 @@ Some people have wondered if I have used Kotlin in Emacs for bigger serious proj
 </p>
 
 
-<div id="outline-container-orga39ebd2" class="outline-2">
-<h2 id="orga39ebd2">Recommended packages for working with Kotlin</h2>
-<div class="outline-text-2" id="text-orga39ebd2">
+<div id="outline-container-org78bbe8b" class="outline-2">
+<h2 id="org78bbe8b">Recommended packages for working with Kotlin</h2>
+<div class="outline-text-2" id="text-org78bbe8b">
 <p>
 These are based upon my personal experience, so some of you may have different preferences (e.g, eglot instead of lsp-mode). 
 </p>
@@ -73,9 +79,9 @@ Some of you will probably wonder about the theme and modeline I use. I use <a hr
 
 
 
-<div id="outline-container-org3928657" class="outline-2">
-<h2 id="org3928657">Basic config (relating to Kotlin)</h2>
-<div class="outline-text-2" id="text-org3928657">
+<div id="outline-container-orgd16c667" class="outline-2">
+<h2 id="orgd16c667">Basic config (relating to Kotlin)</h2>
+<div class="outline-text-2" id="text-orgd16c667">
 <p>
 The config here is truncated a bit to show the most important parts. Some parts of my config are based upon my personal preferences, and not very relevant for an article like this. If you want to take a look at the entire config, you can check out <a href="https://github.com/themkat/.emacs.d">the Github repo</a> (it has a table of contents for easy navigation). There are also links for some ommited packages in the previous section :)
 </p>
@@ -145,9 +151,9 @@ If you really wanted to, you could install the packages manually, require them (
 </div>
 
 
-<div id="outline-container-org64e7524" class="outline-2">
-<h2 id="org64e7524">IDE functionality with the help of kotlin-language-server and kotlin-debug-adapter</h2>
-<div class="outline-text-2" id="text-org64e7524">
+<div id="outline-container-org8d64a6a" class="outline-2">
+<h2 id="org8d64a6a">IDE functionality with the help of kotlin-language-server and kotlin-debug-adapter</h2>
+<div class="outline-text-2" id="text-org8d64a6a">
 <p>
 lsp-mode gives you IDE functionality (completions, code actions etc.) for Kotlin using <a href="https://github.com/fwcd/kotlin-language-server">kotlin-language-server</a>, while debugging is provided by dap-mode using <a href="https://github.com/fwcd/kotlin-debug-adapter">kotlin-debug-adapter</a>.
 </p>
@@ -168,9 +174,9 @@ One caveat worth mentioning is renaming symbols (<code>lsp-rename</code>). If th
 </div>
 
 
-<div id="outline-container-orga1303b9" class="outline-3">
-<h3 id="orga1303b9">Code actions</h3>
-<div class="outline-text-3" id="text-orga1303b9">
+<div id="outline-container-org4a789ac" class="outline-3">
+<h3 id="org4a789ac">Code actions</h3>
+<div class="outline-text-3" id="text-org4a789ac">
 <p>
 kotlin-language-server provides the following code actions:
 </p>
@@ -210,9 +216,9 @@ Now you can execute a code action with <code>lsp-execute-code-action</code>, whi
 </div>
 
 
-<div id="outline-container-orgd613c02" class="outline-3">
-<h3 id="orgd613c02">Override members</h3>
-<div class="outline-text-3" id="text-orgd613c02">
+<div id="outline-container-org6883bcd" class="outline-3">
+<h3 id="org6883bcd">Override members</h3>
+<div class="outline-text-3" id="text-org6883bcd">
 <p>
 You might have a project where you have interfaces with default implementations that you want to override (especially true if you use some Java libraries!). Those are not supported by the code action above as they are not missing an implementation. Do you have to do those manually by reading API docs? No! Thanks to a custom operation (i.e, protocol extension) in the langauge server and lsp-mode, you can simply have your cursor at the class name of your class and run <code>lsp-kotlin-implement-member</code>! You will now be prompted by the open methods and variables not implemented in the class in your file. If you are using Helm, you can select multiple of them with <code>C-SPACE</code>. That looks like this (in a stupid small project :
 </p>
@@ -232,9 +238,9 @@ Notice that it includes members from base classes like Object and Any as well! :
 
 
 
-<div id="outline-container-org6acb4c6" class="outline-3">
-<h3 id="org6acb4c6">Code lenses (run/debug program)</h3>
-<div class="outline-text-3" id="text-org6acb4c6">
+<div id="outline-container-org6810850" class="outline-3">
+<h3 id="org6810850">Code lenses (run/debug program)</h3>
+<div class="outline-text-3" id="text-org6810850">
 <p>
 These are not on by default, mostly because not everyone will want to run or debug their programs inside of Eamcs. Some are stubborn and prefer to run it in the terminal etc. (I have to admit that I do that most of the time for tests). You can activate the run/debug code lenses using <code>lsp-kotlin-lens-mode</code> (pro-tip: Put it in a hook in your configuration if you use it often)
 </p>
@@ -261,9 +267,9 @@ Debugging main functions (including JVMMain annotated ones) are currently suppor
 </div>
 
 
-<div id="outline-container-orge8829c2" class="outline-3">
-<h3 id="orge8829c2">More clear overview with lsp-treemacs</h3>
-<div class="outline-text-3" id="text-orge8829c2">
+<div id="outline-container-org08e865a" class="outline-3">
+<h3 id="org08e865a">More clear overview with lsp-treemacs</h3>
+<div class="outline-text-3" id="text-org08e865a">
 <p>
 lsp-treemacs gives you some handy tools, like seeing a list of errors (like many IDEs have) using <code>lsp-treemacs-errors-list</code>:
 </p>
@@ -280,9 +286,9 @@ or seeing symbols in the current buffer/file with == in a representation like th
 
 
 
-<div id="outline-container-org474a03e" class="outline-3">
-<h3 id="org474a03e">Basics of debugging with dap-mode using kotlin-debug-adapter</h3>
-<div class="outline-text-3" id="text-org474a03e">
+<div id="outline-container-org226ff71" class="outline-3">
+<h3 id="org226ff71">Basics of debugging with dap-mode using kotlin-debug-adapter</h3>
+<div class="outline-text-3" id="text-org226ff71">
 <p>
 The debugging support is very bare-bones at the moment. You can only debug using Maven or Gradle projects for the JVM, and there is <a href="https://github.com/fwcd/kotlin-debug-adapter/issues/62">an open issue for debugging standalone JVM applications</a>. If you are not using the code lenses above, you can specify settings yourself in a dap template, or make a <a href="https://code.visualstudio.com/docs/editor/debugging">VSCode launch.json file</a> with the debug specification with the type kotlin. If you want to attach to an already running debug process, you can use the built in dap template called "Kotlin Attach" (just run <code>dap-debug</code> after setting up dap-mode like in the config above!). Attaching is currently the only way to debug tests. In Gradle, you can create a debug test process like this:
 </p>
@@ -313,9 +319,9 @@ If you are curious on what this looks like, here is a screenshot where we hit a 
 
 
 
-<div id="outline-container-orgcb6e921" class="outline-3">
-<h3 id="orgcb6e921">Debugging issues with kotlin-language-server and kotlin-debug-adapter</h3>
-<div class="outline-text-3" id="text-orgcb6e921">
+<div id="outline-container-orgd45b88e" class="outline-3">
+<h3 id="orgd45b88e">Debugging issues with kotlin-language-server and kotlin-debug-adapter</h3>
+<div class="outline-text-3" id="text-orgd45b88e">
 <p>
 Something isn't working? Code actions aren't showing up? No completions? Then it's time to look into the <code>*lsp-log*</code>-buffer! If you  want to see more info, like the JSON requests and responses from and to the language server, enable <code>lsp-print-io</code>.
 </p>
@@ -343,9 +349,9 @@ To debug possible debug errors, the most useful thing to do is print the communi
 </div>
 
 
-<div id="outline-container-orgfd88ef2" class="outline-3">
-<h3 id="orgfd88ef2">General tips</h3>
-<div class="outline-text-3" id="text-orgfd88ef2">
+<div id="outline-container-orgf8bd80f" class="outline-3">
+<h3 id="orgf8bd80f">General tips</h3>
+<div class="outline-text-3" id="text-orgf8bd80f">
 <p>
 Sometimes you may encounter weird behavior. Sadly this can happen as kotlin-language-server and kotlin-debug-adapter are projects maintained and contributed to out of love in our spare time. Some possible workarounds: 
 </p>
