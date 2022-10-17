@@ -1,0 +1,15 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Announcement: YouTube channel!
+tags: info
+---
+#+END_EXPORT
+
+About a week ago, I uploaded the first video to my new YouTube channel. Yesterday, the second video followed! So far they have both been about Emacs, but other videos will be about other things as well. My main goal with the channel is "to share the love for computing; Past, present and future!" :) 
+
+
+Feel free [[https://www.youtube.com/channel/UC_3sv9P5H8wShL1cRnsHDjA][to subscribe]] and watch my videos :) So far there is a video about [[https://youtu.be/J4s3T0dd5CY][Kotlin in Emacs]], and one about [[https://youtu.be/9O_0vwrLCow][recommended Emacs packages]].
