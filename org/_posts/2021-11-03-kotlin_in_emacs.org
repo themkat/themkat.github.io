@@ -12,6 +12,9 @@ tags: programming kotlin emacs editor
 Some people, including myself, grudgingly used IntellIJ IDEA for Kotlin programming for a long time, maybe because we didn't think the Emacs tooling was up to speed. Well, it is, and we can finally use the best editor of all time (Emacs) to do Kotlin programming! Today I'm going to show you basic setup (and share some links), so you can also use Emacs for Kotlin programming! I made the switch this summer (reasons for waiting so long below), will you make the switch too?
 
 
+*EDIT October 17th 2022: There is now [[https://youtu.be/J4s3T0dd5CY][a YouTube video about this topic]]! It doesn't cover everything in this article, or [[https://themkat.net/2022/09/24/kotlin_in_emacs_redux.html][the newer one]], but shows off the most important features and recommended packages.*
+
+
 * Quick recap: What is LSP
 LSP is an acronym for [[https://microsoft.github.io/language-server-protocol/][Language Server Protocol]]. It's a common JSON-RPC protocol used to create servers for different languages. This makes it possible to create tooling in all editors that use these servers to provide IDE functionality (i.e, not editor specific tooling). There are LSP modes to use these servers for VSCode, Vim, Emacs and more! It was developed by Microsoft, but later standardized. Great to have a standard way of making these servers, as it is now much easier to create completions in most editors with less custom code!
 

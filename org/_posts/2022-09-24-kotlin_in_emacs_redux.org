@@ -13,6 +13,10 @@ tags: programming kotlin emacs editor
 Last year I wrote a blog post about the basics of using Kotlin in Emacs. Since then, some new developments have happened, including some new features have been added to the Kotlin langauge server. I also got some questions regarding which Eamcs packages I like using when developing Kotlin code. Let's answer some of the questions not answered last time, and see what Kotlin Language Server and Kotlin Debug Adapter can do!
 
 
+
+*EDIT October 17th 2022: There is now [[https://youtu.be/J4s3T0dd5CY][a YouTube video about this topic]]! It doesn't cover everything in this article, but shows off the most important features and recommended packages.*
+
+
 If you have not read [[https://themkat.net/2021/11/03/kotlin_in_emacs.html][my previous article]] yet, you might still get something useful out of it. It covers the basics, as well as getting [[https://github.com/kscripting/kscript][KScript]] working. The last part I will not cover here, but what we cover will be useful for that use case as well. If you have not yet tried [[https://github.com/kscripting/kscript][KScript]] for scripting, I recommend it as it can be super nice <3
 
 
