@@ -1,0 +1,81 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: Small command line tricks you should know
+tags: cli linux macosx
+---
+#+END_EXPORT
+
+This time we will look at some small command line tricks that will improve your productivity. By command line, I am off course referring to bash or similar Unix-style command lines. If you know the complete basics, and want to expand your knowledge a bit, I hope this short article will help you! 
+
+
+
+Before reading further, you should be familiar with basic usage. That is covered in my [[https://themkat.net/2021/10/02/no_nonsense_command_line.html][no-nonsense guide to the command line]]. If you feel adventurous with command line tools after reading this article, I've recently also written [[https://themkat.net/2022/10/15/sed_more_than_replacements.html][an article about sed for editing text]]. There is also [[https://themkat.net/tags/cli.html][several other articles about other fun tools and usage]]. Now that we have that out of the way, let's get into the tricks :)
+
+
+* Creating aliases
+Tired of often writing the same long command? Or maybe you are spelling it wrong very often? Did you know that you can make aliases? Define =mci= to mean =mvn clean install=, =exot= to mean =exit= and similar? How would that look like?
+
+#+BEGIN_SRC bash
+  alias mci='mvn clean install'
+  alias exot='exit'
+#+END_SRC
+
+That way you don't have to type in long commands, and you can even misspell them! Note that your shell simply replaces your alias with the desired command, there is no magic beyond that. If you want more advanced functionality, you will have to implement a function.
+
+
+On my machines I use different Java versions (I have worked on some legacy systems fairly recently), so I have a few aliases to change the Java version:
+#+BEGIN_SRC bash
+  alias useJava8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
+  alias useJava11='export JAVA_HOME=$(/usr/libexec/java_home -v 11)'
+  alias useJava18='export JAVA_HOME=$(/usr/libexec/java_home -v 18)'
+#+END_SRC
+
+That way I can easily change =JAVA_HOME=, and thereby my current Java version, without having to type that much. Just type =useJava8=, and I'm back to using Java 8 (until the current session ends at least).
+
+* Chaining - run multiple commands (no dependencies between them)
+Want to run more than one command? And not have to wait for one to finish and then type the next? With chaining using =;= you can! No matter if the first command was successful or not, the next one will run. This makes it perfect for sequences of commands that doesn't depend on each other.
+
+#+BEGIN_SRC bash
+  command1; command2
+#+END_SRC
+
+You can run almost as many as you like  (there is a command limit depending on your operating system off course). I rarely use this, as I often chain commands that have dependencies to each other. Which brings us to...
+
+
+* Chaining using =&&= and =||=
+** =&&= 
+The last section showed you how to run commands no matter the exit code (or status if you will) of the previous command. What if they have a dependency? You only want to run the next one if the previous one succeeded? That is what =&&= does; running the right hand side if the left hand side has a successful exit code (0).
+
+#+BEGIN_SRC bash
+  command1 && command2
+#+END_SRC
+
+So command2 is only run if command1 is successful. Like for the previous chaining type, you can chain almost as many commands as you want. =command1 && command2 && command3 && command4= and so on is possible. Let us see an example:
+
+#+BEGIN_SRC bash
+  cd Programming/Kotlin/my-awesome-project && mvn clean install && java -jar target/my-awesome-project-V1.0.jar
+#+END_SRC
+
+This will navigate to the given path, clean and build project using maven, and then run the jar file produced by the maven build (given that your maven build actually produces a jar with a main manifest). I usually use it for various cases like this, where we either build or download files, and then do something with them.
+
+
+** =||=
+What if you want to run a command if the previous one failed? Now we are looking at =||=, which does exactly that. If the left hand side returns a unsuccessful exit code (i.e, not 0), then the right hand side runs. If not, it doesn't run the right hand side.
+
+#+BEGIN_SRC bash
+  command1 || command2
+#+END_SRC
+
+So when is this useful? Maybe you want a fallback for something? A file failed downloading, so try another URL? (look into curl and wget if you are curious about how to do something like that!). Or maybe you just want to use the say application to have a text-to-speech message when your build fails?
+
+#+BEGIN_SRC bash
+  mvn clean install || say 'Build failed dumbass'
+#+END_SRC
+
+
+* Searching for previously run commands
+Sometimes we have typed commands that we want to run again. Then you can use =CTRL-r= (control followed by the r key). You will see a text saying something like "bck-i-search:" followed by a prompt. Type your search query, and you will see matches as you go. Press enter if you want to run one. If you want to see the next match, just use =CTRL-r= again. Want to go forward to the match you just went past, then use =CTRL-s=. Want to quit the searching? =CTRL-g= is your friend.
