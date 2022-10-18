@@ -14,9 +14,9 @@ Exceptions should contain enough information for you to be able to see the reaso
 </p>
 
 
-<div id="outline-container-orgb0384ee" class="outline-2">
-<h2 id="orgb0384ee">Rethrow/wrap exceptions</h2>
-<div class="outline-text-2" id="text-orgb0384ee">
+<div id="outline-container-org5d74186" class="outline-2">
+<h2 id="org5d74186">Rethrow/wrap exceptions</h2>
+<div class="outline-text-2" id="text-org5d74186">
 <p>
 Rethrow/wrap in this case means to throw a new exception with the original as the cause (in other words: passing it to the constructor of our new exception). To see why this is useful, let's take a look at an example. The example might seem stupid, and I somewhat agree as I usually prefer to write code in a more functional way. That being said, it was picked out because it can throw a few different exceptions. Without further ado, let's take a look at the code:
 </p>
@@ -86,9 +86,9 @@ This is probably a simple example, but I think it proves the point.
 </div>
 
 
-<div id="outline-container-org7f4fe36" class="outline-2">
-<h2 id="org7f4fe36">Logging exceptions</h2>
-<div class="outline-text-2" id="text-org7f4fe36">
+<div id="outline-container-org22d81f3" class="outline-2">
+<h2 id="org22d81f3">Logging exceptions</h2>
+<div class="outline-text-2" id="text-org22d81f3">
 <p>
 Sometimes you may choose to log it instead of rethrowing. I prefer that approach if I don't want to throw a new exception, but just return a default value or similar. Your preference may be different. Why log the exception in this case, you may ask? We may want to know in our logs for debugging potential issues. What if the default value is returned each time? Then we might want to investigate and see what caused our original operation to fail (external endpoint down? Issue like in the previous section? Something else?). 
 </p>
