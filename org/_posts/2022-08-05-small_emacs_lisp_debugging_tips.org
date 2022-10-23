@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: Emacs Lisp debugging tips
-tags: emacs
+tags: emacs programming
 ---
 #+END_EXPORT
 

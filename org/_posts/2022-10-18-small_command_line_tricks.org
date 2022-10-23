@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: Small command line tricks you should know
-tags: cli linux macosx
+tags: cli linux macosx automation
 ---
 #+END_EXPORT
 
