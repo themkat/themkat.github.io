@@ -12,24 +12,24 @@ tags: programming rust
 I have really fallen in love with Rust this year! It has many positive features, like compiling to almost any platform, nice syntax and more. In this article I will show you some of these features, tell you about them, and maybe inspire you to look into learning Rust yourself! If you disagree about something being awesome, then that is okay too, as the article is based upon my personal opinion. 
 
 
-* Topics in this article                                              :TOC_1:
-- [[#easy-installation---rustup][Easy installation - rustup]]
-- [[#build-system---cargo][Build system - Cargo]]
-- [[#compiles-to-almost-any-platform][Compiles to almost any platform!]]
-- [[#compiler-guides-you---useful-compiler-messages][Compiler guides you! - Useful compiler messages]]
-- [[#better-enums][Better enums]]
-- [[#awesome-pattern-matching][Awesome pattern matching]]
-- [[#error-handling-that-makes-sense][Error handling that makes sense]]
-- [[#closures-and-functional-programming-features][Closures and functional programming features]]
-- [[#the-ownership-model][The ownership model]]
-- [[#simplified-object-orientation---no-heavy-oop-like-in-java-or-c][Simplified "object orientation" - No heavy OOP like in Java or C++]]
-- [[#not-focused-on-selling-a-specific-editoride---language-server-implemented-as-an-official-core-component][NOT focused on selling a specific editor/IDE - language server implemented as an official core component]]
-- [[#want-to-learn-rust-now---recommended-resources][Want to learn Rust now? - Recommended resources]]
+* Topics in this article
+- [[rustup][Easy installation - rustup]]
+- [[cargo][Build system - Cargo]]
+- [[multiplatform][Compiles to almost any platform!]]
+- [[useful compiler messages][Compiler guides you! - Useful compiler messages]]
+- [[enums][Better enums]]
+- [[pattern matching][Awesome pattern matching]]
+- [[error handling][Error handling that makes sense]]
+- [[closures][Closures and functional programming features]]
+- [[ownership][The ownership model]]
+- [[oop][Simplified "object orientation" - No heavy OOP like in Java or C++]]
+- [[lsp][NOT focused on selling a specific editor/IDE - language server implemented as an official core component]]
+- [[learn][Want to learn Rust now? - Recommended resources]]
 
 * Easy installation - rustup
 Installing the basic tools (compiler, build system etc.) is very easy by using [[https://rustup.rs/][rustup]]. rustup is also used to update the tools, install other components (formatter, language server etc.), install unstable/nightly versions of the tools, install other Rust versions and so on. It is also used to set the default compiler/tool versions etc. This means that an official language tool handles quite a lot for us out of the box, and that we don't need to find other tools to do these tasks. If you have used other ecosystems like Node.JS, Java etc., you will know that you will often need several different (often unofficial) tools to handle multiple versions (e.g, nvm for Node.JS), installing official tooling etc. This simplicity in the Rust ecosystem makes it really easy to get started, and also doing lots of common tasks in a standard way. In other ecosystems you will probably do more research to do these things than you would have to do with Rust. 
 
-
+<<cargo>>
 * Build system - Cargo
 Rust comes with a powerful build system for your projects, [[https://doc.rust-lang.org/cargo/commands/cargo-install.html][which is also used to install programs directly from source (e.g, git or crates.io)]]. This build system handles building/compiling, fetching dependencies, running tests (including having a built in test runner!), and more! The way it handles dependencies is very modern, with each project having a Cargo.toml file specifying dependencies and their versions. If you have used older build systems like CMake, automake etc., you will be pleased that you don't need to handle dependencies yourself and that you can have multiple versions of them on the same system. If you are coding in the Java ecosystem, you will probably be happy that there is a great build system out of the box, instead of having to research which one to use (for JVM languages you have Maven, Gradle, Ant etc., no standard one). Printing a dependency graph, which requires a plugin on the JVM with Maven, can be done out of the box with [[https://doc.rust-lang.org/cargo/commands/cargo-tree.html][cargo tree]].
 
@@ -46,14 +46,17 @@ There is also an official code analyzer that integrates well with Cargo called [
 Hopefully I've now teased some of the features I really love about Cargo! Covering everything is a bit out of scope for a small article like this :) 
 
 
+<<multiplatform>>
 * Compiles to almost any platform!
 Rust compiles to many different computers, micro controllers, game consoles and more. This is all thanks to the compiler utilizing [[https://llvm.org/][LLVM]] for generating machine code. LLVM supports generating machine code for many different computer architectures, and thanks to it we can describe Rust targets. The targets describe the architecture, operating system and so on an executable runs on. Many are [[https://docs.rust-embedded.org/embedonomicon/compiler-support.html#built-in-target][built into Rust]], and we can also [[https://docs.rust-embedded.org/embedonomicon/custom-target.html][create our own]]. This has lead to support for many different architectures, which off course includes many micro controllers and computers. Some interesting ones include [[https://doc.rust-lang.org/beta/rustc/platform-support/m68k-unknown-linux-gnu.html][Linux on Motorola 68k processors]] (hopefully we can hack together AmigaOS classic and 4.1 variants in the future!), [[https://github.com/rust-console/gba][GameBoy Advance]], and [[https://github.com/rust9x/rust/wiki][older 32 bit Windows versions (including Windows 95!)]].
 
 
+<<useful compiler messages>>
 * Compiler guides you! - Useful compiler messages
 The Rust compiler have, in my view, really useful compiler messages! I often feel like they guide you to the solution you might want (within reason off course). I could construct an example here, but I feel like the Rust book have [[https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html][a great early tutorial that shows you this in action]]!
 
 
+<<enums>>
 * Better enums
 You are probably used to enums to do simple enumerations in many languages. In Java, Kotlin and many similar languages they can also contain some data, though this data can not vary for the same enum value (the definition of an enum value has to call the constructor directly). Rust enums are way more powerful, and in my view operate more in a way as a sort of category. Let us see some code with comments:
 
@@ -81,6 +84,7 @@ In the last variant we see that the Post, Put and Custom variants contain data. 
 
 These powerful enums relate to our next topic; Rust's awesome pattern matching!
 
+<<pattern matching>>
 * Awesome pattern matching
 We can destructure, check for matches etc.:
 
@@ -97,7 +101,7 @@ We can destructure, check for matches etc.:
 
 I have [[https://themkat.net/2022/10/06/rust_awesome_pattern_matching.html][an article on pattern matching in Rust]] that might be of interest, which goes more in-depth on the syntax. It also have links for further reading. 
 
-
+<<error handling>>
 * Error handling that makes sense
 One thing I think is really great in Rust is that we don't have big bloaty exceptions. Rust have two types of error scenarios: recoverable and non-recoverable. Non-recoverable errors are done by stopping the program (i.e, panic), and possibly giving a stack trace (depending on settings). This type of error is [[https://doc.rust-lang.org/book/ch09-01-unrecoverable-errors-with-panic.html][well documented]], and as it is non-recoverable we can't handle it that much. Recoverable errors on the other hand we can handle!
 
@@ -114,7 +118,7 @@ One thing I think is really great in Rust is that we don't have big bloaty excep
 There are also many methods on Result like unwrap (panic if error, or else give us the result), expect (to fail with a custom panic message), and unwrap_or_default (to get a default value if error). The [[https://doc.rust-lang.org/std/result/][documentation for std::result]] covers this in great detail for those of you who are curious :) 
 
 
-
+<<closures>>
 * Closures and functional programming features
 Like many other modern languages, Rust provides functional programming features. Closures, similar to lambdas in other languages, act as anonymous functions. You can use higher order constructs (i.e, functions that take functions as input and/or return functions) to iterate, like map, filter, reduce etc. In Rust, this concept is called iterators. It looks something like this:
 
@@ -125,9 +129,12 @@ Like many other modern languages, Rust provides functional programming features.
 One of the best parts is that these constructs compile to the same code as regular loops, and there is no overhead added! It is therefore called [[https://doc.rust-lang.org/book/ch13-04-performance.html][one of Rusts zero-cost abstractions]]!
 
 
+<<ownership>>
 * The ownership model
 Rust have a simple, but effective way to manage memory. Each value has only one owner, and assigning the content to a new variable moves it to that new variable. Other places can borrow it, but two places cannot own the same value (there are ways to work around this with reference counters though). Having these "restriction" makes it possible for the compiler to handle the memory more or less for us (you don't really do manual allocation and deallocation yourself like you would in C). Owner going out of scope, means that the value will be dropped. This system of ownership is probably one of Rusts most unique features, and [[https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html][you can read more about it in the Rust book]].
 
+
+<<oop>>
 * Simplified "object orientation" - No heavy OOP like in Java or C++
 I have to admit, I'm not a big fan of the heavy object orientation constructs in Java and similar languages. Interfaces, abstract classes etc. are okay concepts, but not necessarily all the design patterns and solutions built around them. They solve specific problems, and can work if they are used to share common languages between developers... but they seem so far away from how computers really work. In some code bases, especially enterprise ones, they are often overused (some people seem to have a competition on who can cram the most object oriented design patterns into a code base). Look at the satirical [[https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition][FizzBuzz Enterprise Edition]] for an example of what I'm talking about.
 
@@ -147,10 +154,12 @@ Rust on the other hand, are more like C in this regard. Structures, enums etc. a
 *NOTE! I'm not hating on design patterns in general. I think they can be a good to convey concepts and discuss solutions to problems. What I'm hating on is their overuse, and cramming them into all sorts of places.*
 
 
+<<lsp>>
 * NOT focused on selling a specific editor/IDE - language server implemented as an official core component
 rust-analyzer, the language server for Rust, is an official Rust project. The people behind Rust does NOT do favoritism with any IDE, or try to sell you one (looking at you Kotlin!!!). This means that you can use any editor you like. For some languages, like Kotlin, most people end up using the official IDE, and the language servers end up having limited interest and contributions. Rust is different, and therefore everything works great in Emacs! Though I would recommend using [[https://github.com/brotzeit/rustic][rustic]] instead of [[https://www.rust-lang.org/tools][rust-mode (the latter is linked to on the official rust-lang website)]], as it builds on top of rust-mode and provides more features (e.g, automatic LSP configuration, some Cargo popups etc.). 
 
 
+<<learn>>
 * Want to learn Rust now? - Recommended resources
 *NOTE! The book links are Amazon Affiliate links where I make a commission on qualified purchases.*
 
