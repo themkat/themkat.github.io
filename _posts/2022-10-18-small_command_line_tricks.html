@@ -15,9 +15,9 @@ Before reading further, you should be familiar with basic usage. That is covered
 </p>
 
 
-<div id="outline-container-org4f9e39d" class="outline-2">
-<h2 id="org4f9e39d">Creating aliases</h2>
-<div class="outline-text-2" id="text-org4f9e39d">
+<div id="outline-container-orga74ea78" class="outline-2">
+<h2 id="orga74ea78">Creating aliases</h2>
+<div class="outline-text-2" id="text-orga74ea78">
 <p>
 Tired of often writing the same long command? Or maybe you are spelling it wrong very often? Did you know that you can make aliases? Define <code>mci</code> to mean <code>mvn clean install</code>, <code>exot</code> to mean <code>exit</code> and similar? How would that look like?
 </p>
@@ -49,9 +49,9 @@ That way I can easily change <code>JAVA_HOME</code>, and thereby my current Java
 </div>
 </div>
 
-<div id="outline-container-org19b3ec3" class="outline-2">
-<h2 id="org19b3ec3">Chaining - run multiple commands (no dependencies between them)</h2>
-<div class="outline-text-2" id="text-org19b3ec3">
+<div id="outline-container-orga8362ed" class="outline-2">
+<h2 id="orga8362ed">Chaining - run multiple commands (no dependencies between them)</h2>
+<div class="outline-text-2" id="text-orga8362ed">
 <p>
 Want to run more than one command? And not have to wait for one to finish and then type the next? With chaining using <code>;</code> you can! No matter if the first command was successful or not, the next one will run. This makes it perfect for sequences of commands that doesn't depend on each other.
 </p>
@@ -68,13 +68,13 @@ You can run almost as many as you like  (there is a command limit depending on y
 </div>
 
 
-<div id="outline-container-org9d45596" class="outline-2">
-<h2 id="org9d45596">Chaining using <code>&amp;&amp;</code> and <code>||</code></h2>
-<div class="outline-text-2" id="text-org9d45596">
+<div id="outline-container-orge3650d3" class="outline-2">
+<h2 id="orge3650d3">Chaining using <code>&amp;&amp;</code> and <code>||</code></h2>
+<div class="outline-text-2" id="text-orge3650d3">
 </div>
-<div id="outline-container-orgd84e9d5" class="outline-3">
-<h3 id="orgd84e9d5"><code>&amp;&amp;</code></h3>
-<div class="outline-text-3" id="text-orgd84e9d5">
+<div id="outline-container-orgbdda7ea" class="outline-3">
+<h3 id="orgbdda7ea"><code>&amp;&amp;</code></h3>
+<div class="outline-text-3" id="text-orgbdda7ea">
 <p>
 The last section showed you how to run commands no matter the exit code (or status if you will) of the previous command. What if they have a dependency? You only want to run the next one if the previous one succeeded? That is what <code>&amp;&amp;</code> does; running the right hand side if the left hand side has a successful exit code (0).
 </p>
@@ -100,9 +100,9 @@ This will navigate to the given path, clean and build project using maven, and t
 </div>
 
 
-<div id="outline-container-orgf90ae0d" class="outline-3">
-<h3 id="orgf90ae0d"><code>||</code></h3>
-<div class="outline-text-3" id="text-orgf90ae0d">
+<div id="outline-container-orgc866ea2" class="outline-3">
+<h3 id="orgc866ea2"><code>||</code></h3>
+<div class="outline-text-3" id="text-orgc866ea2">
 <p>
 What if you want to run a command if the previous one failed? Now we are looking at <code>||</code>, which does exactly that. If the left hand side returns a unsuccessful exit code (i.e, not 0), then the right hand side runs. If not, it doesn't run the right hand side.
 </p>
@@ -125,9 +125,9 @@ So when is this useful? Maybe you want a fallback for something? A file failed d
 </div>
 
 
-<div id="outline-container-orgf62c4ca" class="outline-2">
-<h2 id="orgf62c4ca">Searching for previously run commands</h2>
-<div class="outline-text-2" id="text-orgf62c4ca">
+<div id="outline-container-org53fa041" class="outline-2">
+<h2 id="org53fa041">Searching for previously run commands</h2>
+<div class="outline-text-2" id="text-org53fa041">
 <p>
 Sometimes we have typed commands that we want to run again. Then you can use <code>CTRL-r</code> (control followed by the r key). You will see a text saying something like "bck-i-search:" followed by a prompt. Type your search query, and you will see matches as you go. Press enter if you want to run one. If you want to see the next match, just use <code>CTRL-r</code> again. Want to go forward to the match you just went past, then use <code>CTRL-s</code>. Want to quit the searching? <code>CTRL-g</code> is your friend.
 </p>
