@@ -26,6 +26,7 @@ I have really fallen in love with Rust this year! It has many positive features,
 - [[lsp][NOT focused on selling a specific editor/IDE - language server implemented as an official core component]]
 - [[learn][Want to learn Rust now? - Recommended resources]]
 
+  <<rustup>>
 * Easy installation - rustup
 Installing the basic tools (compiler, build system etc.) is very easy by using [[https://rustup.rs/][rustup]]. rustup is also used to update the tools, install other components (formatter, language server etc.), install unstable/nightly versions of the tools, install other Rust versions and so on. It is also used to set the default compiler/tool versions etc. This means that an official language tool handles quite a lot for us out of the box, and that we don't need to find other tools to do these tasks. If you have used other ecosystems like Node.JS, Java etc., you will know that you will often need several different (often unofficial) tools to handle multiple versions (e.g, nvm for Node.JS), installing official tooling etc. This simplicity in the Rust ecosystem makes it really easy to get started, and also doing lots of common tasks in a standard way. In other ecosystems you will probably do more research to do these things than you would have to do with Rust. 
 
