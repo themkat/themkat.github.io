@@ -10,9 +10,9 @@ Reactive is a buzzword thrown around a lot, but what is it really? At first glan
 
 
 
-<div id="outline-container-orgb516248" class="outline-2">
-<h2 id="orgb516248">What is Reactive? - The original definition</h2>
-<div class="outline-text-2" id="text-orgb516248">
+<div id="outline-container-org2ce861d" class="outline-2">
+<h2 id="org2ce861d">What is Reactive? - The original definition</h2>
+<div class="outline-text-2" id="text-org2ce861d">
 <p>
 If we visit <a href="https://reactivex.io/">the ReactiveX website</a>, we see the following definition:
 "ReactiveX is a combination of the best ideas from the Observer pattern, the Iterator pattern, and functional programming"
@@ -36,9 +36,9 @@ This definition is quite hard to grasp at first glance. Your first thought might
 
 
 
-<div id="outline-container-org000d868" class="outline-2">
-<h2 id="org000d868">What is Reactive? - A more descriptive definition</h2>
-<div class="outline-text-2" id="text-org000d868">
+<div id="outline-container-orgc394876" class="outline-2">
+<h2 id="orgc394876">What is Reactive? - A more descriptive definition</h2>
+<div class="outline-text-2" id="text-orgc394876">
 <p>
 The original definition makes us think of streams like in Java, and the higher order functions it entails. While this is a great beginning, and a great way to understand the way we code, I don't think it makes it clear what the big whoop is about.
 </p>
@@ -60,9 +60,9 @@ Reactive applications often don't exist in isolation, we want to make reactive s
 </div>
 
 
-<div id="outline-container-org4c4c0e2" class="outline-2">
-<h2 id="org4c4c0e2">Nonblocking IO</h2>
-<div class="outline-text-2" id="text-org4c4c0e2">
+<div id="outline-container-orgd329d5a" class="outline-2">
+<h2 id="orgd329d5a">Nonblocking IO</h2>
+<div class="outline-text-2" id="text-orgd329d5a">
 <p>
 Nonblocking IO has been a term that has gone around like a buzzword on the internet in the last years, and few really know what it means. You might have heard about it for JavaScript runtimes like <a href="https://nodejs.org/en/about/">NodeJS</a>, but do you really feel you  have a grasp on the advantages of such an approach? In NodeJS you often see that you give a callback to IO functions (reading files, databases etc.), which is executed once the IO action is done. That is the start of understanding nonblocking IO. The thread is not blocked until the IO action is done, but can do other things. 
 </p>
@@ -138,9 +138,9 @@ Many databases these days have reactive clients, including PostgreSQL, Oracle, M
 
 
 
-<div id="outline-container-org554da4f" class="outline-2">
-<h2 id="org554da4f">Why Reactive is loved in cloud environments (AWS, Azure, GCP etc.)</h2>
-<div class="outline-text-2" id="text-org554da4f">
+<div id="outline-container-orge0af6c8" class="outline-2">
+<h2 id="orge0af6c8">Why Reactive is loved in cloud environments (AWS, Azure, GCP etc.)</h2>
+<div class="outline-text-2" id="text-orge0af6c8">
 <p>
 Like we mentioned with nonblocking IO above, reactive code will use less resources than standard imperative code if done correctly. Less resources will equate to a lower bill. All companies, whether you are a startup or enterprise (or even just doing your own spare time project) would like to use the resources you are paying for to the max. If you can handle more request in a cheaper manner, then why not? Combined with something like serverless, you can get minimal resource usage even for many requests. Wait, what the actual f**k is serverless? Another buzzword? Serverless is quickly summarized just instances that activates to service the calls being done (i.e, not running all the time, only when needed), running only the instances needed, and doing small amounts of work. So together with reactive, it uses just the minimal amount of resources on your cloud provider. Examples include Azure Functions and AWS Lambda. Serverless might be a weird word, because we still have servers, but our applications only run on them when needed. When not used, our cloud provider uses the machines for other peoples serverless functions (at least to my understanding, would be stupid to just have them idle ;) )
 </p>
@@ -152,9 +152,9 @@ Now you might have an impression that Reactive is only great for penny-pinching 
 </div>
 </div>
 
-<div id="outline-container-org4cbe320" class="outline-2">
-<h2 id="org4cbe320">In conclusion and further reading</h2>
-<div class="outline-text-2" id="text-org4cbe320">
+<div id="outline-container-orgcc70260" class="outline-2">
+<h2 id="orgcc70260">In conclusion and further reading</h2>
+<div class="outline-text-2" id="text-orgcc70260">
 <p>
 Hopefully you have now gotten the main points of what Reactive programming is about. This article only scratched the surface, and there are off course more research you could do. A great start would be looking at some of the articles linked above, or looking at some libraries and how coding with them works. Examples include <a href="https://rxjs.dev/">RxJs</a>, <a href="https://github.com/ReactiveX/RxJava">RxJava</a>, and <a href="https://quarkus.io/">Quarkus</a> (JVM framework, and way more than just Reactive). If you thought event driven architectures using something like Apache Kafka sounded interesting, that can easily be done in Quarkus using Reactive principles (or done with other tools if you just want to research event driven architectures!). <a href="https://wiki.openjdk.java.net/display/loom/Main">Project Loom</a> can be interesting to read about as well, as its virtual threads might improve the efficiency of mixing blocking and nonblocking code in Reactive code bases in the future (or maybe kill Reactive as some people seem to think, <a href="https://youtu.be/9si7gK94gLo?t=1150">like Brian Goetz</a>). Maybe you instead want to know how Reactive libraries and frameworks are coded? Then you can research the patterns often used like the Reactor pattern, or Proactor pattern (<a href="https://quarkus.io/guides/quarkus-reactive-architecture">used by Quarkus</a>).
 </p>
