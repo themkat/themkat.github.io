@@ -1,0 +1,60 @@
+---
+layout: blogpost
+title: QEMU user emulation in Linux
+tags: cli linux
+---
+
+<p>
+Most people know of QEMU for emulating a full operating system for various architectures, but did you know that it can also do single executables in its user-mode emulation? That means that you can run programs compiled for another architecture, but with the same OS (we are not emulating that part after all), on the machine you are using. I did not know about it until recently, but I'm very happy I learned about it! So today I will show it to you, so you also know about it if you ever need it!
+</p>
+
+
+
+<p>
+How does it work? While the <a href="https://www.qemu.org/">full QEMU program</a> emulate (or virtualize depending on the usage) a full computer architecture, including the full operating system, the user emulation only runs single executables. This is done through translating system calls and endianness (how the bytes are ordered on the target architectures). That entails that running programs for other operating systems is not possible. 
+</p>
+
+
+
+<p>
+<b>NOTE: While some sources claim it works on Mac OS X, I have not gotten it to work. I have only used it in Linux distros like Debian, and that is what I will talk about in this article.</b>
+</p>
+
+
+<div id="outline-container-orga21a73f" class="outline-2">
+<h2 id="orga21a73f">What can it be used for?</h2>
+<div class="outline-text-2" id="text-orga21a73f">
+<p>
+To some people it might not be clear what a tool like this can be used for. It can replace use cases where you usually had to start up a full virtual machine or similar, including:
+</p>
+
+
+<ul class="org-ul">
+<li>Cross compilation and tasks relating to cross compilation (e.g, GNU Emacs runs compiled executables as part of the compilation process, and have no concept of a host system compiler).</li>
+<li>Testing cross compiled applications for other architectures</li>
+<li>Setting up file systems for linux distributions, like with <a href="https://manpages.debian.org/bullseye/debootstrap/debootstrap.8.en.html">debootstrap</a> (for Debian based systems), but for other architectures than the one you are using (e.g, arm, powerpc, m68k, etc. when you are using x64).</li>
+<li>Running (simple) statically linked programs that are unavailable for your architecture. (dynamically linked applications can be a bit tricky).</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgd8f88c3" class="outline-2">
+<h2 id="orgd8f88c3">How to use</h2>
+<div class="outline-text-2" id="text-orgd8f88c3">
+<p>
+The setup is very simple. Install the QEMU user space emulator, and activate the relevant architectures (might also sometimes be done automatically, depending on the system you use). On most linux distributions, this package is called <code>qemu-user-static</code>. In Debian based systems you can activate the desired architecture with <code>update-binfmts --enable qemu-ppc</code> , where you replace qemu-ppc with the desired qemu-target. You can display the ones you have available with <code>update-binfmts --display</code>, or check the qemu applications in <code>/usr/bin/</code>. There might be additional steps needed depending on your use case. For Debian, several of these are described in <a href="https://wiki.debian.org/QemuUserEmulation">the QEMU User Emulation documentation</a>. Other distributions may have their docs, but I haven't found any as in depth as the Debian documentation. QEMU also have <a href="https://www.qemu.org/docs/master/user/main.html">a brief documentation</a> of their own that might be useful.
+</p>
+
+
+<p>
+After doing the quick setup, you can run executables for other architectures just as regular executables! (e.g, <code>./myexecutable</code>). This also includes using <a href="https://en.wikipedia.org/wiki/Chroot">chroot</a> to switch your root, and therefore also the running processes (including starting bash or similar from the new root). That is all! Usage is that simple :)
+</p>
+
+
+<p>
+All of the above works within Docker (and similar container runtimes)! Just remember that chroot requires privileged access if you should need it (like when doing debootstrap). Very handy if you need to make Debian file systems or run PowerPC/m68k/other linux applications on a Mac!
+</p>
+</div>
+</div>
