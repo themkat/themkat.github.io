@@ -9,7 +9,7 @@ tags: programming kotlin
 ---
 #+END_EXPORT
 
-This time we will look at features in Kotlin that are often overlooked in walktroughs or other places, but are still cool and can be useful! Some are features some of us might know of, but often forget exist. Others are features we forget exist untill we see them mentioned, probably because we don't use them as often (or very rarely). Hopefully you will see at least one feature you have forgotten existed! 
+This time we will look at features in Kotlin that are often overlooked in walkthroughs or other places, but are still cool and can be useful! Some are features some of us might know of, but often forget exist. Others are features we forget exist until we see them mentioned, probably because we don't use them as often (or very rarely). Hopefully you will see at least one feature you have forgotten existed! 
 
 
 * Inline objects
