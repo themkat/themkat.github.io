@@ -4,7 +4,7 @@
 #+BEGIN_EXPORT html
 ---
 layout: blogpost
-title: QEMU user emulation in Linux
+title: QEMU user space emulation in Linux
 tags: cli linux
 ---
 #+END_EXPORT
@@ -13,7 +13,7 @@ Most people know of QEMU for emulating a full operating system for various archi
 
 
 
-How does it work? While the [[https://www.qemu.org/][full QEMU program]] emulate (or virtualize depending on the usage) a full computer architecture, including the full operating system, the user emulation only runs single executables. This is done through translating system calls and endianness (how the bytes are ordered on the target architectures). That entails that running programs for other operating systems is not possible. 
+How does it work? While the [[https://www.qemu.org/][full QEMU program]] emulate (or virtualize depending on the usage) a full computer architecture, including the full operating system, the user space emulation only runs single executables. This is done through translating system calls and endianness (how the bytes are ordered on the target architectures). That entails that running programs for other operating systems is not possible. 
 
 
 
