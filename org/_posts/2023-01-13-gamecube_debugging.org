@@ -128,7 +128,7 @@ What this will do is automatically load the symbol file (elf), connect to the ta
 * Adapting the process to Emacs
 While Emacs has a built-in GDB command we could use, we would still need to write GDB commands the old fashioned way. To make our debugging more comfortable, we can use [[https://emacs-lsp.github.io/dap-mode/][dap-mode]]. dap-mode makes it simple to use the debugger part of the extension mentioned above, [[https://emacs-lsp.github.io/dap-mode/page/configuration/#native-debug-gdblldb][as you only need to run a interactive command in Emacs after requiring dap-gdb-lldb]]. After that is done, we can create a debug template:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (dap-register-debug-template "GameCube debug"
                                (list :name "GameCube debug"
                                      :type "gdbserver"
