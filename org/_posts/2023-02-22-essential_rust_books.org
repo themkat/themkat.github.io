@@ -47,6 +47,11 @@ You might also want to check out my other posts on Rust, like [[https://themkat.
 *Who should read it?* People who want to learn the Rust programming language, but who have written in another language before. If you are clever, you will probably be able to pick it up without knowing other programming languages as well.
 
 
+#+BEGIN_EXPORT html
+<br />
+<br />
+#+END_EXPORT
+
 
 * [[https://amzn.to/3Ewv0lv][Rust Brain Teasers]] by Herbert Wolverson
 #+BEGIN_EXPORT html
@@ -60,6 +65,12 @@ You might also want to check out my other posts on Rust, like [[https://themkat.
 
 
 *Who should read it?* People who have read the previous book (or learned the basics in another way), and want to look into code examples that might at first seem peculiar. If you are a group of people learning Rust, this book might be fun to read together. You can look at the issues, and guess together what will happen. 
+
+
+#+BEGIN_EXPORT html
+<br />
+<br />
+#+END_EXPORT
 
 
 * [[https://amzn.to/3Exq0Nj][Rust for Rustaceans]] by Jon Gjengset
