@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: Things I wish I did earlier in life
-tags: life-lessons
+tags: life-lessons opinions
 ---
 #+END_EXPORT
 
