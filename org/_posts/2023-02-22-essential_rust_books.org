@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: Essential books on the Rust programming language
-tags: programming rust
+tags: programming rust books
 ---
 #+END_EXPORT
 
