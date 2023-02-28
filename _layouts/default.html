@@ -88,14 +88,18 @@
 				   class="active"
 				   {% endif %}
 				   href="/">Home</a>
+                <a {% if page.url == "/tags/programming.html" %}
+				   class="active"
+				   {% endif %}
+				   href="{{"tags/programming.html" | relative_url }}">Programming</a>
 				<a {% if page.url == "/tags/emacs.html" %}
 				   class="active"
 				   {% endif %}
-				   href="{{"tags/emacs.html" | relative_url }}">Emacs articles</a>
+				   href="{{"tags/emacs.html" | relative_url }}">Emacs</a>
 				<a {% if page.url == "/tags/books.html" %}
 				   class="active"
 				   {% endif %}
-				   href="{{"tags/books.html" | relative_url }}">Book recommendations</a>
+				   href="{{"tags/books.html" | relative_url }}">Book club</a>
 				<a {% if page.tab == "tech" %}
 				   class="active"
 				   {% endif %}
