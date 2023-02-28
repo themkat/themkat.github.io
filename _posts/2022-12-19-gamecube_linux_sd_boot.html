@@ -32,9 +32,9 @@ In this article we will focus on booting from an SD card where both the kernel a
 
 
 
-<div id="outline-container-orgebd8b88" class="outline-2">
-<h2 id="orgebd8b88">Prerequisites</h2>
-<div class="outline-text-2" id="text-orgebd8b88">
+<div id="outline-container-org4dc8580" class="outline-2">
+<h2 id="org4dc8580">Prerequisites</h2>
+<div class="outline-text-2" id="text-org4dc8580">
 <p>
 To run Linux on the GameCube, you need two things:
 </p>
@@ -54,7 +54,7 @@ You will also need a way to interact with the system, as a game controller doesn
 <ul class="org-ul">
 <li><b>GameCube keyboard controller</b> (quirky layout, but works like a charm!). This is probably the easiest, most interactive way to use the system. Just plug in the controller, and use the the system in an interactive way.</li>
 <li><b>Broadband adapter</b>. The classic way of booting GameCube linux was <a href="http://www.gc-linux.org/wiki/Setting_up_GC-Linux_with_NFS">by using a Network File System</a>. More importantly; The broadband adapter also gives you another option of using the system: an SSH server. By simply setting up an SSH server on your GameCube, you can log into it using any SSH client on your machine and use it from there.</li>
-<li><b>USB Gecko</b> is probably the closest to a serial connection we have. It's a small device that plugs into a memory card slot, and a USB cable then connects the <a href="https://wiibrew.org/wiki/USB_Gecko">USB Gecko</a> to your computer. <a href="https://wiibrew.org/wiki/Debugging">The main use case for USB Gecko is debugging your applications using GDB</a>, but thanks to having a simple serial protocol, we can configure it for that need as well. We will look at that more closely <a href="#org37402b7">in the section on booting</a>. Not really easy to get anymore, but there is <a href="https://www.tindie.com/products/webhdx/usb-gecko-debugging-tool-for-gamecubewii/">a seller on Tindie now selling them</a>.</li>
+<li><b>USB Gecko</b> is probably the closest to a serial connection we have. It's a small device that plugs into a memory card slot, and a USB cable then connects the <a href="https://wiibrew.org/wiki/USB_Gecko">USB Gecko</a> to your computer. <a href="https://wiibrew.org/wiki/Debugging">The main use case for USB Gecko is debugging your applications using GDB</a>, but thanks to having a simple serial protocol, we can configure it for that need as well. We will look at that more closely <a href="#org9121d65">in the section on booting</a>. Not really easy to get anymore, but there is <a href="https://www.tindie.com/products/webhdx/usb-gecko-debugging-tool-for-gamecubewii/">a seller on Tindie now selling them</a>.</li>
 </ul>
 
 
@@ -63,13 +63,13 @@ You will also need a way to interact with the system, as a game controller doesn
 </div>
 
 
-<div id="outline-container-orgb69b74d" class="outline-2">
-<h2 id="orgb69b74d">Compiling GameCube Linux</h2>
-<div class="outline-text-2" id="text-orgb69b74d">
+<div id="outline-container-org428f7a4" class="outline-2">
+<h2 id="org428f7a4">Compiling GameCube Linux</h2>
+<div class="outline-text-2" id="text-org428f7a4">
 </div>
-<div id="outline-container-org424c733" class="outline-3">
-<h3 id="org424c733">Basic compilation</h3>
-<div class="outline-text-3" id="text-org424c733">
+<div id="outline-container-org882d78d" class="outline-3">
+<h3 id="org882d78d">Basic compilation</h3>
+<div class="outline-text-3" id="text-org882d78d">
 <p>
 While <a href="http://www.gc-linux.org/wiki/Main_Page">the official page</a> provides much information, it can be a bit fragmented and outdated at times. To get the most "up to date" kernels with community patches (e.g, xorg color fixes, SD card support for GameCube etc.), I suggest looking at <a href="https://github.com/DeltaResero/GC-Wii-Linux-Kernels/tree/GC-Wii-Linux-Kernel-2.6.32.y-STABLE">DeltaRosero' github repo instead</a>. These are the most up to date ones, and provides the most ease of use thanks to including a cross compilation toolchain (you can <a href="http://www.gc-linux.org/wiki/Cross-compiling">build your own cross compilation toolchain</a> if you prefer). Many of the newer kernels focus on Wii, but most should also work on GameCube.  I mainly use 2.6.32 stable kernel, as it compiles and works without issues on my GameCube. Full branch in DeltaRosero's repo: <b>GC-Wii-Linux-Kernel-2.6.32.y-STABLE</b>
 </p>
@@ -94,7 +94,7 @@ Now we have the kernel, and is ready to compile! The creators have included a ve
 
 
 <p>
-<a id="orgab7a30c"></a>
+<a id="org42cec9d"></a>
 Compiling as is easy as these 3 steps (the script does these automatically):
 </p>
 <ul class="org-ul">
@@ -161,23 +161,23 @@ You now should have a bootable dol file, <b>zImage1.dol</b>! This can be booted 
 </div>
 
 
-<div id="outline-container-orgf30243d" class="outline-3">
-<h3 id="orgf30243d">Configuration</h3>
-<div class="outline-text-3" id="text-orgf30243d">
+<div id="outline-container-orge749ab7" class="outline-3">
+<h3 id="orge749ab7">Configuration</h3>
+<div class="outline-text-3" id="text-orge749ab7">
 <p>
 You will probably want to configure your install. Based upon what you want to use the installation for, there are several options that can affect your experience. If you take a look at modern software like <a href="https://wiki.debian.org/systemd#Configuring_as_default">systemd</a> (just an example of a well put wiki-page, not any bigger praises, down with the pithforks now!), you will see that the documentation describes kernel flags and init-arguments.
 </p>
 
 
 <p>
-<a id="org9f3ccb5"></a>
+<a id="org72a0c54"></a>
 </p>
 </div>
-<div id="outline-container-org8077340" class="outline-4">
-<h4 id="org8077340">Build arguments</h4>
-<div class="outline-text-4" id="text-org8077340">
+<div id="outline-container-orgc0311ed" class="outline-4">
+<h4 id="orgc0311ed">Build arguments</h4>
+<div class="outline-text-4" id="text-orgc0311ed">
 <p>
-If you have built a linux kernel before, you know it is based upon config in a .config-file. We have some ready-made config files in our repo, so our first step is often just to use one as a base. <a href="#orgab7a30c">When we discussed building earlier</a>, our first operation was simply stating that we want to use the gamecube<sub>defconfig</sub> configuration. You find this file in arch/powerpc/configs/gamecube<sub>defconfig</sub>.
+If you have built a linux kernel before, you know it is based upon config in a .config-file. We have some ready-made config files in our repo, so our first step is often just to use one as a base. <a href="#org42cec9d">When we discussed building earlier</a>, our first operation was simply stating that we want to use the gamecube<sub>defconfig</sub> configuration. You find this file in arch/powerpc/configs/gamecube<sub>defconfig</sub>.
 </p>
 
 
@@ -209,9 +209,9 @@ What you may want to set here will depend on what you want to do.
 </div>
 
 
-<div id="outline-container-org6378d11" class="outline-4">
-<h4 id="org6378d11">Kernel boot arguments</h4>
-<div class="outline-text-4" id="text-org6378d11">
+<div id="outline-container-orgc0decf8" class="outline-4">
+<h4 id="orgc0decf8">Kernel boot arguments</h4>
+<div class="outline-text-4" id="text-orgc0decf8">
 <p>
 One of the most important steps to configure during compilation is the kernel boot arguments. You might have to tweak these a bit as a you go, depending on your use case. Where to boot from etc. In arch/powerpc/boot/dts/gamecube.dts you find something along the lines of this (line 23 in my file):
 </p>
@@ -241,9 +241,9 @@ Which tells the kernel to read the root file system from the second partition on
 </div>
 
 
-<div id="outline-container-org1aa6152" class="outline-2">
-<h2 id="org1aa6152">Creating a root file system - Debootstrap</h2>
-<div class="outline-text-2" id="text-org1aa6152">
+<div id="outline-container-orgfa8d21b" class="outline-2">
+<h2 id="orgfa8d21b">Creating a root file system - Debootstrap</h2>
+<div class="outline-text-2" id="text-orgfa8d21b">
 <p>
 We now have a kernel we can boot into, but it got nothing to do. As all other Linux-based systems, we need a file system to run in. This file system includes our applications (e.g, bash, emacs etc.) and other things the various distributions include. There are many ways to create Linux root file systems, some of them being:
 </p>
@@ -341,7 +341,7 @@ mknod dev/gcnsda2  b 61 2
 </div>
 
 <p>
-These are just some of the things you could do! There are many things you could do based upon your needs. You might also want to set up device nodes during this stage, <a href="#org6948880">see later in this article for a small reference</a>.
+These are just some of the things you could do! There are many things you could do based upon your needs. You might also want to set up device nodes during this stage, <a href="#orgbcee304">see later in this article for a small reference</a>.
 </p>
 
 
@@ -356,17 +356,17 @@ Setting up a Debian system is a topic in itself, so we have only done the comple
 
 
 <p>
-<a id="org37402b7"></a>
+<a id="org9121d65"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org73a2a62" class="outline-2">
-<h2 id="org73a2a62">Booting and using</h2>
-<div class="outline-text-2" id="text-org73a2a62">
+<div id="outline-container-org8248f0c" class="outline-2">
+<h2 id="org8248f0c">Booting and using</h2>
+<div class="outline-text-2" id="text-org8248f0c">
 </div>
-<div id="outline-container-org616eff7" class="outline-3">
-<h3 id="org616eff7">Preparing SD card</h3>
-<div class="outline-text-3" id="text-org616eff7">
+<div id="outline-container-org9be00e0" class="outline-3">
+<h3 id="org9be00e0">Preparing SD card</h3>
+<div class="outline-text-3" id="text-org9be00e0">
 <p>
 I use SD Media Launcher, so I run everything from an SD card. My SD card has two partitions:
 </p>
@@ -395,9 +395,9 @@ If you have your file system as a image file like I do, then you can burn it to 
 </div>
 </div>
 
-<div id="outline-container-orgb3f2518" class="outline-3">
-<h3 id="orgb3f2518">Interacting with the system</h3>
-<div class="outline-text-3" id="text-orgb3f2518">
+<div id="outline-container-org2fc6873" class="outline-3">
+<h3 id="org2fc6873">Interacting with the system</h3>
+<div class="outline-text-3" id="text-org2fc6873">
 <p>
 So now we have a Debian based system using SysVInit:
 </p>
@@ -405,9 +405,9 @@ So now we have a Debian based system using SysVInit:
 </div>
 
 
-<div id="outline-container-orgaa7a838" class="outline-4">
-<h4 id="orgaa7a838">Keyboard controller</h4>
-<div class="outline-text-4" id="text-orgaa7a838">
+<div id="outline-container-orgd53511e" class="outline-4">
+<h4 id="orgd53511e">Keyboard controller</h4>
+<div class="outline-text-4" id="text-orgd53511e">
 <p>
 <b>Note! I have only tested the ASCII Keyboard Controller ASC-1901PO, but I guess it will work the same for the Action Replay keyboard.</b>
 </p>
@@ -440,9 +440,9 @@ There are some drawbacks with approach:
 </div>
 
 
-<div id="outline-container-orgd42c011" class="outline-4">
-<h4 id="orgd42c011">Broadband adapter</h4>
-<div class="outline-text-4" id="text-orgd42c011">
+<div id="outline-container-org11fd086" class="outline-4">
+<h4 id="org11fd086">Broadband adapter</h4>
+<div class="outline-text-4" id="text-org11fd086">
 <p>
 The broadband adapter works pretty much out of the box. Just boot your system, and things will connect during initialization thanks to the <code>ip=on</code> boot argument. On boot the GameCube will also print its ip address, which is super convenient if you want to log into it. In Debian you can simply install openssh-server, and you can connect right away.
 </p>
@@ -475,11 +475,11 @@ If you don't have it, you might want to try to install some software that handle
 </div>
 
 
-<div id="outline-container-org4cec1c0" class="outline-4">
-<h4 id="org4cec1c0">USB Gecko</h4>
-<div class="outline-text-4" id="text-org4cec1c0">
+<div id="outline-container-orgb4ac2c4" class="outline-4">
+<h4 id="orgb4ac2c4">USB Gecko</h4>
+<div class="outline-text-4" id="text-orgb4ac2c4">
 <p>
-<a href="#org9f3ccb5">In the section about compiling above</a>, I activated the USBGECKO serial option. This makes it possible for us to the the USB Gecko device for serial communication. To actually use it, we have to do two things:
+<a href="#org72a0c54">In the section about compiling above</a>, I activated the USBGECKO serial option. This makes it possible for us to the the USB Gecko device for serial communication. To actually use it, we have to do two things:
 </p>
 <ul class="org-ul">
 <li><p>
@@ -518,13 +518,13 @@ Usage is also documented on <a href="http://www.gc-linux.org/wiki/UsbGeckoConsol
 
 
 <p>
-<a id="org6948880"></a>
+<a id="orgbcee304"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org1303e34" class="outline-4">
-<h4 id="org1303e34">Summarizing important device nodes</h4>
-<div class="outline-text-4" id="text-org1303e34">
+<div id="outline-container-orgecd9d67" class="outline-4">
+<h4 id="orgecd9d67">Summarizing important device nodes</h4>
+<div class="outline-text-4" id="text-orgecd9d67">
 <p>
 Like we saw above with USB Gecko, there are a few device nodes that can be useful to make (unless it happens automatically). Some can be useful for mounting file systems, while others are useful for logging in (like: USB Gecko). You can either make these as root on a running system, or during your debootstrap setup.
 </p>
@@ -587,9 +587,9 @@ mknod /dev/usbgecko1 c 4 65
 </div>
 
 
-<div id="outline-container-org1de52cb" class="outline-4">
-<h4 id="org1de52cb">Other</h4>
-<div class="outline-text-4" id="text-org1de52cb">
+<div id="outline-container-orgb30bf4b" class="outline-4">
+<h4 id="orgb30bf4b">Other</h4>
+<div class="outline-text-4" id="text-orgb30bf4b">
 <p>
 Sound seems to work out of the box, but requires some setup. The device gcn-ai seems to be detected just fine by Alsa when installed and running. Like all other linux distros set up from scratch, you will probably have some sound issues :) 
 </p>
@@ -599,9 +599,9 @@ Sound seems to work out of the box, but requires some setup. The device gcn-ai s
 </div>
 
 
-<div id="outline-container-orgcdfa566" class="outline-2">
-<h2 id="orgcdfa566">Troubleshooting</h2>
-<div class="outline-text-2" id="text-orgcdfa566">
+<div id="outline-container-org6a256b0" class="outline-2">
+<h2 id="org6a256b0">Troubleshooting</h2>
+<div class="outline-text-2" id="text-org6a256b0">
 <ul class="org-ul">
 <li>Many programs getting killed due to memory issues? Remember that GameCube is a game console from 2002 with 24 Mb RAM, so it might not handle all the newest software that well.</li>
 <li>Issues during boot? "attempt to access beyond end of device" (ext2 and ext3) or "block count yyy exceeds size if device xxxx"? Then the GameCube does not seem to recognize the full size of your SD card. The only way I have found so far is to limit the size of my homebrew and ext4 linux partition. Seems like just the way the SD card is seen by the hardware. There was <a href="https://www.gc-forever.com/forums/viewtopic.php?t=4413">a GC Forever forum thread</a> with the same issue a while back, and I guess a lot of people have ended up here without any clear hint of what the issue may be.</li>
