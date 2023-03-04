@@ -27,9 +27,9 @@ Hopefully you remember what the absolute value is. It is simply a positive repre
 \end{equation}
 
 
-<div id="outline-container-org6377b66" class="outline-2">
-<h2 id="org6377b66">Naive implementation with branching</h2>
-<div class="outline-text-2" id="text-org6377b66">
+<div id="outline-container-org01816a1" class="outline-2">
+<h2 id="org01816a1">Naive implementation with branching</h2>
+<div class="outline-text-2" id="text-org01816a1">
 <p>
 We can implement the mathematical formula above directly:
 </p>
@@ -56,9 +56,9 @@ The implementation explains itself. Now onto the clever trick!
 </div>
 
 
-<div id="outline-container-orgd0074d9" class="outline-2">
-<h2 id="orgd0074d9">The bit trick</h2>
-<div class="outline-text-2" id="text-orgd0074d9">
+<div id="outline-container-org098a363" class="outline-2">
+<h2 id="org098a363">The bit trick</h2>
+<div class="outline-text-2" id="text-org098a363">
 <p>
 For integers, the trick can be described like this: 
 </p>
@@ -98,7 +98,7 @@ Let's see what happens for a positive number (and also 0):
 Now let's take a negative number:
 </p>
 <ul class="org-ul">
-<li>Mask becomes -1 (bit shift 31 places. Sign bit propagated, so the new empty places to the left is filled with the sign bit 1). This is the same as 1111 1111 1111 1111 1111 1111 1111 1111 for the integer above. (Read up on <a href="https://en.wikipedia.org/wiki/Two's_complement">two complement</a> and how negative numbers are handled if this seems foreign to you).</li>
+<li>Mask becomes -1 (bit shift 31 places. Sign bit propagated, so the new empty places to the left is filled with the sign bit 1). This is the same as 1111 1111 1111 1111 1111 1111 1111 1111 for the integer above. (Read up on <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two complement</a> and how negative numbers are handled if this seems foreign to you).</li>
 <li>Input XOR -1 becomes the (bit-)negated version of the input (the same as using the NOT operator on the input)</li>
 <li>The result of the previous operation minus -1, which is the same as adding 1, becomes the same as multiplying the input variable by -1. Remember that negated value + 1 is how we get the negative version of our current number in the two complement system.</li>
 </ul>
@@ -115,9 +115,9 @@ If that still sounds like magic to you, let's break it down further! You can pro
 </div>
 
 
-<div id="outline-container-org9fd7fd6" class="outline-3">
-<h3 id="org9fd7fd6">(Bit) Negation if negative number</h3>
-<div class="outline-text-3" id="text-org9fd7fd6">
+<div id="outline-container-orgbff2c9e" class="outline-3">
+<h3 id="orgbff2c9e">(Bit) Negation if negative number</h3>
+<div class="outline-text-3" id="text-orgbff2c9e">
 <p>
 All bits in the mask will either be 0 or 1, so let's take a look at a XOR table for a single mask bit:
 </p>
@@ -172,9 +172,9 @@ Let's say B is the mask in this case. Take a close look. For 0 mask, the input (
 </div>
 
 
-<div id="outline-container-orgdef420e" class="outline-3">
-<h3 id="orgdef420e">Two complement</h3>
-<div class="outline-text-3" id="text-orgdef420e">
+<div id="outline-container-orge09e2e1" class="outline-3">
+<h3 id="orge09e2e1">Two complement</h3>
+<div class="outline-text-3" id="text-orge09e2e1">
 <p>
 We can easily see that for a positive number, we get the same number back (positive number XOR 0 - 0 is still the same number). What happens for negative ones? The number is first negated, then we subtract negative one. Wait a minute&#x2026; This is the same as negating and then adding one! Which is how we negate a number in the two complement system. This is how negative numbers are represented. That's the magic of this trick :)
 </p>
@@ -183,9 +183,9 @@ We can easily see that for a positive number, we get the same number back (posit
 </div>
 
 
-<div id="outline-container-orgf380caa" class="outline-2">
-<h2 id="orgf380caa">Where can this be useful?</h2>
-<div class="outline-text-2" id="text-orgf380caa">
+<div id="outline-container-org6887594" class="outline-2">
+<h2 id="org6887594">Where can this be useful?</h2>
+<div class="outline-text-2" id="text-org6887594">
 <p>
 While not super useful for modern high powered hardware, it might be useful in other contexts. Some of these are low power microcontrollers, retro computers and retro console programming. Some processors in these sort of devices are low powered, and sometimes we might need some clever tricks. The absolute value trick might prove useful where we simply want to avoid the extra cycles the jump call and conditional require, even though it shines the brightest in cases of pipelined processors. 
 </p>
