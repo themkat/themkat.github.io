@@ -1,0 +1,303 @@
+#+OPTIONS: toc:nil num:nil ^:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Often overlooked Collections operations in the Kotlin Standard Library"
+tags: programming kotlin
+---
+#+END_EXPORT
+
+If you work with Kotlin, you probably use Collection types like list a lot. Most people already know of simple list operations like getting elements, checking if an element is present, mapping etc. Did you know that the standard library provides a whole plethora of useful operations? In this article we will look at operations that are often overlooked when we talk about list processing. For the people who are more new to Kotlin, we will start with a small recap. So don't worry if you are relatively new to Kotlin, hopefully you will learn some new nifty tricks here as well!
+
+
+
+Collections is a category that includes lists, sets, maps (like hashmap) etc. In this article, the main focus is list-like structures (including sets). Most of the operations will work on Maps as well, but Maps also has own operations exclusive to them. 
+
+
+
+Note that the operations below are my picks. You may pick out others depending on your taste, and the types of problems you usually solve. The examples below will use primitive types, but will work for almost any types you throw at it if not otherwise stated :)
+
+
+* Recap: List basics
+*If you are already familiar with the basics of lists, feel free to skip this part.*
+
+
+Let's start simple by creating a list:
+
+#+BEGIN_SRC kotlin
+  // list of integers
+  val myList = listOf(0, 2, 4, 6, 8, 10)
+
+  // list of strings
+  val myStrings = listOf("hi", "there")
+#+END_SRC
+(The elements should be of the same type, if not you will get a list of =Any=
+ elements, and need to check the type manually when working with them. That makes for very error prone code.)
+
+ 
+We could also create lists by giving a size and an initializer function for the elements:
+#+BEGIN_SRC kotlin
+  // Creating the same list of intergers as above
+  val myList = List(6) {
+      it * 2
+  }
+#+END_SRC
+(the input to the function is the current index)
+
+ 
+We can access the elements in a list like we would do for an array:
+#+BEGIN_SRC kotlin
+  myList.get(2)
+  // equal to:
+  myList[2]
+#+END_SRC
+
+You should be aware that the index elements might not exist, and that the operations above may return null for some lists. (fortunately we know that =myList= is bigger than 2 in this precise case)
+  
+
+The above lists as immutable, and can not be changed (e.g, added elements to, delete elements etc). Kotlin also provides us with mutable variants using =mutableListOf=, =MutableList= and other similar constructs. These provides list variants we can modify. Why have a distinction like this? There are several reasons. One of them being that if we want a list to be immutable, it can be enforced by the compiler. Then we are sure we do not modify the lists by mistake. It also makes the code a bit easier to reason about. If we don't modify the list, but makes copies, then making tests are a bit easier (depending on the problem off course). This article is not meant to be an introduction to mutability in Kotlin, so let's keep it at that.
+
+
+
+Both types of list supports constructs that we are used to from Java streams, some of them from functional programming. (Kotlin is great for mixing and maxing paradigms when you find it beneficial after all!). Let's quickly see some of them in action (return values given in comments below each):
+#+BEGIN_SRC kotlin
+  myList.map {
+      it * 10
+  }
+  // => [0, 20, 40, 60, 80, 100]
+
+  myStrings.map {
+      it.toUpperCase()
+  }
+  // => ["HI", "THERE"]
+
+  myList.filter {
+      it % 3 == 0
+  }
+  // => [0, 6]
+
+  myList.reduce { acc, curr ->
+      acc + curr
+  }
+  // equivalent to
+  myList.sum()
+  // => 30
+
+  myList.min()
+  // => 0
+
+  myList.max()
+  // => 10
+#+END_SRC
+
+
+
+If you still feel like you need some more refreshing on Kotlin collections, [[https://kotlinlang.org/docs/collections-overview.html#collection-types][the official web pages provides a guide]] (which also covers Maps, Sets etc.)
+ 
+
+** Sequences
+The operations above all returns new lists in each operations. You may remember that streams in Java have lazy evaluation. Why don't the lists in Kotlin provide the same? Well, we have to consider that streams are not pure lists. Kotlin have its own stream type called =Sequence=. These will not return a list right away, and will support lazy evaluation and other things you are used to in Java streams (e.g, only being executed once a terminal operation like =toList()= is done). So when should you use sequences? If you chain multiple operations on a list of many elements, it might be beneficial to consider to use sequences. This article was not meant to cover the basics, so you should read [[https://kotlinlang.org/docs/sequences.html][the official documentation]] if you are still confused. For now, you should know that most (if not all) operations we cover here will work with sequences as well.
+
+
+
+* Effective searching for single elements
+Sometimes we want to get an index of an element in a list. This can simply be done by use of the =indexOf= extension function:
+#+BEGIN_SRC kotlin
+  // create a testing list
+  val myList = listOf(0, 15, 4, 6, 1)
+
+  // find the first 4
+  myList.indexOf(4)
+  // => 2
+
+  // find 64, which does not exist
+  myList.indexOf(64)
+  // => -1
+#+END_SRC
+
+
+This function goes through each element, and tests if it is indeed the given input element. The index is returned when the first occurrence is found, and -1 otherwise.
+
+
+For much bigger lists, finding elements this way can be a bit ineffective. Sometimes we can make assumptions on the data, which can provide a more effective solution. Let's say you can assume that a list is sorted in ascending order (i.e, lowest to highest) given some criteria, and that the elements therefore implements =Comparable=. If you remember your algorithms, you may notice that this is an ideal case for a [[https://en.wikipedia.org/wiki/Binary_search_algorithm][binary search]]! Kotlin provides this algorithm for is with lists. The elements are meant to be sorted in ascending order, and the behavior is undefined if it's not.
+
+#+BEGIN_SRC kotlin
+  // Assume we have a very big sorted list
+  // (... is meant to signify many additional elements, not valid Kotlin syntax)
+  val mySortedList = listOf(0, 3, 5, 7, 23, 54, ...)
+
+
+  // Find the index of 54
+  mySortedList.binarySearch(54)
+  // => 5
+
+  // find the index of 5 in a given range 1-6
+  // (only the given range is searched)
+  mySortedList.binarySearch(5, 1, 5)
+  // => 2
+#+END_SRC
+(a negative index is returned if the element is not found)
+
+
+*NOTE! Numbers are used above for simplicity, but we can do this for all types that can be sorted in an ascending order. This include numbers, strings, your own types implementing Comparable etc. If you need a refresher on the Comparable interface, [[https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/][the official documentation]] provides a quick explanation. The important aspect is that the elements have a way of ordering them that can be described with a function called compareTo*
+
+
+* Indexed higher order functions
+We have already briefly discussed higher order functions like =map=, =filter=, and =reduce=, in the recap-section above. In some cases you might want the indices of the elements as well.
+
+#+BEGIN_SRC kotlin
+  val someList = listOf("amiga", "atari st", "ibm pc", "macintosh")
+
+
+  // add the index as a postfix to each element
+  someList.mapIndexed { index, elem ->
+      "$elem $index"
+  }
+  // => ["amiga 0", "atari st 1", "ibm pc 2", "macintosh 3"]
+
+
+  // Only even indexed elements
+  someList.filterIndexed { index, _ ->
+      index % 2 == 0
+  }
+  // => ["amiga", "ibm pc"]
+#+END_SRC
+
+All the regular higher order functions provide indexed variants, so you will find functions like =flatMapIndexed= (to map and flatten), =reduceIndexed=, =forEachIndexed= and more in the standard library!
+
+
+
+* Combining lists
+Sometimes you may want to concatenate list structures. Thanks to Kotlins operator overloading, we can use the =+= operator to do this:
+
+#+BEGIN_SRC kotlin
+  val firstList = listOf(1, 2, 3, 4)
+  val secondList = listOf(4, 5, 6)
+
+  firstList + secondList
+  // => [1, 2, 3, 4, 4, 5, 6]
+#+END_SRC
+
+
+Kotlin also provides us with ways of combining distinct elements from two lists, using sets:
+#+BEGIN_SRC kotlin
+  firstList.union(secondList)
+  // => [1, 2, 3, 4, 5, 6]
+#+END_SRC
+(notice that you may use lists as inputs, but sets are returned)
+
+
+*NOTE! union is different from concatenating lists as we only get distinct elements, meaning that duplicates are ignored. This is after all how Sets work.*
+
+
+You may also sometimes want to intersect two lists, and get only the elements they have in common:
+#+BEGIN_SRC kotlin
+  firstList.intersect(secondList)
+  // => [4]
+#+END_SRC
+
+
+
+* zipping lists
+Some of you may wonder: what does zipping mean? If you think of a zipper on a jacket or similar, it puts two-and-two elements together. In Kotlin you can think of each strip of your zipper as a list. It combines the list into pairs of the same index of each list:
+
+#+BEGIN_SRC kotlin
+  val firstList = listOf(1, 2, 3, 4)
+  val secondList = listOf(4, 5, 6)
+
+
+  firstList.zip(secondList)
+  // => [(1, 4), (2, 5), (3, 6)]
+
+
+  // use zip with a transformer to transform the elements instead of just returning a pair:
+  firstList.zip(secondList) { first,second ->
+      first + second  
+  }
+  // => [5, 7, 9]
+#+END_SRC
+(notice that it stops when we have reached the end of the shortest of the lists. also note that (x, y) is meant to indicate a pair in the outputs)
+
+
+We can also zip only one list by zipping each element with the next:
+#+BEGIN_SRC kotlin
+  val myList = listOf(1, 2, 3, 4, 5)
+
+  myList.zipWithNext()
+  // => [(1, 2), (2, 3), (3, 4), (4, 5)]
+
+  // can also use a transformer:
+  myList.zipWithNext() { first, second ->
+      first + second
+  }
+  // => [3, 5, 7, 9]
+#+END_SRC
+(notice that each element is zipped with the one next to it, we don't skip forward 2 places like some people expect!)
+
+
+
+Notice that we also have a unzip method that works like a reverse of the zip operation above:
+#+BEGIN_SRC kotlin
+  val myZipped = listOf((3 to 4), (5 to 6), (4 to 5))
+
+  myZipped.unzip()
+  // => ([3, 5, 4], [4, 6, 5])
+  // (pair of two lists)
+#+END_SRC
+
+
+
+* Partitioning lists (split in two)
+There are cases where you may sometimes want to split a list in two, based upon some given criteria. One famous example includes the quicksort algorithm. You will find a method for partitioning list called =partition= in the standard library. It takes in a predicate (i.e, function returning true or false), and returns all elements satisfying the predicate into the first element of a pair, and those who do not into the second element.
+
+#+BEGIN_SRC kotlin
+  val myList = listOf(10, 2, 5, 25, 43, 0)
+
+
+  myList.partition {
+      it < 10
+  }
+  // => ([2, 5, 0], [10, 25, 43])
+#+END_SRC
+
+
+* Chunking
+Sometimes you may want to split a list into chunks. For those of you who have worked with batch processing, you may be familiar with this concept. The idea is to split a number of elements into groups of fixed length. Let us use an example of tasks we want done. We decide to split them into days, and do a number of tasks every day. 
+
+#+BEGIN_SRC kotlin
+  val tasks = listOf("do the dishes", "clean room", "paint house", "vacuum clean", "take out garbage", "pray to the snake god Glycon")
+
+  // do 2 tasks each day
+  tasks.chunked(2)
+  // => [["do the dishes", "clean room"], ["paint house", "vacuum clean"], ["take out garbage", "pray to the snake god Glycon"]]
+
+  // do 3 tasks each day
+  tasks.chunked(3)
+  // => [["do the dishes", "clean room", "paint house"], ["vacuum clean", "take out garbage", "pray to the snake god Glycon"]]
+
+  // do 5 tasks each day
+  tasks.chunked(5)
+  // => [["do the dishes", "clean room", "paint house", "vacuum clean", "take out garbage"], ["pray to the snake god Glycon"]]
+#+END_SRC
+(chunked returns a new list, and does not modify the original)
+
+
+Each sublist will on our example indicate the tasks to be done each day. This provides extremely useful for splitting a list into subgroups!
+
+
+* Random permutation of elements
+Have you ever wanted to give the elements of your list a new random ordering? In other words; a different permutation of the list elements. If yes, the standard library has just the function for you called =shuffled=:
+
+#+BEGIN_SRC kotlin
+  val someList = listOf(2, 4, 5, 7)
+
+  someList.shuffled()
+  // this is only one possible return value as it will be random each time
+  // => [7, 4, 2, 5]
+#+END_SRC
+(you also have =shuffle= which modifies the original list instead of returning a new one)
+
+
+If you want to provide your own source of randomness (implementing the abstract class =kotlin.random.Random=) object, you can give that as an argument.
