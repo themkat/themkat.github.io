@@ -1,0 +1,250 @@
+#+OPTIONS: toc:nil num:nil ^:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Often overlooked String operations in the Kotlin Standard Library"
+tags: programming kotlin
+---
+#+END_EXPORT
+
+
+The Kotlin standard library provide many useful helper extension functions for string operations. You probably know the basic ones to make a string lower and upper case, but did you know that there are many more? Some of them do operations that you would otherwise implement yourself, and some are more focused on making the code more clear by exposing the intent of the operations as a name. Some of these may be common to you, but I hope that you at least find one that you are not familiar with!
+
+
+
+If you are interested in Kotlin, you may find [[https://themkat.net/2023/03/04/kotlin_collections_stdlib.html][my previous article on often overlooked Collections operations in the standard library]] interesting. You will be able to use many of these on Strings, as Strings are themselves a collection of characters (more precisely a CharSequence, or sequence of characters). The collections operations also prove very useful when splitting strings to lists.
+
+
+* Recap: String basics
+*If you are already familiar with the basics of Strings in Kotlin, feel free to skim through this part.*
+
+Let's do a quick recap of creating strings, and string templates. The best way is probably just to look at code!
+
+#+BEGIN_SRC kotlin
+  // We can easily create strings as values and variables.
+  // Like other types in Kotlin, they can also be nullable.
+  val myString = "hi, I am a string"
+  var someNullableString: String? = "I'm allowed to be reassigned to null :O"
+
+  // We don't need the string concatenation from Java to put variables into strings anymore. Now we have string literals.
+  val someNumber = 42
+  val answer = "Answer to the life, the universe and everything $someNumber"
+
+  // We can also print these and have expressions inside them
+  println("Hi there! 2+2=${2+2}. The answer to life, universe and everything is still $someNumber")
+#+END_SRC
+(you can do string concatenation with =+= as well, but using templates is more readable)
+
+
+There are many extension functions for Strings in Kotlin, which provides helpful operations. Let's start with some common ones which you are probably used to (e.g, converting a string to lower case):
+
+#+BEGIN_SRC kotlin
+  val exampleString = "This is an example String"
+
+  exampleString.toLowerCase()
+  // => "this is an example string"
+
+  exampleString.toUpperCase()
+  // => "THIS IS AN EXAMPLE STRING"
+
+
+
+  // We can also check if a string starts or ends with a given string
+  exampleString.startsWith("This")
+  // => true
+
+  exampleString.startsWith("other")
+  // => false
+
+
+  exampleString.endsWith("String")
+  // => true
+
+  exampleString.endsWith("testing")
+  // => false
+
+
+  // substring (last index is exclusive, not inclusive!)
+  exampleString.substring(0, 4)
+  // => "This"
+  // can also take a single argument for beginning index, and let the last index be implicit for the rest of the string
+  exampleString.substring(4)
+  // => " is an example String"
+
+
+
+  // trim whitespace
+  val myPaddedString = "   test    "
+
+  myPaddedString.trim()
+  // => "test"
+
+
+  // padding
+  val myNonPadded = "hi"
+
+  myNonPadded.padStart(2, '-')
+  // => "--hi"
+
+  myNonPadded.padEnd(3, '.')
+  // => "hi..."
+#+END_SRC
+
+
+Strings can also easily be converted to a list by splitting them into lines (using the =lines= function), or splitting by a given delimiter. Lists can also easily be converted back to Strings by joining the elements by a given delimiter.
+
+#+BEGIN_SRC kotlin
+  val myExampleString = "amiga, atari st, ibm pc"
+
+  val splitted = myExampleString.split(", ")
+  // => ["amiga", "atari st", "ibm pc"]
+
+  splitted.join(", ")
+  // => "amiga, atari st, ibm pc"
+#+END_SRC
+
+
+If you are still unsure about some of the basics, and maybe need an explanation in a different way, then [[https://kotlinlang.org/docs/strings.html][the official documentation has a great page about it as well]].
+
+
+* Checking blank or empty strings
+The standard library provides several functions for checking if strings are empty or blank:
+
+#+BEGIN_SRC kotlin
+  // isEmpty checks if the string has no characters (if it is the empty string)
+  // about the same as myString == ""
+  "".isEmpty()
+  // => true
+
+  " ".isEmpty()
+  // => false
+
+  "hi".isNotEmpty()
+  // => true
+  
+
+  // We can also check for blanks with isBlank and isNotBlank
+  // (blanks = whitespace or empty string)
+  "".isBlank()
+  // => true
+
+  " ".isBlank()
+  // => true
+
+  "hi".isNotBlank()
+  // => true
+#+END_SRC
+
+
+As you probably know, Kotlin also have nullable types. In code where a string might be null, we might want to check if the string is either null or empty/blank:
+
+#+BEGIN_SRC kotlin
+  // assume we calculate a string that might be null from somewhere
+  // (maybe you did a REST call, received an event with optional arguments etc.?)
+  var myNullableString: String? = calculateSomeString()
+
+
+  // Check if the string is either null or empty ("")
+  // (notice no need for safe-call operator, as isNullOrEmpty is implemented on the String? type, not String)
+  myNullableString.isNullOrEmpty()
+
+
+  // Check if the string is either null or blank (i.e, empty or containing whitespace)
+  myNullableString.isNullOrBlank()
+#+END_SRC
+(no more need for chaining of multiple operations like you may be used to in Java!)
+
+
+There is one more common operation to look at. There are many times were we have a nullable string, and want to return an empty string when the string is null.
+
+#+BEGIN_SRC kotlin
+  // seen a lot of these around
+  myNullableString ?: ""
+
+  // Can be written in a more clean way as:
+  myNullableString.orEmpty()
+  // (notice that the extension function is implemented on String?, so no safe call operator necessary!)
+#+END_SRC
+
+
+* Remove parts of strings
+We briefly looked at substring above, but did you know that the opposite is also possible? Yes, getting a new string without the substring!
+
+#+BEGIN_SRC kotlin
+  val myString = "this is an example"
+
+
+  myString.substring(5, 10)
+  // => "is an"
+
+
+  // Did you know you can do the opposite? Get the string without that substring? (new string returned)
+  myString.removeRange(5, 10)
+  // => "this  example"
+#+END_SRC
+
+
+Some substring operations are also naturally just removal operations. Sometimes we want to remove the beginning or the end of strings:
+#+BEGIN_SRC kotlin
+  // remove 5 characters from the beginning of the string
+  myString.drop(5)
+  // => "is an example"
+  // might also be done with:
+  myString.substring(5)
+    
+  // remove 8 characters from the end
+  myString.dropLast(8)
+  // => "this is an"
+  // might also be done with:
+  myString.substring(0, myString.length - 8)
+  // (you will probably agree that the way with dropLast is more clear!)
+#+END_SRC
+
+
+* Prefixes and suffixes
+Sometimes we might want to get common prefixes or common suffixes between two strings.
+
+#+BEGIN_SRC kotlin
+  val string1 = "This is An example string"
+  val string2 = "This is also an example string"
+
+  string1.commonPrefixWith(string2)
+  // => "This is "
+
+  string1.commonSuffixWith(string2)
+  // => " example string"
+
+
+  // Both of these extension functions also allow an extra ignoreCase parameter that defaults to false
+  string1.commonPrefixWith(string2, ignoreCase = true)
+  // => "This is a"
+#+END_SRC
+
+
+
+
+Other times you may want to remove a prefix or suffix from a string if they are present (and just return the string if the prefix or suffix is not present).
+#+BEGIN_SRC kotlin
+  // Removing prefixes
+  val address = "https://amazon.com"
+  val addressWithoutPrefix = "google.com"
+
+  address.removePrefix("https://")
+  // => "amazon.com"
+
+  addressWithoutPrefix.removePrefix("https://")
+  // => google.com
+
+
+  // Removing suffixes
+  val filename = "MyApp.kt"
+  val filenameWithoutSuffix = "Cat"
+
+  filename.removeSuffix(".kt")
+  // => "MyApp"
+
+  filenameWithoutSuffix.removeSuffix(".kt")
+  // => "Cat"
+#+END_SRC
