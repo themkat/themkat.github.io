@@ -28,6 +28,13 @@ layout: default
     {% for post_tag in post.tags %}
 
     {% comment %}
+    Simple hack to avoid including oneself
+    {% endcomment %}
+    {% if post.url == page.url %}
+    {% break %}
+    {% endif %}
+
+    {% comment %}
     Hacky solution to avoid adding new related posts after max_related_posts are added...
     {% endcomment %}
     {% if max_related_posts <= 0 %}
