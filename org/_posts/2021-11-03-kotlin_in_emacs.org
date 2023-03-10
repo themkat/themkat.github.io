@@ -6,6 +6,7 @@
 layout: blogpost
 title: Programming Kotlin in Emacs (including KScript!)
 tags: programming kotlin emacs editor
+related_tags_count: 3
 ---
 #+END_EXPORT
 

@@ -7,6 +7,7 @@ layout: blogpost
 title: Debugging GameBoy Advance (GBA) programs/games in Emacs
 preview_image: assets/img/gbadebug/screenshot.png
 tags: retro-computing programming gba emacs
+related_tags_count: 3
 ---
 #+END_EXPORT
 
