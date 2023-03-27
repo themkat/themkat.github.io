@@ -5,8 +5,7 @@
 ---
 layout: blogpost
 title: The essential Ayn Rand reading list
-tags: books objectivism
-related_tags_count: 1
+tags: books objectivism philosophy
 ---
 #+END_EXPORT
 

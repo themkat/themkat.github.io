@@ -6,6 +6,7 @@
 layout: blogpost
 title: Sir Clive Sinclair (1940-2021)
 tags: retro-computing 
+related_tags_count: 1
 ---
 #+END_EXPORT
 

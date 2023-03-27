@@ -6,6 +6,7 @@
 layout: blogpost
 title: My favorite personal finance books - Start your journey to become wealthy today as well!
 tags: books
+related_tags_count: 1
 ---
 #+END_EXPORT
 

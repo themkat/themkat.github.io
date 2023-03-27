@@ -6,6 +6,7 @@
 layout: blogpost
 title: Science fiction books to read to unwind and relax
 tags: books
+related_tags_count: 1
 ---
 #+END_EXPORT
 
