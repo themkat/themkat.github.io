@@ -6,6 +6,7 @@
 layout: blogpost
 title: Browser extension recommendation - Vimium
 tags: web-browsers
+related_tags_count: 0
 ---
 #+END_EXPORT
 
