@@ -27,9 +27,9 @@ Hopefully you remember what the absolute value is. It is simply a positive repre
 \end{equation}
 
 
-<div id="outline-container-orgf91b619" class="outline-2">
-<h2 id="orgf91b619">Naive implementation with branching</h2>
-<div class="outline-text-2" id="text-orgf91b619">
+<div id="outline-container-org6d1366f" class="outline-2">
+<h2 id="org6d1366f">Naive implementation with branching</h2>
+<div class="outline-text-2" id="text-org6d1366f">
 <p>
 We can implement the mathematical formula above directly:
 </p>
@@ -56,9 +56,9 @@ The implementation explains itself. Now onto the clever trick!
 </div>
 
 
-<div id="outline-container-orgd4df20f" class="outline-2">
-<h2 id="orgd4df20f">The bit trick</h2>
-<div class="outline-text-2" id="text-orgd4df20f">
+<div id="outline-container-orgde18aa3" class="outline-2">
+<h2 id="orgde18aa3">The bit trick</h2>
+<div class="outline-text-2" id="text-orgde18aa3">
 <p>
 For integers, the trick can be described like this: 
 </p>
@@ -115,9 +115,9 @@ If that still sounds like magic to you, let's break it down further! You can pro
 </div>
 
 
-<div id="outline-container-org72acd14" class="outline-3">
-<h3 id="org72acd14">(Bit) Negation if negative number</h3>
-<div class="outline-text-3" id="text-org72acd14">
+<div id="outline-container-org306fd06" class="outline-3">
+<h3 id="org306fd06">(Bit) Negation if negative number</h3>
+<div class="outline-text-3" id="text-org306fd06">
 <p>
 All bits in the mask will either be 0 or 1, so let's take a look at a XOR table for a single mask bit:
 </p>
@@ -172,9 +172,9 @@ Let's say B is the mask in this case. Take a close look. For 0 mask, the input (
 </div>
 
 
-<div id="outline-container-org4482a92" class="outline-3">
-<h3 id="org4482a92">Two complement</h3>
-<div class="outline-text-3" id="text-org4482a92">
+<div id="outline-container-org2c8304b" class="outline-3">
+<h3 id="org2c8304b">Two complement</h3>
+<div class="outline-text-3" id="text-org2c8304b">
 <p>
 We can easily see that for a positive number, we get the same number back (positive number XOR 0 - 0 is still the same number). What happens for negative ones? The number is first negated, then we subtract negative one. Wait a minute&#x2026; This is the same as negating and then adding one! Which is how we negate a number in the two complement system. This is how negative numbers are represented. That's the magic of this trick :)
 </p>
@@ -183,9 +183,9 @@ We can easily see that for a positive number, we get the same number back (posit
 </div>
 
 
-<div id="outline-container-org84b1e24" class="outline-2">
-<h2 id="org84b1e24">Where can this be useful?</h2>
-<div class="outline-text-2" id="text-org84b1e24">
+<div id="outline-container-orgf7a5acf" class="outline-2">
+<h2 id="orgf7a5acf">Where can this be useful?</h2>
+<div class="outline-text-2" id="text-orgf7a5acf">
 <p>
 While not super useful for modern high powered hardware, it might be useful in other contexts. Some of these are low power microcontrollers, retro computers and retro console programming. Some processors in these sort of devices are low powered, and sometimes we might need some clever tricks. The absolute value trick might prove useful where we simply want to avoid the extra cycles the jump call and conditional require, even though it shines the brightest in cases of pipelined processors. 
 </p>
