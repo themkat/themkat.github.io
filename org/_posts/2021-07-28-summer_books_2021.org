@@ -6,7 +6,6 @@
 layout: blogpost
 title: Summer book recommendations 2021
 tags: books retro-computing
-related_tags_count: 1
 ---
 #+END_EXPORT
 
