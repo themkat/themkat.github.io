@@ -151,6 +151,19 @@ body {
 	float: right;
 }
 
+.content .sharebuttons {
+    font-size: small;
+
+    a {
+        text-decoration: solid;
+    }
+
+    img {
+        height: 2vh;
+	    width: auto;
+    }
+}
+
 .content .tags {
 	font-size: medium;
 }

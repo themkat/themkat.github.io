@@ -2,6 +2,14 @@
 layout: default
 ---
 <p class="downloads" style="display: none;"><a href="#">print</a> <a href="#">e-book</a></p>
+<p class="sharebuttons">
+    Share: 
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}"><img src="{{ "assets/img/facebooklogo.png" | relative_url }}" alt="Facebook icon" /></a>
+    -
+    <a href="http://twitter.com/share?url={{ page.url | absolute_url }}"><img src="{{ "assets/img/twitterlogo.png" | relative_url }}" alt="Twitter icon" /></a>
+    -
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absolute_url }}"><img src="{{ "assets/img/linkedinlogo.png" | relative_url }}" alt="LinkedIn icon" /></a>
+</p>
 <h2>{{page.title}}</h2>
 <span class="timestamp">Published {{page.date | date: "%a %b %d %Y"}}</span>
 <p class="tags">Tags:
