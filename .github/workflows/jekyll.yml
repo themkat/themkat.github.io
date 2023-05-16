@@ -20,21 +20,12 @@ jobs:
         run: ./emacs_headless_publish.sh
       - name: Setup new tags if any
         run: ./create_tag_pages.sh
+      # only publish the pages for master/main branch activity
       - name: Publish new files if any
+        if: github.event_name != 'pull_request'
         run: |
           git config --local user.email "action@github.com" && \
           git config --local user.name "GitHub Action" && \
           git add . && \
           git commit -am "[SKIP] New org mode articles and/or tags" && \
           git push
-    
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build the site in the jekyll/builder container
-      run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
