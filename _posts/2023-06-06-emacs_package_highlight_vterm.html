@@ -37,9 +37,9 @@ One very obvious con to the project is that the library it is using is in public
 
 
 
-<div id="outline-container-orgd1b3f34" class="outline-2">
-<h2 id="orgd1b3f34">Dependencies needed</h2>
-<div class="outline-text-2" id="text-orgd1b3f34">
+<div id="outline-container-org3f16ab0" class="outline-2">
+<h2 id="org3f16ab0">Dependencies needed</h2>
+<div class="outline-text-2" id="text-org3f16ab0">
 <p>
 As mentioned before, vterm uses an external C library to do most of the heavy lifting. It may then not come as a shock that compiling this library is needed. To do this, CMake and libtool is used. Installing these should be super simple on most systems. Homebrew on Mac OS X have both:
 </p>
@@ -65,14 +65,14 @@ You don't need to worry about building anything yourself beyond this point! The 
 </div>
 
 
-<div id="outline-container-orgec35ce0" class="outline-2">
-<h2 id="orgec35ce0">Configuration and usage</h2>
-<div class="outline-text-2" id="text-orgec35ce0">
+<div id="outline-container-org326eeb7" class="outline-2">
+<h2 id="org326eeb7">Configuration and usage</h2>
+<div class="outline-text-2" id="text-org326eeb7">
 <p>
 vterm can be installed directly from source or <a href="https://melpa.org/#/vterm">through Melpa</a>. I use <code>use-package</code> to install and configure it, which looks like this:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(use-package vterm
+<pre class="src src-lisp">(use-package vterm
     :commands vterm
     :custom
     (vterm-always-compile-module t)
@@ -123,9 +123,9 @@ Note that by default, vterm only handles ONE terminal inside of Emacs.
 </div>
 
 
-<div id="outline-container-orgf2f2f9b" class="outline-2">
-<h2 id="orgf2f2f9b">Closing remarks</h2>
-<div class="outline-text-2" id="text-orgf2f2f9b">
+<div id="outline-container-orgaaa22dd" class="outline-2">
+<h2 id="orgaaa22dd">Closing remarks</h2>
+<div class="outline-text-2" id="text-orgaaa22dd">
 <p>
 You may ask: With this awesome terminal inside Emacs, surely you don't need any other terminal programs? I still use other ones, and don't call me Shirley. (sorry, I had to). The main reason here is that old habits die hard. On my setups I usually have a lot of terminals open at the same time. That should be possible with vterm by using the <a href="https://github.com/suonlight/multi-vterm/">multi-vterm</a>, though I have not tried that one yet. Who knows, maybe I will replace my many iterm2 tabs with vterm buffers in the future?
 </p>
