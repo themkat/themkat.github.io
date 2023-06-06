@@ -48,7 +48,7 @@ You don't need to worry about building anything yourself beyond this point! The 
 
 * Configuration and usage
 vterm can be installed directly from source or [[https://melpa.org/#/vterm][through Melpa]]. I use =use-package= to install and configure it, which looks like this:
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
 (use-package vterm
     :commands vterm
     :custom
