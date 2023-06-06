@@ -1,0 +1,138 @@
+---
+layout: blogpost
+title: Emacs package highlight - vterm
+tags: emacs
+preview_image: assets/img/vterm/vterm.png
+---
+
+<p>
+vterm, or emacs-libvterm, is a way of running a terminal inside of Emacs. It may not sound interesting at first, but it has some nice features that set it apart from the alternatives. One of these includes supporting interactive programs. It also feels more a part of Emacs than an external program, unlike alternatives like term. Read on to see more on why I prefer vterm to the alternatives and how you can se it up yourself!
+</p>
+
+
+
+<p>
+<a href="https://github.com/akermu/emacs-libvterm">vterm</a> has quickly become my favorite way of running a terminal inside of Emacs. Sometimes it is convenient to have a terminal in a buffer, especially if you run interactive sessions that listens to file changes. It is also convenient to be able to check Github Actions builds using <code>gh run watch</code> directly inside the comfort of your editor!  
+</p>
+
+
+<p>
+What makes vterm stand out?
+</p>
+<ul class="org-ul">
+<li>Compared to eshell (M-x shell), you can have interactive sessions. vterm behaves more like a regular interactive terminal inside of Emacs.</li>
+<li>Compared to term (M-x term), you can still use your Emacs keybindings to navigate Emacs. When using term, I always experience that I can't easily navigate to other buffers without hazzle as the terminal takes the keyboard focus by default.</li>
+<li>Not working on Windows. I don't really care about this one to be honest. May not come as a shock if you have ever heard me talk about my "love" for Windows before&#x2026; May be a deal breaker to you if your main operating system is Windows.</li>
+</ul>
+
+
+<p>
+There are also more differences discussed in <a href="https://github.com/akermu/emacs-libvterm#given-that-eshell-shell-and-ansi-term-are-emacs-built-in-why-should-i-use-vterm">the readme of the vterm project</a>. One notable difference to other terminal solutions is that vterm is not implemented in elisp, but uses an external C library.
+</p>
+
+
+<p>
+One very obvious con to the project is that the library it is using is in public archive mode in Github. This means that it won't get any more fixes. The Emacs lisp side is still maintained though, even hough it specifies that it should be considered as alpha-stage software. In my experience, it works well enough for me to use it daily. In my experience this is the best way to run terminals inside of Emacs!
+</p>
+
+
+
+<div id="outline-container-orgd1b3f34" class="outline-2">
+<h2 id="orgd1b3f34">Dependencies needed</h2>
+<div class="outline-text-2" id="text-orgd1b3f34">
+<p>
+As mentioned before, vterm uses an external C library to do most of the heavy lifting. It may then not come as a shock that compiling this library is needed. To do this, CMake and libtool is used. Installing these should be super simple on most systems. Homebrew on Mac OS X have both:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">brew install libtool cmake
+</pre>
+</div>
+
+<p>
+Ubuntu and Debian based systems also have them readily available:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">apt-get install libtool-bin cmake
+</pre>
+</div>
+
+<p>
+You don't need to worry about building anything yourself beyond this point! The package installation of vterm does it all for you. 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgec35ce0" class="outline-2">
+<h2 id="orgec35ce0">Configuration and usage</h2>
+<div class="outline-text-2" id="text-orgec35ce0">
+<p>
+vterm can be installed directly from source or <a href="https://melpa.org/#/vterm">through Melpa</a>. I use <code>use-package</code> to install and configure it, which looks like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package vterm
+    :commands vterm
+    :custom
+    (vterm-always-compile-module t)
+    :hook
+    (vterm-mode . (lambda ()
+		    ;; Settings to mimic dracula I use for zsh.
+		    (setq-local buffer-face-mode-face '(:background "#000000" :foreground "#FFFFFF"))
+		    (buffer-face-mode 1)
+		    (text-scale-adjust 2)))
+    :bind
+    ("&lt;f7&gt;" . vterm))
+</pre>
+</div>
+
+<p>
+The config does the following:
+</p>
+<ul class="org-ul">
+<li>Installs vterm.</li>
+<li>Compiles the dependent C library without prompting me when first installing. If you don't set <code>vterm-always-compile-module</code> you will be prompted if you want to compile the dependency. You may also provide your own build if you want to, though I have not tried that.</li>
+<li>Adds a hook that sets some style related settings to fit my needs, including an okay zoom level.</li>
+<li>Binds vterm to the F7 key.</li>
+</ul>
+
+
+<p>
+Now you can start a terminal using F7!
+</p>
+
+<img src="{{ "assets/img/vterm/vterm.png" | relative_url}}" alt="vterm running inside of Emacs" class="blogpostimg" />
+
+
+<p>
+You can use Emacs keybindings as you are used to. One example is splitting the window with <code>C-x 2</code> and then having your source file on one side and a listening process on the other side. Here we see a simple Kotlin file and <a href="https://quarkus.io/developer-joy/">Quarkus dev mode</a> running, which is super useful to have side by side when developing Quarkus applications (especially when writing your tests and having your little test driven feedback loop!):
+</p>
+
+<img src="{{ "assets/img/vterm/vterm_quarkus.png" | relative_url}}" alt="Having" class="blogpostimg" />
+
+<p>
+(you can then off course navigate between the two using <code>C-x o</code> or any other way you navigate between your buffers with Emacs keybindings)
+</p>
+
+
+<p>
+Note that by default, vterm only handles ONE terminal inside of Emacs.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgf2f2f9b" class="outline-2">
+<h2 id="orgf2f2f9b">Closing remarks</h2>
+<div class="outline-text-2" id="text-orgf2f2f9b">
+<p>
+You may ask: With this awesome terminal inside Emacs, surely you don't need any other terminal programs? I still use other ones, and don't call me Shirley. (sorry, I had to). The main reason here is that old habits die hard. On my setups I usually have a lot of terminals open at the same time. That should be possible with vterm by using the <a href="https://github.com/suonlight/multi-vterm/">multi-vterm</a>, though I have not tried that one yet. Who knows, maybe I will replace my many iterm2 tabs with vterm buffers in the future?
+</p>
+
+
+<p>
+There are many configuration options not discussed here, some of them being on the shell side. One of these is directory tracking to have Emacs' default directory following your current directory in vterm. I have not had much need for it, but <a href="https://github.com/akermu/emacs-libvterm#shell-side-configuration">it is described in the project readme</a>.
+</p>
+</div>
+</div>
