@@ -6,6 +6,7 @@
 layout: blogpost
 title: Fun (and useless) things you can do in Emacs!
 tags: emacs
+related_tags_count: 1
 ---
 #+END_EXPORT
 
