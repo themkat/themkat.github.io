@@ -9,9 +9,9 @@ ServiceLoader (aka Service Provider) is a feature that has been in Java since Ja
 </p>
 
 
-<div id="outline-container-org9f4e9ea" class="outline-2">
-<h2 id="org9f4e9ea">Simple example: A service with a single implementation</h2>
-<div class="outline-text-2" id="text-org9f4e9ea">
+<div id="outline-container-orgbcb7824" class="outline-2">
+<h2 id="orgbcb7824">Simple example: A service with a single implementation</h2>
+<div class="outline-text-2" id="text-orgbcb7824">
 <p>
 Let's start with the most simple example possible to show the basic functionality. Later we will see a more useful example, but it's always useful to see the complete basics first. 
 </p>
@@ -75,9 +75,9 @@ Now this is pretty simple, but shows the basic mechanics of a "dynamic" loading 
 </div>
 
 
-<div id="outline-container-org020b50b" class="outline-2">
-<h2 id="org020b50b">Taking it a bit further: CurrencyProvider</h2>
-<div class="outline-text-2" id="text-org020b50b">
+<div id="outline-container-org023c662" class="outline-2">
+<h2 id="org023c662">Taking it a bit further: CurrencyProvider</h2>
+<div class="outline-text-2" id="text-org023c662">
 <p>
 Let's go a step further with another toy example, that may seem a little bit more useful, and show what ServiceProvider is capable of. CurrencyProvider will be an interface for services/implementations providing the default currency for the area they are in. We will create implementations for Norway, EU and the US. In the real world, this might be a little more advanced (using real ISO standard country codes consistently etc.), but let's keep it simple for the sake of the example.
 </p>
@@ -228,9 +228,9 @@ You can also use other data types like enums, or make the loading of implementat
 </div>
 
 
-<div id="outline-container-org110e217" class="outline-2">
-<h2 id="org110e217">Making it simpler: Maven plugin</h2>
-<div class="outline-text-2" id="text-org110e217">
+<div id="outline-container-org96089b7" class="outline-2">
+<h2 id="org96089b7">Making it simpler: Maven plugin</h2>
+<div class="outline-text-2" id="text-org96089b7">
 <p>
 Maybe you have a big project with many implementations to a service? Or you just hate creating the text files describing implementations. There is (shockingly not) a Maven plugin for that! With this Maven plugin you can generate the services files. Let's see how that would look for our CurrencyProvider example above:
 </p>
@@ -280,9 +280,9 @@ Want to get better at using Maven from the command line? Feel free to <a href="h
 </div>
 </div>
 
-<div id="outline-container-org0ae8bc4" class="outline-2">
-<h2 id="org0ae8bc4">Final remarks</h2>
-<div class="outline-text-2" id="text-org0ae8bc4">
+<div id="outline-container-org918a660" class="outline-2">
+<h2 id="org918a660">Final remarks</h2>
+<div class="outline-text-2" id="text-org918a660">
 <p>
 Maybe you are still unsure what kind of problems to use it for? Here are a few examples:
 </p>

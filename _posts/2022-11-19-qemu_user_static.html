@@ -21,9 +21,9 @@ How does it work? While the <a href="https://www.qemu.org/">full QEMU program</a
 </p>
 
 
-<div id="outline-container-org76cd6ec" class="outline-2">
-<h2 id="org76cd6ec">What can it be used for?</h2>
-<div class="outline-text-2" id="text-org76cd6ec">
+<div id="outline-container-org8c64c8d" class="outline-2">
+<h2 id="org8c64c8d">What can it be used for?</h2>
+<div class="outline-text-2" id="text-org8c64c8d">
 <p>
 To some people it might not be clear what a tool like this can be used for. It can replace use cases where you usually had to start up a full virtual machine or similar, including:
 </p>
@@ -40,9 +40,9 @@ To some people it might not be clear what a tool like this can be used for. It c
 
 
 
-<div id="outline-container-org2718fb9" class="outline-2">
-<h2 id="org2718fb9">How to use</h2>
-<div class="outline-text-2" id="text-org2718fb9">
+<div id="outline-container-org073811a" class="outline-2">
+<h2 id="org073811a">How to use</h2>
+<div class="outline-text-2" id="text-org073811a">
 <p>
 The setup is very simple. Install the QEMU user space emulator, and activate the relevant architectures (might also sometimes be done automatically, depending on the system you use). On most linux distributions, this package is called <code>qemu-user-static</code>. In Debian based systems you can activate the desired architecture with <code>update-binfmts --enable qemu-ppc</code> , where you replace qemu-ppc with the desired qemu-target. You can display the ones you have available with <code>update-binfmts --display</code>, or check the qemu applications in <code>/usr/bin/</code>. There might be additional steps needed depending on your use case. For Debian, several of these are described in <a href="https://wiki.debian.org/QemuUserEmulation">the QEMU User Emulation documentation</a>. Other distributions may have their docs, but I haven't found any as in depth as the Debian documentation. QEMU also have <a href="https://www.qemu.org/docs/master/user/main.html">a brief documentation</a> of their own that might be useful.
 </p>
