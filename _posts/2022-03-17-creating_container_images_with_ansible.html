@@ -52,9 +52,9 @@ In the end, it comes down to taste. If you really love Ansible and its expressiv
 
 
 
-<div id="outline-container-org54edb9f" class="outline-2">
-<h2 id="org54edb9f">Using ansible-bender</h2>
-<div class="outline-text-2" id="text-org54edb9f">
+<div id="outline-container-orgf4601d1" class="outline-2">
+<h2 id="orgf4601d1">Using ansible-bender</h2>
+<div class="outline-text-2" id="text-orgf4601d1">
 <p>
 So you have installed ansible-bender, either directly or by using an image like mine above. What's next? If you have installed Buildah and Podman as well, you can actually start using the tool directly! If you want a playbook with ansible-bender specific variables inserted for you, you can use the <code>ansible-bender init</code> command, and a playbook.yml file is created for you. In essence, that is what an ansible-bender playbook really is; a normal Ansible playbook with some special variables. Those special variables are <a href="https://ansible-community.github.io/ansible-bender/build/html/configuration.html">covered in depth in the documentation</a>.
 </p>
@@ -71,9 +71,9 @@ Talk is cheap, let's look at some examples!
 </div>
 
 
-<div id="outline-container-orga925845" class="outline-3">
-<h3 id="orga925845">Example: Containerized Emacs setup</h3>
-<div class="outline-text-3" id="text-orga925845">
+<div id="outline-container-org8daa649" class="outline-3">
+<h3 id="org8daa649">Example: Containerized Emacs setup</h3>
+<div class="outline-text-3" id="text-org8daa649">
 <p>
 Continuing the trend from the last article! Let's set up an image with my Emacs setup ready to be used. 
 </p>
@@ -149,9 +149,9 @@ As you can see above, the differences from a plain Ansible playbook to a ansible
 </div>
 
 
-<div id="outline-container-org3b9948a" class="outline-3">
-<h3 id="org3b9948a">Example: Simple Spring Boot application image</h3>
-<div class="outline-text-3" id="text-org3b9948a">
+<div id="outline-container-orgfc04ee9" class="outline-3">
+<h3 id="orgfc04ee9">Example: Simple Spring Boot application image</h3>
+<div class="outline-text-3" id="text-orgfc04ee9">
 <p>
 Let's do something slightly different by demonstrating the usage of volumes and Ansible roles during build. It's not unusual to want to package an application into a container, and for simplicity we put it into the same directory as the playbook itself (so we can use the playbook_dir variable). To not make this example too advanced, we simply use a Spring Boot application made from <a href="https://start.spring.io/">Spring Initializr</a> without any changes (<a href="https://github.com/themkat/spring-starter-terminal">if you prefer a terminal UI, there is one for that too</a>). We'll use geerlingguys java role to setup Java to not boggle down the example with Java setup.
 </p>
@@ -213,9 +213,9 @@ What happens here? We build our Maven Spring Boot project, and put the resulting
 </div>
 
 
-<div id="outline-container-org53f0915" class="outline-3">
-<h3 id="org53f0915">Useful commands</h3>
-<div class="outline-text-3" id="text-org53f0915">
+<div id="outline-container-orgeb5a9ea" class="outline-3">
+<h3 id="orgeb5a9ea">Useful commands</h3>
+<div class="outline-text-3" id="text-orgeb5a9ea">
 <p>
 ansible-bender has quite <a href="https://ansible-community.github.io/ansible-bender/build/html/usage.html#getting-logs-of-a-build">a few useful commands beyond just building images</a>. If you want to fetch earlier build logs, that can be done. Inspecting images is simple. But to me, the most useful is probably pushing images. Not necessarily to a central repository or something, but to Docker. I have to admit, I still use Docker. Let's say we have built the myemacs image as in the first example, and want to push it to our docker daemon with the tag 0.1. Then we simply run:
 </p>
@@ -229,9 +229,9 @@ ansible-bender has quite <a href="https://ansible-community.github.io/ansible-be
 </div>
 
 
-<div id="outline-container-orgd3a1c18" class="outline-2">
-<h2 id="orgd3a1c18">Summary</h2>
-<div class="outline-text-2" id="text-orgd3a1c18">
+<div id="outline-container-orge279507" class="outline-2">
+<h2 id="orge279507">Summary</h2>
+<div class="outline-text-2" id="text-orge279507">
 <p>
 In summary, ansible-bender seems like a promising tool that definitely have some fun and useful use cases. Making images with Ansible seems like a very readable way to make images, especially for bigger ones. Dockerfiles quickly gets messy, and Ansible might be an antidote for that issue. 
 </p>
