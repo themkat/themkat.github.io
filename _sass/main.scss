@@ -187,11 +187,13 @@ body {
 
 .footer .info {
 	float: left;
+    max-width: 40vw;
 }
 
 .footer .external-links {
 	height: 5vh;
 	float: right;
+    max-width: 40vw;
 }
 
 .footer .external-links a {
