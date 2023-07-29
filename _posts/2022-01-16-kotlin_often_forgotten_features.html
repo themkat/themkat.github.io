@@ -9,9 +9,9 @@ This time we will look at features in Kotlin that are often overlooked in walkth
 </p>
 
 
-<div id="outline-container-org2517254" class="outline-2">
-<h2 id="org2517254">Inline objects</h2>
-<div class="outline-text-2" id="text-org2517254">
+<div id="outline-container-orge0f4cf4" class="outline-2">
+<h2 id="orge0f4cf4">Inline objects</h2>
+<div class="outline-text-2" id="text-orge0f4cf4">
 <p>
 The most known usage of inline/anonymous objects in Kotlin is in places where we need to send in an object (in the Java sense of the word) that implements an interface, the particular object is only needed once in your code, and a lambda won't suffice (because the interface is not functional, i.e, it has several methods). That was probably a bit confusing if you haven't seen it before. It's hard finding good examples of this, as it doesn't happen that often (probably happens more often on Android with its click handlers and more). Let us just use Runnable as a quick example, even though you could easily have used a lambda: 
 </p>
@@ -68,9 +68,9 @@ Now you may ask: Where is this last feature useful? It might be useful as return
 </div>
 
 
-<div id="outline-container-org136d18c" class="outline-2">
-<h2 id="org136d18c">tailrec</h2>
-<div class="outline-text-2" id="text-org136d18c">
+<div id="outline-container-org087678c" class="outline-2">
+<h2 id="org087678c">tailrec</h2>
+<div class="outline-text-2" id="text-org087678c">
 <p>
 Let's start with the simplest recursive implementation of factorial:
 </p>
@@ -117,9 +117,9 @@ You may wonder; what happens if I use the tailrec keyword without meeting the co
 </div>
 
 
-<div id="outline-container-org9d7aaa3" class="outline-2">
-<h2 id="org9d7aaa3">Extension functions to lambdas</h2>
-<div class="outline-text-2" id="text-org9d7aaa3">
+<div id="outline-container-orgcd7e0b6" class="outline-2">
+<h2 id="orgcd7e0b6">Extension functions to lambdas</h2>
+<div class="outline-text-2" id="text-orgcd7e0b6">
 <p>
 Lambdas are instances of classes behind the scenes, which means that you can create extension functions on them! If you never thought about it, this may seem confusing. What would the class name look like? Let's create one type of lambda (taking in two integers, and returning a new integer), and then later creating an extension function for it. First a simple add function:
 </p>
@@ -171,13 +171,13 @@ This was a very simple example, and there are more fun things you can do with th
 </div>
 
 
-<div id="outline-container-orgea7d2a5" class="outline-2">
-<h2 id="orgea7d2a5">Delegation of properties/variables</h2>
-<div class="outline-text-2" id="text-orgea7d2a5">
+<div id="outline-container-orgc299fb4" class="outline-2">
+<h2 id="orgc299fb4">Delegation of properties/variables</h2>
+<div class="outline-text-2" id="text-orgc299fb4">
 </div>
-<div id="outline-container-org676648a" class="outline-3">
-<h3 id="org676648a">Recap of delegation in classes</h3>
-<div class="outline-text-3" id="text-org676648a">
+<div id="outline-container-orga1a289a" class="outline-3">
+<h3 id="orga1a289a">Recap of delegation in classes</h3>
+<div class="outline-text-3" id="text-orga1a289a">
 <p>
 Most people know of the class-level delegation, but in case you don't, let's do a very quick recap. When extending a class or implementing an interface, the relationship is of type "is a" (e.g, a Toyota is a Car, a Siberian Husky is a Dog etc.). Composition, storing the relationship in a variable, is of the type "has a" (e.g, Manager manages/has a programmer do work for them, Cat has a human which gives them food etc.). Delegation is a special case of composition where we delegate work to another class. You probably don't want your Cat to implement the Human interface just to be able to get Food&#x2026;? You want to delegate the work to the cats servant/owner. How do this look in Kotlin? 
 </p>
@@ -212,9 +212,9 @@ This looks just like the Cat implements the Human interface, but behind the scen
 </div>
 
 
-<div id="outline-container-orgc40a463" class="outline-3">
-<h3 id="orgc40a463">properties/variables</h3>
-<div class="outline-text-3" id="text-orgc40a463">
+<div id="outline-container-org100ecc0" class="outline-3">
+<h3 id="org100ecc0">properties/variables</h3>
+<div class="outline-text-3" id="text-org100ecc0">
 <p>
 The delegation example above was probably familiar to you, as it is presented clearly in many Kotlin texts. Did you know that you can use delegates on properties/variables as well? This is a simple way of adding some extra functionality around the given type. Let's say you want a variable with a number, but it can only be even. Or a string that can only be lower case. Let's see how a stupid example like that can be implemented:
 </p>
@@ -292,13 +292,13 @@ These examples are a little bit stupid on purpose, but they show some simple val
 </div>
 
 
-<div id="outline-container-orgfc8c844" class="outline-2">
-<h2 id="orgfc8c844">Honorable mention</h2>
-<div class="outline-text-2" id="text-orgfc8c844">
+<div id="outline-container-orgd6fdc91" class="outline-2">
+<h2 id="orgd6fdc91">Honorable mention</h2>
+<div class="outline-text-2" id="text-orgd6fdc91">
 </div>
-<div id="outline-container-org195c834" class="outline-3">
-<h3 id="org195c834">Referential equality using <code>===</code></h3>
-<div class="outline-text-3" id="text-org195c834">
+<div id="outline-container-org604c3ca" class="outline-3">
+<h3 id="org604c3ca">Referential equality using <code>===</code></h3>
+<div class="outline-text-3" id="text-org604c3ca">
 <p>
 Let's say you have implemented the equals method, and it checks for structural equality (e.g, the fields are equal to each other). What if you want to check that they are the same object, do we need to remove the equals-method? NO! You can use <code>===</code> instead, and you check if the objects are the same objects in memory (i.e, same reference).
 </p>

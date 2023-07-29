@@ -9,46 +9,46 @@ I have really fallen in love with Rust this year! It has many positive features,
 </p>
 
 
-<div id="outline-container-orgfc3ec36" class="outline-2">
-<h2 id="orgfc3ec36">Topics in this article</h2>
-<div class="outline-text-2" id="text-orgfc3ec36">
+<div id="outline-container-orgad76862" class="outline-2">
+<h2 id="orgad76862">Topics in this article</h2>
+<div class="outline-text-2" id="text-orgad76862">
 <ul class="org-ul">
-<li><a href="#org864dbad">Easy installation - rustup</a></li>
-<li><a href="#org4765149">Build system - Cargo</a></li>
-<li><a href="#org5946f21">Compiles to almost any platform!</a></li>
-<li><a href="#orgf8f04b3">Compiler guides you! - Useful compiler messages</a></li>
-<li><a href="#orgccc951e">Better enums</a></li>
-<li><a href="#orgcfb970e">Awesome pattern matching</a></li>
-<li><a href="#orgafd475d">Error handling that makes sense</a></li>
-<li><a href="#org9a831f9">Closures and functional programming features</a></li>
-<li><a href="#org1033bd7">The ownership model</a></li>
-<li><a href="#orgc87a495">Simplified "object orientation" - No heavy OOP like in Java or C++</a></li>
-<li><a href="#org5d3ecfb">NOT focused on selling a specific editor/IDE - language server implemented as an official core component</a></li>
+<li><a href="#orgf5a00b2">Easy installation - rustup</a></li>
+<li><a href="#orgb9d2a10">Build system - Cargo</a></li>
+<li><a href="#orgc48b5c8">Compiles to almost any platform!</a></li>
+<li><a href="#orgbb2f562">Compiler guides you! - Useful compiler messages</a></li>
+<li><a href="#org56cf394">Better enums</a></li>
+<li><a href="#org1ad82e8">Awesome pattern matching</a></li>
+<li><a href="#orgd4ce512">Error handling that makes sense</a></li>
+<li><a href="#org756d5ca">Closures and functional programming features</a></li>
+<li><a href="#orgcd28775">The ownership model</a></li>
+<li><a href="#org75592a5">Simplified "object orientation" - No heavy OOP like in Java or C++</a></li>
+<li><a href="#orgb8ace7d">NOT focused on selling a specific editor/IDE - language server implemented as an official core component</a></li>
 <li><p>
-<a href="#org51793db">Want to learn Rust now? - Recommended resources</a>
+<a href="#org3d89397">Want to learn Rust now? - Recommended resources</a>
 </p>
 
 <p>
-<a id="org864dbad"></a>
+<a id="orgf5a00b2"></a>
 </p></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdff493c" class="outline-2">
-<h2 id="orgdff493c">Easy installation - rustup</h2>
-<div class="outline-text-2" id="text-orgdff493c">
+<div id="outline-container-orgfad2f76" class="outline-2">
+<h2 id="orgfad2f76">Easy installation - rustup</h2>
+<div class="outline-text-2" id="text-orgfad2f76">
 <p>
 Installing the basic tools (compiler, build system etc.) is very easy by using <a href="https://rustup.rs/">rustup</a>. rustup is also used to update the tools, install other components (formatter, language server etc.), install unstable/nightly versions of the tools, install other Rust versions and so on. It is also used to set the default compiler/tool versions etc. This means that an official language tool handles quite a lot for us out of the box, and that we don't need to find other tools to do these tasks. If you have used other ecosystems like Node.JS, Java etc., you will know that you will often need several different (often unofficial) tools to handle multiple versions (e.g, nvm for Node.JS), installing official tooling etc. This simplicity in the Rust ecosystem makes it really easy to get started, and also doing lots of common tasks in a standard way. In other ecosystems you will probably do more research to do these things than you would have to do with Rust. 
 </p>
 
 <p>
-<a id="org4765149"></a>
+<a id="orgb9d2a10"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-orgd1401db" class="outline-2">
-<h2 id="orgd1401db">Build system - Cargo</h2>
-<div class="outline-text-2" id="text-orgd1401db">
+<div id="outline-container-orgf642bd9" class="outline-2">
+<h2 id="orgf642bd9">Build system - Cargo</h2>
+<div class="outline-text-2" id="text-orgf642bd9">
 <p>
 Rust comes with a powerful build system for your projects, <a href="https://doc.rust-lang.org/cargo/commands/cargo-install.html">which is also used to install programs directly from source (e.g, git or crates.io)</a>. This build system handles building/compiling, fetching dependencies, running tests (including having a built in test runner!), and more! The way it handles dependencies is very modern, with each project having a Cargo.toml file specifying dependencies and their versions. If you have used older build systems like CMake, automake etc., you will be pleased that you don't need to handle dependencies yourself and that you can have multiple versions of them on the same system. If you are coding in the Java ecosystem, you will probably be happy that there is a great build system out of the box, instead of having to research which one to use (for JVM languages you have Maven, Gradle, Ant etc., no standard one). Printing a dependency graph, which requires a plugin on the JVM with Maven, can be done out of the box with <a href="https://doc.rust-lang.org/cargo/commands/cargo-tree.html">cargo tree</a>.
 </p>
@@ -75,39 +75,39 @@ Hopefully I've now teased some of the features I really love about Cargo! Coveri
 
 
 <p>
-<a id="org5946f21"></a>
+<a id="orgc48b5c8"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org863fe10" class="outline-2">
-<h2 id="org863fe10">Compiles to almost any platform!</h2>
-<div class="outline-text-2" id="text-org863fe10">
+<div id="outline-container-org34a42fc" class="outline-2">
+<h2 id="org34a42fc">Compiles to almost any platform!</h2>
+<div class="outline-text-2" id="text-org34a42fc">
 <p>
 Rust compiles to many different computers, micro controllers, game consoles and more. This is all thanks to the compiler utilizing <a href="https://llvm.org/">LLVM</a> for generating machine code. LLVM supports generating machine code for many different computer architectures, and thanks to it we can describe Rust targets. The targets describe the architecture, operating system and so on an executable runs on. Many are <a href="https://docs.rust-embedded.org/embedonomicon/compiler-support.html#built-in-target">built into Rust</a>, and we can also <a href="https://docs.rust-embedded.org/embedonomicon/custom-target.html">create our own</a>. This has lead to support for many different architectures, which off course includes many micro controllers and computers. Some interesting ones include <a href="https://doc.rust-lang.org/beta/rustc/platform-support/m68k-unknown-linux-gnu.html">Linux on Motorola 68k processors</a> (hopefully we can hack together AmigaOS classic and 4.1 variants in the future!), <a href="https://github.com/rust-console/gba">GameBoy Advance</a>, and <a href="https://github.com/rust9x/rust/wiki">older 32 bit Windows versions (including Windows 95!)</a>.
 </p>
 
 
 <p>
-<a id="orgf8f04b3"></a>
+<a id="orgbb2f562"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org8e7d9aa" class="outline-2">
-<h2 id="org8e7d9aa">Compiler guides you! - Useful compiler messages</h2>
-<div class="outline-text-2" id="text-org8e7d9aa">
+<div id="outline-container-org8d8a8dc" class="outline-2">
+<h2 id="org8d8a8dc">Compiler guides you! - Useful compiler messages</h2>
+<div class="outline-text-2" id="text-org8d8a8dc">
 <p>
 The Rust compiler have, in my view, really useful compiler messages! I often feel like they guide you to the solution you might want (within reason off course). I could construct an example here, but I feel like the Rust book have <a href="https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html">a great early tutorial that shows you this in action</a>!
 </p>
 
 
 <p>
-<a id="orgccc951e"></a>
+<a id="org56cf394"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org3fde442" class="outline-2">
-<h2 id="org3fde442">Better enums</h2>
-<div class="outline-text-2" id="text-org3fde442">
+<div id="outline-container-org8dc3844" class="outline-2">
+<h2 id="org8dc3844">Better enums</h2>
+<div class="outline-text-2" id="text-org8dc3844">
 <p>
 You are probably used to enums to do simple enumerations in many languages. In Java, Kotlin and many similar languages they can also contain some data, though this data can not vary for the same enum value (the definition of an enum value has to call the constructor directly). Rust enums are way more powerful, and in my view operate more in a way as a sort of category. Let us see some code with comments:
 </p>
@@ -142,13 +142,13 @@ These powerful enums relate to our next topic; Rust's awesome pattern matching!
 </p>
 
 <p>
-<a id="orgcfb970e"></a>
+<a id="org1ad82e8"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org7f6d43e" class="outline-2">
-<h2 id="org7f6d43e">Awesome pattern matching</h2>
-<div class="outline-text-2" id="text-org7f6d43e">
+<div id="outline-container-orgc9081b3" class="outline-2">
+<h2 id="orgc9081b3">Awesome pattern matching</h2>
+<div class="outline-text-2" id="text-orgc9081b3">
 <p>
 We can destructure, check for matches etc.:
 </p>
@@ -170,13 +170,13 @@ I have <a href="https://themkat.net/2022/10/06/rust_awesome_pattern_matching.htm
 </p>
 
 <p>
-<a id="orgafd475d"></a>
+<a id="orgd4ce512"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org686ee69" class="outline-2">
-<h2 id="org686ee69">Error handling that makes sense</h2>
-<div class="outline-text-2" id="text-org686ee69">
+<div id="outline-container-orgd60feff" class="outline-2">
+<h2 id="orgd60feff">Error handling that makes sense</h2>
+<div class="outline-text-2" id="text-orgd60feff">
 <p>
 One thing I think is really great in Rust is that we don't have big bloaty exceptions. Rust have two types of error scenarios: recoverable and non-recoverable. Non-recoverable errors are done by stopping the program (i.e, panic), and possibly giving a stack trace (depending on settings). This type of error is <a href="https://doc.rust-lang.org/book/ch09-01-unrecoverable-errors-with-panic.html">well documented</a>, and as it is non-recoverable we can't handle it that much. Recoverable errors on the other hand we can handle!
 </p>
@@ -200,13 +200,13 @@ There are also many methods on Result like unwrap (panic if error, or else give 
 
 
 <p>
-<a id="org9a831f9"></a>
+<a id="org756d5ca"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-orga8c7788" class="outline-2">
-<h2 id="orga8c7788">Closures and functional programming features</h2>
-<div class="outline-text-2" id="text-orga8c7788">
+<div id="outline-container-org85de402" class="outline-2">
+<h2 id="org85de402">Closures and functional programming features</h2>
+<div class="outline-text-2" id="text-org85de402">
 <p>
 Like many other modern languages, Rust provides functional programming features. Closures, similar to lambdas in other languages, act as anonymous functions. You can use higher order constructs (i.e, functions that take functions as input and/or return functions) to iterate, like map, filter, reduce etc. In Rust, this concept is called iterators. It looks something like this:
 </p>
@@ -222,26 +222,26 @@ One of the best parts is that these constructs compile to the same code as regul
 
 
 <p>
-<a id="org1033bd7"></a>
+<a id="orgcd28775"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-orgb998bff" class="outline-2">
-<h2 id="orgb998bff">The ownership model</h2>
-<div class="outline-text-2" id="text-orgb998bff">
+<div id="outline-container-orgba988de" class="outline-2">
+<h2 id="orgba988de">The ownership model</h2>
+<div class="outline-text-2" id="text-orgba988de">
 <p>
 Rust have a simple, but effective way to manage memory. Each value has only one owner, and assigning the content to a new variable moves it to that new variable. Other places can borrow it, but two places cannot own the same value (there are ways to work around this with reference counters though). Having these "restriction" makes it possible for the compiler to handle the memory more or less for us (you don't really do manual allocation and deallocation yourself like you would in C). Owner going out of scope, means that the value will be dropped. This system of ownership is probably one of Rusts most unique features, and <a href="https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html">you can read more about it in the Rust book</a>.
 </p>
 
 
 <p>
-<a id="orgc87a495"></a>
+<a id="org75592a5"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-orgb8a3bb0" class="outline-2">
-<h2 id="orgb8a3bb0">Simplified "object orientation" - No heavy OOP like in Java or C++</h2>
-<div class="outline-text-2" id="text-orgb8a3bb0">
+<div id="outline-container-orgf44d07c" class="outline-2">
+<h2 id="orgf44d07c">Simplified "object orientation" - No heavy OOP like in Java or C++</h2>
+<div class="outline-text-2" id="text-orgf44d07c">
 <p>
 I have to admit, I'm not a big fan of the heavy object orientation constructs in Java and similar languages. Interfaces, abstract classes etc. are okay concepts, but not necessarily all the design patterns and solutions built around them. They solve specific problems, and can work if they are used to share common languages between developers&#x2026; but they seem so far away from how computers really work. In some code bases, especially enterprise ones, they are often overused (some people seem to have a competition on who can cram the most object oriented design patterns into a code base). Look at the satirical <a href="https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition">FizzBuzz Enterprise Edition</a> for an example of what I'm talking about.
 </p>
@@ -269,26 +269,26 @@ Rust on the other hand, are more like C in this regard. Structures, enums etc. a
 
 
 <p>
-<a id="org5d3ecfb"></a>
+<a id="orgb8ace7d"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-org3696bf4" class="outline-2">
-<h2 id="org3696bf4">NOT focused on selling a specific editor/IDE - language server implemented as an official core component</h2>
-<div class="outline-text-2" id="text-org3696bf4">
+<div id="outline-container-orge3e3543" class="outline-2">
+<h2 id="orge3e3543">NOT focused on selling a specific editor/IDE - language server implemented as an official core component</h2>
+<div class="outline-text-2" id="text-orge3e3543">
 <p>
 rust-analyzer, the language server for Rust, is an official Rust project. The people behind Rust does NOT do favoritism with any IDE, or try to sell you one (looking at you Kotlin!!!). This means that you can use any editor you like. For some languages, like Kotlin, most people end up using the official IDE, and the language servers end up having limited interest and contributions. Rust is different, and therefore everything works great in Emacs! Though I would recommend using <a href="https://github.com/brotzeit/rustic">rustic</a> instead of <a href="https://www.rust-lang.org/tools">rust-mode (the latter is linked to on the official rust-lang website)</a>, as it builds on top of rust-mode and provides more features (e.g, automatic LSP configuration, some Cargo popups etc.). 
 </p>
 
 
 <p>
-<a id="org51793db"></a>
+<a id="org3d89397"></a>
 </p>
 </div>
 </div>
-<div id="outline-container-orgccd6b11" class="outline-2">
-<h2 id="orgccd6b11">Want to learn Rust now? - Recommended resources</h2>
-<div class="outline-text-2" id="text-orgccd6b11">
+<div id="outline-container-org48fcbae" class="outline-2">
+<h2 id="org48fcbae">Want to learn Rust now? - Recommended resources</h2>
+<div class="outline-text-2" id="text-org48fcbae">
 <p>
 <b>NOTE! The book links are Amazon Affiliate links where I make a commission on qualified purchases.</b>
 </p>
