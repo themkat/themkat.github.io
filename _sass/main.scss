@@ -178,6 +178,15 @@ body {
 	color: black;
 }
 
+.content blockquote {
+    background: #f2f2f2;
+    border-left: 10px solid gray;
+    padding: 1em;
+    margin: 1em 2em;
+    display: block;
+    box-shadow: 5px 5px 2px 0 lightgray;
+}
+
 .footer {
 	width: 80vw;
 	margin-left: auto;
