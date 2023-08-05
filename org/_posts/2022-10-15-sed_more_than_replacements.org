@@ -85,7 +85,7 @@ sed can work with input piped into it, or you can supply a file as input. We wil
 
 
 
-There is off course much more advanced things you can do by combining the various addressing, command line options and so on that sed provides. I recommend reading the man-pages to get information on all the options you have for using sed (i.e, run =man sed=). If you want more examples and explanations to dive deeper into sed (and text editing in scripts) after reading this article, I suggest reading the book [[https://amzn.to/3CZc3Y8][sed and awk: UNIX Power Tools]] (*Amazon affiliate link, so I will earn a commission on qualified purchases*). The book will also teach you awk, which is a small scripting language for editing text files, and might be a topic for a future article on this blog :) 
+There is off course much more advanced things you can do by combining the various addressing, command line options and so on that sed provides. I recommend reading the man-pages to get information on all the options you have for using sed (i.e, run =man sed=). If you want more examples and explanations to dive deeper into sed (and text editing in scripts) after reading this article, I suggest reading the book [[https://amzn.to/43UwvDS][sed and awk: UNIX Power Tools]] (*Amazon affiliate link, so I will earn a commission on qualified purchases*). The book will also teach you awk, which is a small scripting language for editing text files, and might be a topic for a future article on this blog :) 
 
 
 * Simple replacements
