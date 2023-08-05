@@ -28,9 +28,9 @@ If you need a refresher on other commands, as well as basic command line usage (
 </p>
 
 
-<div id="outline-container-orgd437ed3" class="outline-2">
-<h2 id="orgd437ed3">Basics of sed</h2>
-<div class="outline-text-2" id="text-orgd437ed3">
+<div id="outline-container-org973b8ba" class="outline-2">
+<h2 id="org973b8ba">Basics of sed</h2>
+<div class="outline-text-2" id="text-org973b8ba">
 <p>
 sed is an acronym and stands for Stream EDitor. If you have seen <a href="https://en.wikipedia.org/wiki/Ed_(text_editor)">the line editor ed</a> in action, you will recognize many of the commands. (read up on teletypes and computers before the featureful editors we have today if you are curious!). In many ways, I like to think of sed as an automated version of ed. The main difference is that it prints the file to standard output instead of editing the file directly. You give sed commands on how it should edit a given text, and it does exactly that! It can do some more as well, as we will see, like getting only parts of the text back. At its core, sed takes in an address (might be empty  for entire input) and a command. Some examples of addresses:
 </p>
@@ -246,15 +246,15 @@ sed can work with input piped into it, or you can supply a file as input. We wil
 
 
 <p>
-There is off course much more advanced things you can do by combining the various addressing, command line options and so on that sed provides. I recommend reading the man-pages to get information on all the options you have for using sed (i.e, run <code>man sed</code>). If you want more examples and explanations to dive deeper into sed (and text editing in scripts) after reading this article, I suggest reading the book <a href="https://amzn.to/3CZc3Y8">sed and awk: UNIX Power Tools</a> (<b>Amazon affiliate link, so I will earn a commission on qualified purchases</b>). The book will also teach you awk, which is a small scripting language for editing text files, and might be a topic for a future article on this blog :) 
+There is off course much more advanced things you can do by combining the various addressing, command line options and so on that sed provides. I recommend reading the man-pages to get information on all the options you have for using sed (i.e, run <code>man sed</code>). If you want more examples and explanations to dive deeper into sed (and text editing in scripts) after reading this article, I suggest reading the book <a href="https://amzn.to/43UwvDS">sed and awk: UNIX Power Tools</a> (<b>Amazon affiliate link, so I will earn a commission on qualified purchases</b>). The book will also teach you awk, which is a small scripting language for editing text files, and might be a topic for a future article on this blog :) 
 </p>
 </div>
 </div>
 
 
-<div id="outline-container-orgfb3a647" class="outline-2">
-<h2 id="orgfb3a647">Simple replacements</h2>
-<div class="outline-text-2" id="text-orgfb3a647">
+<div id="outline-container-orgbca9e2d" class="outline-2">
+<h2 id="orgbca9e2d">Simple replacements</h2>
+<div class="outline-text-2" id="text-orgbca9e2d">
 <p>
 The most common usage of sed is to do replacements. Replacements are done using the command <code>s/pattern to replace/replacement text/</code>, using regular expressions. Refer to the description of commands and regular expressions above if something is unclear. To have some data to test with, we will use an extract of <a href="https://www.gnu.org/fun/jokes/eternal-flame.html">the song Eternal Flame by Bob Kanefsky and Julia Ecklar</a> saved in a file called godwroteinlisp.txt:
 </p>
@@ -347,9 +347,9 @@ I know God likes a language with it's own four-letter name!
 </div>
 
 
-<div id="outline-container-org1f026de" class="outline-2">
-<h2 id="org1f026de">Editing files by combining lines, deleting etc.</h2>
-<div class="outline-text-2" id="text-org1f026de">
+<div id="outline-container-orgcdb8199" class="outline-2">
+<h2 id="orgcdb8199">Editing files by combining lines, deleting etc.</h2>
+<div class="outline-text-2" id="text-orgcdb8199">
 <p>
 We can combine multiple lines together by using the <code>N</code> command and replace the newline character with an empty string:
 </p>
@@ -389,9 +389,9 @@ And when I ponder snowflakes, never finding two the same,
 
 
 
-<div id="outline-container-org25411b0" class="outline-2">
-<h2 id="org25411b0">Transliteration</h2>
-<div class="outline-text-2" id="text-org25411b0">
+<div id="outline-container-org04b7f06" class="outline-2">
+<h2 id="org04b7f06">Transliteration</h2>
+<div class="outline-text-2" id="text-org04b7f06">
 <p>
 Our next topic may be a little bit obscure, but I've met people who didn't know sed could do it! I'm talking about <a href="https://en.wikipedia.org/wiki/Transliteration">transliteration</a>. In a linguistic context, transliteration can be useful for example to transform greek characters into our Latin variant (I guess that is what it is called, I'm not very much into linguistics). One other use I've found for this is obfuscation. Let's do a quick example with replacing every "f" with "l", every "s" with "o", and every "o" with "l":
 </p>
@@ -419,9 +419,9 @@ Not really the feature I use most in sed, but might come in handy one day! :)
 </div>
 
 
-<div id="outline-container-org96fb9aa" class="outline-2">
-<h2 id="org96fb9aa">Selecting/cutting content from files</h2>
-<div class="outline-text-2" id="text-org96fb9aa">
+<div id="outline-container-org325800a" class="outline-2">
+<h2 id="org325800a">Selecting/cutting content from files</h2>
+<div class="outline-text-2" id="text-org325800a">
 <p>
 You might have noticed the addressing type <code>/regex1/,/regex 2/</code> above, and wondered why you would want to fetch matches between two regular expression matches? Nifty feature, but where is it useful? My number one place for this is undoubtedly log files! To look into this, let us create a sample log file based upon <a href="https://www.ibm.com/docs/en/zos/2.1.0?topic=problems-example-log-file">a z/OS example log file from IBM</a> that we will call log.txt:
 </p>
@@ -501,9 +501,9 @@ We <code>-n</code> to not echo each line, but only print what we tell sed to pri
 </div>
 
 
-<div id="outline-container-orgfa84d56" class="outline-2">
-<h2 id="orgfa84d56">Example: Simple grep replacement</h2>
-<div class="outline-text-2" id="text-orgfa84d56">
+<div id="outline-container-orgf78ef0a" class="outline-2">
+<h2 id="orgf78ef0a">Example: Simple grep replacement</h2>
+<div class="outline-text-2" id="text-orgf78ef0a">
 <p>
 In the introduction, I mentioned that we could make a very simple grep replacement with sed. By now you will probably realize that the <code>-n</code>
  option and the <code>p</code> commands are part of the solution. By knowing this we can make a function that takes some text as input, and uses sed to print only the lines matching this text:
@@ -535,9 +535,9 @@ Here we searched for God (yes, I did it just because of that pun!) in the song l
 </div>
 </div>
 
-<div id="outline-container-orgd51c43d" class="outline-2">
-<h2 id="orgd51c43d">In summary</h2>
-<div class="outline-text-2" id="text-orgd51c43d">
+<div id="outline-container-org322a7a4" class="outline-2">
+<h2 id="org322a7a4">In summary</h2>
+<div class="outline-text-2" id="text-org322a7a4">
 <p>
 So as you can see, sed provides many editing utilities that goes beyond "just replacements" :) 
 </p>
