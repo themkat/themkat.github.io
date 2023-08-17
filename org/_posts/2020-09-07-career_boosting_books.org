@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: Books that boost your programming career (Java developer edition)
-tags: java books enterprise programming
+tags: java books enterprise career programming
 ---
 #+END_EXPORT
 
