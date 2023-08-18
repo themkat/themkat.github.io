@@ -1,0 +1,105 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Want to get a job as a backend developer? - Learn these topics now!"
+tags: programming career java enterprise
+related_tags_count: 1
+preview_image: assets/img/backenddev/backend.png
+---
+#+END_EXPORT
+
+
+Sometimes I get questions on how to learn the skills necessary to get a backend programmer job. That is exactly my aim for this article: to give you a set of terms, keywords and knowledge to get started on your journey. My hope is that you know what you need to learn after reading on.
+
+
+
+I originally got the idea for an article like this after some minor contributions to [[https://koding.no/][Koding.no]]. Koding.no is a Norwegian resource to help self thought programmers find resources, learn key topics, get a structure to their learning and more. If you can read Norwegian, I think the site might be a great deal of help to you if you are currently learning software development on your own. Feel free to contribute if you can as well :) 
+
+
+Who am I to write this? I have programmed since my teens, and have also worked for many years in a big enterprise. I have interviewed people, coordinated people, and worked as a backend developer myself. Programming conferences, talking to people and reading online has also formed my opinion. That being said, some people might disagree. Like all lists of this kind, it is formed by opinion.
+
+
+If you are already a backend developer, and are looking to level up your skills, I have [[https://themkat.net/2020/09/07/career_boosting_books.html][a list of recommended books]]. It is Java flavored, but several of the books are useful to other people as well. The books cover some of what I write about below, and you might want to have a look even if you are fairly fresh to the world of backend development.
+
+
+
+** Target audience
+My target audience is people who want to work professionally as a backend developer. This can include both beginners as well as people transitioning from a different area of expertise. I expect you to now be completely new to computers however, so if you are very new, you may find parts of this article confusing. Take it one step at a time, and I'm sure you will figure it out :) Start with learning a programming language and general programming concepts in that case.
+
+
+
+** How this article is structured
+This article contains information about what to search for and learn, and will not have in-depth explanations. An article covering everything would be too much, and would probably fit better as a book. My hope is that you at least get some guidance on where to start, terms to look up, and other research topics to help you become a backend developer. (or if you are already, become even better at it!).
+
+
+I have put the learning tips into 3 sections:
+- *1. Complete basics:* These are the complete basics of knowledge, and can in a way be considered prerequisites for the rest. You should know as much of these are possible.
+- *2. Next steps - The bread and butter:* These topics contain the bread and butter of the knowledge you use daily. To get a job within the field, you should at least know some of them. 
+- *3. Going a bit above and beyond:* sdfsd
+
+
+Don't worry if you get a job and don't know everything in number 2 and 3! You will probably also learn some of these on the job while working. Knowing at least some of them will help you get in the door though, and the more the better if there are stiff competition!
+
+
+Before we begin on those, there is a general tips section with tips for everyone (no matter their skill level).
+
+
+** General tips
+There are some general tips that apply no matter your skill level. Even if you are experienced, you can find great joy in following some of these tips if you are not already.
+
+- *Have an active Github, Gitlab or similar account for sharing code.* This is even more important if you are self thought, or want to get into a field where you do not have an education. Just having some small toy projects shows that you know how to make basic things. Helping out in open source projects can also be very useful, as it can show potential employers that you can collaborate with others. (visible through review comments, discussions etc.).
+- *Learn patterns, not just the latest technology.* I have seen this again and again. Many developers seem very interested in X and Y technology, but doesn't seem to learn the patterns behind them. When doing that, you end up just learning a set of technologies without deeper meaning. One example of such a pattern is the dependency injection pattern as seen in frameworks like Spring Framework (Java), Quarkus (Java), and Angular (JavaScript). Focus on learning the patterns behind something, not just learning tons of technologies. If you know patterns and terms, it is easier to search for information on them. It is also more important that you have an understanding of the framework/library you are using (i.e, what it does and the basics of how it works), than having used hundreds of them without any deeper understanding. Patterns is used in a broad sense here, as I'm including both concepts like dependency injection, and design patterns like the Builder-pattern (and other typical "gang of four design patterns").
+- *Be curious!* A backend developer often models the world around us into code. To know what you are making, and to make it as good as possible, you should know your problem domain well. How else are you going to solve the customers needs with your software? Understanding both whats happening in the world, as well other fields than computers, will help you a lot. 
+
+
+
+** Learning list
+
+*** 1. Complete basics
+- *Know you a programming language at a decent level:* You should be decently familiar with your programming language of choice. This includes basic problem solving, constructs unique to the language etc. You don't need to know everything. You don't have to know every little nook and cranny of the language, or be a master programmer. All of those things come with experience. Some popular languages (in enterprises) include Java, Kotlin, JavaScript, and Golang. If you specifically want to learn Kotlin, I have written [[https://themkat.net/2022/10/11/learning_kotlin_resources.html][a small guide to good learning resources]].
+- *git:* git is a version control system that is mostly used for source code. If you want to learn the complete basics, I've heard that [[Kevin Stratverts introduction video]] is good. Other people might want to jump straight to [[https://git-scm.com/doc][the documentation]].
+- *Know the basics of the command line:* A lot of people get away with using graphical utilities and their IDE (e.g, [[https://www.jetbrains.com/idea/][IntelliJ IDEA]]) to avoid using the command line. I would argue that they would be much more productive if they just learned the command line. With the advent of DevOps in many companies, you will also get use for command line skills when creating container images, automating workflows etc. If you are a beginner to the command line, I have [[https://themkat.net/2021/10/02/no_nonsense_command_line.html][a beginner article on getting started with it]].
+
+
+*** 2. Next steps - The bread and butter
+The following are some of the concepts a backend developer should know, and that will help you in becoming one. It is not necessary to know everything before starting a job though. Knowing as much about these as possible, and how it relates to your job, might help your chances on getting a job if there is competition. Don't be scared if you don't know everything! It is okay to learn some of it on the job as well.
+
+
+- *API:*  Application programming interface. You can oversimplify it a bit, and think of it as the interface we use to communicate with an external system, process or library. A common example is using HTTP to fetch JSON data from a server. This is essentially what most backend developers does: create APIs to fetch JSON data that a frontend (i.e, website, mobile application or similar) or other server can use. Often this is called a REST API, though [[https://aws.amazon.com/what-is/restful-api/][REST APIs]] also come with some architectural constraints. You should know what a REST API is, and the HTTP verbs you use when creating them (e.g, POST, GET, PUT etc.). 
+- *Databases:* What a database is, and basic concepts surrounding them. You should at least know what a [[https://cloud.google.com/learn/what-is-a-relational-database][relational database]] is, as well as how we work with them. Some minor knowledge on [[https://www.w3schools.com/sql/default.asp][basic SQL]] for querying the databases is also very useful to know. Knowing and having played with a few different types of databases might also help. E.g, PostgreSQL vs MongoDB to see different approaches (relational vs newer NoSQL document storage).  
+- *Software testing:*  [[https://www.freecodecamp.org/news/software-testing-for-beginners/][Software testing]] has become its own field, and you should know at least know why we test our code and a few test classifications. You will also need to write tests even if you are not a software tester, though mostly [[https://www.freecodecamp.org/news/unit-tests-explained/][unit tests]]. How you write these unit tests will vary depending on your language and environment. For the Java platform (aka programs running on the Java Virtual Machine), almost everyone uses [[https://junit.org/junit5/][JUnit]]. When you have read a bit about testing, you will probably start thinking about how many you should write. How many full end to end tests do we need? And how many unit tests? Many best practices refer to the [[https://learn.cypress.io/testing-foundations/the-testing-pyramid][test pyramid]], so you should at least know about it.
+- *DevOps:* If you are working as a developer in 2000-current-year, you will undoubtedly hear the word DevOps at some point. To oversimplify, DevOps is the combination of Development and Operations. Usually this means that that developers have more responsibility for deployment of their systems, without the classical handover to operations at the end. Operations will often still collaborate and empower developers to do what they need though, so operations are not completely replaced like some people online believe. That being said, DevOps is one of the many misused buzzwords these days, and you may experience different interpretations of it in different companies. There are several important tools and concepts that have made DevOps possible: [[https://cloud.google.com/learn/what-are-containers][containers]] (you may have heard of [[https://www.docker.com/][Docker]]?), container orchestration tools like [[https://kubernetes.io/][Kubernetes]], and [[https://about.gitlab.com/topics/ci-cd/][CI/CD]] (continuous integration / continuous delivery) automation like [[https://github.com/features/actions][Github Actions]]. While there are much more that could be mentioned here, these are the most important concepts to know about in my view.
+- *Various terms to learn the meaning of:* Learning a set of terms can help you have more clear discussions and make better (i.e, more relevant) search queries.
+  - [[https://www.freecodecamp.org/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it-7578c84fa88f/][dependency injection]]
+  - [[https://refactoring.guru/design-patterns][design patterns]]. Useful to know some common ones like Builder, Singleton, Visitor, Observer, and Factory method. (all described in the link given)
+  - [[https://en.wikipedia.org/wiki/Create,_read,_update_and_delete][CRUD/CRUDL]] (create, read, update, delete, list). Way of describing basic set of operations. These terms are often used when planning or discussing APIs.
+  - [[https://www.atlassian.com/agile/project-management/project-management-intro][agile vs. waterfall]] (software planning)
+
+    
+Even if you are learning theory, most of you will probably also want to experiment with actual technologies and frameworks. Below is a set of popular frameworks and libraries used in backend development these days. The first 3 are full blown frameworks, while the last is a more simplistic web server (that is still super useful for creating server applications!).  
+
+- [[https://spring.io/][Spring Framework]] (Java), though you will probably want to use [[https://spring.io/projects/spring-boot][Spring Boot]] for newer projects.
+- [[https://quarkus.io/][Quarkus]] (Java)
+- [[https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0][ASP.NET Core]] (C#)
+- [[https://expressjs.com/][Express.js]] (webserver for Node.js)
+
+
+*** 3. Going a bit above and beyond
+I'm in no way saying these are super advanced topics, though they might seem that way if you are a beginner. What I'm saying is that a lot of people applying for a job don't a lot about these, especially those with less experience. Knowing a few will help you, as you will probably work with these topics (especially in a decently modern software company).
+
+
+All of these will probably be considered basic knowledge for a more senior position. 
+
+
+- *Software architecture:* Includes many topics ranging from how a system should work functionally, technologies used, code structure etc. One common approach in software architecture is to separate the pure technology code (database logic, web server logic etc.) from the business logic (e.g, create a customer, place an order etc.). This should then in theory make the code easier to work with and change over time. There are many other considerations that can be made, like how the systems should communicate (i.e, REST APIs, events, file reading etc.). Knowing a bit about [[https://martinfowler.com/architecture/][software architecture]] can help you better understand the various systems that you work with. A lot of people have heard about [[https://microservices.io/][Microservice architecture]], but have you heard about terms like [[https://priyalwalpita.medium.com/software-architecture-patterns-layered-architecture-a3b89b71a057][layered architecture]] or [[https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html][clean architecture]]?
+- *Events and event driven architectures:* When communicating between systems, the classical approach was to do this communications synchronously. We do a call to a service we want to communicate with, and wait for results. Events are another approach where we send data asynchronously! We send an event that something has happened, and interested parties pick this up and handle it their way. Architectures that use this as a main building block is often called [[https://aws.amazon.com/event-driven-architecture/][event driven architecture]]. This leads to different ways of creating software systems. Many enterprises are starting to use concepts like these more and more, so knowing a thing or two about them can be beneficial. Relevant technologies include [[https://kafka.apache.org/][Apache Kafka]] and [[https://www.rabbitmq.com/][RabbitMQ]].
+- *Kubernetes:* Learning the ins and outs of Kubernetes can help you a lot, especially if you have to debug issues. What has helped me most in my job is the following:
+  - Listing resources (pods, services, custom resources etc.)
+  - Listing events in a namespace. These include allocation of resources, failure to start, health checks failing etc.
+  - Describing pods using =kubectl describe pod=. This helps tremendously when you want to see metadata, events and more about your pod. Most of my startup issues have been solved by details from a quick describe command!
+  - Running commands in pods using =kubectl exec=  
+  - [[https://www.redhat.com/en/topics/containers/what-is-a-kubernetes-operator][Operators]], what they are and what they do.
+
