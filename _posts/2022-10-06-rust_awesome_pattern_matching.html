@@ -10,13 +10,13 @@ If you have followed me for a while, you know that I have really started enjoyin
 
 
 
-<div id="outline-container-orgd72599a" class="outline-2">
-<h2 id="orgd72599a">Basics of patterns</h2>
-<div class="outline-text-2" id="text-orgd72599a">
+<div id="outline-container-orgb51fbc7" class="outline-2">
+<h2 id="orgb51fbc7">Basics of patterns</h2>
+<div class="outline-text-2" id="text-orgb51fbc7">
 </div>
-<div id="outline-container-org51c0ba8" class="outline-3">
-<h3 id="org51c0ba8">Refutable vs irrefutable</h3>
-<div class="outline-text-3" id="text-org51c0ba8">
+<div id="outline-container-orgcfb750c" class="outline-3">
+<h3 id="orgcfb750c">Refutable vs irrefutable</h3>
+<div class="outline-text-3" id="text-orgcfb750c">
 <p>
 Patterns in Rust come in two types; refutable and irrefutable. Patterns that match conditionally are called refutable, while patterns that match any possible value are called irrefutable. Which one you can use will depend on the context. For example, a let-statement will need a irrefutable pattern, because what would happen if a variable in a let-statement doesn't get a value?
 </p>
@@ -55,17 +55,17 @@ We will see more examples of these kinds of statements and patterns below. If yo
 </div>
 </div>
 
-<div id="outline-container-orgc0936c7" class="outline-3">
-<h3 id="orgc0936c7">Destructuring</h3>
-<div class="outline-text-3" id="text-orgc0936c7">
+<div id="outline-container-org7e32510" class="outline-3">
+<h3 id="org7e32510">Destructuring</h3>
+<div class="outline-text-3" id="text-org7e32510">
 <p>
 Many patterns are patterns that destructure various types, and they can also be mixed and match together. Let's look at some of them.
 </p>
 </div>
 
-<div id="outline-container-org15cac17" class="outline-4">
-<h4 id="org15cac17">Tuples</h4>
-<div class="outline-text-4" id="text-org15cac17">
+<div id="outline-container-org152325b" class="outline-4">
+<h4 id="org152325b">Tuples</h4>
+<div class="outline-text-4" id="text-org152325b">
 <p>
 We already saw example of tuple destructuring in the last section, but let's take another look:
 </p>
@@ -134,9 +134,9 @@ Tuple structs are technically structs, which brings us to our next type of destr
 </div>
 
 
-<div id="outline-container-orgc063e53" class="outline-4">
-<h4 id="orgc063e53">Structs</h4>
-<div class="outline-text-4" id="text-orgc063e53">
+<div id="outline-container-org8c8f5b6" class="outline-4">
+<h4 id="org8c8f5b6">Structs</h4>
+<div class="outline-text-4" id="text-org8c8f5b6">
 <p>
 Structs are not that much different, and an example might show it clearly:
 </p>
@@ -173,9 +173,9 @@ One thing you should notice when destructuring structs is that the name have to 
 </div>
 
 
-<div id="outline-container-org69fd3ac" class="outline-4">
-<h4 id="org69fd3ac">Enums</h4>
-<div class="outline-text-4" id="text-org69fd3ac">
+<div id="outline-container-org1f10589" class="outline-4">
+<h4 id="org1f10589">Enums</h4>
+<div class="outline-text-4" id="text-org1f10589">
 <p>
 The simplest case for an enum is simply to match one with no data:
 </p>
@@ -222,9 +222,9 @@ If an enum has several arguments, you can do most of what you are used to from t
 </div>
 </div>
 
-<div id="outline-container-org7d00fcb" class="outline-4">
-<h4 id="org7d00fcb">Combined</h4>
-<div class="outline-text-4" id="text-org7d00fcb">
+<div id="outline-container-orgd2df6a0" class="outline-4">
+<h4 id="orgd2df6a0">Combined</h4>
+<div class="outline-text-4" id="text-orgd2df6a0">
 <p>
 You can also combine all of the above into your own patterns! Structs inside enums, enums inside tuples etc. The list goes on!
 </p>
@@ -266,9 +266,9 @@ if let Triangle(
 </div>
 
 
-<div id="outline-container-orgb1f2946" class="outline-3">
-<h3 id="orgb1f2946">Other patterns</h3>
-<div class="outline-text-3" id="text-orgb1f2946">
+<div id="outline-container-org0ac7fa9" class="outline-3">
+<h3 id="org0ac7fa9">Other patterns</h3>
+<div class="outline-text-3" id="text-org0ac7fa9">
 <p>
 There are other types of patterns as well, and these are mostly used with match which you will see more of below. The first one is the or-matcher:
 </p>
@@ -332,9 +332,9 @@ That should be the most important topics, but there might be things I've missed.
 </div>
 </div>
 
-<div id="outline-container-orgf32eee1" class="outline-3">
-<h3 id="orgf32eee1">Caveats</h3>
-<div class="outline-text-3" id="text-orgf32eee1">
+<div id="outline-container-org0fe06e4" class="outline-3">
+<h3 id="org0fe06e4">Caveats</h3>
+<div class="outline-text-3" id="text-org0fe06e4">
 <p>
 One minor caveat I have found is that Rust is finicky about floating points in patterns. Not about the capturing part, but if you try to use them in ranges and so on. It warns you that it is not supported. We all know how floating points behave, and that they are very sensitive to different scales and that they are rarely (if ever) exact. That probably explains why they are not recommended to use with more advanced Rust patterns.
 </p>
@@ -343,17 +343,17 @@ One minor caveat I have found is that Rust is finicky about floating points in p
 </div>
 
 
-<div id="outline-container-org09a26e3" class="outline-2">
-<h2 id="org09a26e3">Where to use pattern matching? (example time!)</h2>
-<div class="outline-text-2" id="text-org09a26e3">
+<div id="outline-container-org8307290" class="outline-2">
+<h2 id="org8307290">Where to use pattern matching? (example time!)</h2>
+<div class="outline-text-2" id="text-org8307290">
 <p>
 We have already seen some basic examples above, but let's dive a bit deeper and see how and where to use pattern matching. We have already seen lots of let and if-let statements, so let's look at match and patterns in function signatures!
 </p>
 </div>
 
-<div id="outline-container-org413c7a0" class="outline-3">
-<h3 id="org413c7a0">match</h3>
-<div class="outline-text-3" id="text-org413c7a0">
+<div id="outline-container-org9f75936" class="outline-3">
+<h3 id="org9f75936">match</h3>
+<div class="outline-text-3" id="text-org9f75936">
 <p>
 This is in my view the switch/case statement you are used to in other languages, but on steroids! match lets you write crazy powerful matchers. We have already looked at all the different patterns above, so let us have some quick examples:
 </p>
@@ -408,9 +408,9 @@ Here we have added a check to see if the string data sent in is not empty! Prett
 </div>
 </div>
 
-<div id="outline-container-orgea4c026" class="outline-3">
-<h3 id="orgea4c026">functions</h3>
-<div class="outline-text-3" id="text-orgea4c026">
+<div id="outline-container-org2f36b2d" class="outline-3">
+<h3 id="org2f36b2d">functions</h3>
+<div class="outline-text-3" id="text-org2f36b2d">
 <p>
 You can use patterns in function definitions! That is really cool, right? You do have to remember that the patterns have to be irrefutable like for let. Don't be sad yet! It still means you can use a lot of destructuring operations we have seen above! Let's look at some examples:
 </p>

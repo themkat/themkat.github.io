@@ -20,13 +20,13 @@ I will refer to the structures we are working on as binary strings. Binary strin
 </p>
 
 
-<div id="outline-container-orgee81d82" class="outline-2">
-<h2 id="orgee81d82">The algorithm</h2>
-<div class="outline-text-2" id="text-orgee81d82">
+<div id="outline-container-orga9b4628" class="outline-2">
+<h2 id="orga9b4628">The algorithm</h2>
+<div class="outline-text-2" id="text-orga9b4628">
 </div>
-<div id="outline-container-orgd73c756" class="outline-3">
-<h3 id="orgd73c756">Pseudo code and basics</h3>
-<div class="outline-text-3" id="text-orgd73c756">
+<div id="outline-container-org3b9150f" class="outline-3">
+<h3 id="org3b9150f">Pseudo code and basics</h3>
+<div class="outline-text-3" id="text-org3b9150f">
 <p>
 How do we count the number of 1 bits in a binary string? One possible solution is to clear the lowest 1 bit in each step, and then count the number of steps needed for the input to become 0. This is the algorithm we will look at today. We will work on unsigned ints here, but it could easily have been chars, unsigned longs or something else. Unsigned because we want to count the number of bits, even for negative numbers, so we would have to cast signed variants to unsigned types. I find it easier to work on numbers where the lowest possible value is 0 in this case. The basic algorithm looks like this in a while-loop variant:
 </p>
@@ -64,9 +64,9 @@ So we do an operation <code>x &amp; (x - 1)</code> on an unsigned number (can al
 </div>
 </div>
 
-<div id="outline-container-org6d7cb66" class="outline-3">
-<h3 id="org6d7cb66">Explaining the base step</h3>
-<div class="outline-text-3" id="text-org6d7cb66">
+<div id="outline-container-org69ee5b9" class="outline-3">
+<h3 id="org69ee5b9">Explaining the base step</h3>
+<div class="outline-text-3" id="text-org69ee5b9">
 <p>
 We know from the previous section that  <code>x &amp; (x - 1)</code> removes the lowest 1 bit in each step. The first time you see it, it can be a bit confusing. I think it is best explained by looking at a few examples to gain some intuition. First of all, remember that the AND-operation (<code>&amp;</code>) only returns 1 if both bits are one. AND has the following truth-table (a and b are the input bits, result is the result of the operation):
 </p>
@@ -126,9 +126,9 @@ To make the examples simple, they will be 8 bit data aka one byte. In my view, t
 </div>
 
 
-<div id="outline-container-orgef6eb15" class="outline-4">
-<h4 id="orgef6eb15">Example input: 4</h4>
-<div class="outline-text-4" id="text-orgef6eb15">
+<div id="outline-container-orgcaae21d" class="outline-4">
+<h4 id="orgcaae21d">Example input: 4</h4>
+<div class="outline-text-4" id="text-orgcaae21d">
 <p>
 Let us first look at the number 4 (<code>00000100</code>). What is the result of doing the operation above:
 </p>
@@ -145,9 +145,9 @@ By looking at x and x-1, we see that the and-operation clearly has to have the r
 </div>
 </div>
 
-<div id="outline-container-orgeece2ca" class="outline-4">
-<h4 id="orgeece2ca">Example input: 7</h4>
-<div class="outline-text-4" id="text-orgeece2ca">
+<div id="outline-container-org6e6093f" class="outline-4">
+<h4 id="org6e6093f">Example input: 7</h4>
+<div class="outline-text-4" id="text-org6e6093f">
 <div class="org-src-container">
 <pre class="src src-text">x:           00000111
 x - 1:       00000110
@@ -157,9 +157,9 @@ x &amp; (x - 1): 00000110
 </div>
 </div>
 
-<div id="outline-container-orgaaf821e" class="outline-4">
-<h4 id="orgaaf821e">Example input: 25</h4>
-<div class="outline-text-4" id="text-orgaaf821e">
+<div id="outline-container-orgee9aa6c" class="outline-4">
+<h4 id="orgee9aa6c">Example input: 25</h4>
+<div class="outline-text-4" id="text-orgee9aa6c">
 <div class="org-src-container">
 <pre class="src src-text">x:           00011001
 x - 1:       00011000
@@ -169,9 +169,9 @@ x &amp; (x - 1): 00011000
 </div>
 </div>
 
-<div id="outline-container-orga32d3e6" class="outline-4">
-<h4 id="orga32d3e6">Example input: 24</h4>
-<div class="outline-text-4" id="text-orga32d3e6">
+<div id="outline-container-org1105d98" class="outline-4">
+<h4 id="org1105d98">Example input: 24</h4>
+<div class="outline-text-4" id="text-org1105d98">
 <div class="org-src-container">
 <pre class="src src-text">x:           00011000
 x - 1:       00010111
@@ -187,9 +187,9 @@ If you try to do the step again you have x (<code>00010000</code>), x-1 (<code>0
 </div>
 </div>
 
-<div id="outline-container-org202c7c9" class="outline-2">
-<h2 id="org202c7c9">Where can this be useful?</h2>
-<div class="outline-text-2" id="text-org202c7c9">
+<div id="outline-container-org90cd781" class="outline-2">
+<h2 id="org90cd781">Where can this be useful?</h2>
+<div class="outline-text-2" id="text-org90cd781">
 <p>
 The most obvious place I can think of this as being useful is when you have encoded data into bits. One example include saving the on-off state of something like Conway's game of life into bits (each bit is an on-off cell in the grid). Then you can simply mask the data, and then count the number of bits to find adjacent neighbors. Choosing an algorithm for that case depends on if you are optimizing for speed of program size.
 </p>
