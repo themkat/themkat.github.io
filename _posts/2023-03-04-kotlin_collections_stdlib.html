@@ -21,9 +21,9 @@ Note that the operations below are my picks. You may pick out others depending o
 </p>
 
 
-<div id="outline-container-orgec4c2bc" class="outline-2">
-<h2 id="orgec4c2bc">Recap: List basics</h2>
-<div class="outline-text-2" id="text-orgec4c2bc">
+<div id="outline-container-org6990306" class="outline-2">
+<h2 id="org6990306">Recap: List basics</h2>
+<div class="outline-text-2" id="text-org6990306">
 <p>
 <b>If you are already familiar with the basics of lists, feel free to skip this part.</b>
 </p>
@@ -125,9 +125,9 @@ If you still feel like you need some more refreshing on Kotlin collections, <a h
 </div>
 
 
-<div id="outline-container-orgf4b010d" class="outline-3">
-<h3 id="orgf4b010d">Sequences</h3>
-<div class="outline-text-3" id="text-orgf4b010d">
+<div id="outline-container-orgbcf1240" class="outline-3">
+<h3 id="orgbcf1240">Sequences</h3>
+<div class="outline-text-3" id="text-orgbcf1240">
 <p>
 The operations above all returns new lists in each operations. You may remember that streams in Java have lazy evaluation. Why don't the lists in Kotlin provide the same? Well, we have to consider that streams are not pure lists. Kotlin have its own stream type called <code>Sequence</code>. These will not return a list right away, and will support lazy evaluation and other things you are used to in Java streams (e.g, only being executed once a terminal operation like <code>toList()</code> is done). So when should you use sequences? If you chain multiple operations on a list of many elements, it might be beneficial to consider to use sequences. This article was not meant to cover the basics, so you should read <a href="https://kotlinlang.org/docs/sequences.html">the official documentation</a> if you are still confused. For now, you should know that most (if not all) operations we cover here will work with sequences as well.
 </p>
@@ -137,9 +137,9 @@ The operations above all returns new lists in each operations. You may remember 
 
 
 
-<div id="outline-container-org63d2277" class="outline-2">
-<h2 id="org63d2277">Effective searching for single elements</h2>
-<div class="outline-text-2" id="text-org63d2277">
+<div id="outline-container-orga0a9973" class="outline-2">
+<h2 id="orga0a9973">Effective searching for single elements</h2>
+<div class="outline-text-2" id="text-orga0a9973">
 <p>
 Sometimes we want to get an index of an element in a list. This can simply be done by use of the <code>indexOf</code> extension function:
 </p>
@@ -195,9 +195,9 @@ mySortedList.binarySearch(5, 1, 5)
 </div>
 
 
-<div id="outline-container-org3912137" class="outline-2">
-<h2 id="org3912137">Indexed higher order functions</h2>
-<div class="outline-text-2" id="text-org3912137">
+<div id="outline-container-orgc3ddd52" class="outline-2">
+<h2 id="orgc3ddd52">Indexed higher order functions</h2>
+<div class="outline-text-2" id="text-orgc3ddd52">
 <p>
 We have already briefly discussed higher order functions like <code>map</code>, <code>filter</code>, and <code>reduce</code>, in the recap-section above. In some cases you might want the indices of the elements as well.
 </p>
@@ -229,9 +229,9 @@ All the regular higher order functions provide indexed variants, so you will fin
 
 
 
-<div id="outline-container-org554131a" class="outline-2">
-<h2 id="org554131a">Combining lists</h2>
-<div class="outline-text-2" id="text-org554131a">
+<div id="outline-container-org7e69ef6" class="outline-2">
+<h2 id="org7e69ef6">Combining lists</h2>
+<div class="outline-text-2" id="text-org7e69ef6">
 <p>
 Sometimes you may want to concatenate list structures. Thanks to Kotlins operator overloading, we can use the <code>+</code> operator to do this:
 </p>
@@ -277,9 +277,9 @@ You may also sometimes want to intersect two lists, and get only the elements th
 
 
 
-<div id="outline-container-org241b880" class="outline-2">
-<h2 id="org241b880">zipping lists</h2>
-<div class="outline-text-2" id="text-org241b880">
+<div id="outline-container-orgaa537db" class="outline-2">
+<h2 id="orgaa537db">zipping lists</h2>
+<div class="outline-text-2" id="text-orgaa537db">
 <p>
 Some of you may wonder: what does zipping mean? If you think of a zipper on a jacket or similar, it puts two-and-two elements together. In Kotlin you can think of each strip of your zipper as a list. It combines the list into pairs of the same index of each list:
 </p>
@@ -343,9 +343,9 @@ myZipped.unzip()
 
 
 
-<div id="outline-container-orgf4936d1" class="outline-2">
-<h2 id="orgf4936d1">Partitioning lists (split in two)</h2>
-<div class="outline-text-2" id="text-orgf4936d1">
+<div id="outline-container-orgb88d57a" class="outline-2">
+<h2 id="orgb88d57a">Partitioning lists (split in two)</h2>
+<div class="outline-text-2" id="text-orgb88d57a">
 <p>
 There are cases where you may sometimes want to split a list in two, based upon some given criteria. One famous example includes the quicksort algorithm. You will find a method for partitioning list called <code>partition</code> in the standard library. It takes in a predicate (i.e, function returning true or false), and returns all elements satisfying the predicate into the first element of a pair, and those who do not into the second element.
 </p>
@@ -364,9 +364,9 @@ myList.partition {
 </div>
 
 
-<div id="outline-container-org56513dc" class="outline-2">
-<h2 id="org56513dc">Chunking</h2>
-<div class="outline-text-2" id="text-org56513dc">
+<div id="outline-container-orgfafcda1" class="outline-2">
+<h2 id="orgfafcda1">Chunking</h2>
+<div class="outline-text-2" id="text-orgfafcda1">
 <p>
 Sometimes you may want to split a list into chunks. For those of you who have worked with batch processing, you may be familiar with this concept. The idea is to split a number of elements into groups of fixed length. Let us use an example of tasks we want done. We decide to split them into days, and do a number of tasks every day. 
 </p>
@@ -399,9 +399,9 @@ Each sublist will on our example indicate the tasks to be done each day. This pr
 </div>
 
 
-<div id="outline-container-org74a1867" class="outline-2">
-<h2 id="org74a1867">Random permutation of elements</h2>
-<div class="outline-text-2" id="text-org74a1867">
+<div id="outline-container-org9eb48be" class="outline-2">
+<h2 id="org9eb48be">Random permutation of elements</h2>
+<div class="outline-text-2" id="text-org9eb48be">
 <p>
 Have you ever wanted to give the elements of your list a new random ordering? In other words; a different permutation of the list elements. If yes, the standard library has just the function for you called <code>shuffled</code>:
 </p>
