@@ -1,0 +1,102 @@
+---
+layout: blogpost
+title: "The academically hostile professor - How NOT to teach and promote learning"
+tags: opinions teaching programming
+---
+
+<p>
+This time I'm going to do something different than usual; we are going to look into a story from my past that I recently remembered. Teaching and promoting the joy of learning is something I care about immensely. If we could just show more joy, and point newcomers to good resources, I think we would have more great material out there (i.e, books, indie games blogs, and other works building upon said knowledge). The story I will share today is a story about how to NOT promote joy with relation to math and physics, but can be extended to all sorts of fields. I have made sure to NEVER do it myself. Hopefully after reading this article, you will stop behaving like this if you do&#x2026;
+</p>
+
+
+
+<p>
+<b>NB: Like all experiences, the opinions expressed can be subjective. I would still argue that most of us can agree that this is not in any way good behavior to make people feel good about trying to learn.</b>
+</p>
+
+
+<div id="outline-container-org1415ba4" class="outline-2">
+<h2 id="org1415ba4">Some background on the story and concepts</h2>
+<div class="outline-text-2" id="text-org1415ba4">
+<p>
+Let's start with some background. Many years ago I was taking a university course on numerical solving of partial differential equations (PDEs), as I LOVE when mathematics and computers intersect like in simulations of natural phenomena. If you are not familiar with PDEs, they are mathematical equations describing various phenomena. What makes them more complicated than equations you may have seen before is that PDEs include partial derivatives (i.e, functions derived with relation to specific variables). If we have a function f, then its partial derivative with respect to x would look like:
+</p>
+
+\begin{equation}
+\fract{\partial f}{\partial x}
+\end{equation}
+
+<p>
+If you want to learn the basics of doing numerical solutions to partial differential equations, I think the best material is the course notes from Hans Petter Langtangen (RIP). He was a living legend, and loved teaching. <a href="https://hplgit.github.io/INF5620/doc/web/notes.html">The course website with links to PDF versions are still available</a>, even if the page styling is broken. Like we will discuss shortly, there is always differences in what resources you get the most out of. Sadly, this is the one I learned the basics of, so I have no other recommendations. Some people might want to start with <a href="https://en.wikipedia.org/wiki/Partial_differential_equation">the Wikipedia article on PDEs</a>.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org7753dcb" class="outline-2">
+<h2 id="org7753dcb">"And now the conclusion&#x2026;" (aka the main story if you didn't take the Star Trek The Next Generation reference)</h2>
+<div class="outline-text-2" id="text-org7753dcb">
+<p>
+The course I took was amazing, but the professor was ABSOLUTELY F**KING NOT. He was arrogant, and had an attitude that could repel even the most eager student of mathematics. At the time, I was very curious on fluid motion, and wanted to grok it and understand the basics of the Navier Stokes equations to simulate fluids (fluids = gasses, water, liquids etc.). The resources I had found were convoluted, and I had trouble understanding them. Who better to ask for advice than the professor of a course on PDEs? Seemingly anyone else on the entire planet. As this story is many years old, I will paraphrase below.
+</p>
+
+
+<p class="verse">
+Me: Do you know of any good resources to learn about numerical solutions to the Navier Stokes equations?<br />
+<br />
+Professor: Go to the library.<br />
+</p>
+
+<p>
+Yes, this was the actual conversation, if it can even be called that. If you don't see the problem here, you should probably go home and rethink your life. The answer is in the same vein as "search the internet". If you ask a question like this, it is often implied that you are looking for specific resources.
+</p>
+
+
+<p>
+What if the professor had no specific resources to recommend? Or that it was so long ago that they did not remember? As a professor doing teaching, you should at least encourage learning, and at least not make people feel lost. A good response would have been something akin to:
+</p>
+
+<p class="verse">
+Professor: Sorry, it has been so long since I learned this topic. I can see if I find something before the next lecture, though I can't promise anything.<br />
+</p>
+
+<p>
+The last part can have some sort of variation depending on your schedule. At least don't be a dickhead.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org5da9b7b" class="outline-2">
+<h2 id="org5da9b7b">Afterthoughts</h2>
+<div class="outline-text-2" id="text-org5da9b7b">
+<p>
+What if you want to look into the Navier Stokes equations? I'm in no way an expert, and have only basic understanding here. When you start reading about them, they might seem VERY complicated (as they were for me). You should start by looking into the equations for incompressible fluids (i.e, constant volume, and not being stretched or compressed). 
+</p>
+
+
+<p>
+Some resources that have helped me:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_equations">The Wikipedia article</a></li>
+<li><a href="https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-38-fast-fluid-dynamics-simulation-gpu">GPU Gems chapter 38 - Fast Fluid dynamics simulation on GPUs</a> (recommend to read up on iterative methods to solve systems of equations, aka matrix equations. No resources to recommend sadly).</li>
+<li><a href="https://developer.nvidia.com/gpugems/gpugems3/part-v-physics-simulation/chapter-30-real-time-simulation-and-rendering-3d-fluids">GPU Gems 3 chapter 30 - Real-Time Simulation and Rendering of 3D fluids</a> (read the previous one and understand it first, or else it will seem extra extremely daunting)</li>
+</ul>
+
+<p>
+The main take away to demystify the equation, for me, was to understand that it's Newtons Second Law (\(F = ma\), or force equals mass times acceleration) applied to fluid motion. Often a function f or g is added to the result, which symbolizes external forces like gravity or something else interacting with the fluid.
+</p>
+
+
+<p>
+Remember that these things are known to be hard, so don't be sad if it takes some time to understand. You might still enjoy the articles, even if you only understand parts of it at first. Even if you use a ready made fluid simulator in a game engine, you might like to know some details on how these simulators work.
+</p>
+
+
+<p>
+Happy hacking! :)
+</p>
+</div>
+</div>

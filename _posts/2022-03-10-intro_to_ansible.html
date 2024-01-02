@@ -35,9 +35,9 @@ If you want to play with Ansible, I can recommend running it against a virtual m
 </p>
 
 
-<div id="outline-container-org212e205" class="outline-2">
-<h2 id="org212e205">What can Ansible be used for?</h2>
-<div class="outline-text-2" id="text-org212e205">
+<div id="outline-container-org7abf789" class="outline-2">
+<h2 id="org7abf789">What can Ansible be used for?</h2>
+<div class="outline-text-2" id="text-org7abf789">
 <p>
 We mentioned configuration management and deployments, so it can obviously be used to manage your machines (physical, virtual etc.). You might just brush this off, but think of some possible use cases first (some are not obvious):
 </p>
@@ -59,9 +59,9 @@ So if you still thought of Ansible as a boring configuration tool before this li
 </div>
 
 
-<div id="outline-container-org67b27c3" class="outline-2">
-<h2 id="org67b27c3">Basics of Ansible</h2>
-<div class="outline-text-2" id="text-org67b27c3">
+<div id="outline-container-orgb0c42c1" class="outline-2">
+<h2 id="orgb0c42c1">Basics of Ansible</h2>
+<div class="outline-text-2" id="text-orgb0c42c1">
 <p>
 We have already introduced Ansible as a configuration management system, but what more do we need to know before we start using it for something? The most important file we need is something called an inventory file. An inventory file describes the machines we will connect to, as well as information on them like user names, SSH key to use (on your local filesystem) and more depending on your needs. (<a href="https://docs.ansible.com/ansible/latest/reference_appendices/config.html">there are also more ways to configuring Ansible that you can look into</a>, but for now we will keep it simple). The machines are divided into groups, which can contain one or more machines. Groups are what we are working with in Ansible, when describing where to run our commands.
 </p>
@@ -101,9 +101,9 @@ Here you also see a new concept of variables in action, which we will see more o
 </div>
 
 
-<div id="outline-container-orge5cac6e" class="outline-2">
-<h2 id="orge5cac6e">Ad-hoc tasks execution</h2>
-<div class="outline-text-2" id="text-orge5cac6e">
+<div id="outline-container-org1c36bee" class="outline-2">
+<h2 id="org1c36bee">Ad-hoc tasks execution</h2>
+<div class="outline-text-2" id="text-org1c36bee">
 <p>
 We have an inventory file, we so we can finally start using Ansible for something! Using it for ad-hoc task execution can be a very handy way of running commands on multiple machines. Let us look at some examples. 
 </p>
@@ -148,9 +148,9 @@ If you run the above commands, you will see some hosts giving a status of change
 </div>
 
 
-<div id="outline-container-org18aa706" class="outline-2">
-<h2 id="org18aa706">Configuration management - Playbooks</h2>
-<div class="outline-text-2" id="text-org18aa706">
+<div id="outline-container-orgd4d207f" class="outline-2">
+<h2 id="orgd4d207f">Configuration management - Playbooks</h2>
+<div class="outline-text-2" id="text-orgd4d207f">
 <p>
 While running commands on the server ad-hoc is great, the main strength of Ansible is its playbooks. Why? When we run commands on various servers, we can quickly make unicorn servers. A unicorn server is a server we can't reproduce quickly if something goes wrong (trust me, you will quickly forget a step or two you did manually). Automating the setup, and maintenance of servers, will avoid this problems and make them easier for you to handle.
 </p>
@@ -199,9 +199,9 @@ Ansible playbooks have expressions like variables, basic string operations etc.,
 </div>
 
 
-<div id="outline-container-org6b1a763" class="outline-3">
-<h3 id="org6b1a763">Example: Installing Emacs and setting up my configuration</h3>
-<div class="outline-text-3" id="text-org6b1a763">
+<div id="outline-container-org5ff0a64" class="outline-3">
+<h3 id="org5ff0a64">Example: Installing Emacs and setting up my configuration</h3>
+<div class="outline-text-3" id="text-org5ff0a64">
 <p>
 For our first example, let's do the most important initial setup I do on new computers: installing and configuring Emacs! To make it as simple as possible, let's just assume that package caches are updated and ready for use.
 </p>
@@ -247,9 +247,9 @@ The git module works as you would expect: clones the git repository to the selec
 </div>
 
 
-<div id="outline-container-org51cd2ba" class="outline-3">
-<h3 id="org51cd2ba">Example: FTP server</h3>
-<div class="outline-text-3" id="text-org51cd2ba">
+<div id="outline-container-org4ca7972" class="outline-3">
+<h3 id="org4ca7972">Example: FTP server</h3>
+<div class="outline-text-3" id="text-org4ca7972">
 <p>
 Next, let's make it a bit more advanced to introduce more concepts. We'll make a simple FTP server. Let's update package caches if we use a Debian based system (because apt requires that we have updated package archives to install a program). 
 </p>
@@ -327,9 +327,9 @@ Beyond those features, the other features probably explains themselves. when run
 </div>
 
 
-<div id="outline-container-org537456c" class="outline-3">
-<h3 id="org537456c">Example: Setting up user accounts and Emacs for each, variable amount of users</h3>
-<div class="outline-text-3" id="text-org537456c">
+<div id="outline-container-org174b2fc" class="outline-3">
+<h3 id="org174b2fc">Example: Setting up user accounts and Emacs for each, variable amount of users</h3>
+<div class="outline-text-3" id="text-org174b2fc">
 <p>
 So far we've seen a several features, and got them explained briefly. In this section, we will look at a <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html">loop construct</a>, specifically with_items. In my own playbooks I usually use with_items or with_indexed_items, but loop does the same in a more modern way.
 </p>
@@ -373,9 +373,9 @@ Here we iterate on the users variable, running the module user and git for each 
 </div>
 
 
-<div id="outline-container-org2d57755" class="outline-3">
-<h3 id="org2d57755">Modules and extra tools to make playbooks</h3>
-<div class="outline-text-3" id="text-org2d57755">
+<div id="outline-container-org4e8c1e7" class="outline-3">
+<h3 id="org4e8c1e7">Modules and extra tools to make playbooks</h3>
+<div class="outline-text-3" id="text-org4e8c1e7">
 <p>
 There are <a href="https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html">many Ansible modules you can use</a>, and if you don't find what you need you will probably find it in a collection (see below). Some useful highlights include:
 </p>
@@ -402,9 +402,9 @@ The interested reader might also check out <a href="https://docs.ansible.com/ans
 </div>
 
 
-<div id="outline-container-orgca0ec56" class="outline-3">
-<h3 id="orgca0ec56">Inventory plugins</h3>
-<div class="outline-text-3" id="text-orgca0ec56">
+<div id="outline-container-orgd66eca0" class="outline-3">
+<h3 id="orgd66eca0">Inventory plugins</h3>
+<div class="outline-text-3" id="text-orgd66eca0">
 <p>
 Maybe you manage a lot of computers, create new ones quickly, and find it tedious to update your inventory file? It grows big too! Do I really need to write all my IPs/hostnames in a file? No! There are actually <a href="https://docs.ansible.com/ansible/latest/collections/community/general/index.html#inventory-plugins">plugins that can help you dynamically fetch the inventory</a> based on certain parameters. Also, <a href="https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html">AWS EC2 plugin</a>, <a href="https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_inventory.html">Azure plugin</a>, and many more exists, even if you sometimes have to use <a href="https://docs.ansible.com/ansible/latest/galaxy/user_guide.html">ansible-galaxy to install them</a>. Maybe you have tagged your virtual machine or something similar to identify them? Then use those specific tags to put them into host groups, and you are all set!
 </p>
@@ -416,9 +416,9 @@ If you can't find what you are looking for somewhere else, you can always <a hre
 </div>
 </div>
 
-<div id="outline-container-org4d7f64c" class="outline-3">
-<h3 id="org4d7f64c">Testing playbooks?</h3>
-<div class="outline-text-3" id="text-org4d7f64c">
+<div id="outline-container-org0efecff" class="outline-3">
+<h3 id="org0efecff">Testing playbooks?</h3>
+<div class="outline-text-3" id="text-org0efecff">
 <p>
 There are indeed tools you can use to test your playbooks, and to work in a more test driven approach. My approach so far has been the following:
 </p>
@@ -434,9 +434,9 @@ Testing playbooks is a topic in itself, so to not clutter up the entire article 
 </div>
 
 
-<div id="outline-container-org62fb6cf" class="outline-3">
-<h3 id="org62fb6cf">Roles and collections</h3>
-<div class="outline-text-3" id="text-org62fb6cf">
+<div id="outline-container-orge6cbd24" class="outline-3">
+<h3 id="orge6cbd24">Roles and collections</h3>
+<div class="outline-text-3" id="text-orge6cbd24">
 <p>
 Both roles and collection can be installed and handled with <a href="https://docs.ansible.com/ansible/latest/galaxy/user_guide.html">the ansible-galaxy tool</a>.
 </p>
@@ -465,9 +465,9 @@ Collections are, like the name suggests, collections of roles, plugins, modules 
 </div>
 </div>
 
-<div id="outline-container-orga1e2762" class="outline-2">
-<h2 id="orga1e2762">Further reading and resources</h2>
-<div class="outline-text-2" id="text-orga1e2762">
+<div id="outline-container-org1c7fac8" class="outline-2">
+<h2 id="org1c7fac8">Further reading and resources</h2>
+<div class="outline-text-2" id="text-org1c7fac8">
 <p>
 Hopefully you now know the basics of Ansible, and have some links for gaining more knowledge. To learn Ansible, I think the best resource is <a href="https://www.ansiblefordevops.com/">Jeff Geerling's book Ansible for Devops</a>. If you prefer videos, he has also done a <a href="https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN">Ansible 101 video series</a>. These resources covers almost everything you would like to know. To really learn Ansible you have to play around with it as well off course.
 </p>

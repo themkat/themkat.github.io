@@ -21,9 +21,9 @@ You may already have found some resources related to VSCode around, like <a href
 </p>
 
 
-<div id="outline-container-orgdd4e5e7" class="outline-2">
-<h2 id="orgdd4e5e7">Basic GBA debug workflow (editor independent)</h2>
-<div class="outline-text-2" id="text-orgdd4e5e7">
+<div id="outline-container-orga2a30cc" class="outline-2">
+<h2 id="orga2a30cc">Basic GBA debug workflow (editor independent)</h2>
+<div class="outline-text-2" id="text-orga2a30cc">
 <p>
 No matter which editor you debug in, the workflow is about the same. You will need <a href="https://devkitpro.org/wiki/Getting_Started">DevkitPro gba-dev</a> and an emulator like <a href="https://mgba.io/">mGBA</a>. If you want to familiarize yourself with some C code for GBA, as well as Makefiles with CFlags and other build options, there is <a href="https://github.com/devkitPro/gba-examples">an example repo you can check out</a> :)
 </p>
@@ -51,9 +51,9 @@ The above approach should in theory work for both C (and C++) and assembly code,
 </div>
 </div>
 
-<div id="outline-container-org7d9112d" class="outline-2">
-<h2 id="org7d9112d">Adapting it to Emacs with dap-mode</h2>
-<div class="outline-text-2" id="text-org7d9112d">
+<div id="outline-container-org7bb57ed" class="outline-2">
+<h2 id="org7bb57ed">Adapting it to Emacs with dap-mode</h2>
+<div class="outline-text-2" id="text-org7bb57ed">
 <p>
 We will use <a href="https://github.com/emacs-lsp/dap-mode">dap-mode</a> with the dap-gdb-lldb option here. Under the hood, it uses the debug adapter from the <a href="https://github.com/WebFreak001/code-debug">Native Debug VSCode extension</a>. Configuring it is described on <a href="https://emacs-lsp.github.io/dap-mode/page/configuration/#native-debug-gdblldb">the dap-mode webpages</a>. After we have configured dap-mode, we could in theory reuse the launch.json configurations from the VSCode related articles above. That will require that you also use lsp-mode, as dap-launch depends on the lsp-workspace-root function and will not resolve when lsp-mode is not used. I don't use lsp-mode with C (company-clang and company-c-headers provide what I need), so the next logical solution would be to create a debug template ourselves:
 </p>
@@ -87,9 +87,9 @@ No matter which way you start a debug process, it will look about like this with
 </div>
 
 
-<div id="outline-container-orgf8cda42" class="outline-2">
-<h2 id="orgf8cda42">Simplifying with gba-debug.el</h2>
-<div class="outline-text-2" id="text-orgf8cda42">
+<div id="outline-container-org7fdf2f7" class="outline-2">
+<h2 id="org7fdf2f7">Simplifying with gba-debug.el</h2>
+<div class="outline-text-2" id="text-org7fdf2f7">
 <p>
 The solutions above entails some manual work, and that lead me to automate it. Wouldn't it be nice to just run one simple command, and then everything compiles and your debug process just automatically begin? That's exactly what I was thinking, <a href="https://github.com/themkat/emacs-gba-debug">so I created a simple Emacs extension</a>. If you use a Makefile to build, and configure the path to mGBA and DevkitARMs gdb, you can debug a GBA program directly with <code>M-x gba-debug-program</code>. No need to compile manually, run mGBA manually or anything else! 
 </p>
