@@ -38,9 +38,9 @@ One very obvious con to the project is that the library it is using is in public
 
 
 
-<div id="outline-container-orgabc044c" class="outline-2">
-<h2 id="orgabc044c">Dependencies needed</h2>
-<div class="outline-text-2" id="text-orgabc044c">
+<div id="outline-container-org5fe7865" class="outline-2">
+<h2 id="org5fe7865">Dependencies needed</h2>
+<div class="outline-text-2" id="text-org5fe7865">
 <p>
 As mentioned before, vterm uses an external C library to do most of the heavy lifting. It may then not come as a shock that compiling this library is needed. To do this, CMake and libtool is used. Installing these should be super simple on most systems. Homebrew on Mac OS X have both:
 </p>
@@ -66,9 +66,9 @@ You don't need to worry about building anything yourself beyond this point! The 
 </div>
 
 
-<div id="outline-container-org2ad592d" class="outline-2">
-<h2 id="org2ad592d">Configuration and usage</h2>
-<div class="outline-text-2" id="text-org2ad592d">
+<div id="outline-container-orgf8009fc" class="outline-2">
+<h2 id="orgf8009fc">Configuration and usage</h2>
+<div class="outline-text-2" id="text-orgf8009fc">
 <p>
 vterm can be installed directly from source or <a href="https://melpa.org/#/vterm">through Melpa</a>. I use <code>use-package</code> to install and configure it, which looks like this:
 </p>
@@ -124,9 +124,9 @@ Note that by default, vterm only handles ONE terminal inside of Emacs.
 </div>
 
 
-<div id="outline-container-org7b8538d" class="outline-2">
-<h2 id="org7b8538d">Closing remarks</h2>
-<div class="outline-text-2" id="text-org7b8538d">
+<div id="outline-container-orgc7533ff" class="outline-2">
+<h2 id="orgc7533ff">Closing remarks</h2>
+<div class="outline-text-2" id="text-orgc7533ff">
 <p>
 You may ask: With this awesome terminal inside Emacs, surely you don't need any other terminal programs? I still use other ones, and don't call me Shirley. (sorry, I had to). The main reason here is that old habits die hard. On my setups I usually have a lot of terminals open at the same time. That should be possible with vterm by using the <a href="https://github.com/suonlight/multi-vterm/">multi-vterm</a>, though I have not tried that one yet. Who knows, maybe I will replace my many iterm2 tabs with vterm buffers in the future?
 </p>
