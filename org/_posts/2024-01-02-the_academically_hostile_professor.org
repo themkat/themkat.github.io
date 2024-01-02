@@ -20,7 +20,7 @@ This time I'm going to do something different than usual; we are going to look i
 Let's start with some background. Many years ago I was taking a university course on numerical solving of partial differential equations (PDEs), as I LOVE when mathematics and computers intersect like in simulations of natural phenomena. If you are not familiar with PDEs, they are mathematical equations describing various phenomena. What makes them more complicated than equations you may have seen before is that PDEs include partial derivatives (i.e, functions derived with relation to specific variables). If we have a function f, then its partial derivative with respect to x would look like:
 
 \begin{equation}
-\fract{\partial f}{\partial x}
+\frac{\partial f}{\partial x}
 \end{equation}
 
 If you want to learn the basics of doing numerical solutions to partial differential equations, I think the best material is the course notes from Hans Petter Langtangen (RIP). He was a living legend, and loved teaching. [[https://hplgit.github.io/INF5620/doc/web/notes.html][The course website with links to PDF versions are still available]], even if the page styling is broken. Like we will discuss shortly, there is always differences in what resources you get the most out of. Sadly, this is the one I learned the basics of, so I have no other recommendations. Some people might want to start with [[https://en.wikipedia.org/wiki/Partial_differential_equation][the Wikipedia article on PDEs]].
