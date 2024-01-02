@@ -36,10 +36,13 @@ Me: Do you know of any good resources to learn about numerical solutions to the 
 Professor: Go to the library.
 #+END_VERSE
 
+(resource in this context refer to books, webpages, videos and so on)
+
+
 Yes, this was the actual conversation, if it can even be called that. If you don't see the problem here, you should probably go home and rethink your life. The answer is in the same vein as "search the internet". If you ask a question like this, it is often implied that you are looking for specific resources.
 
 
-What if the professor had no specific resources to recommend? Or that it was so long ago that they did not remember? As a professor doing teaching, you should at least encourage learning, and at least not make people feel lost. A good response would have been something akin to:
+What if the professor had no specific resources to recommend? Or that it was so long ago that they did not remember? As a professor doing teaching, you should at least encourage learning, and at least not make people feel lost. We all learn in different ways after all, and one resource might not work for everyone. A good response would have been something akin to:
 
 #+BEGIN_VERSE
 Professor: Sorry, it has been so long since I learned this topic. I can see if I find something before the next lecture, though I can't promise anything.
