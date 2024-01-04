@@ -1,0 +1,191 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Emacs package highlight - Centaur Tabs - The best tab (UI) system for Emacs!"
+tags: emacs editor
+related_tags_count: 1
+preview_image: assets/img/backenddev/backend.png
+---
+#+END_EXPORT
+
+My relationship with tabs as a UI element is a bit ambivalent. I really enjoy tabs in web browsers, except maybe the missing option to group tabs in most browsers. In most editors and Integrated Developer Environments (IDEs) I have tried through the years, they never feel enjoyable to me. That might be because I have very specific needs and opinions on how things should work. Last autumn, I found an Emacs package called centaur-tabs and have been using it ever since. So far, it is the only tab package I have enjoyed! Continue reading to see why.
+
+
+
+This should not need to be mentioned, but I use Emacs for ME! If you don't like a package, that is okay. My hope is to inspire you to try new packages that I enjoy. I don't give a shit if Emacs maintainers, your mom, the pope, or someone else hate a package I use. People will always have different opinions. I got a lot of flack by one guy in my YouTube comments when mentioning Helm, as he thought it was trash, with the proof being that none of the top Emacs maintainers use it or contribute to it. He did not enjoy that it overrides a lot of standard Emacs behavior either, but that is what I REALLY enjoy about it. As said by Howard Roark in The Fountainhead by Ayn Rand (movie version): 
+#+BEGIN_VERSE
+"MY work done MY way, nothing else matters to me"
+#+END_VERSE
+(feel free to read [[https://themkat.net/2021/09/22/essential_ayn_rand.html][my article on recommended books by Ayn Rand]] if you are curious)
+
+
+*NB! Packages might change, and this article covers how the package worked at January 4th 2024. You can find [[https://github.com/themkat/.emacs.d][my up-to-date Emacs configuration on Github]]. Search for centaur-tabs, and you will see the config if I still use the package in the future.*
+
+
+* What I expect from tab packages
+Many years ago I tried other tab packages in Emacs, and didn't really enjoy them that much. As I experiment with them many years ago, I do not remember the specific package names. I remember the reasons for not enjoying them though:
+- Limited or missing customization options. This includes tab grouping, configuring how the tabs are navigated etc. Customizing packages to MY liking is paramount.
+- Unintuitive navigation and behavior.
+- Integration with other packages. While centaur-tabs is not perfect, it at least integrates with Helm, Ivy and Projectiles. I will share how I configure it to my liking below.
+- Not in active development.
+- Bugs.
+
+  
+Continue reading to see how I think [[https://github.com/ema2159/centaur-tabs][centaur-tabs]] solves these issues.
+
+* Introducing [[https://github.com/ema2159/centaur-tabs][centaur-tabs]]
+Let us first see what the top tab bar looks like with centaur-tabs in my setup. Yours might look a bit more plain at first, but I will share some configuration options shortly (so don't worry!). Currently I'm editing this blog-post, while also having another post open as well as a terminal:
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/centaurtabs/firstexample.png" | relative_url}}" alt="centaur-tabs with a few tabs open." class="blogpostimg" />
+#+END_EXPORT
+
+Now, let us try editing this blog post:
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/centaurtabs/edited.png" | relative_url}}" alt="centaur-tabs when we edit contents the tab is showing." class="blogpostimg" />
+#+END_EXPORT
+
+Notice that we get the bolder text in the filename, as well as a filled circle to indicate that the buffer has been edited. 
+
+
+You can navigate using the mouse if you want to as well, though I prefer not to.
+
+* Configuration options
+Activating centaur-tabs is as easy as running a function:
+#+BEGIN_SRC emacs-lisp
+  (centaur-tabs-mode 1)
+#+END_SRC
+
+You are probably curious on what configuration options you need to make the tabs look as above...? To get nice icons, we need the [[https://github.com/domtronn/all-the-icons.el][all-the-icons package]] (remember to run =all-the-icons-install-fonts= or you will not have any icons!). To activate them, we simply set the corresponding variable:
+#+BEGIN_SRC emacs-lisp
+  (setq centaur-tabs-set-icons t)
+#+END_SRC
+
+By default, the icons are colored. I prefer them to be the same color as the text:
+#+BEGIN_SRC emacs-lisp
+  (setq centaur-tabs-plain-icons t)
+#+END_SRC
+
+Last, but not least we configure the highlighting of edited tabs:
+#+BEGIN_SRC emacs-lisp
+  (setq centaur-tabs-set-modified-marker t)
+#+END_SRC
+
+That is all you need to get the pretty tabs above!
+
+
+There is a built in [[https://github.com/bbatsov/projectile][projectile]] integration, though I had my own wishes for how it should work. It provides tab grouping where you only see tabs in the current projectile project, and everything else in a separate group (with minor deviations). This worked okay for a while, but had the issue of process tabs like terminals, Rust cargo runs using Rustic etc. running in a separate tab group than the project they started from. Sometimes this also affected untracked files in Git. See the next heading to see how I defined a custom function (still using projectile internals) to make it work the way I want.
+
+
+If it is not clear how to switch between tab groups: This is completely up to you! I use Helm to switch between individual buffers that are open, which will also switch to other tab groups. Using helm-mini, it might look something like this:
+
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/centaurtabs/tabgroups.gif" | relative_url}}" alt="centaur-tabs when using helm to switch between tab groups." class="blogpostimg" />
+#+END_EXPORT
+(notice that the visible tabs change based upon which project I am currently in)
+
+
+There are many more configuration options, so see [[https://github.com/ema2159/centaur-tabs][the centaur-tabs github repo]] for more information on them.
+
+
+* Making tab-grouping work the way I want
+While the projectile integration is okay, it has the limits as described above. Buffers like the ones from [[https://github.com/akermu/emacs-libvterm][VTerm]] (feel free to read [[https://themkat.net/2023/06/06/emacs_package_highlight_vterm.html][my article on vterm and why it is the best terminal solution inside Emacs]]), Cargo Rustic runs etc. are shown in a separate group instead of the project they are part of. Projectile exposes some a function called =projectile-project-root= as well as a variable called =projectile-known-projects=. We can use this to ask projectile directly for the corresponding project root, and to create a fallback (some buffers were weird and stubborn, might not be needed in all cases):
+
+
+#+BEGIN_SRC emacs-lisp
+  (defun centaur-tabs-buffer-groups ()
+    "Groups tabs based on which project root they are in if possible"
+    (let ((get-closest-projectile-project
+           (lambda (path)
+             (let ((expanded-path (f-long path)))
+               (-first (lambda (proj)
+                         (s-starts-with? proj
+                                         expanded-path))
+                       (-map (lambda (proj)
+                               (f-long proj))
+                             projectile-known-projects))))))
+      (list (cond
+             ;; Group as part of projectile project if directly part of it
+             ((condition-case _err
+                  (projectile-project-root)
+                (error nil))
+              (f-expand (projectile-project-root)))
+             ;; Try to group as part of projectile project if indirectly part of it (started from the same directory, not yet tracked, or maybe temporary buffer)
+             ;; (useful for temporary buffers, vterm terminals started in same directory, rustic runs etc.)
+             (get-closest-projectile-project default-directory)
+             ((string-equal "*" (substring (buffer-name) 0 1))
+              "proc-buffers")
+             ;; ... other groupings ...
+             (t
+              "Other")))))
+#+END_SRC
+
+
+The code above uses [[https://github.com/magnars/dash.el][dash.el]] (for better list operations), [[https://github.com/magnars/s.el][s.el]] (for better string operations) and [[https://github.com/rejeep/f.el][f.el]] (for better file operations). I have previously written [[https://themkat.net/2022/10/03/emacs_lisp_better.html][an article on how these improve your Emacs Lisp experience significantly]]!
+
+(Like mentioned above, the inner function =get-closes-projectile-project=  might not be needed for you. I just found that some stubborn buffers were not grouped correctly without it. Might be a bug in projectile.)
+
+* My complete configuration
+I use [[https://github.com/jwiegley/use-package][use-package]] to configure my Emacs packages. If you are unfamiliar with it, I suggest taking a quick look at it before reading my configuration below.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Unset the default behavior of the C-x <left> and <right> arrow key navigation
+  (global-unset-key (kbd "C-x <left>"))
+  (global-unset-key (kbd "C-x <right>"))
+
+  (use-package centaur-tabs
+    :after (dashboard org)
+
+    :config
+    (centaur-tabs-mode 1)
+
+    (defun centaur-tabs-buffer-groups ()
+      "Groups tabs based on which project root they are in if possible"
+      (let ((get-closest-projectile-project
+             (lambda (path)
+               (let ((expanded-path (f-long path)))
+                 (-first (lambda (proj)
+                           (s-starts-with? proj
+                                           expanded-path))
+                         (-map (lambda (proj)
+                                 (f-long proj))
+                               projectile-known-projects))))))
+        (list (cond
+               ;; Group as part of projectile project if directly part of it
+               ((condition-case _err
+                    (projectile-project-root)
+                  (error nil))
+                (f-expand (projectile-project-root)))
+               ;; Try to group as part of projectile project if indirectly part of it (started from the same directory, not yet tracked, or maybe temporary buffer)
+               ;; (useful for temporary buffers, vterm terminals started in same directory, rustic runs etc.)
+               (get-closest-projectile-project default-directory)
+               ((string-equal "*" (substring (buffer-name) 0 1))
+                "proc-buffers")
+               ;; ... other groupings ...
+               (t
+                "Other")))))
+
+    :custom
+    (centaur-tabs-set-icons t)
+    (centaur-tabs-plain-icons t)
+    (centaur-tabs-set-modified-marker t)
+
+    :bind
+    (("C-x <left>" . centaur-tabs-backward-tab)
+     ("C-x <right>" . centaur-tabs-forward-tab))
+
+    :hook
+    ((dashboard-mode . centaur-tabs-local-mode)
+     (org-src-mode . centaur-tabs-local-mode)
+     (calendar-mode . centaur-tabs-local-mode)))
+#+END_SRC
+
+Notice that I override the default behavior of the =C-x <arrow-key>= key bindings. This is to only navigate within a given tab group for those key bindings. The regular way these key bindings work are weird, though I have used them a lot still. It is often not possible to know which buffer is the previous and next with the default behavior, but with the custom behavior above it is completely deterministic! (just the next visible tab, with looping).
+
+
+You might also notice the hooks on =centaur-tabs-local-mode=. What is this? It simply removes the tab bar at the top when we are in these modes.
+
+
+My configuration might change with time, and there are probably room for improvements (as always) :)
