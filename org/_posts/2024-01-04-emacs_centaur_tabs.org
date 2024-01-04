@@ -54,22 +54,22 @@ You can navigate using the mouse if you want to as well, though I prefer not to.
 
 * Configuration options
 Activating centaur-tabs is as easy as running a function:
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (centaur-tabs-mode 1)
 #+END_SRC
 
 You are probably curious on what configuration options you need to make the tabs look as above...? To get nice icons, we need the [[https://github.com/domtronn/all-the-icons.el][all-the-icons package]] (remember to run =all-the-icons-install-fonts= or you will not have any icons!). To activate them, we simply set the corresponding variable:
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (setq centaur-tabs-set-icons t)
 #+END_SRC
 
 By default, the icons are colored. I prefer them to be the same color as the text:
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (setq centaur-tabs-plain-icons t)
 #+END_SRC
 
 Last, but not least we configure the highlighting of edited tabs:
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (setq centaur-tabs-set-modified-marker t)
 #+END_SRC
 
@@ -94,7 +94,7 @@ There are many more configuration options, so see [[https://github.com/ema2159/c
 While the projectile integration is okay, it has the limits as described above. Buffers like the ones from [[https://github.com/akermu/emacs-libvterm][VTerm]] (feel free to read [[https://themkat.net/2023/06/06/emacs_package_highlight_vterm.html][my article on vterm and why it is the best terminal solution inside Emacs]]), Cargo Rustic runs etc. are shown in a separate group instead of the project they are part of. Projectile exposes some a function called =projectile-project-root= as well as a variable called =projectile-known-projects=. We can use this to ask projectile directly for the corresponding project root, and to create a fallback (some buffers were weird and stubborn, might not be needed in all cases):
 
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (defun centaur-tabs-buffer-groups ()
     "Groups tabs based on which project root they are in if possible"
     (let ((get-closest-projectile-project
@@ -130,7 +130,7 @@ The code above uses [[https://github.com/magnars/dash.el][dash.el]] (for better 
 * My complete configuration
 I use [[https://github.com/jwiegley/use-package][use-package]] to configure my Emacs packages. If you are unfamiliar with it, I suggest taking a quick look at it before reading my configuration below.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   ;; Unset the default behavior of the C-x <left> and <right> arrow key navigation
   (global-unset-key (kbd "C-x <left>"))
   (global-unset-key (kbd "C-x <right>"))
