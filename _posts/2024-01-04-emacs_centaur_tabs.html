@@ -28,9 +28,9 @@ This should not need to be mentioned, but I use Emacs for ME! If you don't like 
 </p>
 
 
-<div id="outline-container-org4e79726" class="outline-2">
-<h2 id="org4e79726">What I expect from tab packages</h2>
-<div class="outline-text-2" id="text-org4e79726">
+<div id="outline-container-orga8726ec" class="outline-2">
+<h2 id="orga8726ec">What I expect from tab packages</h2>
+<div class="outline-text-2" id="text-orga8726ec">
 <p>
 Many years ago I tried other tab packages in Emacs, and didn't really enjoy them that much. As I experiment with them many years ago, I do not remember the specific package names. I remember the reasons for not enjoying them though:
 </p>
@@ -49,9 +49,9 @@ Continue reading to see how I think <a href="https://github.com/ema2159/centaur-
 </div>
 </div>
 
-<div id="outline-container-orgcabdf13" class="outline-2">
-<h2 id="orgcabdf13">Introducing <a href="https://github.com/ema2159/centaur-tabs">centaur-tabs</a></h2>
-<div class="outline-text-2" id="text-orgcabdf13">
+<div id="outline-container-org18afa00" class="outline-2">
+<h2 id="org18afa00">Introducing <a href="https://github.com/ema2159/centaur-tabs">centaur-tabs</a></h2>
+<div class="outline-text-2" id="text-org18afa00">
 <p>
 Let us first see what the top tab bar looks like with centaur-tabs in my setup. Yours might look a bit more plain at first, but I will share some configuration options shortly (so don't worry!). Currently I'm editing this blog-post, while also having another post open as well as a terminal:
 </p>
@@ -73,14 +73,14 @@ You can navigate using the mouse if you want to as well, though I prefer not to.
 </div>
 </div>
 
-<div id="outline-container-orgc30eaec" class="outline-2">
-<h2 id="orgc30eaec">Configuration options</h2>
-<div class="outline-text-2" id="text-orgc30eaec">
+<div id="outline-container-org8bffc1e" class="outline-2">
+<h2 id="org8bffc1e">Configuration options</h2>
+<div class="outline-text-2" id="text-org8bffc1e">
 <p>
 Activating centaur-tabs is as easy as running a function:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(centaur-tabs-mode 1)
+<pre class="src src-lisp">(centaur-tabs-mode 1)
 </pre>
 </div>
 
@@ -88,7 +88,7 @@ Activating centaur-tabs is as easy as running a function:
 You are probably curious on what configuration options you need to make the tabs look as above&#x2026;? To get nice icons, we need the <a href="https://github.com/domtronn/all-the-icons.el">all-the-icons package</a> (remember to run <code>all-the-icons-install-fonts</code> or you will not have any icons!). To activate them, we simply set the corresponding variable:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(setq centaur-tabs-set-icons t)
+<pre class="src src-lisp">(setq centaur-tabs-set-icons t)
 </pre>
 </div>
 
@@ -96,7 +96,7 @@ You are probably curious on what configuration options you need to make the tabs
 By default, the icons are colored. I prefer them to be the same color as the text:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(setq centaur-tabs-plain-icons t)
+<pre class="src src-lisp">(setq centaur-tabs-plain-icons t)
 </pre>
 </div>
 
@@ -104,7 +104,7 @@ By default, the icons are colored. I prefer them to be the same color as the tex
 Last, but not least we configure the highlighting of edited tabs:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(setq centaur-tabs-set-modified-marker t)
+<pre class="src src-lisp">(setq centaur-tabs-set-modified-marker t)
 </pre>
 </div>
 
@@ -135,16 +135,16 @@ There are many more configuration options, so see <a href="https://github.com/em
 </div>
 
 
-<div id="outline-container-orgc2f02f8" class="outline-2">
-<h2 id="orgc2f02f8">Making tab-grouping work the way I want</h2>
-<div class="outline-text-2" id="text-orgc2f02f8">
+<div id="outline-container-orgbe37554" class="outline-2">
+<h2 id="orgbe37554">Making tab-grouping work the way I want</h2>
+<div class="outline-text-2" id="text-orgbe37554">
 <p>
 While the projectile integration is okay, it has the limits as described above. Buffers like the ones from <a href="https://github.com/akermu/emacs-libvterm">VTerm</a> (feel free to read <a href="https://themkat.net/2023/06/06/emacs_package_highlight_vterm.html">my article on vterm and why it is the best terminal solution inside Emacs</a>), Cargo Rustic runs etc. are shown in a separate group instead of the project they are part of. Projectile exposes some a function called <code>projectile-project-root</code> as well as a variable called <code>projectile-known-projects</code>. We can use this to ask projectile directly for the corresponding project root, and to create a fallback (some buffers were weird and stubborn, might not be needed in all cases):
 </p>
 
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(defun centaur-tabs-buffer-groups ()
+<pre class="src src-lisp">(defun centaur-tabs-buffer-groups ()
   "Groups tabs based on which project root they are in if possible"
   (let ((get-closest-projectile-project
 	 (lambda (path)
@@ -183,15 +183,15 @@ The code above uses <a href="https://github.com/magnars/dash.el">dash.el</a> (fo
 </div>
 </div>
 
-<div id="outline-container-orgf8dbbe8" class="outline-2">
-<h2 id="orgf8dbbe8">My complete configuration</h2>
-<div class="outline-text-2" id="text-orgf8dbbe8">
+<div id="outline-container-org7c11524" class="outline-2">
+<h2 id="org7c11524">My complete configuration</h2>
+<div class="outline-text-2" id="text-org7c11524">
 <p>
 I use <a href="https://github.com/jwiegley/use-package">use-package</a> to configure my Emacs packages. If you are unfamiliar with it, I suggest taking a quick look at it before reading my configuration below.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">;; Unset the default behavior of the C-x &lt;left&gt; and &lt;right&gt; arrow key navigation
+<pre class="src src-lisp">;; Unset the default behavior of the C-x &lt;left&gt; and &lt;right&gt; arrow key navigation
 (global-unset-key (kbd "C-x &lt;left&gt;"))
 (global-unset-key (kbd "C-x &lt;right&gt;"))
 
