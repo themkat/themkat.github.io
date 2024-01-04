@@ -7,7 +7,7 @@ layout: blogpost
 title: "Emacs package highlight - Centaur Tabs - The best tab (UI) system for Emacs!"
 tags: emacs editor
 related_tags_count: 1
-preview_image: assets/img/backenddev/backend.png
+preview_image: assets/img/centaurtabs/edited.png
 ---
 #+END_EXPORT
 
