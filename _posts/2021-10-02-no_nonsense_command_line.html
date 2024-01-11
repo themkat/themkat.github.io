@@ -10,9 +10,9 @@ In this article I will introduce you to the command line, or bash equivalent one
 
 
 
-<div id="outline-container-org78ac0a8" class="outline-2">
-<h2 id="org78ac0a8">Prerequisites</h2>
-<div class="outline-text-2" id="text-org78ac0a8">
+<div id="outline-container-org70e8259" class="outline-2">
+<h2 id="org70e8259">Prerequisites</h2>
+<div class="outline-text-2" id="text-org70e8259">
 <p>
 The only thing you need to follow this guide is to have a terminal/command line on your system, which is in the Bash-family of command lines. That's it! This does NOT include Windows CMD or Powershell, as these are different beasts (CMD have more in common with MS DOS than Bash-based command lines). All standard terminals for Linux distributions and Mac OS X will work, as well as the previously defined options for Windows (Linux Subsystem, Cygwin, Git Bash). 
 </p>
@@ -35,9 +35,9 @@ It might also be a good idea to have a text editor handy, to create text files w
 </div>
 
 
-<div id="outline-container-org3df92a3" class="outline-2">
-<h2 id="org3df92a3">Why should you learn to use the command line in 2021 (or later)?</h2>
-<div class="outline-text-2" id="text-org3df92a3">
+<div id="outline-container-orgfe30b5c" class="outline-2">
+<h2 id="orgfe30b5c">Why should you learn to use the command line in 2021 (or later)?</h2>
+<div class="outline-text-2" id="text-orgfe30b5c">
 <p>
 There are many reasons to learn the command line! Some of them include:
 </p>
@@ -52,9 +52,9 @@ There are many reasons to learn the command line! Some of them include:
 </div>
 
 
-<div id="outline-container-org4961ab2" class="outline-2">
-<h2 id="org4961ab2">Your first command!</h2>
-<div class="outline-text-2" id="text-org4961ab2">
+<div id="outline-container-orgb7725b8" class="outline-2">
+<h2 id="orgb7725b8">Your first command!</h2>
+<div class="outline-text-2" id="text-orgb7725b8">
 <p>
 So you have finally come this far? You are ready to type in your first commands and experience the wonders of the command line for the first(ish) time? Let's start by opening your command line application / terminal emulator, then typing <code>pwd</code>, which might look something like this (including your prompt):
 </p>
@@ -97,17 +97,17 @@ Now we have opened our terminal and typed our first command, let's continue to m
 
 
 
-<div id="outline-container-org4804ef0" class="outline-2">
-<h2 id="org4804ef0">File management and navigation</h2>
-<div class="outline-text-2" id="text-org4804ef0">
+<div id="outline-container-orgc7388ab" class="outline-2">
+<h2 id="orgc7388ab">File management and navigation</h2>
+<div class="outline-text-2" id="text-orgc7388ab">
 <p>
 <code>pwd</code> was probably a very uninteresting command to start with, but don't worry! Now we begin with some real commands for navigation and looking at your files, before continuing with even more interesting commands as each section progresses!
 </p>
 </div>
 
-<div id="outline-container-org43dc69b" class="outline-3">
-<h3 id="org43dc69b">ls - list directory</h3>
-<div class="outline-text-3" id="text-org43dc69b">
+<div id="outline-container-orgaba9dbe" class="outline-3">
+<h3 id="orgaba9dbe">ls - list directory</h3>
+<div class="outline-text-3" id="text-orgaba9dbe">
 <p>
 We are currently in a directory, but how do we see the files in it? This is where the <code>ls</code> comes in! You might see something like this:
 </p>
@@ -153,9 +153,9 @@ Hidden files usually start with a dot in their name, and these files are usually
 </div>
 
 
-<div id="outline-container-orgcacd3eb" class="outline-3">
-<h3 id="orgcacd3eb">cd - change directory</h3>
-<div class="outline-text-3" id="text-orgcacd3eb">
+<div id="outline-container-org7e74a97" class="outline-3">
+<h3 id="org7e74a97">cd - change directory</h3>
+<div class="outline-text-3" id="text-org7e74a97">
 <p>
 For now, we have been stuck at our starting directory. Let's change that! If we are still in our home folders, we can navigate to our Documents folder (or another folder if your folder structure is different):
 </p>
@@ -185,9 +185,9 @@ As you can see, we have now navigated back. You don't even need to navigate one 
 </div>
 
 
-<div id="outline-container-org1bf7e3f" class="outline-3">
-<h3 id="org1bf7e3f">rm - remove/delete file</h3>
-<div class="outline-text-3" id="text-org1bf7e3f">
+<div id="outline-container-orgae640bb" class="outline-3">
+<h3 id="orgae640bb">rm - remove/delete file</h3>
+<div class="outline-text-3" id="text-orgae640bb">
 <p>
 Want to delete a file? The rm command is at your service! Just do <code>rm myfile.txt</code> and myfile.txt will be removed/deleted. You can use complete paths (like <code>Documents/Budgets/2019/myfile.txt</code>) as well as files in the same folder here. If you want to delete multiple files, you can add them after your first. <code>rm myfirstfile.txt myotherfile.txt yetanother.txt</code> (or more files if you want to)
 </p>
@@ -203,18 +203,18 @@ Want to delete a file? The rm command is at your service! Just do <code>rm myfil
 </div>
 </div>
 
-<div id="outline-container-orgfb2c7d9" class="outline-3">
-<h3 id="orgfb2c7d9">rmdir - remove/delete (empty) directory</h3>
-<div class="outline-text-3" id="text-orgfb2c7d9">
+<div id="outline-container-orgd574e1a" class="outline-3">
+<h3 id="orgd574e1a">rmdir - remove/delete (empty) directory</h3>
+<div class="outline-text-3" id="text-orgd574e1a">
 <p>
 Let's say you want to delete a directory with no files in it? There is a command for that as well! <code>rmdir Documents</code> will delete your Documents directory if it's empty. (see the previous info-box on <code>rm -rf</code> for deleting non-empty directories and some dangers for beginners relating to this command).
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga966300" class="outline-3">
-<h3 id="orga966300">mkdir - create a directory</h3>
-<div class="outline-text-3" id="text-orga966300">
+<div id="outline-container-org9e57991" class="outline-3">
+<h3 id="org9e57991">mkdir - create a directory</h3>
+<div class="outline-text-3" id="text-org9e57991">
 <p>
 Just like rmdir deletes an empty directory, mkdir creates one! <code>mkdir Documents</code> will create a directory called documents.
 </p>
@@ -222,9 +222,9 @@ Just like rmdir deletes an empty directory, mkdir creates one! <code>mkdir Docum
 </div>
 
 
-<div id="outline-container-org6581582" class="outline-3">
-<h3 id="org6581582">cp - copy file</h3>
-<div class="outline-text-3" id="text-org6581582">
+<div id="outline-container-org105b6a0" class="outline-3">
+<h3 id="org105b6a0">cp - copy file</h3>
+<div class="outline-text-3" id="text-org105b6a0">
 <p>
 Want to copy a file to another destination? The command is simple; cp followed by the full path of the file you want to copy (either a filename or a path like <code>Documents/Budgets/2019/mybudget.txt</code>) and the destination (either just a filename or a complete new path). Example:
 </p>
@@ -266,17 +266,17 @@ Now you will have a copy of myfile called mycopy. You can even change the filety
 
 
 
-<div id="outline-container-org5db5435" class="outline-2">
-<h2 id="org5db5435">Viewing files in your terminal/command line</h2>
-<div class="outline-text-2" id="text-org5db5435">
+<div id="outline-container-orgb9c3a1d" class="outline-2">
+<h2 id="orgb9c3a1d">Viewing files in your terminal/command line</h2>
+<div class="outline-text-2" id="text-orgb9c3a1d">
 <p>
 So far we have navigated around, deleted files, copied and so on, but we have never really viewed our file contents outside a text editor. In this section we will do exactly that!
 </p>
 </div>
 
-<div id="outline-container-orgd84c238" class="outline-3">
-<h3 id="orgd84c238">cat</h3>
-<div class="outline-text-3" id="text-orgd84c238">
+<div id="outline-container-org26f990e" class="outline-3">
+<h3 id="org26f990e">cat</h3>
+<div class="outline-text-3" id="text-org26f990e">
 <p>
 The simplest way to view a file is the cat command. cat simply prints the content of the file like this:
 </p>
@@ -292,9 +292,9 @@ This is some text in my file
 </div>
 </div>
 
-<div id="outline-container-org68a7a1d" class="outline-3">
-<h3 id="org68a7a1d">less</h3>
-<div class="outline-text-3" id="text-org68a7a1d">
+<div id="outline-container-orgee2cdf5" class="outline-3">
+<h3 id="orgee2cdf5">less</h3>
+<div class="outline-text-3" id="text-orgee2cdf5">
 <p>
 A slightly more advanced way of viewing files is to use the command called less. less let's us navigate our file and view it as well. For one of my files (my default layout for this blog) it looks like this:
 </p>
@@ -313,9 +313,9 @@ To search the contents of a file you can use the / command, and then write your 
 </div>
 
 
-<div id="outline-container-org849c246" class="outline-2">
-<h2 id="org849c246">Piping</h2>
-<div class="outline-text-2" id="text-org849c246">
+<div id="outline-container-orgfdc0028" class="outline-2">
+<h2 id="orgfdc0028">Piping</h2>
+<div class="outline-text-2" id="text-orgfdc0028">
 <p>
 Let us quickly introduce echo to make our examples more clear. echo simply prints its input:
 </p>
@@ -341,17 +341,17 @@ All of the above can be used with almost any program! Feel free to mix and match
 </div>
 
 
-<div id="outline-container-orga265db7" class="outline-2">
-<h2 id="orga265db7">Searching</h2>
-<div class="outline-text-2" id="text-orga265db7">
+<div id="outline-container-orgb1cba99" class="outline-2">
+<h2 id="orgb1cba99">Searching</h2>
+<div class="outline-text-2" id="text-orgb1cba99">
 <p>
 Sometimes you may not know where a file is, or may want to know which line of a file a given text resides.
 </p>
 </div>
 
-<div id="outline-container-org71a44d8" class="outline-3">
-<h3 id="org71a44d8">find - finding files matching criteria</h3>
-<div class="outline-text-3" id="text-org71a44d8">
+<div id="outline-container-org09179fc" class="outline-3">
+<h3 id="org09179fc">find - finding files matching criteria</h3>
+<div class="outline-text-3" id="text-org09179fc">
 <p>
 find can be used for many things, including finding files matching a given name. This is the most common use-case and what we will cover the basics of here. If you are curious about more ways to use find, you can find documentation using the resources in the next section (Finding documentation).
 </p>
@@ -364,9 +364,9 @@ Let say we want to search for a file containing the term books in its name, then
 </div>
 
 
-<div id="outline-container-org1368bf5" class="outline-3">
-<h3 id="org1368bf5">grep - search content in files and input text</h3>
-<div class="outline-text-3" id="text-org1368bf5">
+<div id="outline-container-org3b2f753" class="outline-3">
+<h3 id="org3b2f753">grep - search content in files and input text</h3>
+<div class="outline-text-3" id="text-org3b2f753">
 <p>
 Let's say we want to search for contents in files instead. The simplest use case can be covered with the command <code>grep -Rn "My Search Text" .</code> (. for search to begin in the same directory we are in). Then you will get each occurrence listed. Each line will look like this (here I have searched for Clive Sinclair on the local files for this blog):
 </p>
@@ -387,9 +387,9 @@ What if we instead wanted to supply grep with a text and search that text oursel
 </div>
 </div>
 
-<div id="outline-container-orgae733f3" class="outline-2">
-<h2 id="orgae733f3">Finding documentation</h2>
-<div class="outline-text-2" id="text-orgae733f3">
+<div id="outline-container-org964fd1d" class="outline-2">
+<h2 id="org964fd1d">Finding documentation</h2>
+<div class="outline-text-2" id="text-org964fd1d">
 <p>
 So far some of the options to the programs above may seem a little bit cryptic. How do people learn about all of them? Well, you rarely need to know all of them, but there are resources to make them easier to handle.
 </p>
@@ -423,9 +423,9 @@ If you have problems, there is always Google, DuckDuckGo or another search engin
 </div>
 
 
-<div id="outline-container-orga646b7b" class="outline-2">
-<h2 id="orga646b7b">A whirlwind tour of scripting</h2>
-<div class="outline-text-2" id="text-orga646b7b">
+<div id="outline-container-orge509fee" class="outline-2">
+<h2 id="orge509fee">A whirlwind tour of scripting</h2>
+<div class="outline-text-2" id="text-orge509fee">
 <p>
 Covering everything about shell scripting would make this guide way to long, as the topic is worthy of an article in itself. (let me know if you would want one!). There are several good resources to get you started, like <a href="https://www.shellscript.sh/">ShellScript.sh</a> or the man-page for bash (<code>man bash</code>).
 </p>
@@ -477,9 +477,9 @@ This quickly introduces the if-expression where we can test for various conditio
 </div>
 
 
-<div id="outline-container-org3267097" class="outline-2">
-<h2 id="org3267097">What's next?</h2>
-<div class="outline-text-2" id="text-org3267097">
+<div id="outline-container-orge441a33" class="outline-2">
+<h2 id="orge441a33">What's next?</h2>
+<div class="outline-text-2" id="text-orge441a33">
 <p>
 Now you have gotten started and learned the basics of the command line, and even some shell scripting. What's next? Depending on your skill level and what you want to achieve, there are several options ahead! I can not possibly make an exhaustive list of everything you want to do, but below are some suggestions:
 </p>
