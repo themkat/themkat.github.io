@@ -7,7 +7,6 @@ layout: blogpost
 title: "The many ways of helping Open Source (and Free) Software projects"
 tags: programming
 related_tags_count: 1
-preview_image: assets/img/centaurtabs/edited.png
 ---
 #+END_EXPORT
 
