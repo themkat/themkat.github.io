@@ -6,9 +6,8 @@
 layout: blogpost
 title: "The joy and wonders of browsing the web from the command line - A short introduction to Lynx"
 tags: cli linux macosx web-browsers
-related_tags_count: 1
-TODO: change preview image....
-preview_image: assets/img/centaurtacbs/edited.png
+related_tags_count: 2
+preview_image: assets/img/lynx/themkat.png
 ---
 #+END_EXPORT
 
