@@ -1,0 +1,91 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Reasons I hate (modern) Microsoft Windows - The most awful choice of operating system anyone can make"
+tags: windows linux opinions
+related_tags_count: 2
+preview_image: assets/img/windowshate/hate.jpg
+---
+#+END_EXPORT
+
+In case I haven't been clear in earlier articles: I'm not a fan of Microsoft Windows. While I have enjoyed Windows 95, and a bit of Windows XP, I don't enjoy any modern forms of Microsoft Windows (and the older versions are probably only enjoyed because of nostalgia). To me, the sane choice have always been some sort of Unix-style operating system like GNU/Linux and Mac OS X. Some people just think it is because I'm a nerd that sits inside all day and have dubious hygiene habits, but there are valid reasons. So what are the reasons I hate modern Windows so much? Keep on reading to find out.
+
+
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/windowshate/hate.jpg" | relative_url}}" alt="My experience when using Windows." class="blogpostimg" />
+#+END_EXPORT
+
+
+Do you think Windows is right for you? Then use it! This is from my perspective as I was forced to use it for work, in school and so on. Obviously not everyone loves the same things, and something that feels like torture for me will probably feel good to you. (ehh.. Yeah, please read the last sentence in the context of operating systems and software, so I don't plan too kinky thoughts in your head). Probably has do with my habits as well when using a computer. Feel free to disagree, as these lists are meant to be fun ramblings :)
+
+
+To not be too big of a Negative Nancy, I also show the alternatives I love in Unix based systems. Enjoy the mix of negativity and positivity! :P
+
+
+* The file system doesn't make any sense!
+*NOTE: When talking about file systems here, I'm not referring to NTFS, EXT4, ZFS and other types of ways the data is stored. What I'm talking about here is the organization of directories/folders and how these behave during the runtime of your computer.*
+
+
+To me, a file system when running my operating system is a representation of my machine. That includes devices (e.g, disk drives, serial devices etc.), my own files, programs, configuration files, temporary directories and so on. From the root of my file system, I should be able to see all information on my running system. As a Unix style purist, so to me, this root looks like =/=. If you are not familiar with Unix style operating systems like GNU/Linux, BSD, Mac OS X etc., here are some quick example of places on the file system:
+- =/dev/=: Here is a representation of the devices connected to a system, but also logical devices like terminal outputs and so on. If you connect a serial device, like the USB Gecko for GameCube and Wii (as shown in [[https://themkat.net/2023/01/13/gamecube_debugging.html][my guide for debugging GameCube applications]], and [[https://themkat.net/2022/12/19/gamecube_linux_sd_boot.html][my guide to booting GameCube Linux]]), you will see the device as something akin to =/dev/cu.usbserial-GECKUSB0= (depending on drivers and so on). From here you can connect to the device, or in the case of a disk (or solid state) drive mount it. I will not go deeply into devices here, the most important take away is that everything is a file or directory! [[https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/dev.html][You can go more into detail about it on a site like the Linux Documentation Project]].
+- =/proc/=: Not on Mac OS X, but GNU/Linux systems have them. This directory contains files with kernel- and process-information. To keep it short, you can find much information on your running system here. If you know the PID (process id) of your process, you can find information on arguments, open files, status etc. in =/proc/PID/=. There is also information on your CPU available there, which drivers are active and so on. This could almost be a topic in itself, but I think there are more knowledgeable people on all the awesome stuff in this directory than me :) 
+- =/var/=: Files that are prone to change, like log files, websites, system crash dumps and so on.
+- =/home/= or =/Users/= (last one for us Mac OS X plebs): The various users files on the file system. This is your home directory for your own files, configurations to programs (like dot files) etc.
+- =/etc/=: Mostly global configuration files.
+
+
+I think we will end it with those simple examples. There are other sites that goes into detail about all aspect of a GNU/Linux file system and the File System Hierarchy standard. [[https://www.howtogeek.com/117435/htg-explains-the-linux-directory-structure-explained/][HowToGeek has a nice summary you can have a look at if you are curious]].
+
+
+
+Then how does it look and feel in Windows style operating systems? Windows simply represent the files on the drives designated by a drive letter. You usually have =C:\= for your main drive =D:\= for your next drive and so on. This is historical, as [[https://en.wikipedia.org/wiki/CP/M][the CP/M operating system]] used to do it that way, and Microsoft just copied the idea when they released MS DOS (which was also just bought from another company in the beginning). I'm not hating on CP/M here, as it was a good operating system in its hay-day, and deserves credit as one of the first operating systems for microprocessors. While this representation of file systems can probably feel okay for users who do not care about the underlying hardware or running processes, it does not make sense to me. There seems to be that there are no other way to view data on running processes or hardware than going outside the file system to external programs. In many cases these programs are graphical user interfaces (GUIs), which leads me to my next point...
+
+
+
+Wait...!? Some of you know that I *LOOOOOVE* Amiga, but Amiga does not follow the file system stuff complained about above? Is TheMKat simply a hypocrite when it comes to Amiga? Yes, because there are so many other great things when it comes to Amiga :)
+
+
+
+
+* Changing most system settings needs some sort of graphical program...?
+Probably ties a bit into the previous point. When everything is not a file or directory that is supposed to be queried directly, it leads to settings being stored in proprietary binary formats only meant to be read by certain programs.
+
+
+Most settings in Windows are changed by graphical user interfaces, with you being at the mercy of Microsoft for the few changes you can do from the command line. WHAT THE FLYING FUCK?!? Why does it need to be that tedious? Why can't I just edit a file to change a setting? Finding the right program whether it is RegEdit (for registry values), system settings / control panel, changing your PATH variable so shells can find programs (why not just have a shell bashrc style file of some kind?!?!?), device manager etc. Why do I need all of that? My preference is strong for simply changing a file or in some cases making a script?!? Why am I not free to do that with ALL types of settings? I know Mac OS X is not perfect here either, but it is still better at Windows here as many settings are easily changed with the right configuration files. I also live in the terminal and Emacs, so the graphical settings on Mac OS X rarely bother me as I only interact with the once in a blue moon. Not being able to do ALL system updates from the terminal bothers me though...
+
+
+Some of you may be thinking: "Do I NEED to edit files instead of just using a settings GUI?". No, you actually have a choice on Unix style systems. People have created GUIs for all sorts of settings for people with that sort of preference :)
+
+
+* Bloatware built-in
+This one probably don't need much explanation; Modern Windows comes pre-installed with lots of things:
+- Newer Windows have many widgets enabled by default like Weather, Stocks etc. Why?!? This will automatically waste your internet traffic. If you are off the grid in the woods (off course you bring your computer), it will waste the data you probably use 3G/4G/5G traffic for. WHY?!?!? Not immediatly clear how to turn off these things either. Stocks and Weather I don't need real-time access do, I can query it by need to avoid wasting internet traffic.
+- Bloated start menu with the impression that lots of stuff like TikTok, Spotify etc. is installed. Sometimes they are just shortcuts to download.
+- Advertisements! Yes, in many of the lower tier versions of Windows, you get ads in your start menu! Wish I was joking. If I have paid for software, I don't want ads there! Ads are for monetizing free content in my view, like this web site. It can be a useful tool to make money, but for an operating system it is a clear no for me. Again it wastes internet data.
+- All sorts of programs that I should download by interest, like Sports, Money/Finance package, Movies and TV etc. 
+  
+
+* Installing programs is tedious
+What is the standard way of downloading programs on a Windows system? Downloading executables off random websites... Why? Yes, I know Windows Store is a thing, but most useful programs are not there last time I looked (e.g, Git). I can understand that you download some programs directly from various websites, but that being the standard way...? I mostly do that with weird very small open source programs that I build from source in most cases. The Windows way of always having to find executables on websites sounds like a good way to get tons of malware installed, at least to me...
+
+
+What is the actual good way of downloading 90 % of your programs? Through a package manager off course! The package manager will look into  a repository of packages, which are often reviewed by a community. In many cases, you can also use alternative repositories if you want other selections of packages. Some examples:
+- =apt=: Simply install a package with =apt install package-name=! This will read from a local cache which can be updated with =apt update=, either when adding new repositories or periodically refreshing to keep cache up to date (download URLs and similar are part of this cache). This is the package manager used in Debian based systems like Ubuntu, Linux Mint and so on.
+- =dnf=: Almost exactly the same, only in Fedora flavor.
+- =brew=: [[https://brew.sh/][Homebrew]] is the package manager for Mac OS X. While it is not supported by Apple, and is not built-in, it feels as native as any of the Linux based package managers (and works the same!). It is driven by a dedicated community.
+
+
+Yes, I know that Windows has gotten some package managers through the years. When I last experienced it, [[https://chocolatey.org/][Chocolatey]] was good, though some packages had weird behavior. At least it makes installing software on Windows livable.
+
+
+* File locks
+Saved one of the most annoying things for last. I know file locks exist in some form in other operating systems as well, but I have never experienced the level of annoyance as I have in Windows. The short explanation is that you sometimes can't even read a file due to it being open in another program, which leads to the "Cannot read file as it is open in another program" style of errors. This is really tedious!
+
+
+Let us have a quick example here. A few years ago I worked with a system that was tested using SoapUI Pro. The test data was laid out in Excel files, and the compilations and test runs was done using Maven. Sometimes you need to edit or add test data, so you open the test data in Microsoft Excel (ugh). So what happens when you reasonably have the test data open, and want to run the tests with your command line at the same time? It will obviously try to read the file, and you will get the error that the file is open in another program. So the expectation is that I have to close and open the Excel file every time I want to change and run test data? Real nice Microsoft, this makes test driven development real easy... (sarcasm btw).
+
+
+The ONLY sane solutions is to NOT ever have file locks like these...
