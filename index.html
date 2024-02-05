@@ -5,6 +5,8 @@ tab: home
 
 <h3>{{ site.posts | size }} articles on many different topics!</h3>
 
+<a id="random-article-link" href="javascript:void(0)">Take me to a random article!</a>
+
 <!-- collecting all tags to make links to tag pages.
    Wish I could make it  in a more functional style :( I miss you map, filter and friends :( -->
 {% assign tags =  "" | split: "," %}
@@ -40,3 +42,18 @@ tab: home
 </div>
 
 <script src="https://cdn.commento.io/js/count.js"></script>
+
+<script>
+ // Little snippet I originally made for AITales to get a random article
+ document.getElementById("random-article-link").onclick = function() {
+     {% for post in site.posts %}
+     {% if page.url != post.url %}
+     {% assign urls = urls | append: "'" | append: post.url | append: "', " %}
+     {% endif %}
+     {% endfor %}
+     
+     const posts = [{{urls}}].slice(0, -1);
+     const randomPost = posts[Math.floor(Math.random() * posts.length)];
+     window.open(randomPost, '_self');
+ }
+</script>
