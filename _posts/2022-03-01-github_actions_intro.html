@@ -14,9 +14,9 @@ This article will focus on the complete basics, and not be too long. Links to do
 </p>
 
 
-<div id="outline-container-orgc41ba8a" class="outline-2">
-<h2 id="orgc41ba8a">Why automate?</h2>
-<div class="outline-text-2" id="text-orgc41ba8a">
+<div id="outline-container-org0779105" class="outline-2">
+<h2 id="org0779105">Why automate?</h2>
+<div class="outline-text-2" id="text-org0779105">
 <p>
 Are you still doing releases and other manual tasks manually? Think that a lot of automation is something just big organizations gets benefits from? Think again, everyone can reap the benefits of automating tasks. Startups, lone wolf coders etc. Automation pipelines (of tasks) saves a lot of time compared to doing things manually. Even when each task only takes you a couple of minutes, it will eventually stack up to longer periods of time.  If you don't have to do it manually, you might also do it more often (we are lazy and want to avoid manual work). This empowers you to do releases, builds etc. even more often, and it becomes less scary to do so (humans makes mistakes more often than you might like, and if we have to do it manually, the probability of doing something wrong increases).
 </p>
@@ -44,9 +44,9 @@ Some examples of tasks you can automate in a pipeline include (this is common fo
 
 
 
-<div id="outline-container-orgd857aa1" class="outline-2">
-<h2 id="orgd857aa1">Why Github Actions?</h2>
-<div class="outline-text-2" id="text-orgd857aa1">
+<div id="outline-container-orgb0b722a" class="outline-2">
+<h2 id="orgb0b722a">Why Github Actions?</h2>
+<div class="outline-text-2" id="text-orgb0b722a">
 <p>
 You may ask: Why Github Actions? Why not Jenkins, Travis, CircleCI etc.? There are several reasons, each depending on the tool. For Jenkins primarily, one of the main reasons is the loss of control you sometimes get. Administrators have to install plugins, and in some organizations, the users don't have access to install them or play around with new ones. Github Actions on the other hand, makes it easy to try new things. Some of these things have improved by using Docker containers, but you will then have to do more yourself. Using a ready-made action (e.g, setup Java, setting up Kubernetes etc.) makes creating automation pipelines quicker and simpler. The added bonus is the readability by using reusable chunks (actions).  
 </p>
@@ -64,9 +64,9 @@ In addition, Github Actions gives the following benefits:
 </div>
 
 
-<div id="outline-container-org80671d6" class="outline-2">
-<h2 id="org80671d6">Basics of Github Actions</h2>
-<div class="outline-text-2" id="text-org80671d6">
+<div id="outline-container-org82f414b" class="outline-2">
+<h2 id="org82f414b">Basics of Github Actions</h2>
+<div class="outline-text-2" id="text-org82f414b">
 <p>
 Github Actions uses a simple YAML syntax. To not bore you with minor details, let's just look at a very simple pipeline that can be copy-pasted and used (put into the .github/workflows directory). The following workflow/action builds your Maven project, as well as setting up the necessary configuration (checking out code and having JDK and Maven available).
 </p>
@@ -113,9 +113,9 @@ You may ask: Can I have multiple jobs in one file? Yes! <a href="https://docs.gi
 
 
 
-<div id="outline-container-orgfca940f" class="outline-2">
-<h2 id="orgfca940f">Available actions and further reading</h2>
-<div class="outline-text-2" id="text-orgfca940f">
+<div id="outline-container-org86d4b19" class="outline-2">
+<h2 id="org86d4b19">Available actions and further reading</h2>
+<div class="outline-text-2" id="text-org86d4b19">
 <p>
 So where can I find available Actions? Github makes this easy with <a href="https://github.com/marketplace?type=actions">its Marketplace</a> (don't be fooled by the name, almost all are free! Consider sponsoring the developers if you really love their work though!). Some useful ones include:
 </p>

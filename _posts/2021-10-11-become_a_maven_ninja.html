@@ -23,13 +23,13 @@ There is probably much more that could be covered, but I think this is the most 
 My last self-promotion before we begin&#x2026; General command line skills can be very useful when working with almost any command line tool, including Maven. If you need a refresher, I recently wrote <a href="https://themkat.net/2021/10/02/no_nonsense_command_line.html">a guide to getting started with the command line</a> (important topics: piping, searching with grep, less).
 </p>
 
-<div id="outline-container-org2cde4b4" class="outline-2">
-<h2 id="org2cde4b4">Basic usage and flags</h2>
-<div class="outline-text-2" id="text-org2cde4b4">
+<div id="outline-container-org531116a" class="outline-2">
+<h2 id="org531116a">Basic usage and flags</h2>
+<div class="outline-text-2" id="text-org531116a">
 </div>
-<div id="outline-container-orga716d34" class="outline-3">
-<h3 id="orga716d34">Check Maven version</h3>
-<div class="outline-text-3" id="text-orga716d34">
+<div id="outline-container-org6f864ed" class="outline-3">
+<h3 id="org6f864ed">Check Maven version</h3>
+<div class="outline-text-3" id="text-org6f864ed">
 <p>
 I want to show this for one reason, it's useful when checking for possible errors. Simply type <code>mvn -v</code> and you will get information about the Maven and Java versions currently being used: 
 </p>
@@ -41,9 +41,9 @@ I want to show this for one reason, it's useful when checking for possible error
 </div>
 
 
-<div id="outline-container-org44fc8d8" class="outline-3">
-<h3 id="org44fc8d8">package vs install</h3>
-<div class="outline-text-3" id="text-org44fc8d8">
+<div id="outline-container-orge9e0b3a" class="outline-3">
+<h3 id="orge9e0b3a">package vs install</h3>
+<div class="outline-text-3" id="text-orge9e0b3a">
 <p>
 You may have noticed that you have a .m2-folder in your home directory. This can contain a settings.xml file (if you have specific local settings like proxies), as well as your local Maven repository (where Maven downloads and stores dependencies and artifacts locally). Why is this important? package builds your project (compiles, run tests etc.), and install does the same in addition to installing it (copying it) to your local Maven repository (.m2/repository). 
 </p>
@@ -54,18 +54,18 @@ You may have noticed that you have a .m2-folder in your home directory. This can
 </div>
 </div>
 
-<div id="outline-container-org3434f7f" class="outline-3">
-<h3 id="org3434f7f">using -f option to run a specific pom file</h3>
-<div class="outline-text-3" id="text-org3434f7f">
+<div id="outline-container-org2c33384" class="outline-3">
+<h3 id="org2c33384">using -f option to run a specific pom file</h3>
+<div class="outline-text-3" id="text-org2c33384">
 <p>
 Just like the title says. If you do something like <code>mvn -f mymodule/pom.xml install</code>, Maven will build based upon the pom.xml file in the directory mymodule instead of the directory you are currently in. 
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgefe2233" class="outline-3">
-<h3 id="orgefe2233">using -X option to get debug information</h3>
-<div class="outline-text-3" id="text-orgefe2233">
+<div id="outline-container-orgc82b6cb" class="outline-3">
+<h3 id="orgc82b6cb">using -X option to get debug information</h3>
+<div class="outline-text-3" id="text-orgc82b6cb">
 <p>
 <code>mvn -X goals</code> (replace goals with the actual Maven goals!) will show you looooots of information you can use when debugging possible issues. Just be aware that this is a lot of information! Ranging from all packages imported, what settings files are used (local for your user as well as global settings for the computer), complete configurations for things like <a href="https://maven.apache.org/surefire/maven-surefire-plugin/">Surefire</a> (testing) and so on.
 </p>
@@ -79,13 +79,13 @@ Now a little story time! I recently helped someone I know with some issues they 
 </div>
 
 
-<div id="outline-container-org2314d58" class="outline-2">
-<h2 id="org2314d58">Tests</h2>
-<div class="outline-text-2" id="text-org2314d58">
+<div id="outline-container-orgffd9406" class="outline-2">
+<h2 id="orgffd9406">Tests</h2>
+<div class="outline-text-2" id="text-orgffd9406">
 </div>
-<div id="outline-container-orgdb6291c" class="outline-3">
-<h3 id="orgdb6291c">Run single test(class)</h3>
-<div class="outline-text-3" id="text-orgdb6291c">
+<div id="outline-container-orgdeab7d9" class="outline-3">
+<h3 id="orgdeab7d9">Run single test(class)</h3>
+<div class="outline-text-3" id="text-orgdeab7d9">
 <p>
 You can run only tests with <code>mvn test</code>, but did you know you can run just a single test class by using <code>mvn test -Dtest=MyClassTest</code>? If you have several test classes with that name, use the fully qualified name (including package, example: com.example.MyClassTest).
 </p>
@@ -97,18 +97,18 @@ Want to run just a single test method within that test class? Just as simple! <c
 </div>
 </div>
 
-<div id="outline-container-orge8b68a1" class="outline-3">
-<h3 id="orge8b68a1">Don't trim stack trace</h3>
-<div class="outline-text-3" id="text-orge8b68a1">
+<div id="outline-container-org2de6223" class="outline-3">
+<h3 id="org2de6223">Don't trim stack trace</h3>
+<div class="outline-text-3" id="text-org2de6223">
 <p>
 Sometimes you get unexpected nullpointers or other exceptions within the method you are testing. Some times you will se a very minimal stack trace with just your test method, and the rest cut off (aka trimmed). If you want the complete stack trace with causes, line numbers etc., then you can use the definition <code>-DtrimStackTrace=false</code>! (works with test, package install, other goals, etc.). Helps me a lot, especially since I prefer to use the command line instead of big bloaty IDEs.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org8ebca1d" class="outline-3">
-<h3 id="org8ebca1d">Skipping tests</h3>
-<div class="outline-text-3" id="text-org8ebca1d">
+<div id="outline-container-orgbc2b924" class="outline-3">
+<h3 id="orgbc2b924">Skipping tests</h3>
+<div class="outline-text-3" id="text-orgbc2b924">
 <p>
 Want to skip all tests when building? <code>mvn install -DskipTests</code> will run install like usual, but not run any tests (but they will still be compiled!). 
 </p>
@@ -117,22 +117,22 @@ Want to skip all tests when building? <code>mvn install -DskipTests</code> will 
 </div>
 
 
-<div id="outline-container-orgb4842bd" class="outline-2">
-<h2 id="orgb4842bd">Dependency plugin</h2>
-<div class="outline-text-2" id="text-orgb4842bd">
+<div id="outline-container-orgc100dda" class="outline-2">
+<h2 id="orgc100dda">Dependency plugin</h2>
+<div class="outline-text-2" id="text-orgc100dda">
 </div>
-<div id="outline-container-orged165d3" class="outline-3">
-<h3 id="orged165d3">tree</h3>
-<div class="outline-text-3" id="text-orged165d3">
+<div id="outline-container-org4b85d9e" class="outline-3">
+<h3 id="org4b85d9e">tree</h3>
+<div class="outline-text-3" id="text-org4b85d9e">
 <p>
 <code>mvn dependency:tree</code> is one of the most useful commands for checking the dependencies in your project, including transitive dependencies (dependencies of your dependencies and so on). This include all versions of dependencies being used. These reports can be quite long for bigger projects, so it can be useful to pipe the result to less or search it using grep (if you have a suspicion of deprecated code and similar causing weird behavior). 
 </p>
 </div>
 </div>
 
-<div id="outline-container-org7173411" class="outline-3">
-<h3 id="org7173411">analyze</h3>
-<div class="outline-text-3" id="text-org7173411">
+<div id="outline-container-org7c545e1" class="outline-3">
+<h3 id="org7c545e1">analyze</h3>
+<div class="outline-text-3" id="text-org7c545e1">
 <p>
 Have a suspicion that you use conflicting versions of packages? Or have unused dependencies in your project? <code>mvn dependency:analyze</code> can help you here! It will print all info like this. (also useful to browse by piping the output to less!).
 </p>
@@ -143,9 +143,9 @@ Have a suspicion that you use conflicting versions of packages? Or have unused d
 </div>
 </div>
 
-<div id="outline-container-org7510260" class="outline-3">
-<h3 id="org7510260">display-ancestors</h3>
-<div class="outline-text-3" id="text-org7510260">
+<div id="outline-container-org1d80307" class="outline-3">
+<h3 id="org1d80307">display-ancestors</h3>
+<div class="outline-text-3" id="text-org1d80307">
 <p>
 Many enterprises (and maybe open source projects) have hierarchies of <a href="https://maven.apache.org/guides/introduction/introduction-to-the-pom.html">parent pom files</a> to handle global settings, approved dependency versions and so on. Sometimes you may want to see what version of parent poms you are currently using (maybe to debug if you are using the correct one, because these things can be updated!). Then <code>mvn dependency:display-ancestors</code> is your friend! Running it with a new Spring Boot project will show you the version of the Spring Boot starter poms it's using:
 </p>
@@ -155,9 +155,9 @@ Many enterprises (and maybe open source projects) have hierarchies of <a href="h
 </div>
 
 
-<div id="outline-container-orga9beddd" class="outline-2">
-<h2 id="orga9beddd">Versions</h2>
-<div class="outline-text-2" id="text-orga9beddd">
+<div id="outline-container-orgdd2c1f4" class="outline-2">
+<h2 id="orgdd2c1f4">Versions</h2>
+<div class="outline-text-2" id="text-orgdd2c1f4">
 <p>
 Maven have a versions plugin that can be used for several operations relating to versions. The only command here I find useful is <code>mvn versions:set -DnewVersion=1.0.0</code>. This will set the new versions of your project (including submodules) to 1.0.0. No need to edit the files manually! Neat!
 </p>
@@ -165,9 +165,9 @@ Maven have a versions plugin that can be used for several operations relating to
 </div>
 
 
-<div id="outline-container-orge7f5826" class="outline-2">
-<h2 id="orge7f5826">Bonus: ZSH completion</h2>
-<div class="outline-text-2" id="text-orge7f5826">
+<div id="outline-container-org8ca866a" class="outline-2">
+<h2 id="org8ca866a">Bonus: ZSH completion</h2>
+<div class="outline-text-2" id="text-org8ca866a">
 <p>
 Oh-My-ZSH has some really useful completions so you don't have to memorize any Maven commands. Just add mvn to your plugins list, open a new tab in your terminal (or new session) and you get nice completion! (you probably need Maven installed first, just to mention it&#x2026;). Mine looks like this <code>plugins=(git z gh mvn thefuck)</code> on my personal machine (kubectl is also super useful if you use Kubernetes!).  
 </p>
