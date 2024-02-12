@@ -1,0 +1,151 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "My Amiga 1200 Checkmate 1500 Plus build - Why, how and lots of pictures!"
+tags: amiga retro-computing
+---
+#+END_EXPORT
+
+A few weeks ago, I finally got around to building my Amiga 1200 build in a Checkmate 1500 Plus case. For several reasons, I have wanted this for a long time. The beautiful case, the nice keyboard garage, easier to fit on my desk and more. So this time I want to show you some pictures, share some thoughts, and maybe introduce you to a world of the Amiga hobby if you have not seen much of it before. Hopefully you will find it interesting as well.
+
+
+* What is the Checkmate 1500 Plus?
+The Checkmate 1500 Plus is a case/cabinet for computer builds, most famously various Amigas. [[https://www.checkmate1500plus.com/about.aspx][It is made by Steve Jones and a team of people]]. They have other products as well, like the smaller Checkmate 1500 Mini and the upcoming Checkmate Displays. No affiliation, just admire their work. What I find interesting is that Steve Jones actually made a similar case in the 80s for the Amiga 500! The Checkmate 1500. It made it possible to build the motherboard of the Amiga 500 into a new case, which had rooms for expansions. Remember that the big box Amigas in the 80s was expensive, so it was often way cheaper for people to buy this setup. The great upgradability was a huge plus. Commodore noticed the effort, and launched their own Amiga 1500. If you find this story interesting, you can hear parts of it in Steven's own words in RMC The Cave's video about it:
+
+#+BEGIN_EXPORT html
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xMxWvEmvti4?si=78ATtzKlFSZQYeZK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+#+END_EXPORT
+
+
+* Why did I want this?
+For the people who only thinks of Amiga machines as gaming machines or similar, it can be hard to understand why anyone would do this. They often just think of Amigas as games consoles, and aren't really invested in online Amiga communities. To me, Amiga is a cool computer platform, and I use it for all sorts of things:
+- Testing out new software, and seeing how far you can take older hardware. Sometimes it makes you think if we can use our devices a bit longer, and not just get the newest flashiest shit...
+- Trying new hardware for it. What I find most interesting is seeing new technology meeting the old. Seeing how it empowers the machine to do new things we might not have thought possible! 
+- Making small utilities and applications for it, and learning about the hardware. Programming using older APIs, or none, is a fun distraction from the modern horrors or complexity. Would also be fun to see if I could do software defined radio stuff on it somehow.
+- Sometimes games. Yes, I sometimes play some small games for it. It is NOT only a game machine though.
+
+
+If you want to go deeper into the rabbit hole, I recommend [[https://www.youtube.com/@10MARC][10 Minute Amiga Retrocast]] videos, [[https://www.youtube.com/@TheGuruMeditation/videos][The Guru Meditation]], or [[https://www.youtube.com/@danwood_uk][Dan Wood's]] videos. 
+
+
+
+*So why did I want to do this build?*
+- Better space for accelerators and upgrades like a possible CD-ROM drive in the future.
+- Easier to open and look inside. The screws on my Amiga 1200 has slowly been wearing out over the years, and the case seems more brittle. Better to have that as a display piece, and being able to use the rest of it.
+- An actual power button that is easy to reach (thanks to a modern power supply/PSU).
+- Nice sleek cabinet on my desk that I can easily slide my keyboard below to get more space. Also heightening the monitor/TV, which is a bonus!
+- The previous point again! The actual keyboard garage like the Amiga 1000 had! That is peak design in my book!
+
+
+* Pre-build configuration
+My Amiga 1200 is fairly standard, but with some improvements and expansions:
+- Polymer capacitors. Recapped by [[https://www.retropassion.co.uk/][RetroPassion]] (shoutout, not affiliated). Recapping is necessary to keep the machines alive, and avoid the old capacitors leaking and destroying your motherboard.
+- SUM USB Keyboard adapter. This plugs over the U7 chip on the motherboard, and lets me use a regular USB keyboard. As you can see in the later pictures, it has a long cable that doesn't really fit anywhere. For now, both before and after the build, it dangles out the case...
+- 8MB RAM Expansion card with FPU
+- Amiga OS 3.2. Not super important for the build, but if you are not using it yet, what are you even doing?!?
+- Plipbox for internet access. I use Roadshow for TCP/IP stack and so on. I have tried various PCMCIA solutions, but none have worked. The wireless card did not work for WPA2 encrypted networks, so back to ethernet based Plipbox it is...
+
+
+I also used to briefly use a Indivision AGA MK3, but managed to set it to an invalid display mode. Forgot to make a backup disk. Plan on replacing it anyway, so might just sell it cheap to someone.
+
+
+Now to the actual build!
+
+
+* The build(!)
+The build is probably best experienced with some images:
+
+#+BEGIN_EXPORT html
+<!-- Set up glightbox base settings for a nice gallery experience -->
+<link rel="stylesheet" href="{{ "/assets/deps/css/glightbox.min.css" | relative_url }}" />
+<script src="{{ "/assets/deps/js/glightbox.min.js" | relative_url }}"></script>
+
+<!-- The actual gallery! weee -->
+<a href="{{ "/assets/img/amigacheckmate/before.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="Before the build. Regular Amiga 1200">
+    <img src="{{ "/assets/img/amigacheckmate/before_thumbnail.jpg" | relative_url }}" alt="image" />
+</a>
+
+<a href="{{ "/assets/img/amigacheckmate/before_top_removed.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="Amiga 1200 top removed, and ready to transplant the motherboard to the new Checkmate case."></a>
+
+<a href="{{ "/assets/img/amigacheckmate/case_ready.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="Checkmate 1500 Plus case ready."></a>
+
+
+<a href="{{ "/assets/img/amigacheckmate/case_ready_inside.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="Inside of the empty Checkmate 1500 Plus case. Amiga 1200 in the back, ready for building."></a>
+
+<a href="{{ "/assets/img/amigacheckmate/checkmate_manual.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="The nice Checkmate manual, reminiscent of older Commodore manuals in the 80s."></a>
+
+<a href="{{ "/assets/img/amigacheckmate/checkmate_backplate.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="The Checkmate 1500 Plus backplate sold for Amiga 1200 builds."></a>
+
+
+<a href="{{ "/assets/img/amigacheckmate/motherboard_removed_rf.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="Amiga 1200 motherboard, with RF shielding (the metal plate) still in place. This was later removed."></a>
+
+<a href="{{ "/assets/img/amigacheckmate/build_powersupply_motherboard.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="Modern power supply and Amiga 1200 motherboard fit into the case."></a>
+
+<a href="{{ "/assets/img/amigacheckmate/still_works_short_floppy_cables.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="It still works! As you can see, the floppy drive cables were too short. Scroll further to the end to see more about that ;)"></a>
+
+<a href="{{ "/assets/img/amigacheckmate/borked_ram.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="My RAM expansion card seems to have malfunctioned. Worked a bit, then stopped working. Probably a connector or similar that is not as good as it used to be. Will use a newer expansion card anyway in the future, so not that bit of a loss."></a>
+
+<a href="{{ "/assets/img/amigacheckmate/finished.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="The finished Checkmate build, later in the evening">
+    <img src="{{ "/assets/img/amigacheckmate/finished_thumbnail.jpg" | relative_url }}" alt="image" />
+</a>
+
+<a href="{{ "/assets/img/amigacheckmate/too_short_floppy_cables.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="The floppy cables used in the original Amiga 1200 case, which was too small for the Checkmate case."></a>
+
+<a href="{{ "/assets/img/amigacheckmate/floppy_new_cables_internal.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="After a few weeks, the new cables arrived! Installed them so I can finally use my floppy drive again."></a>
+
+<a href="{{ "/assets/img/amigacheckmate/floppy_new_cables_works.jpg" | relative_url }}" class="glightbox" data-gallery="build-log-gallery" data-description="New floppy cables, and the floppy drive works again! Here with an Amiga Format cover disk.">
+    <img src="{{ "/assets/img/amigacheckmate/floppy_new_cables_works_thumbnail.jpg" | relative_url }}" alt="image" />
+</a>
+#+END_EXPORT
+
+(click on an image to get a gallery view with even more images!)
+
+
+
+Some notes about the build:
+- The RF shielding (aka the metal plate at the back of the Amiga 1200 motherboard) needs to be removed for it to fit the Checkmate 1500 Plus case. This is probably not that visible in the images. For this to be done, the header plate screws needs to be removed. (this is the screws that are at the sides of cables like VGA to tighten the grip of the cable which a lot of you might be used to. It is the same for almost all input at the back of the Amiga). A little tedious, but doable. 
+- The power supply is a modern one, and is connected through a plug that plugs directly into the power input on the back of the Amiga 1200 motherboard. This looks a bit wonky, but works great!
+- I forgot that the floppy drive cables might be too short, so had to wait a few weeks for new ones to arrive... Order new ones if you only have the ones that are already in your Amiga!
+- The floppy drive uses the same riser-screws as used to lift the motherboard. This is not visible, but if you don't do it, the floppy drive will not fit properly (i.e, the button and input will lie too low). 
+
+
+So now I have a nice machine on my desk that looks like the Amiga 1000 and Amiga 3000 had a baby :) 
+
+
+
+* Future improvements
+I have some future improvements I want to do as well. If you prefer, view the image gallery:
+
+
+#+BEGIN_EXPORT html
+<a href="{{ "/assets/img/amigacheckmate/future_buffered_ide.jpg" | relative_url }}" class="glightbox" data-gallery="future-gallery" data-description="4xEIDE adapter. A buffered IDE adapter to plug more IDE devices into my Amiga. A CD-ROM drive is on my wishlist, and will fit perfectly into the added space of the Checkmate cabinet.">
+    <img src="{{ "/assets/img/amigacheckmate/future_buffered_ide_thumbnail.jpg" | relative_url }}" alt="image" />
+</a>
+
+<a href="{{ "/assets/img/amigacheckmate/backside_empty_space.jpg" | relative_url }}" class="glightbox" data-gallery="future-gallery" data-description="Empty slot at the back that is currently used for the SUM USB Keyboard adapter cable. Might 3D Print a cover for it."></a>
+
+<a href="{{ "/assets/img/amigacheckmate/backside_pci_slots.jpg" | relative_url }}" class="glightbox" data-gallery="future-gallery" data-description="Empty PCI bracket slots. Might want to 3D Print custom brackets to fit the SUM USB Keyboard adapter to have a neat place to have that input. Having an HDMI cable input to get crisp output from a PiStorm could also be an option. Might also want to cover up the power supply solution a bit with some tape..."></a>
+
+<a href="{{ "/assets/img/amigacheckmate/future_pistorm.jpg" | relative_url }}" class="glightbox" data-gallery="future-gallery" data-description="PiStorm accelerator powered by Raspberry Pi 3. Uses Emu68 to give a super fast 68040 compatible processor that is much faster than the original. Also provides RTG output, which gives access to many applications that uses RTG">
+    <img src="{{ "/assets/img/amigacheckmate/future_pistorm_thumbnail.jpg" | relative_url }}" alt="image" />
+</a>
+
+
+<!-- Set up the glightbox classes for gallery rendering -->
+<script>
+ const glightbox = GLightbox({ selector: '.glightbox' });
+</script>
+#+END_EXPORT
+(click on an image to enter the gallery view!)
+
+
+Future improvements, summary:
+- A 4xEIDE buffered IDE adapter. This lets me plug more devices into the IDE port on my Amiga, and buffers them so I can read and write from multiple ones without issues. Also makes it easier to realize my dream of having a CD-ROM drive in my Amiga! Why? I have some CDs laying around, some being cover CDs from Amiga Future and similar. Being able to read them and listen to audio CDs on my Amiga would be neat!
+- 3D print some back plates and PCI slots. PCI slots would really tidy up the cables for my USB keyboard adapter, as well as a possible HDMI cable. This brings me to...
+- PiStorm! This is an accelerator card powered by a Raspberry Pi 3, though I will maybe consider using a CM4 if WiFi internet connectivity is implemented. It is powered by Emu68, and provides the Amiga with a super fast 68040 inspired CPU which includes both a MMU and FPU. The card also gives us HDMI output, and with that also works as an RTG card. Having RTG functionality opens up a whole lot of new software to try, as well as being able to use a [[https://github.com/AmigaPorts/libSDL12][SDL port]]. The uninitiated might wonder what RTG is? It would be out of scope of this article to explain it fully, so let's over-simplify; RTG, or ReTargetable Graphics is a way for Amiga to use external graphics cards. This lets us use chunky pixels (drawing pixels with one operations) instead of relying on bitplanes. You would have to combine several bitplanes and draw to each one separately to draw pixel by pixel in the same way that games like Wolfenstein 3D and Doom did, which made the Amiga too slow for those kind of games.  RTG lets us do this kind of drawing easier. Bitplanes were a really good optimization back in the day though, as you saved memory for drawing big 2D scenes. That was probably super over-simplified, but hopefully the more hard-core fellow Amiga geeks out there can forgive me for that explanation :)
+
+
+The future looks bright! Looking forward to playing with the PiStorm when I have finished this article and eaten my vegetables! :) 
