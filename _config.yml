@@ -1,7 +1,7 @@
 url: "https://themkat.net" 
 baseurl: ""
 title: "TheMKat's blog" 
-paginate: 5
+paginate: 10
 include: [".well-known"]
 exclude: ["org"] 
 plugins:
