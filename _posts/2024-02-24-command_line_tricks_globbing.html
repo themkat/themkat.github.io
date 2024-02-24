@@ -1,0 +1,594 @@
+---
+layout: blogpost
+title: Command line tricks: Globbing basics
+tags: cli linux macosx automation
+---
+
+<p>
+When working with files in the command line, you don't always want to write full file names. Maybe you are working on a group of files that has file names with a given patterns, like log files (e.g, log<sub>011023.txt</sub>)? Or maybe you want to filter out files that don't fit a given pattern? Or maybe your use case is just picking out shell scripts that starts with the letter P? In this article we will look at globbing, which can be thought of as wildcards we use in place of explicitly writing full filenames. Read on to see several examples on how they can be used to solve various command line tasks!
+</p>
+
+
+<p>
+If it is not clear from the introductions: globs can be thought of as wildcards. That way we can make patterns to match files instead of explicitly writing full filenames. We will also use bash here, so there might be minor differences in other Unix style shells like Fish or Zsh. (I use zsh, so there is one note about that below!).
+</p>
+
+
+
+<div id="outline-container-org8fd4c4b" class="outline-2">
+<h2 id="org8fd4c4b">Glob patterns</h2>
+<div class="outline-text-2" id="text-org8fd4c4b">
+<p>
+There are a lot of different patterns we could cover, and many of them would be very esoteric. Instead, the basic and most useful patterns will be covered here. If you are curious on different ones from the ones covered, you can skip to the further reading section for a suggested place to read more.
+</p>
+
+
+<p>
+To make the explanations a bit more fun, they will be very example heavy.
+</p>
+
+
+
+<div class="notebox">
+  <div class="notebox-heading">
+    <strong>Globs - when are they "executed"</strong>
+  </div>
+  <div class="notebox-content">
+    If you are new to globbing, you might wonder how the matches are executed? All programs can't posibly handle them themselves, so they are done by the shell, right? Yes! Before executing the programs in your scripts or command line, bash (or other shell variant) will match the glob patterns. To make it more clear, let us look at a quick example. To make things simple, we will use <a href="https://github.com/themkat/themkat.github.io">this blogs code</a> in the example.
+    <br />
+    <br />
+    Let's say we have the command "<pre>cat *.html</pre>" (to print contents of all html files directly to the command line).
+    <br />
+    That is exactly the same as running "<pre>cat 404.html about.html index.html privacypolicy.html</pre>" directly. Before cat is being run, bash will replace the glob pattern with those exact file matches.
+    <br />
+    <br />
+    (don't worry if the pattern seem a bit weird! It will be explained and have more examples shortly.)
+  </div>
+</div>
+</div>
+
+
+<div id="outline-container-org8611708" class="outline-3">
+<h3 id="org8611708">Matching anything with <code>*</code></h3>
+<div class="outline-text-3" id="text-org8611708">
+<p>
+If you read the info-box above, you will probably have noticed the <code>*</code> matching. What does it mean? It simply matches anything! 0 or more characters. If you are used to regex (regular expressions), you might have seen it there. While globs and regular expressions have commonalities, there are also many differences. So have that in mind if you are familiar with regex.
+</p>
+</div>
+
+
+<div id="outline-container-org70e659d" class="outline-4">
+<h4 id="org70e659d">Listing information on all html files in directory</h4>
+<div class="outline-text-4" id="text-org70e659d">
+<p>
+Let us use the above glob pattern for something useful, and list file information on all html files in the root directory:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">$ ls -l *.html
+-rw-r--r--  1 marie  staff   123 Jul  1  2021 404.html
+-rw-r--r--@ 1 marie  staff  2381 Feb 12 18:18 about.html
+-rw-r--r--@ 1 marie  staff  1740 Feb 12 18:40 index.html
+-rw-r--r--  1 marie  staff   657 Oct 31  2022 privacypolicy.html
+</pre>
+</div>
+<p>
+(you might not see the <code>@</code> characters, as those are Mac OS X style extended attributes. I always ignore them)
+</p>
+
+
+<p>
+As you can see, with a simple trick, we filtered out only the file type we were interested in. 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org96f7078" class="outline-4">
+<h4 id="org96f7078">Listing all files that has an "l" in their extension, and contains a "g" in their name</h4>
+<div class="outline-text-4" id="text-org96f7078">
+<p>
+What do we want here? We want a filename where g appears somewhere, with an extension where l appears somewhere. Take a deep breath and remember that <code>*</code> matches 0 or more characters. This means we can use <code>*g*</code> and <code>*l*</code> for our patterns:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls *g*.*l*
+_config.yml
+org_publish.el
+</pre>
+</div>
+
+<p>
+You will notice this about using globs, namely that it is mostly about knowing base rules, and knowing your data.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org39dca83" class="outline-3">
+<h3 id="org39dca83">Match a single character with <code>?</code></h3>
+<div class="outline-text-3" id="text-org39dca83">
+<p>
+The previous pattern matched zero or more characters, but sometimes it can be useful to match only one character. This is possible with <code>?</code>. 
+</p>
+</div>
+
+
+<div id="outline-container-org1eae700" class="outline-4">
+<h4 id="org1eae700">Mixing <code>?</code> and  <code>*</code>: Getting all blog posts from the last 3 months of 2021</h4>
+<div class="outline-text-4" id="text-org1eae700">
+<p>
+If you take a look at the html files on this blog, you will notice that they follow a pattern: <code>year-month-day-title.html</code>. We can use that to our advantage. The last 3 months of the year start with a <code>1</code> (i.e, 10, 11 and 12), so the pattern for those is simply <code>1?</code>. After the month, we simply have a dash, our day, title and file extension. We don't really care what comes after the dash, so that is a good candidate for <code>*</code>. That leads us to the following pattern, and result:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls _posts/2021-1?-*.html
+_posts/2021-10-02-no_nonsense_command_line.html
+_posts/2021-10-04-macosx_software.html
+_posts/2021-10-08-emacs_packages_that_make_me_happy.html
+_posts/2021-10-11-become_a_maven_ninja.html
+_posts/2021-10-15-retro_programming_youtubers.html
+_posts/2021-10-16-java_serviceloader.html
+_posts/2021-10-20-springboot_easy_customizations.html
+_posts/2021-10-26-javascript_the_good_parts.html
+_posts/2021-11-03-kotlin_in_emacs.html
+_posts/2021-11-10-jvm_scripting.html
+_posts/2021-11-15-emacs_small_tips.html
+_posts/2021-11-17-favorite_personal_finance_books.html
+_posts/2021-11-20-emacs_package_highlight_try.html
+_posts/2021-11-27-biographies_about_tech.html
+_posts/2021-11-30-emacs_fun_useless.html
+_posts/2021-12-01-coding_advent_calendars.html
+_posts/2021-12-11-even_more_cli_tools_to_try.html
+_posts/2021-12-16-reactive_whats_the_big_deal.html
+_posts/2021-12-20-five_reasons_i_love_emacs.html
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org390a82d" class="outline-4">
+<h4 id="org390a82d">Creating e-book with pandoc</h4>
+<div class="outline-text-4" id="text-org390a82d">
+<p>
+To give you some context: I usually prefer reading longer texts on my Kindle, but there are a lot of "books" you read directly in your browser out there. A lot of those come in markdown or html format, so they need to be converted if used on my Kindle. Fortunately, there is a tool that solves this issue called Pandoc! Some tweaking is sometimes needed, so we will use a fairly simple example here. Sheepolution has created <a href="https://www.sheepolution.com/learn/book/contents">a really awesome book for learning the Love2D Lua game framework</a>, and has made <a href="https://github.com/Sheepolution/how-to-love">the source files available on Github</a>. We can use those Markdown files to create a really awesome epub file that can later be converted for use on our Kindle!
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">pandoc --resource-path=. -o sheepolution.epub --epub-cover-image=logo.png title.txt book/chapter?.md book/chapter1?.md book/chapter2?.md
+</pre>
+</div>
+
+<p>
+The logo.png file and title.txt files are files I created; One is a simple cover, the other contain only yaml metadata. The metadata I use look like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml">---
+title: Sheepolutions How to Love
+author: Sheepolution
+rights:  MIT
+language: en-US
+---
+</pre>
+</div>
+
+
+<p>
+First things first, why couldn't we just use the pattern <code>book/chapter*.md</code> to cover everything? This is because the globbing matches alphabetically, so the order would be like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">book/chapter0.md
+book/chapter1.md
+book/chapter10.md
+book/chapter11.md
+book/chapter12.md
+book/chapter13.md
+book/chapter14.md
+book/chapter15.md
+book/chapter16.md
+book/chapter17.md
+book/chapter18.md
+book/chapter19.md
+book/chapter2.md
+book/chapter20.md
+book/chapter21.md
+book/chapter22.md
+book/chapter23.md
+book/chapter24.md
+book/chapter3.md
+book/chapter4.md
+book/chapter5.md
+book/chapter6.md
+book/chapter7.md
+book/chapter8.md
+book/chapter9.md
+</pre>
+</div>
+
+<p>
+As you see, the order is all wrong!
+</p>
+
+
+<p>
+If you are unfamiliar with scripting, the next parts might be a little confusing. Don't worry! They are only meant as improvements to the above examples. Look at them slowly, and look up some references if you think they look scary. If you are very new to the command line, you might just want to skip right to the next heading.
+</p>
+
+
+
+<p>
+If you run the pandoc command above, you might notice that it complains about the image files not existing? Some minor tweaks as needed in the markdown files, as the image paths start at root (e.g, <code>/images/book/download_love.png</code>). We need to remove the leading slashes. To do this task, we can utilize the find and sed commands to create a small script:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">chapters=$(find book -name '*.md')
+for chapter in $chapters; do
+    cat $chapter | sed 's!/images/!images/!g' &gt; tmp.md
+    mv tmp.md $chapter
+done
+</pre>
+</div>
+
+
+<p>
+Here you notice that we use find to recursively search the book directory for files with the ending <code>.md</code>. The pattern given to find isn't globbed by bash, so it needs to be a string. find processes its patterns itself. Next is a simple for loop to go through each of the results from find. For each result, or chapter if you will, we use sed to replace <code>/images/</code> with <code>images/</code> (i.e, essentially removing the leading slash). For the curious, you will notice that we use <code>!</code> as a delimiter for the replace pattern. As several matches may happen on the same line, we match globally with <code>g</code> to replace for all matches and not just the first. We write the results to a temporary file, and last we replace the original file with the temporary one. Many tools work line by line in the command line, so you might sometime get weird results if you write directly back to your input. It might have worked in this case, but I have built a habit of using temporary files in cases like these&#x2026;
+</p>
+
+
+<p>
+If you look closely at the example book, you will notice that it contains animated gifs. For our e-readers, it is a waste of space to keep them when only the first frame is shown. We can extract the first frame and only use that one to make the file size smaller. There is a neat tool for working with gif files, called <a href="https://www.lcdf.org/gifsicle/">gifsicle</a>, which we can use here. The script is fairly similar to our last script:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">files=$(find images -name '*.gif')
+for file in $files; do
+    echo "Fixing $file..."
+    gifsicle $file '#0' &gt; tmp.gif &amp;&amp; mv tmp.gif $file
+done
+</pre>
+</div>
+
+<p>
+There are off course many more improvements we could have done. If you need an exercise, you can work on using <a href="https://imagemagick.org/script/convert.php">ImageMagicks convert command</a> to resize and/or compress the images :)
+</p>
+
+
+<p>
+If you feel like the piping characters <code>|</code> and <code>&gt;</code> above are confusing, I suggest you read up on pipes. It is covered in <a href="https://themkat.net/2021/10/02/no_nonsense_command_line.html">my earlier beginners guide to the command line article</a> :)
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org0a58b22" class="outline-3">
+<h3 id="org0a58b22">Ranges and groups with <code>[]</code></h3>
+<div class="outline-text-3" id="text-org0a58b22">
+<p>
+The group syntax, <code>[group]</code>, where <code>group</code> is a group pattern, is a useful way to match ranges and limit possible matches. One such group matches one character at a time. Some notable patterns include:
+</p>
+<ul class="org-ul">
+<li><code>[a-z]</code> - matches all lower case letters from a to z. Likewise, <code>[A-Z]</code> will match the uppercase variants.</li>
+<li><code>[0-9]</code> - the numbers from 0 to 9.</li>
+<li><code>[abc]</code> - a, b and c.</li>
+<li><code>[-0-9]</code> - the <code>-</code> characters, and the numbers from 0 to 9. To include the <code>-</code> character, it either has to come at the beginning or end.</li>
+<li><code>[!A-Z]</code> - NOT upper case A to Z. This not-operation, <code>!</code>, can be used with other groups as well. The important part is that it is in the beginning of the square brackets.</li>
+<li><code>[[:space:]]</code> - space.</li>
+</ul>
+
+
+<p>
+<b>NOTE! The not pattern above can give some weird error messages in zshell/zsh, as zsh also uses ! for other events.</b>
+</p>
+
+
+<p>
+I often find groups to be of best use together with the previous patterns, so the examples will reflect that.
+</p>
+</div>
+
+
+<div id="outline-container-org6a1e6bb" class="outline-4">
+<h4 id="org6a1e6bb">Files starting with a, b, c, d, e or f in blog source root</h4>
+<div class="outline-text-4" id="text-org6a1e6bb">
+<p>
+Let us for simplicity only match files that have an extension. That way we can use ls to list the files in a simple manner. (Remember that ls lists the content of the directory it gets as an argument, when the argument is a directory). This can be done fairly simply by combining groups and the match anything pattern. We can specify a, b, c, d, e and f with a direct group:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">$ ls -1 [abcdef]*.*
+about.html
+ads.txt
+create_tag_pages.sh
+emacs_headless_publish.sh
+favicon.ico
+</pre>
+</div>
+<p>
+(the <code>-1</code> argument will print each listing on one line)
+</p>
+
+<p>
+This is quite verbose, as it is simply a range of alphabetic characters. Matches like above are useful when we can't express it with a range, for example if you want to skip every other character. In this case though, we can instead use the range <code>[a-f]</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls -1 [a-f]*.*
+about.html
+ads.txt
+create_tag_pages.sh
+emacs_headless_publish.sh
+favicon.ico
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgbf826ea" class="outline-4">
+<h4 id="orgbf826ea">Improving our "Blog posts from the last 3 months of 2021" example</h4>
+<div class="outline-text-4" id="text-orgbf826ea">
+<p>
+In the previous version of this matcher, we matched every possible character after 1. Hopefully, you know that the only valid month numbers that start with 1  are 10, 11 and 12. That means that our previous version would have matched invalid patterns if we had made such files. Let us limit it a bit using groups. Instead of matching anything, we only want to match 0, 1 and 2. This can easily be done with a range <code>[0-2]</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls _posts/2021-1[0-2]-*.html
+_posts/2021-10-02-no_nonsense_command_line.html
+_posts/2021-10-04-macosx_software.html
+_posts/2021-10-08-emacs_packages_that_make_me_happy.html
+_posts/2021-10-11-become_a_maven_ninja.html
+_posts/2021-10-15-retro_programming_youtubers.html
+_posts/2021-10-16-java_serviceloader.html
+_posts/2021-10-20-springboot_easy_customizations.html
+_posts/2021-10-26-javascript_the_good_parts.html
+_posts/2021-11-03-kotlin_in_emacs.html
+_posts/2021-11-10-jvm_scripting.html
+_posts/2021-11-15-emacs_small_tips.html
+_posts/2021-11-17-favorite_personal_finance_books.html
+_posts/2021-11-20-emacs_package_highlight_try.html
+_posts/2021-11-27-biographies_about_tech.html
+_posts/2021-11-30-emacs_fun_useless.html
+_posts/2021-12-01-coding_advent_calendars.html
+_posts/2021-12-11-even_more_cli_tools_to_try.html
+_posts/2021-12-16-reactive_whats_the_big_deal.html
+_posts/2021-12-20-five_reasons_i_love_emacs.html
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org8661188" class="outline-4">
+<h4 id="org8661188">Blog posts NOT from 2022, 2023 or 2024</h4>
+<div class="outline-text-4" id="text-org8661188">
+<p>
+If we assumed that all blog posts are from the 2020 decade, then this one is simply a match for the last digit not to be 2, 3 or 4. That leads us to <code>202[!234]</code>. We want a more flexible solution for a longer living blog than mine. Maybe it is not even a blog, but a journal of sorts that matches far back (1900s?). For simplicity, we assume 4 digits with a maximum year of 9999. This means that future people using Unix on their space station could also use this pattern! (if every system is not Unix-inspired in the future, then all is lost). We need 2 different groups here: one for the numbers 0-9, and one for the numbers to avoid. One possible solution is
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls _posts/202[!234]-*.html
+_posts/2020-08-08-first_post.html
+_posts/2020-08-27-kotlin_dsl.html
+_posts/2020-08-30-cool_linux_clis.html
+_posts/2020-09-07-career_boosting_books.html
+_posts/2020-10-04-java_rethrow_log_exceptions.html
+_posts/2020-10-20-browser-extension-recommendation.html
+_posts/2021-03-23-programminglanguages2021.html
+_posts/2021-07-28-summer_books_2021.html
+_posts/2021-08-04-more_cli_tools.html
+_posts/2021-09-13-recommended_emacs_packages.html
+_posts/2021-09-18-rip_clive_sinclair.html
+_posts/2021-09-22-essential_ayn_rand.html
+_posts/2021-09-26-scifi_books_to_unwind.html
+_posts/2021-10-02-no_nonsense_command_line.html
+_posts/2021-10-04-macosx_software.html
+_posts/2021-10-08-emacs_packages_that_make_me_happy.html
+_posts/2021-10-11-become_a_maven_ninja.html
+_posts/2021-10-15-retro_programming_youtubers.html
+_posts/2021-10-16-java_serviceloader.html
+_posts/2021-10-20-springboot_easy_customizations.html
+_posts/2021-10-26-javascript_the_good_parts.html
+_posts/2021-11-03-kotlin_in_emacs.html
+_posts/2021-11-10-jvm_scripting.html
+_posts/2021-11-15-emacs_small_tips.html
+_posts/2021-11-17-favorite_personal_finance_books.html
+_posts/2021-11-20-emacs_package_highlight_try.html
+_posts/2021-11-27-biographies_about_tech.html
+_posts/2021-11-30-emacs_fun_useless.html
+_posts/2021-12-01-coding_advent_calendars.html
+_posts/2021-12-11-even_more_cli_tools_to_try.html
+_posts/2021-12-16-reactive_whats_the_big_deal.html
+_posts/2021-12-20-five_reasons_i_love_emacs.html
+</pre>
+</div>
+
+<p>
+We could also easily have done a positive match:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls _posts/202[0156789]-*.html
+_posts/2020-08-08-first_post.html
+_posts/2020-08-27-kotlin_dsl.html
+_posts/2020-08-30-cool_linux_clis.html
+_posts/2020-09-07-career_boosting_books.html
+_posts/2020-10-04-java_rethrow_log_exceptions.html
+_posts/2020-10-20-browser-extension-recommendation.html
+_posts/2021-03-23-programminglanguages2021.html
+_posts/2021-07-28-summer_books_2021.html
+_posts/2021-08-04-more_cli_tools.html
+_posts/2021-09-13-recommended_emacs_packages.html
+_posts/2021-09-18-rip_clive_sinclair.html
+_posts/2021-09-22-essential_ayn_rand.html
+_posts/2021-09-26-scifi_books_to_unwind.html
+_posts/2021-10-02-no_nonsense_command_line.html
+_posts/2021-10-04-macosx_software.html
+_posts/2021-10-08-emacs_packages_that_make_me_happy.html
+_posts/2021-10-11-become_a_maven_ninja.html
+_posts/2021-10-15-retro_programming_youtubers.html
+_posts/2021-10-16-java_serviceloader.html
+_posts/2021-10-20-springboot_easy_customizations.html
+_posts/2021-10-26-javascript_the_good_parts.html
+_posts/2021-11-03-kotlin_in_emacs.html
+_posts/2021-11-10-jvm_scripting.html
+_posts/2021-11-15-emacs_small_tips.html
+_posts/2021-11-17-favorite_personal_finance_books.html
+_posts/2021-11-20-emacs_package_highlight_try.html
+_posts/2021-11-27-biographies_about_tech.html
+_posts/2021-11-30-emacs_fun_useless.html
+_posts/2021-12-01-coding_advent_calendars.html
+_posts/2021-12-11-even_more_cli_tools_to_try.html
+_posts/2021-12-16-reactive_whats_the_big_deal.html
+_posts/2021-12-20-five_reasons_i_love_emacs.html
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgae2ed3f" class="outline-3">
+<h3 id="orgae2ed3f">Multiple possible match types with <code>{}</code></h3>
+<div class="outline-text-3" id="text-orgae2ed3f">
+<p>
+Sometimes we have multiple possible patterns we want to match. bash has us covered here, and we can cover our options with curly brackets delimited by commas. This is probably best explained with some examples.
+</p>
+</div>
+
+<div id="outline-container-org91b4966" class="outline-4">
+<h4 id="org91b4966">Matching files ending with either html, sh or el</h4>
+<div class="outline-text-4" id="text-org91b4966">
+<p>
+We want to match anything ending with either html, sh or el. Using the anything matcher in combination with the multiple matcher then looks like the following:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls -1 *.{html,el,sh}
+404.html
+about.html
+create_tag_pages.sh
+emacs_headless_publish.sh
+index.html
+org_publish.el
+privacypolicy.html
+</pre>
+</div>
+
+
+<p>
+We notice that two of our patterns end with l. As the inside of the multiple matcher is simply patterns, we can use that to our advantage with an inner pattern:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls -1 *.{{htm,e}l,sh}
+404.html
+about.html
+create_tag_pages.sh
+emacs_headless_publish.sh
+index.html
+org_publish.el
+privacypolicy.html
+</pre>
+</div>
+
+<p>
+You can mix and match these inner patterns using all the previous patterns! Enjoy!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org605fcf4" class="outline-4">
+<h4 id="org605fcf4">Blog posts from March or July, in 2021 or 2023</h4>
+<div class="outline-text-4" id="text-org605fcf4">
+<p>
+We could easily mix and match using the group pattern here, but for the sake of example we will only use the multiple matcher. We either want to match month 03 or 07, and year 2021 or 2023.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls -1 _posts/{2021,2023}-{03,07}-*.html
+_posts/2021-03-23-programminglanguages2021.html
+_posts/2021-07-28-summer_books_2021.html
+_posts/2023-03-04-kotlin_collections_stdlib.html
+_posts/2023-03-04-kotlin_stdlib_overlooked.html
+_posts/2023-03-06-kotlin_strings_stdlib.html
+_posts/2023-03-09-org_mode_uses.html
+_posts/2023-03-26-rust_awesome_videos_explain_concepts.html
+_posts/2023-07-29-three_things_love_hate_mac.html
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org1446db6" class="outline-3">
+<h3 id="org1446db6">What happens if I use the above characters in file names (and want to match them)?</h3>
+<div class="outline-text-3" id="text-org1446db6">
+<p>
+If we <del>are stupid and</del> use the matching characters in file names, then how do we match them? Fortunately, bash let's us escape these characters when matching! Let us use the anything matcher here as an example. We want to match a file like <code>myfile*.txt</code>. For this purpose, we could off course use the anything matcher, but it would match other files as well.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls myfile*.txt
+myfile*.txt
+myfile2.txt
+</pre>
+</div>
+
+<p>
+We didn't want to match myfile2.txt! What can we do? We can escape the <code>*</code> character using <code>\*</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls myfile\*.txt
+myfile*.txt
+</pre>
+</div>
+
+<p>
+Like other patterns, we could use this escaped one in conjunction with the others. Maybe we have many files where the last part of the name is a <code>*</code>?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ ls *\*.txt
+myfile*.txt
+somefile*.txt
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org57cf76e" class="outline-3">
+<h3 id="org57cf76e">No way to match a x number of characters?</h3>
+<div class="outline-text-3" id="text-org57cf76e">
+<p>
+Sadly no, at least not to my knowledge. If you for example want to match 3 numbers in succession, the easiest way is probably <code>[0-9][0-9][0-9]</code>. You don't have the number of times specifier like you have in regular expressions. 
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf896bd9" class="outline-2">
+<h2 id="orgf896bd9">Further reading</h2>
+<div class="outline-text-2" id="text-orgf896bd9">
+<p>
+What we have covered should be enough for most people, I know it is for me. If you want to go deeper into the rabbit hole of globs, there is several articles you can read. <a href="https://mywiki.wooledge.org/glob">One is a wiki article on wooledge</a>. It also covers some useful group matching patterns you might find useful. 
+</p>
+
+
+<p>
+There are also other things you might want to check out, depending on your skill level:
+</p>
+<ul class="org-ul">
+<li>If you are a beginner, or some of the above is foreign to you: Maybe you would enjoy <a href="https://themkat.net/2021/10/02/no_nonsense_command_line.html">going back to the basics of command line usage</a>.</li>
+<li>You want to learn some other tips and tricks for improving your command line usage: <a href="https://themkat.net/2022/10/18/small_command_line_tricks.html">My small command line tricks article</a> is probably your best bet.</li>
+<li>Maybe sed is something you think looks cool and useful: I have <a href="https://themkat.net/2022/10/15/sed_more_than_replacements.html">an article covering several aspects of it</a>!</li>
+</ul>
+
+
+<p>
+Hopefully, I will also make a scripting article for beginners (who have read about the basics of command line usage) in the future. Stay tuned :)
+</p>
+</div>
+</div>

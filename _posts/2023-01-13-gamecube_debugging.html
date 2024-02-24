@@ -41,18 +41,18 @@ Debugging for the GameCube can be a bit different from what you are used to. The
 
 
 
-<div id="outline-container-org69b6a94" class="outline-2">
-<h2 id="org69b6a94">GDB stub snippets</h2>
-<div class="outline-text-2" id="text-org69b6a94">
+<div id="outline-container-org46d5242" class="outline-2">
+<h2 id="org46d5242">GDB stub snippets</h2>
+<div class="outline-text-2" id="text-org46d5242">
 <p>
 Depending on what way you want to debug, there are a few differences on the GDB code stub you put in your code. No matter what method you use, you should link your program with the <code>db</code> library (<code>-ldb</code>), and include <code>debug.h</code> in your program.
 </p>
 </div>
 
 
-<div id="outline-container-org2845ece" class="outline-3">
-<h3 id="org2845ece">Option 1: USB Gecko</h3>
-<div class="outline-text-3" id="text-org2845ece">
+<div id="outline-container-org47db101" class="outline-3">
+<h3 id="org47db101">Option 1: USB Gecko</h3>
+<div class="outline-text-3" id="text-org47db101">
 <p>
 To use USB Gecko, we only need to a single line for initialization:
 </p>
@@ -69,9 +69,9 @@ This initializes our USB Gecko device to EXI Channel 1, which is the Memory Card
 </div>
 
 
-<div id="outline-container-org42d37ab" class="outline-3">
-<h3 id="org42d37ab">Option 2: Network debug (broadband)</h3>
-<div class="outline-text-3" id="text-org42d37ab">
+<div id="outline-container-orgf8aeddd" class="outline-3">
+<h3 id="orgf8aeddd">Option 2: Network debug (broadband)</h3>
+<div class="outline-text-3" id="text-orgf8aeddd">
 <p>
 If you want to debug over the network using a broadband adapter, the stub itself is fairly simple:
 </p>
@@ -103,9 +103,9 @@ const char *tcp_gateway = "192.168.1.1";
 </div>
 
 
-<div id="outline-container-org2289cfc" class="outline-3">
-<h3 id="org2289cfc">Common step: break</h3>
-<div class="outline-text-3" id="text-org2289cfc">
+<div id="outline-container-org5183fa4" class="outline-3">
+<h3 id="org5183fa4">Common step: break</h3>
+<div class="outline-text-3" id="text-org5183fa4">
 <p>
 When you have chosen your way of debugging and inserted the GDB stub initialization code, you need one final thing: a break statement. This can be a bit confusing when you first see it. The initialization snippets only seem to initialize the hardware, and a separate instruction to wait for a GDB session to attach is necessary. Simply put this in your code where you want it to wait for your GDB connection:
 </p>
@@ -127,9 +127,9 @@ Then the GameCube will wait at that position in your code for you to connect.
 </div>
 
 
-<div id="outline-container-org572c650" class="outline-2">
-<h2 id="org572c650">Debugging using GDB directly</h2>
-<div class="outline-text-2" id="text-org572c650">
+<div id="outline-container-orgff28cb4" class="outline-2">
+<h2 id="orgff28cb4">Debugging using GDB directly</h2>
+<div class="outline-text-2" id="text-orgff28cb4">
 <p>
 When you have done the above, debugging using 
 </p>
@@ -170,9 +170,9 @@ While this works pretty well, it is a bit tedious to what we are used to with mo
 </div>
 
 
-<div id="outline-container-org84d9158" class="outline-2">
-<h2 id="org84d9158">Using Debug Adapter Protocol to get visuals like we are used to</h2>
-<div class="outline-text-2" id="text-org84d9158">
+<div id="outline-container-org6f7f607" class="outline-2">
+<h2 id="org6f7f607">Using Debug Adapter Protocol to get visuals like we are used to</h2>
+<div class="outline-text-2" id="text-org6f7f607">
 <p>
 Thanks to VSCode, we have the <a href="https://microsoft.github.io/debug-adapter-protocol/">Debug Adapter Protocol</a>. This standard provides a common way for editors to talk to debuggers, and is implemented in many editors including VSCode, Vim and Emacs. While GDB doesn't provide a way for us to connect using this protocol, there are middleware that do. <a href="https://github.com/WebFreak001/code-debug">WebFreak001 provides a VSCode extension</a> that connects to GDB and visualizes the breakpoints, variables etc. like we are used to. The debug adapter part can be used by almost any editor, and we will use it from Emacs in the next section. Using this extension we can easily create launch configurations:
 </p>
@@ -202,9 +202,9 @@ What this will do is automatically load the symbol file (elf), connect to the ta
 </div>
 
 
-<div id="outline-container-org25e48ba" class="outline-2">
-<h2 id="org25e48ba">Adapting the process to Emacs</h2>
-<div class="outline-text-2" id="text-org25e48ba">
+<div id="outline-container-org687145a" class="outline-2">
+<h2 id="org687145a">Adapting the process to Emacs</h2>
+<div class="outline-text-2" id="text-org687145a">
 <p>
 While Emacs has a built-in GDB command we could use, we would still need to write GDB commands the old fashioned way. To make our debugging more comfortable, we can use <a href="https://emacs-lsp.github.io/dap-mode/">dap-mode</a>. dap-mode makes it simple to use the debugger part of the extension mentioned above, <a href="https://emacs-lsp.github.io/dap-mode/page/configuration/#native-debug-gdblldb">as you only need to run a interactive command in Emacs after requiring dap-gdb-lldb</a>. After that is done, we can create a debug template:
 </p>
@@ -235,13 +235,13 @@ No matter how you choose to debug from Emacs, it will look something like this:
 </div>
 
 
-<div id="outline-container-org49ee6d4" class="outline-2">
-<h2 id="org49ee6d4">Possible issues</h2>
-<div class="outline-text-2" id="text-org49ee6d4">
+<div id="outline-container-orgd8bb581" class="outline-2">
+<h2 id="orgd8bb581">Possible issues</h2>
+<div class="outline-text-2" id="text-orgd8bb581">
 </div>
-<div id="outline-container-orgda6c0ff" class="outline-4">
-<h4 id="orgda6c0ff">"Reading symbols from /path/to/my.elf&#x2026;Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /path/to/my.elf]"</h4>
-<div class="outline-text-4" id="text-orgda6c0ff">
+<div id="outline-container-org2ff13cd" class="outline-4">
+<h4 id="org2ff13cd">"Reading symbols from /path/to/my.elf&#x2026;Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /path/to/my.elf]"</h4>
+<div class="outline-text-4" id="text-org2ff13cd">
 <p>
 This is caused by the newest versions of powerpc-eabi-gcc (version 12.1.0 from 2022 on my machine) defaulting to Dwarf-5 debug format, while powerpc-eabi-gdb (version 7.6.2 from 2013 on my machine) is not supporting it due to being an older version. <a href="https://dwarfstd.org/">Dwarf is a standard for debugging information, and is used by many different compilers today</a>.
 </p>

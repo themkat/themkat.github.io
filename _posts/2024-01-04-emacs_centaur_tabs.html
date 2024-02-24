@@ -28,9 +28,9 @@ This should not need to be mentioned, but I use Emacs for ME! If you don't like 
 </p>
 
 
-<div id="outline-container-org1c14f43" class="outline-2">
-<h2 id="org1c14f43">What I expect from tab packages</h2>
-<div class="outline-text-2" id="text-org1c14f43">
+<div id="outline-container-orgccb6aa2" class="outline-2">
+<h2 id="orgccb6aa2">What I expect from tab packages</h2>
+<div class="outline-text-2" id="text-orgccb6aa2">
 <p>
 Many years ago I tried other tab packages in Emacs, and didn't really enjoy them that much. As I experiment with them many years ago, I do not remember the specific package names. I remember the reasons for not enjoying them though:
 </p>
@@ -49,9 +49,9 @@ Continue reading to see how I think <a href="https://github.com/ema2159/centaur-
 </div>
 </div>
 
-<div id="outline-container-org4a29836" class="outline-2">
-<h2 id="org4a29836">Introducing <a href="https://github.com/ema2159/centaur-tabs">centaur-tabs</a></h2>
-<div class="outline-text-2" id="text-org4a29836">
+<div id="outline-container-org5f5360b" class="outline-2">
+<h2 id="org5f5360b">Introducing <a href="https://github.com/ema2159/centaur-tabs">centaur-tabs</a></h2>
+<div class="outline-text-2" id="text-org5f5360b">
 <p>
 Let us first see what the top tab bar looks like with centaur-tabs in my setup. Yours might look a bit more plain at first, but I will share some configuration options shortly (so don't worry!). Currently I'm editing this blog-post, while also having another post open as well as a terminal:
 </p>
@@ -73,9 +73,9 @@ You can navigate using the mouse if you want to as well, though I prefer not to.
 </div>
 </div>
 
-<div id="outline-container-orgd6d1357" class="outline-2">
-<h2 id="orgd6d1357">Configuration options</h2>
-<div class="outline-text-2" id="text-orgd6d1357">
+<div id="outline-container-org2e2994f" class="outline-2">
+<h2 id="org2e2994f">Configuration options</h2>
+<div class="outline-text-2" id="text-org2e2994f">
 <p>
 Activating centaur-tabs is as easy as running a function:
 </p>
@@ -135,9 +135,9 @@ There are many more configuration options, so see <a href="https://github.com/em
 </div>
 
 
-<div id="outline-container-org1e8f656" class="outline-2">
-<h2 id="org1e8f656">Making tab-grouping work the way I want</h2>
-<div class="outline-text-2" id="text-org1e8f656">
+<div id="outline-container-org2e9a2d9" class="outline-2">
+<h2 id="org2e9a2d9">Making tab-grouping work the way I want</h2>
+<div class="outline-text-2" id="text-org2e9a2d9">
 <p>
 While the projectile integration is okay, it has the limits as described above. Buffers like the ones from <a href="https://github.com/akermu/emacs-libvterm">VTerm</a> (feel free to read <a href="https://themkat.net/2023/06/06/emacs_package_highlight_vterm.html">my article on vterm and why it is the best terminal solution inside Emacs</a>), Cargo Rustic runs etc. are shown in a separate group instead of the project they are part of. Projectile exposes some a function called <code>projectile-project-root</code> as well as a variable called <code>projectile-known-projects</code>. We can use this to ask projectile directly for the corresponding project root, and to create a fallback (some buffers were weird and stubborn, might not be needed in all cases):
 </p>
@@ -182,9 +182,9 @@ The code above uses <a href="https://github.com/magnars/dash.el">dash.el</a> (fo
 </div>
 </div>
 
-<div id="outline-container-orge3c44b3" class="outline-2">
-<h2 id="orge3c44b3">My complete configuration</h2>
-<div class="outline-text-2" id="text-orge3c44b3">
+<div id="outline-container-orgd03b766" class="outline-2">
+<h2 id="orgd03b766">My complete configuration</h2>
+<div class="outline-text-2" id="text-orgd03b766">
 <p>
 I use <a href="https://github.com/jwiegley/use-package">use-package</a> to configure my Emacs packages. If you are unfamiliar with it, I suggest taking a quick look at it before reading my configuration below.
 </p>
