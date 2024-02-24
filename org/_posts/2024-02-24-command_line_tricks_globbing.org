@@ -354,6 +354,7 @@ We want to match anything ending with either html, sh or el. Using the anything 
 
 We notice that two of our patterns end with l. As the inside of the multiple matcher is simply patterns, we can use that to our advantage with an inner pattern:
 
+{% raw %}
 #+BEGIN_SRC bash
   $ ls -1 *.{{htm,e}l,sh}
   404.html
@@ -364,12 +365,14 @@ We notice that two of our patterns end with l. As the inside of the multiple mat
   org_publish.el
   privacypolicy.html
 #+END_SRC
+{% endraw %}
 
 You can mix and match these inner patterns using all the previous patterns! Enjoy!
 
 *** Blog posts from March or July, in 2021 or 2023
 We could easily mix and match using the group pattern here, but for the sake of example we will only use the multiple matcher. We either want to match month 03 or 07, and year 2021 or 2023.
 
+{% raw %}
 #+BEGIN_SRC bash
   $ ls -1 _posts/{2021,2023}-{03,07}-*.html
   _posts/2021-03-23-programminglanguages2021.html
@@ -381,6 +384,7 @@ We could easily mix and match using the group pattern here, but for the sake of 
   _posts/2023-03-26-rust_awesome_videos_explain_concepts.html
   _posts/2023-07-29-three_things_love_hate_mac.html
 #+END_SRC
+{% endraw %}
 
 
 ** What happens if I use the above characters in file names (and want to match them)?
