@@ -4,7 +4,7 @@
 #+BEGIN_EXPORT html
 ---
 layout: blogpost
-title: Command line tricks: Globbing basics
+title: "Command line tricks: Globbing basics"
 tags: cli linux macosx automation
 ---
 #+END_EXPORT
@@ -334,12 +334,13 @@ We could also easily have done a positive match:
 #+END_SRC
 
 
-** Multiple possible match types with ={}=
+** Multiple possible match types with {% raw %} ={}= {% endraw %}
 Sometimes we have multiple possible patterns we want to match. bash has us covered here, and we can cover our options with curly brackets delimited by commas. This is probably best explained with some examples.
 
 *** Matching files ending with either html, sh or el
 We want to match anything ending with either html, sh or el. Using the anything matcher in combination with the multiple matcher then looks like the following:
 
+{% raw %}
 #+BEGIN_SRC bash
   $ ls -1 *.{html,el,sh}
   404.html
@@ -350,6 +351,7 @@ We want to match anything ending with either html, sh or el. Using the anything 
   org_publish.el
   privacypolicy.html
 #+END_SRC
+{% endraw %}
 
 
 We notice that two of our patterns end with l. As the inside of the multiple matcher is simply patterns, we can use that to our advantage with an inner pattern:
