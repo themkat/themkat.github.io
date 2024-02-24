@@ -33,9 +33,9 @@ To make the explanations a bit more fun, they will be very example heavy.
     If you are new to globbing, you might wonder how the matches are executed? All programs can't posibly handle them themselves, so they are done by the shell, right? Yes! Before executing the programs in your scripts or command line, bash (or other shell variant) will match the glob patterns. To make it more clear, let us look at a quick example. To make things simple, we will use <a href="https://github.com/themkat/themkat.github.io">this blogs code</a> in the example.
     <br />
     <br />
-    Let's say we have the command "<pre>cat *.html</pre>" (to print contents of all html files directly to the command line).
+    Let's say we have the command <pre>cat *.html</pre> (to print contents of all html files directly to the command line).
     <br />
-    That is exactly the same as running "<pre>cat 404.html about.html index.html privacypolicy.html</pre>" directly. Before cat is being run, bash will replace the glob pattern with those exact file matches.
+    That is exactly the same as running <pre>cat 404.html about.html index.html privacypolicy.html</pre> directly. Before cat is being run, bash will replace the glob pattern with those exact file matches.
     <br />
     <br />
     (don't worry if the pattern seem a bit weird! It will be explained and have more examples shortly.)
