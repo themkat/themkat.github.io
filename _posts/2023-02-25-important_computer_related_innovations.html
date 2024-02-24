@@ -15,9 +15,9 @@ Some of you are probably expecting to see Cloud Computing, Blockchain and AI on 
 
 
 
-<div id="outline-container-org73f04ae" class="outline-2">
-<h2 id="org73f04ae">Highly programmable GPUs - massively parallel floating point operations for the masses</h2>
-<div class="outline-text-2" id="text-org73f04ae">
+<div id="outline-container-orgf4f1b40" class="outline-2">
+<h2 id="orgf4f1b40">Highly programmable GPUs - massively parallel floating point operations for the masses</h2>
+<div class="outline-text-2" id="text-orgf4f1b40">
 <p>
 Graphics Processing Units (GPUs) started their life as fixed function state machines. You sent it fixed commands, and it obeyed. With their parallel nature, it wasn't too long until someone decided to make them more programmable. What if we could run custom programs on GPUs? That is how shaders came to be. With shaders, developers could program custom logic for how their vertices (points) and pixels were calculated. This still went through a pipeline of operations, but parts of them became programmable. (This pipeline included calculating which 3D points were visible, removing non visible ones, etc.). If you want to learn more about how graphics processing pipelines work, I suggest reading <a href="https://fgiesen.wordpress.com/2011/07/09/a-trip-through-the-graphics-pipeline-2011-index/">this article</a> (it is older, but still valid). The programmability increased through the years, which lead to using GPUs for general purpose applications (i.e, not just graphics). This is called General Purpose GPU (GPGPU). More simulations and massively parallel computations were not possible for more people at home. This lead to innovations in simulation algorithms (e.g, fluid simulations using Smoothed Particle Hydrodynamics), graphics algorithms (e.g, screen space ray tracing, and volume rendering), and more. It also empowers AI (which we discuss later), and has made it faster to train neural networks and do massive calculations. (much of AI and machine learning are calculations, not conditional logic).
 </p>
@@ -32,9 +32,9 @@ Some of you may wonder: why don't we just do the same thing for our CPUs if GPUs
 
 
 
-<div id="outline-container-org3aa06ec" class="outline-2">
-<h2 id="org3aa06ec">Container technology - Process separation to utilize computing resources more effectively</h2>
-<div class="outline-text-2" id="text-org3aa06ec">
+<div id="outline-container-orgfb573c2" class="outline-2">
+<h2 id="orgfb573c2">Container technology - Process separation to utilize computing resources more effectively</h2>
+<div class="outline-text-2" id="text-orgfb573c2">
 <p>
 While Virtual Machines (VMs) have been around for a while, they had one serious drawback; you had to emulate or virtualize several operating systems on the same machine. This provided a separation of processes on a machine, and therefore let us run a lot of different programs on a single computer. Having to run multiple operating systems wasted a lot of resources though. Containers on the other hand share the operating system kernel itself, but have their own file system and process isolation (each container only being able to see its own processes). In Linux this is done through mechanisms like CGroups and namespaces. In essence, a container is just a process with extra steps making it more isolated. This is very lightweight, and has made it super easy to avoid the classical "works on my machine" issues. You pack all your dependencies, like a Debian filesystem and/or OpenSSL, into the container, and the recipient runs exactly the same versions like you. That enabled you to set up completely working servers, database setups and similar, and others can download the complete setup. These days containers come in two main flavors: Linux containers (the original and most popular), and <a href="https://learn.microsoft.com/en-us/virtualization/windowscontainers/about/">Windows containers</a> (if that is your poison).
 </p>
@@ -52,9 +52,9 @@ If you are new to containers, and find the above a bit confusing, there is <a hr
 </div>
 
 
-<div id="outline-container-org0e2bbb4" class="outline-2">
-<h2 id="org0e2bbb4">Affordable computing devices and micro controllers</h2>
-<div class="outline-text-2" id="text-org0e2bbb4">
+<div id="outline-container-orgaab7ae9" class="outline-2">
+<h2 id="orgaab7ae9">Affordable computing devices and micro controllers</h2>
+<div class="outline-text-2" id="text-orgaab7ae9">
 <p>
 I want to begin with a quote from the former boss of Commodore, Jack Tramiel. His goal with the computers they made was to make them affordable so every home could have them. It is possible to make money, and have socially good causes at the same time! (just in case you doubted it for a second)
 </p>
@@ -73,9 +73,9 @@ In the last 10-15 years (or so) we have gotten many small affordable computer- a
 </div>
 
 
-<div id="outline-container-org28af6ac" class="outline-2">
-<h2 id="org28af6ac">3D printers - Everyone can make products at home (given some basic computer skills)</h2>
-<div class="outline-text-2" id="text-org28af6ac">
+<div id="outline-container-orgcdc2b56" class="outline-2">
+<h2 id="orgcdc2b56">3D printers - Everyone can make products at home (given some basic computer skills)</h2>
+<div class="outline-text-2" id="text-orgcdc2b56">
 <p>
 This is probably the section I have to explain the least! Being able to make your own 3D models (CAD) or download them, and then printing them yourself is a huge innovation. This makes it possible to a whole new degree for individuals to produce their own products, and therefore being able to complete in the market place in a whole new way (both from selling digital products and physical ones). You will notice that in everything from home decor, and cases for computers like Raspberry Pi, to guns. Maybe we will also print food in the future, who knows? While 3D printer prices are still a barrier to entry, the prices are slowly declining. More competition in the free(ish) market is amazing like that! Speaking for myself, I would love to own one! Hopefully I will have room for one in the near future.
 </p>
@@ -83,9 +83,9 @@ This is probably the section I have to explain the least! Being able to make you
 </div>
 
 
-<div id="outline-container-orgd60f4c9" class="outline-2">
-<h2 id="orgd60f4c9">Artificial Intelligence (AI) as a service - For those of us who don't have petabytes of data to train our own datasets</h2>
-<div class="outline-text-2" id="text-orgd60f4c9">
+<div id="outline-container-org4189d4d" class="outline-2">
+<h2 id="org4189d4d">Artificial Intelligence (AI) as a service - For those of us who don't have petabytes of data to train our own datasets</h2>
+<div class="outline-text-2" id="text-org4189d4d">
 <p>
 Artificial Intelligence (AI) is not a new field, and has been with us in one shape or form since the 50s. In my view, it is thanks to the growing computing power and related innovations (see GPU section above) that we have been able to do more research faster. This has caused a surge of new algorithms, use cases and more. What I consider the biggest innovation though, is making it available for everyone. Sure, you can program and train your own models, but you probably don't have the amount of data that a company like OpenAI, Google or Microsoft has. These companies providing their trained models as APIs have made it possible for more people to utilize advanced AI (neural networks, machine learning etc.) technology in their applications. You may not have noticed it that much until recently, but many of these APIs have been used in various web and mobile apps for years.
 </p>
@@ -95,9 +95,9 @@ Artificial Intelligence (AI) is not a new field, and has been with us in one sha
 
 
 
-<div id="outline-container-org4640a53" class="outline-2">
-<h2 id="org4640a53">Honorable mention: Digital distribution and better accessibility</h2>
-<div class="outline-text-2" id="text-org4640a53">
+<div id="outline-container-orgfbcf089" class="outline-2">
+<h2 id="orgfbcf089">Honorable mention: Digital distribution and better accessibility</h2>
+<div class="outline-text-2" id="text-orgfbcf089">
 <p>
 You may wonder: what is so special about digital distribution? It has after all been done since the 90s for various media like games and software. Thanks to increasing internet speeds, you can now do all of it way faster. That has in itself enabled platforms like Steam (for games), Netflix (for movies), and more. Still, that is not what I want to highlight here. Digital distribution has also made it easier than ever to access audio books, books, courses etc. The accessibility here is two-fold; actually getting hold of the material, and also making it possible to use for people who may not have had the options earlier. One example is text/subtitles in movies and courses, where you can now increase the font size in most services. Same for audio books becoming popular, and that you are now able to set the speed if you need to (some may want to slow down, or you need to set it up to 2x speed to not get bored). Or for dyslexic people who may not have had the chance to enjoy the book as much otherwise! Having material in digital format has also enabled us to have screen readers to make everything from code to web pages accessible for blind people. To me, accessibility issues like these are probably the most important innovations that have come from digital distribution. My hope for the future is that we can continue to make our media (both entertainment and educational) available to a higher number of people.
 </p>
