@@ -1,6 +1,5 @@
 $backgroundColor: #ffffff;
 $bodyColor: #000000;
-//$bodyFont: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 $menuMainColor: #FFCCE6;
 $menuHoverColor: #FF99CE;
 $menuActiveColor: #BF6091;
@@ -9,7 +8,6 @@ $menuActiveColor: #BF6091;
 body {
 	background: $backgroundColor;
 	color: $bodyColor;
-	//font-family: $bodyFont;
 	font-family: 'Helvetica', 'Arial', sans-serif;
 	margin: 0;
 }
@@ -88,7 +86,6 @@ body {
 .content .verse {
 	margin-left: 2vw;
 	font-style: italic;
-	// TODO: see if this has issues with some browsers
 	font-family: ui-rounded;
 }
 
@@ -234,8 +231,6 @@ body {
 	display: block;
 }
 
-// TODO: any way to combine these two that I'm forgetting? :(
-// TODO: do these need to be changed a bit for mobile devices? Maybe ditch the float?
 .blogfloatrightimg {
 	max-width: 20%;
 	max-height: auto;
