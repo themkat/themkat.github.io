@@ -4,7 +4,6 @@ $menuMainColor: #FFCCE6;
 $menuHoverColor: #FF99CE;
 $menuActiveColor: #BF6091;
 
-
 body {
 	background: $backgroundColor;
 	color: $bodyColor;
@@ -12,11 +11,16 @@ body {
 	margin: 0;
 }
 
-.banner {
-	height: auto;
-	width: 100%;
-	float: left;
-	background-color: $menuMainColor;
+.banner-container {
+	width: 100vw;
+	background-color: $menuActiveColor;
+
+    .banner {
+        display: block;
+        width: 80%;
+        height: auto;
+        margin: auto;
+    }
 }
 
 // only display for mobiles
@@ -36,13 +40,13 @@ body {
 
 .menu nav a {
 	background-color: $menuMainColor;
-	font-size: 2em;
+	font-size: 1.5em;
 	display: inline-block;
 	margin-left: -0.5%;
 	margin-bottom: -0.5%;
-	padding: 1%;
-	padding-left: 3%;
-	padding-right: 3%;
+	padding: 0.75%;
+	padding-left: 2%;
+	padding-right: 2%;
 	color: black;
 	text-decoration: none;
 	font-weight: bolder;
@@ -77,7 +81,7 @@ body {
 	padding-right: 5vw;
 	padding-top: 4vh;
 	padding-bottom: 2vh;
-	font-size: 1.5em;
+	font-size: 1.25em;
 	margin-top: 8vh;
 	margin-left: auto;
 	margin-right: auto;
@@ -92,6 +96,10 @@ body {
 // fixing various settings for mobile devices
 @media only screen and (max-width: 600px) {
 
+    .banner {
+        width: 100%;
+    }
+    
 	.mobile-menu-toggle {
 		display: block;
 		font-size: 2em;
