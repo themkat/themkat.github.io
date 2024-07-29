@@ -3,7 +3,7 @@ baseurl: ""
 title: "TheMKat's blog" 
 paginate: 10
 include: [".well-known"]
-exclude: ["org"] 
+exclude: ["org", "*.sh", "*.org"]
 plugins:
   - jekyll-sitemap
   - jekyll-paginate
