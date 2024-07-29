@@ -83,6 +83,7 @@
             <img  class="banner" src="{{ "/assets/img/banner.jpg" | relative_url }}" alt="" />
         </div>
 		<div class="mobile-menu-toggle" onclick="toggleHamburgerMenu()">&#9776;</div>
+        <div class="color-mode-toggle" id="mode" onclick="toggleColorMode()">☼</div>
 		<div class="menu" id="menu">
 			<nav>
 				<a {% if page.tab == "home" %}
@@ -183,10 +184,30 @@
 			 }
 		 }
 
+         function toggleColorMode() {
+             const mode = document.getElementById('mode');
+             if (mode.classList.length > 1) {
+                 document.body.removeAttribute('data-mode');
+                 localStorage.removeItem('mode');
+                 mode.classList.remove('color-mode-toggle-dark');
+             }
+             else {
+                 document.body.setAttribute('data-mode', 'dark');
+                 localStorage.setItem('mode', 'dark');
+                 mode.classList.add('color-mode-toggle-dark');
+             }
+         }
+         
 		 function generalKenobi() {
 			 console.log(':)');
 		 }
 
+         // load theme settings if the user has set them before
+         if ('dark' === localStorage.getItem('mode')) {
+             document.body.setAttribute('data-mode', 'dark');
+             mode.classList.add('color-mode-toggle-dark');
+         }
+          
 		 console.log('Hello there');
 		</script>
 	</body>

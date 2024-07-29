@@ -1,19 +1,31 @@
-$backgroundColor: #ffffff;
-$bodyColor: #000000;
-$menuMainColor: #FFCCE6;
-$menuHoverColor: #FF99CE;
-$menuActiveColor: #BF6091;
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --link-color: blue;
+    --menu-main-color: #FFCCE6;
+    --menu-hover-color: #FF99CE;
+    --menu-active-color: #BF6091;
+}
+
+[data-mode="dark"] {
+    --bg-color: #000000;
+    --text-color: #7A6BD5;
+    --link-color: #7A6BD5;
+    --menu-main-color: #5A296B;
+    --menu-hover-color: #400F50;
+    --menu-active-color: #BF6091;
+}
 
 body {
-	background: $backgroundColor;
-	color: $bodyColor;
+	background: var(--bg-color);
+	color: var(--text-color);
 	font-family: 'Helvetica', 'Arial', sans-serif;
 	margin: 0;
 }
 
 .banner-container {
 	width: 100vw;
-	background-color: $menuActiveColor;
+	background-color: var(--menu-active-color);
 
     .banner {
         display: block;
@@ -32,14 +44,14 @@ body {
 	top: 0;
 	position: sticky;
 	width: 100%;
-	background-color: $menuMainColor; 
+	background-color: var(--menu-main-color); 
 	overflow: hidden;
 	z-index: 99;
 	border-radius: 0 0 1em 1em;
 }
 
 .menu nav a {
-	background-color: $menuMainColor;
+	background-color: var(--menu-main-color);
 	font-size: 1.5em;
 	display: inline-block;
 	margin-left: -0.5%;
@@ -47,7 +59,7 @@ body {
 	padding: 0.75%;
 	padding-left: 2%;
 	padding-right: 2%;
-	color: black;
+	color: var(--text-color);
 	text-decoration: none;
 	font-weight: bolder;
 	text-align: center;
@@ -55,12 +67,12 @@ body {
 
 .menu nav a:hover {
 	color: white;
-	background-color: $menuHoverColor; 
+	background-color: var(--menu-hover-color); 
 }
 
 .menu nav .active {
 	color: white;
-	background-color: $menuActiveColor; 
+	background-color: var(--menu-active-color); 
 	border-left: 1% solid black;
 	border-right: 1% solid black;
 }
@@ -73,18 +85,41 @@ body {
 	float: right;
 }
 
+.color-mode-toggle {
+    font-size: 2em;
+    display: inline-block;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.25em;
+    padding: 0.1em;
+    background: var(--bg-color);
+    position: absolute;
+    z-index: 1;
+    top: 0.25em;
+    right: 0.25em;
+}
+
+.color-mode-toggle-dark {
+    background: black;
+    color: white;
+}
+
 .content {
 	width: 70vw;
 	box-shadow: 0 0 1em gray;
 	border-radius: 0.25em;
 	padding-left: 5vw;
 	padding-right: 5vw;
-	padding-top: 4vh;
+	padding-top: 2vh;
 	padding-bottom: 2vh;
 	font-size: 1.25em;
-	margin-top: 4vh;
+	margin-top: 2vh;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.content a {
+    color: var(--link-color);
 }
 
 .content .verse {
@@ -103,10 +138,12 @@ body {
 	.mobile-menu-toggle {
 		display: block;
 		font-size: 2em;
-		background-color: $menuMainColor;
+		background-color: var(--menu-main-color);
 		color: black;
 	}
 
+    // todo: easing of some kind. now it is very sudden
+    //         transition: display 5s ease-in-out;
 	.menu {
 		display: none;
 	}
@@ -140,17 +177,6 @@ body {
 	}
 }
 
-.content .downloads {
-	margin-top: -2vh;
-	float: right; 
-}
-
-.content .downloads a {
-	font-size: 1em;
-	text-decoration: none;
-	color: black;
-}
-
 .content .timestamp {
 	font-size: medium;
 	float: right;
@@ -180,7 +206,7 @@ body {
 // TODO: any way to make this count for all heasders? Probably forgetting something here :P (the [class^=h] solution seems like it may cover too much in the future. Maybe overthinking it xD
 .content h2 a {
 	text-decoration: underline;
-	color: black;
+	color: var(--text-color);
 }
 
 .content blockquote {
@@ -211,7 +237,7 @@ body {
 }
 
 .footer .external-links a {
-	color: black;
+	color: var(--text-color);
 	text-decoration: none;
 	text-align: right;
 	display: block;
@@ -228,7 +254,7 @@ body {
 
 .bloglisting h2 a {
 	text-decoration: none;
-	color: black;
+	color: var(--text-color);
 }
 
 .blogpostimg {
