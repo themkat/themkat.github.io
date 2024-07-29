@@ -128,6 +128,10 @@ body {
 	font-family: ui-rounded;
 }
 
+.tag-toggle {
+    display: none;
+}
+
 // fixing various settings for mobile devices
 @media only screen and (max-width: 600px) {
 
@@ -169,6 +173,20 @@ body {
 		padding-left: 0;
 		padding-right: 0;
 	}
+
+    .tag-toggle {
+        display: inline-block;
+        font-weight: normal;
+        color: var(--link-color);
+    }
+
+    .tag-toggle-hide {
+        display: none;
+    }
+    
+    .tag-links {
+        display: none;
+    }
 
 	.footer {
 		margin-left: 0;

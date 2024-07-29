@@ -17,10 +17,32 @@ tab: home
 
 <!-- Print tags with links -->
 <h3>Tags:
+  <span class="tag-toggle" id="tag-toggle" onclick="tagToggle()">...+...</span>
+  <div id="tag-links" class="tag-links">
 	{% for tag in tags%}
 	<a href="/tags/{{tag}}.html">{{tag}}</a>&nbsp;
 	{% endfor %}
+  </div>
 </h3>
+
+<!-- Simple script for tag functionality on mobile units -->
+<script>
+  function tagToggle() {
+      // probably better ways. I'm lazy af
+      const activePattern = "...+...";
+      const links = document.getElementById("tag-links");
+      const toggleBtn = document.getElementById("tag-toggle");
+      const isActive = activePattern === toggleBtn.innerHTML;
+      if (isActive) {
+          toggleBtn.innerHTML = "...-...";
+          links.style = "display: inline-block;";
+      }
+      else {
+          toggleBtn.innerHTML = activePattern;
+          links.style = "display: none;";
+      }
+  }
+</script>
 
 <hr />
 
