@@ -1,0 +1,36 @@
+---
+layout: 68k
+---
+
+<h3>{{ site.posts | size }} articles on many different topics! :cat:</h3>
+
+<!-- tag collecting. DRY plz future me... -->
+{% assign tags =  "" | split: "," %}
+{% for post in site.posts %}
+{% assign tags = tags | concat: post.tags %}
+{% endfor %}
+{% assign tags = tags | uniq %}
+
+<!-- Print tags with links
+     TODO: link to 68k versions of pages?
+  -->
+<h3>Tags:
+  <div id="tag-links" class="tag-links">
+	{% for tag in tags%}
+	<a href="/tags/{{tag}}.html">{{tag}}</a>&nbsp;
+	{% endfor %}
+  </div>
+</h3>
+
+<hr />
+
+<!-- Posts  -->
+{% for post in site.posts %}
+{% include postlisting.html title=post.title date=post.date url=post.url excerpt=post.excerpt %}
+<hr />
+{% endfor %}
+
+
+<!-- TODO:
+     - pagination! Now it may load more slowly as the blog grows on Amiga :/ 
+     - any way to get random article and similar things to work? -->
