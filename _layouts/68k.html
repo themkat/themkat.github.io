@@ -3,14 +3,15 @@
     -->
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
-  <head>
-  </head>
-  <body>
-      <img  width="320" src="{{ "/assets/img/banner_68k.jpg" | relative_url }}" alt="" />
-      <br />
-      <p>Experimental site for older computers :)</p>
-      {{ content }}
-      <br />
-      -- links and stuff in the future maybe --
-  </body>
+    <head>
+        <title>{{ page.title | default: site.title }} - 68k Edition</title>
+    </head>
+    <body>
+        <img  width="320" src="{{ "/assets/img/banner_68k.jpg" | relative_url }}" alt="" />
+        <br />
+        <p>Experimental site for older computers :)</p>
+        {{ content }}
+        <br />
+        -- links and stuff in the future maybe --
+    </body>
 </html>
