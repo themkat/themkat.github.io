@@ -1,4 +1,5 @@
 _site
+_posts/*
 .jekyll-cache
 org/ltximg
 *.*~
