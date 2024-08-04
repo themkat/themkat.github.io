@@ -12,32 +12,8 @@ permissions:
   id-token: write
 
 jobs:
-  setupsite:
-    # [SKIP] Tag to skip Emacs org mode to html and tag generation
-    if: "!contains(github.event.head_commit.message, '[SKIP]')"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: purcell/setup-emacs@v6.0
-        with:
-          version: 28.1
-      - name: Run Emacs Org mode publish to convert Org mode files to HTML
-        run: ./emacs_headless_publish.sh
-      - name: Setup new tags if any
-        run: ./create_tag_pages.sh
-      # only publish the pages for master/main branch activity
-      - name: Publish new files if any
-        if: github.event_name != 'pull_request'
-        run: |
-          git config --local user.email "action@github.com" && \
-          git config --local user.name "GitHub Action" && \
-          git add . && \
-          git commit -am "[SKIP] New org mode articles and/or tags" && \
-          git push
   build:
     runs-on: ubuntu-latest
-    needs: setupsite
-    if: "always()"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,6 +21,18 @@ jobs:
         uses: ruby/setup-ruby@v1.190.0
         with:
           ruby-version: '3.1'
+      - uses: purcell/setup-emacs@v6.0
+        with:
+          version: 28.1
+      - name: Run Emacs Org mode publish to convert Org mode files to HTML
+        run: ./emacs_headless_publish.sh
+      - name: Setup new tags if any
+        run: ./create_tag_pages.sh
+      - name: Create report on generated tag pages
+        run: |
+          echo -e "<h2>Tags made:</h2>\n<ul>" >> $GITHUB_STEP_SUMMARY
+          ls tags >> $GITHUB_STEP_SUMMARY
+          echo "</ul>" >> $GITHUB_STEP_SUMMARY
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
@@ -63,7 +51,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
-    if: "always() && 'success' == needs.build.result && github.event_name != 'pull_request'"
+    if: "github.event_name != 'pull_request'"
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
