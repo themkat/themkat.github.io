@@ -14,3 +14,12 @@ One of my main goals from the beginning was to have a simple experience where I 
   - [[https://orgmode.org/][Org-Mode]]
 - Shell scripting
 - Github Actions (to automate blogpost generation from Org-Mode to HTML files, create new tag pages automatically etc.)
+
+** Dependencies for dev mode
+For building and serving the site locally, the following is needed:
+- Emacs
+- Ruby
+- [[https://github.com/emcrisostomo/fswatch][fswatch]]
+
+
+Then simply run =./dev-mode.sh=
