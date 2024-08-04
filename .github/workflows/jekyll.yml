@@ -45,7 +45,7 @@ jobs:
       - name: Minify HTML to make the site as small as possible
         if: github.event_name != 'pull_request'
         run: |
-          npm install html-minifier
+          npm install -g html-minifier
           html-minifier --collapse-whitespace --minify-js --minify-css --remove-comments --file-ext html --input-dir _site --output-dir _site
       - name: Upload artifact
         if: github.event_name != 'pull_request'
