@@ -31,7 +31,7 @@ jobs:
       - name: Create report on generated tag pages
         run: |
           echo -e "<h2>Tags made:</h2>\n<ul>" >> $GITHUB_STEP_SUMMARY
-          ls tags >> $GITHUB_STEP_SUMMARY
+          ls tags | sed -E 's/(.*)/<li>\1<\/li>/' >> $GITHUB_STEP_SUMMARY
           echo "</ul>" >> $GITHUB_STEP_SUMMARY
       - name: Setup Pages
         id: pages
