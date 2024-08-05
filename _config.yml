@@ -4,6 +4,8 @@ title: "TheMKat's blog"
 paginate: 10
 include: [".well-known"]
 exclude: ["org", "*.sh", "*.org", "Gemfile", "Gemfile.lock"]
+sass:
+  style: compressed
 plugins:
   - jekyll-sitemap
   - jekyll-paginate
