@@ -18,12 +18,16 @@ It should be noted that modern computers like the X86, modern phones, modern ARM
 
 Hopefully you remember what the absolute value is. It is simply a positive representation of the value, in other words it's the value without its sign. -10 will be 10, and 10 will still be 10. Mathematically we can define it like this:
 
+#+BEGIN_EXPORT html
+<!-- htmlmin:ignore -->
 \begin{equation}
 |x| = \begin{cases}
   x & \text{if } x \geq 0  \\
   -x & \text{if } x < 0
 \end{cases}
 \end{equation}
+<!-- htmlmin:ignore -->
+#+END_EXPORT
 
 
 * Naive implementation with branching
