@@ -24,6 +24,14 @@ layout: default
 
 <br />
 <hr />
+<script id="diffblog-plugin-script" async="false" src="https://diff.blog/static/js/diffblog_plugin_v1.js"></script> 
+<script>
+        document.getElementById("diffblog-plugin-script").addEventListener("load", function () {
+            DiffBlog(
+                "kuk9i19wl2iwxssb2l38rebtcz22o32kb2k7jo6npyra4la0k6"
+            );
+        });
+</script>
 <br />
 <!-- Stupid simple algorithm for related posts. Just find those that share at least x tags (defaults to 2). Can be overriden by the post property related_tags_count. 
 -->
