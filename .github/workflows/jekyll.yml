@@ -26,9 +26,9 @@ jobs:
         with:
           version: 28.1
       - name: Run Emacs Org mode publish to convert Org mode files to HTML
-        run: ./emacs_headless_publish.sh
+        run: ./scripts/emacs_headless_publish.sh
       - name: Setup new tags if any
-        run: ./create_tag_pages.sh
+        run: ./scripts/create_tag_pages.sh
       - name: Create report on generated tag pages
         run: |
           echo -e "<h2>Tags made:</h2>\n<ul>" >> $GITHUB_STEP_SUMMARY

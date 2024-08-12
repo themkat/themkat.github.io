@@ -22,7 +22,7 @@ For building and serving the site locally, the following is needed:
 - [[https://github.com/emcrisostomo/fswatch][fswatch]]
 
 
-Then simply run =./dev-mode.sh=
+Then simply run =./scripts/dev-mode.sh=
 
 
 ** Using the resources from this repo? License?
