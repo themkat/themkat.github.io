@@ -23,3 +23,10 @@ For building and serving the site locally, the following is needed:
 
 
 Then simply run =./dev-mode.sh=
+
+
+** Using the resources from this repo? License?
+This is my own personal blog, so ALL texts/blog posts (i.e, content) are prohibited to be used by others (than me) without permission! That includes commercial AI models (e.g, OpenAI) where the model is NOT open source! I can allow open source models with permissive licenses, but only if you get my permission before using any of my content. The reason is that many crawlers (used by AI models) have been predatory in the way they just take data, and especially in problems they have caused with almost DDoSing domains... I know that mentioning it probably won't stop the problem, but at least I have made myself clear :joy:
+
+
+That being said... there are tooling, like scripts and similar. Feel free to use scripts and snippets for your own projects :) If you use anything, please add a small comment in your HTML or code with a link to this repo. Remember that a lot of small blogs following their own path, meaning not using predatory SEO, have troubles being found. We are in this together, so let's help each other out :)
