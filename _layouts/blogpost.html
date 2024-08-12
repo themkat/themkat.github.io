@@ -24,6 +24,7 @@ layout: default
 
 <br />
 <hr />
+{% if "production" == jekyll.environment %}
 <script id="diffblog-plugin-script" async="false" src="https://diff.blog/static/js/diffblog_plugin_v1.js"></script> 
 <script>
         document.getElementById("diffblog-plugin-script").addEventListener("load", function () {
@@ -32,6 +33,7 @@ layout: default
             );
         });
 </script>
+{% endif %}
 <br />
 <!-- Stupid simple algorithm for related posts. Just find those that share at least x tags (defaults to 2). Can be overriden by the post property related_tags_count. 
 -->
