@@ -132,6 +132,13 @@ body {
     display: none;
 }
 
+
+.printbutton {
+    float: right;
+    display: inline-block;
+    cursor: pointer;
+}
+
 // fixing various settings for mobile devices
 @media only screen and (max-width: 600px) {
 
@@ -215,12 +222,6 @@ body {
         height: 2vh;
 	    width: auto;
     }
-}
-
-.printbutton {
-    float: right;
-    display: inline-block;
-    cursor: pointer;
 }
 
 .content .tags {
