@@ -1,0 +1,151 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "CSS Styles for printed webpages? - Did you know you could style for printed sites with CSS?"
+tags: css 
+---
+#+END_EXPORT
+
+Did you know that CSS has a way for us to style a page if the user choose to print it? We might want to tune sizes, not display certain elements and so on. This is all possible thanks to CSS media queries. While many web developers know about media queries, they might not know that it can be used to style print media as well. If this sounds interesting, then read on!
+
+
+This article will assume that you know the basics of CSS. If you are a beginner, you should check out a tutorial first. One example is [[https://www.w3schools.com/css/default.asp][this one from W3Schools]]. 
+
+
+* CSS Media Queries basics recap
+In CSS3 media queries were introduced. Their main use cases are different styling for different screens, like the difference between a desktop web site and a mobile one. The basics is a query to the device that browses the site, to check if it fits a certain criteria. We could for example check if a device has a color screen:
+#+BEGIN_SRC css
+  @media (color) {
+      // styling when colors are supported
+  }
+#+END_SRC
+
+
+Their basic form is as follows:
+#+BEGIN_SRC css
+  @media media-list {
+      // your styling here
+  }
+#+END_SRC
+
+media-list may consist of multiple media types and media features.
+
+
+We always start a query with the =@media= tag, which signalizes to the browser that we want to ask for information. We can choose to not give a media type, like we saw above in the color example, which defaults to =all=. Other options include =screen= and =print=, where we will discuss the last one in the next section. You will sometimes also see the =only= keyword used before one of the media type options. This is oversimplified a way for older browsers to ignore the query, where they might have uncritically applied styling we did not want. One example is older browsers interpreting a max-width query as simply a screen query due to it not understanding the whole query. In a way, it is how we tell the browser to _only_ apply the query if it understands the complete thing.
+
+
+You can also use logical operators to combine several media types and features into one styling block. These includes =and=, =or=, and =not=. We will quickly use =and= below, but will not discuss logical operators in detail. The curious reader should refer to [[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#logical_operators][Mozilla's documentation]].
+
+
+
+*Querying for mobile screens*
+This site uses media queries to make it usable on small screens like a phone. To make the styling section for this blog, the following considerations was done:
+- It is obviously a screen. (hopefully this does not come as a surprise)
+- A phone screen has a maximum size. To make our query simple and flexible, width was the selected criteria here. Using custom styling for all screens smaller than 600 pixels seems reasonable, and using standard styles for the rest, makes sense in my opinion.
+- We want to avoid weird issues in older browsers! While modern machines are great, there is a certain charm in surfing the web from an Amiga... or a toaster.
+
+
+From those criteria, a media query could be produced like so:
+#+BEGIN_SRC css
+  @media only screen and (max-width: 600px) {
+      // ..  other stylings ...
+
+      .content {
+          width: 90%;
+          box-shadow: none;
+          font-size: 1.25em;
+          margin: auto;
+          padding-top: 1vh;
+          padding-left: 0;
+          padding-right: 0;
+      }
+  }
+#+END_SRC
+
+You can see that the content box gets special styling, effectively overriding any previous settings for that class in the file. You will notice that the width is increased, padding is turned off the box shadow is gone etc. While the padding and box shadow is nice for the desktop site, it quickly gets in the way on smaller screens.
+
+
+Media queries can be used for more use cases than discussed here, ranging from [[https://developer.mozilla.org/en-US/docs/Web/CSS/@media/aspect-ratio][checking aspect ratios]], [[https://developer.mozilla.org/en-US/docs/Web/CSS/@media/orientation][screen orientation]] (i.e, portrait or landscape mode), [[https://developer.mozilla.org/en-US/docs/Web/CSS/@media/scripting][checking if scripting is enabled]] and so on. The Mozilla documentation provides satisfactory reading on all those features on [[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries][its media queries page]]. (direct links to their documentation are inline in this article when relevant).
+
+
+With the oversimplification out of the way, let's discuss the actual point of this article...
+
+* Print styling and example from this site (as of August 14th 2024)
+Not too long ago, I discovered that you could actually use the =print= media feature. How I did not know before, I do not know. As described above, there is a print media type we can use. The browser support may vary, but you should in theory be able to combine it with queries for size and similar.
+
+
+This may not come as a shock, but a simple print media query will look like this:
+#+BEGIN_SRC css
+  @media print {
+      // your print styling
+  }
+#+END_SRC
+
+
+Now you may wonder: What should we put here? That depends on what you want to show on a printed page. To me, it makes sense removing elements that the user might not want if they print the page. In my view, it includes elements which are not useful if I read content from paper. That includes, but is not limited to:
+- Possibly banners if you want to be nice. I have chosen to keep it so people hopefully remember where they got the content from...
+- Shadows, padding, margins, and other UI elements which works well on screens, but makes the site look awful on printed paper or pdf files.
+- Menus.
+- Footers with links to social media.
+
+
+This lead me to the current version of the print styling for this site:
+#+BEGIN_SRC css
+  @media print {
+      .menu, .footer, .color-mode-toggle, .sharebuttons, .printbutton, .related_posts, #commento {
+          display: none;
+          margin: 0;
+      }
+
+      .content {
+          width: 95vw;
+          padding: 0;
+          margin: 0;
+          box-shadow: none;
+        
+          hr {
+              display: none;
+          }
+      }
+
+      .banner {
+          width: auto;
+          height: 10vh;
+          margin: 0;
+          padding: 0;
+      }
+
+      .notebox {
+          width: 100%;
+      }
+  }
+#+END_SRC
+
+This overrides some of the settings, in turn making the article we are printing work better for smaller screens. There are probably rooms for improvements, but those can be done incrementally when they are found.
+
+
+* Bonus: Brave/Chromium/Other developer tips
+You might want to debug your media queries. Debugging screen sizes is simple in Chromium based browsers using the dev tools. If you open the dev tools panel, you will notice a small button symbolizing a laptop with a phone on top in the upper left corner:
+
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/cssprint/chromium_devtools_screensizes.png" | relative_url}}" alt="Chromium Devtools screen size selection" class="blogpostimg" />
+#+END_EXPORT
+(here it is blue, indicating that it is active)
+
+
+We might also want to debug our print styling, and there exist an option for that as well. Sadly, it is a bit more hidden. You can find it by first clicking the three dots in the upper right corner, then selecting More Tools, and then last Rendering, like so:
+
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/cssprint/chromium_devtools_settings.png" | relative_url}}" alt="Opening the rendering settings in Chromium Devtools" class="blogpostimg" />
+#+END_EXPORT
+
+When you open this menu, you will notice the Rendering menu opening. In my setup, it opens at the bottom, like so:
+
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/cssprint/chromium_devtools_mediaemul.png" | relative_url}}" alt="Set emulation of media types in Chromium Devtools" class="blogpostimg" />
+#+END_EXPORT
+
+You can then change the "Emulate CSS media type" field to "print" and debug your printed styling. While it might seem a bit cumbersome, you only do it once for each session. From there you can play with the CSS styling directly in the development tools like you are hopefully used to :smile:
