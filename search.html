@@ -73,6 +73,10 @@ layout: default
           const heading = document.createElement('h3');
           heading.innerHTML = (elem.score > goodScoreLimit ? ':trophy: ' : '') + elem.title;
           resultEntry.appendChild(heading);
+
+          const comments = document.createElement('a');
+          comments.href = `{{site.url}}${elem.url}#commento`;
+          resultEntry.appendChild(comments);
           
           const excerpt = document.createElement('p');
           excerpt.innerHTML = elem.excerpt;

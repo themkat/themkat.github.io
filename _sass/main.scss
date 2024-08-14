@@ -134,6 +134,16 @@ body {
 
 #search-result-container div {
     cursor: pointer;
+
+    h3 {
+        margin: 0;
+    }
+    
+    a {
+        font-size: medium;
+        text-decoration: none;
+        float: right;
+    }
 }
 
 .printbutton {
