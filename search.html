@@ -20,59 +20,67 @@ layout: default
 <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.0/dist/umd/index.min.js"></script>
 
 <script>
-  const siteUrl = new URL(document.URL);
-  const searchTerm = decodeURIComponent(siteUrl.searchParams.get('term'));
+  (function() {
+      const siteUrl = new URL(document.URL);
+      const searchInput = siteUrl.searchParams.get('term');
 
-  // TODO: include tags in search?
-  const searchEngine = new MiniSearch({
-      fields: ['title', 'body'],
-      storeFields: ['title', 'excerpt', 'url'],
-      searchOptions: {
-          boost: { title: 5 },
-          fuzzy: 0.2
+      if (null === searchInput) {
+          return;
       }
-  });
 
-  // populate js search engine with data
-  let posts = [];
-  let currentId = 1;
-  {% for post in site.posts %}
-  posts.push({
-      id: currentId++,
-      title: `{{ post.title }}`,
-      excerpt: `{{ post.excerpt | strip_html | strip_newlines | escape }}`,
-      body: decodeURIComponent('{{ post.content | url_encode }}'),
-      url: '{{ post.url | relative_url }}'
-  });
-  {% endfor %}
-  searchEngine.addAll(posts);
+      const searchTerm = decodeURIComponent(searchInput);
 
-  // search engine with some leeway on spelling
-  const results = searchEngine.search(searchTerm);
-  const title = document.getElementById('search-page-title');
-  const container = document.getElementById('search-result-container');
-  
-  title.innerHTML = `${results.length} search results for "${searchTerm}" sorted by relevance`;
-
-  // simple calculation on how big the score needs to be for it to be considered good...
-  // numbers pulled straight out of my ass by trial and error
-  const goodScoreLimit = 14 + Math.pow(10, searchTerm.split(' ').length - 1);
-  results.forEach(elem => {
-      const resultEntry = document.createElement('div');
-      resultEntry.onclick = () => {
-          window.open(elem.url, '_self');
-      };
+      // TODO: include tags in search?
+      const searchEngine = new MiniSearch({
+          fields: ['title', 'body'],
+          storeFields: ['title', 'excerpt', 'url'],
+          searchOptions: {
+              boost: { title: 5 },
+              fuzzy: 0.2
+          }
+      });
       
-      const heading = document.createElement('h3');
-      heading.innerHTML = (elem.score > goodScoreLimit ? ':trophy: ' : '') + elem.title;
-      resultEntry.appendChild(heading);
-
-      const excerpt = document.createElement('p');
-      excerpt.innerHTML = elem.excerpt;
-      resultEntry.appendChild(excerpt);
+      // populate js search engine with data
+      let posts = [];
+      let currentId = 1;
+      {% for post in site.posts %}
+      posts.push({
+          id: currentId++,
+          title: `{{ post.title }}`,
+          excerpt: `{{ post.excerpt | strip_html | strip_newlines | escape }}`,
+          body: decodeURIComponent('{{ post.content | url_encode }}'),
+          url: '{{ post.url | relative_url }}'
+      });
+      {% endfor %}
+      searchEngine.addAll(posts);
       
-      resultEntry.appendChild(document.createElement('br'));
+      // search engine with some leeway on spelling
+      const results = searchEngine.search(searchTerm);
+      const title = document.getElementById('search-page-title');
+      const container = document.getElementById('search-result-container');
       
-      container.appendChild(resultEntry);
-  });
+      title.innerHTML = `${results.length} search results for "${searchTerm}" sorted by relevance`;
+      
+      // simple calculation on how big the score needs to be for it to be considered good...
+      // numbers pulled straight out of my ass by trial and error
+      const goodScoreLimit = 14 + Math.pow(10, searchTerm.split(' ').length - 1);
+      results.forEach(elem => {
+          const resultEntry = document.createElement('div');
+          resultEntry.onclick = () => {
+              window.open(elem.url, '_self');
+          };
+          
+          const heading = document.createElement('h3');
+          heading.innerHTML = (elem.score > goodScoreLimit ? ':trophy: ' : '') + elem.title;
+          resultEntry.appendChild(heading);
+          
+          const excerpt = document.createElement('p');
+          excerpt.innerHTML = elem.excerpt;
+          resultEntry.appendChild(excerpt);
+          
+          resultEntry.appendChild(document.createElement('br'));
+      
+          container.appendChild(resultEntry);
+      });
+  })();
 </script>
