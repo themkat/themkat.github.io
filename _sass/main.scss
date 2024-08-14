@@ -132,6 +132,9 @@ body {
     display: none;
 }
 
+#search-result-container div {
+    cursor: pointer;
+}
 
 .printbutton {
     float: right;
