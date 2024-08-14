@@ -64,7 +64,7 @@ layout: default
       };
       
       const heading = document.createElement('h3');
-      heading.innerHTML = (elem.score > goodScoreLimit ? ':trophy: ' : '') + elem.title + ' ' + elem.score;
+      heading.innerHTML = (elem.score > goodScoreLimit ? ':trophy: ' : '') + elem.title;
       resultEntry.appendChild(heading);
 
       const excerpt = document.createElement('p');
