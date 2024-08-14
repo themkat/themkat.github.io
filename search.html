@@ -1,0 +1,78 @@
+---
+layout: default
+---
+<!-- TODO: can we make this search any better? Maybe search only within given categories etc.? How would the UI for that look?
+     Also, can we use autoSuggest in any way to get complections? without bogging down the entire site in js?
+  -->
+
+
+<h2 id="search-page-title">Are you not searching for anything? Enable JS or something if search term is given, but this title still shows :smirk:</h2>
+<p>(Hint: click on a result to open it! Results with a good score are marked with :trophy:)</p>
+
+<br />
+
+<div id="search-result-container">
+</div>
+
+<script src="https://cdn.commento.io/js/count.js"></script>
+
+<!-- Thank you minisearch for helping me NOT write my own search engine xD  -->
+<script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.0/dist/umd/index.min.js"></script>
+
+<script>
+  const siteUrl = new URL(document.URL);
+  const searchTerm = decodeURIComponent(siteUrl.searchParams.get('term'));
+
+  // TODO: include tags in search?
+  const searchEngine = new MiniSearch({
+      fields: ['title', 'body'],
+      storeFields: ['title', 'excerpt', 'url'],
+      searchOptions: {
+          boost: { title: 5 },
+          fuzzy: 0.2
+      }
+  });
+
+  // populate js search engine with data
+  let posts = [];
+  let currentId = 1;
+  {% for post in site.posts %}
+  posts.push({
+      id: currentId++,
+      title: `{{ post.title }}`,
+      excerpt: `{{ post.excerpt | strip_html | strip_newlines | escape }}`,
+      body: decodeURIComponent('{{ post.content | url_encode }}'),
+      url: '{{ post.url | relative_url }}'
+  });
+  {% endfor %}
+  searchEngine.addAll(posts);
+
+  // search engine with some leeway on spelling
+  const results = searchEngine.search(searchTerm);
+  const title = document.getElementById('search-page-title');
+  const container = document.getElementById('search-result-container');
+  
+  title.innerHTML = `${results.length} search results for "${searchTerm}" sorted by relevance`;
+
+  // simple calculation on how big the score needs to be for it to be considered good...
+  // numbers pulled straight out of my ass by trial and error
+  const goodScoreLimit = 14 + Math.pow(10, searchTerm.split(' ').length - 1);
+  results.forEach(elem => {
+      const resultEntry = document.createElement('div');
+      resultEntry.onclick = () => {
+          window.open(elem.url, '_self');
+      };
+      
+      const heading = document.createElement('h3');
+      heading.innerHTML = (elem.score > goodScoreLimit ? ':trophy: ' : '') + elem.title + ' ' + elem.score;
+      resultEntry.appendChild(heading);
+
+      const excerpt = document.createElement('p');
+      excerpt.innerHTML = elem.excerpt;
+      resultEntry.appendChild(excerpt);
+      
+      resultEntry.appendChild(document.createElement('br'));
+      
+      container.appendChild(resultEntry);
+  });
+</script>
