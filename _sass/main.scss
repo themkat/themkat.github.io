@@ -152,6 +152,29 @@ body {
     cursor: pointer;
 }
 
+.search-box {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    font-size: large;
+
+    h5 {
+        margin: 0;
+    }
+    
+    input {
+        width: 80%;
+        border-radius: 5px;
+    }
+
+    button {
+        background-color: var(--menu-main-color);
+        border-radius: 5px;
+    }
+}
+
 // fixing various settings for mobile devices
 @media only screen and (max-width: 600px) {
 
@@ -183,6 +206,15 @@ body {
 		font-size: 1.5em;
 		display: block;
 	}
+
+    .search-box {
+        width: 100%;
+        margin: 0;
+
+        input {
+            width: auto;
+        }
+    }
 	
 	.content {
 		width: 90%;
@@ -409,7 +441,7 @@ body {
 
 // Experimental printing support
 @media print {
-    .menu, .footer, .color-mode-toggle, .sharebuttons, .printbutton, .related_posts, #commento {
+    .menu, .footer, .color-mode-toggle, .sharebuttons, .printbutton, .related_posts, #commento, .search-box {
         display: none;
         margin: 0;
     }
