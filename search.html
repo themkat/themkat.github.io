@@ -48,7 +48,7 @@ layout: default
           id: currentId++,
           title: `{{ post.title }}`,
           excerpt: `{{ post.excerpt | strip_html | strip_newlines | escape }}`,
-          body: decodeURIComponent('{{ post.content | url_encode }}'),
+          body: decodeURIComponent('{{ post.content | strip_html | url_encode }}'),
           url: '{{ post.url | relative_url }}'
       });
       {% endfor %}
