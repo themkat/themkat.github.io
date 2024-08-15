@@ -6,6 +6,8 @@ include: [".well-known"]
 exclude: ["org", "scripts", "*.org", "Gemfile", "Gemfile.lock"]
 sass:
   style: compressed
+feed:
+  post_limit: 15
 plugins:
   - jekyll-sitemap
   - jekyll-paginate
