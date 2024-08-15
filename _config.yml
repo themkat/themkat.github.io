@@ -8,6 +8,7 @@ sass:
   style: compressed
 feed:
   post_limit: 15
+  excerpt_only: true
 plugins:
   - jekyll-sitemap
   - jekyll-paginate
