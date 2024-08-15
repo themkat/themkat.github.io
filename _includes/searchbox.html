@@ -1,0 +1,40 @@
+<div class="search-box">
+    <h5>Search</h5>
+    <input list="search-completions" id="search-term">
+    
+    <!-- TODO: make even better by not hardcoding possible suggestions. Maybe tags or similar could work? Some type of combinations that make sense as well?
+         Now it is just a proof of concept to test the idea in production :P
+    -->
+    <datalist id="search-completions">
+        <option value="Linux" />
+        <option value="Emacs" />
+        <option value="Emacs packages" />
+        <option value="Kotlin books" />
+        <option value="Rust" />
+    </datalist>
+    
+    <button onclick="navigateToSearchPage()">&#x1f50d;</button>
+</div>
+
+<script>
+ function navigateToSearchPage() {
+     const term = document.getElementById('search-term').value;
+     
+     window.open(`{{  site.url }}/search.html?term=${term}`, '_self');
+ }
+ 
+ // add enter submission on input field
+ document.getElementById('search-term').addEventListener('keypress', (event) => {
+     if ('Enter' == event.key) {
+         navigateToSearchPage();
+     }
+ });
+
+ // TODO: can probably unify the code between here and search a bit
+ const siteUrl = new URL(document.URL);
+ const searchInput = siteUrl.searchParams.get('term');
+ if (null !== searchInput) {
+     const searchTerm = decodeURIComponent(searchInput);
+     document.getElementById('search-term').value = searchTerm;
+ }
+</script>
