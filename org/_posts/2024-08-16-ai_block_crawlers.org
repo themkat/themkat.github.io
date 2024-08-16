@@ -1,0 +1,95 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "How to block AI from using our your content? - Is it even possible? (+ rants)"
+tags: ai opinions
+---
+#+END_EXPORT
+
+Have you ever wondered about how you can block "artificial intelligence" (AI) scrapers/crawlers/bots from stealing your web sites' content? So have I. Like many others, I have been annoyed at the misuse of these technological solutions. Ranging from big companies using our content without permission, to idiots on social media using generated ChatGPT text to sound profound. If you are curious on deranged ranting on AI, or more importantly how you can tell them to f**k off, then read on!
+
+
+In this article, I will refer to these scrapers, bots etc. as simply crawlers. This is the term that makes most sense to me. 
+
+
+* The short answer
+You (probably) can't. There are some ways, but nothing in life is guaranteed (except death and taxes).
+
+
+* Do I hate AI now?
+I know this will be asked at some point. The short answer is NO! I do not. I still stand by most of [[https://themkat.net/2023/02/25/important_computer_related_innovations.html][what I wrote in my earlier article on important innovations]]. The only thing that has changed is that I have a way less positive view on the big companies that creates these models, and in some regards the users. Let me summarize:
+- Companies like OpenAI are known to steal data for training their models, and in many cases people have no chance of opting out. This raises questions if we own our own data or not? It is probably utopic to believe that they will never steal data, but we can at least try to push back. What would the alternative look like? Consent AND getting in some cases (like OpenAI) getting PAID if they use our data. This is NOT because we have delusions that our content is that great, but because it feels unfair that big companies can just copy and use it for something without us consenting.
+- Some people online (and probably also offline) convince themselves that they are so great for using AI all the f**king time. I've seen several people who just put something into ChatGPT, and post it on social media verbatim. They are so convinced that what they get back is so profound. The truth is that most of it reads like rehashed drivel. Also, please don't ever post a 5 paragraph text as a Facebook comment... You do not sound intelligent at all, and should probably use these TOOLS more like tools (i.e, sparring partner, starting points for text, boilerplate code, psychologist etc.).
+- AI "artists". Probably the same as the previous point, but deserves to be mentioned as a separate point. If you just put some text into Midjourney, you are NOT an artist. We have probably all seen the people on social media who proclaim "look at the latest art I made", where it is simply verbatim output from an AI image model. YOU ARE NOT A F**KING ARTIST, YOU LEECH! I can say that if you use AI output as a starting point, and put it into something like Gimp/Photoshop/Krita to do further work with, then it is another topic entirely. 
+
+
+
+(I can also admit that I REALLY hate the harm-filters in most AI models, including the open source ones. They have extra logic to not be offensive or give "harmful" information, but sometimes I need unfiltered input. You could never create [[https://warhammer40k.fandom.com/wiki/Belisarius_Cawl#Cawl_Inferior][AI inferiors like Belisarius Cawl have in Warhammer 40k]] this way. If you now say that I read way to many sci-fi books and aim to be a cybernetic demigod, you are at least a bit right. I aspire to use AI that way, and extend my body with machines in a, to me, good way. If you think I'm some kind of super fanatic about [[https://en.wikipedia.org/wiki/Transhumanism][transhumanism]], then you are 100 % right. You are free to believe that I'm insane.)
+
+
+So no, I do not hate AI. I hate companies misusing our content for their own gain, and morons thinking they are super intelligent for just using ChatGPT. Local open source models get more love from me. If ANYONE can use it, not just your shitty company, then I'm much more open to let you use my data (WITH PERMISSION off course).
+
+
+*Consent is key.*
+
+
+
+* The robots.txt way to tell crawlers to "piss off!"
+Now to the part you actually came here for.
+
+
+Many AI models use website crawlers to get their data. [[https://www.reddit.com/r/singularity/comments/1cdm97j/anthropics_claudebot_is_aggressively_scraping_the/][This has effectively lead to some crawlers overloading servers with website traffic]] (in this case Claude). I'm not optimistic that we can block them totally, but I think we can send them a signal that they are NOT welcome without consent. The best way these days is to give crawlers hint in the robots.txt file for your site. robots.txt is a guide for crawlers on how they are allowed to access your site. If you are new to to concept, [[https://developers.google.com/search/docs/crawling-indexing/robots/intro][Google has a nice developer guide]] you can read. Not everyone follows this advice off course, but we can at least use it to send a signal that crawlers are not allowed to use our content without our permission. 
+
+
+You might wonder what such a robots.txt file looks like? First of all, it needs to be at the root of your site. In my case, this is themkat.net/robots.txt. As of August 16th 2024, it looks like:
+#+BEGIN_SRC text
+  User-agent: GPTBot
+  Disallow: /
+  User-agent: ChatGPT-User
+  Disallow: /
+  User-agent: GoogleOther
+  Disallow: /
+  User-agent: CCBot
+  Disallow: /
+  User-agent: anthropic-ai
+  Disallow: /
+  User-agent: Google-Extended
+  Disallow: /
+  User-agent: Omigili
+  Disallow: /
+  User-agent: OmigiliBot
+  Disallow: /
+  User-agent: PerplexityBot
+  Disallow: /
+  User-agent: ImagesiftBot
+  Disallow: /
+  User-agent: FacebookBot
+  Disallow: /
+  User-agent: Diffbot
+  Disallow: /
+  User-agent: cohere-ai
+  Disallow: /
+  User-agent: Bytespider
+  Disallow: /
+  User-agent: Applebot-Extended
+  Disallow: /
+  User-agent: Claude-Web
+  Disallow: /
+
+  User-agent: *
+  Sitemap: {{ site.url }}/sitemap.xml
+#+END_SRC
+(thanks to [[https://www.foundationwebdev.com/2023/08/utilizing-robots-txt-to-block-ai-crawlers/][Foundation Web Design & Development]] for the starting point here!)
+
+
+This robots.txt file tells most AI crawlers to stay away from my domain. At the end it is also a note for all crawlers where they can find the sitemap. While this may seem weird to some, it helps search engines. The crawlers above are still now allowed to access anything.
+
+
+If you are curious in experimenting with robots.txt sites for your domain, then there are tools for debugging it. One example is [[https://technicalseo.com/tools/robots-txt/][this tool from TechnicalSEO.com]].
+
+
+* Other options?
+Cloudflare offers a solution to block AI bots, scrapers etc. (which are referred to in this article as crawlers). Other than that, I have not found much.
