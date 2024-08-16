@@ -4,3 +4,4 @@ tags/*
 .jekyll-cache
 org/ltximg
 *.*~
+**/*.DS_STORE
