@@ -225,6 +225,10 @@ body {
 		padding-top: 1vh;
 		padding-left: 0;
 		padding-right: 0;
+
+        pre {
+            white-space: pre-wrap;
+        }
 	}
 
     .printbutton {
