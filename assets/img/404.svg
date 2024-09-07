@@ -1,0 +1,65 @@
+<svg version="1.1"
+     width="300" height="300"
+     xmlns="http://www.w3.org/2000/svg">
+
+    <!-- can probably be written better. Handwriting svg is a pain :P !-->
+    <text x="30" y="30" transform-origin="center">
+        <tspan font-weight="bold" font-size="2em" stroke="#BF6091" fill="#FF99CE">404</tspan>
+
+        <animateTransform
+            attributeName="transform"
+            additive="sum"
+            type="scale"
+            begin="0s"
+            dur="5s"
+            from="1,1"
+            to="0,0"
+            repeatCount="indefinite"
+        />
+    </text>
+    
+    <text x="230" y="30" transform-origin="center">
+        <tspan font-weight="bold" font-size="2em" stroke="#BF6091" fill="#FF99CE">404</tspan>
+        
+        <animateTransform
+            attributeName="transform"
+            additive="sum"
+            type="scale"
+            begin="0s"
+            dur="5s"
+            from="1,1"
+            to="0,0"
+            repeatCount="indefinite"
+        />
+    </text>
+
+    <text x="30" y="250" transform-origin="center">
+        <tspan font-weight="bold" font-size="2em" stroke="#BF6091" fill="#FF99CE">404</tspan>
+        
+        <animateTransform
+            attributeName="transform"
+            additive="sum"
+            type="scale"
+            begin="0s"
+            dur="5s"
+            from="1,1"
+            to="0,0"
+            repeatCount="indefinite"
+        />
+    </text>
+
+    <text x="230" y="250" transform-origin="center">
+        <tspan font-weight="bold" font-size="2em" stroke="#BF6091" fill="#FF99CE">404</tspan>
+        
+        <animateTransform
+            attributeName="transform"
+            additive="sum"
+            type="scale"
+            begin="0s"
+            dur="5s"
+            from="1,1"
+            to="0,0"
+            repeatCount="indefinite"
+        />
+    </text>
+</svg>
