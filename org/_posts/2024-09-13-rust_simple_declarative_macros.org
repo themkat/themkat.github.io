@@ -53,7 +53,7 @@ While they can be useful, they come with their own set of problems and limitatio
 *Lisp style macros*
 The Lisp family of programming languages have had macros since the 1960s. They are very powerful and gives us great control of many details, including controlling when input parameters are evaluated. Lisp languages work on lists, so macros return lists that are evaluated by the Lisp interpreter. Let us see a quick and simple example in Emacs Lisp:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (defmacro quarkus--set-text-field (field)
     `(lambda (self &rest _ignore)
        (setq-local ,field (widget-value self))))
@@ -64,7 +64,7 @@ In essence: I needed to generate several lambdas that looked almost the same, wh
 
 
 The result of the code above? We generate a new lambda expression.
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (quarkus--set-text-field my-variable)
   ;; expands to:
   (lambda (self &rest _ignore)
