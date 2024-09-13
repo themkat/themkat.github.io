@@ -24,8 +24,8 @@
 
 		<link rel="stylesheet"
 				   href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/sunburst.min.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js" async></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/languages/lisp.min.js" async integrity="sha512-/opdFSi4yauKgOKsTeN7MPbPp2QnhX2y7WvaS682VYwmtSsTwM1qsePlN1Vn+iTWL3PvXI5vtFQFPLNrPphBJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/languages/lisp.min.js" integrity="sha512-/opdFSi4yauKgOKsTeN7MPbPp2QnhX2y7WvaS682VYwmtSsTwM1qsePlN1Vn+iTWL3PvXI5vtFQFPLNrPphBJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         {% endif %}
 
 		<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -156,15 +156,17 @@
 			</div>
 		</div>
 
+        {% if page.path contains '_posts' %}
 		<script>
-		 // Highlight Org mode exported source code blocks if any
-		 document.addEventListener('DOMContentLoaded', (event) => {
-			 document.querySelectorAll('pre.src').forEach((block) => {
-				 // hack to get hljs to cooperate with my org mode settings
-				 block.className = block.className.replace('src-', 'language-');
-				 hljs.highlightElement(block);
-			 });
-		 });
+		  // Highlight Org mode exported source code blocks if any
+		  document.addEventListener('DOMContentLoaded', (event) => {
+			  document.querySelectorAll('pre.src').forEach((block) => {
+				  // hack to get hljs to cooperate with my org mode settings
+				  block.className = block.className.replace('src-', 'language-');
+				  hljs.highlightElement(block);
+			  });
+		  });
+          {% endif %}
 
 		 // hamburger menu helper for mobile phones
 		 function toggleHamburgerMenu() {
