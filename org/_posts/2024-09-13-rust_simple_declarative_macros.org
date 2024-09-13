@@ -221,6 +221,7 @@ In the C macros above, I said that a major flaw was that they didn't allow proce
 
 To make our =deduped_vec= macro interesting, we will allow for optional commas between elements. How would such a code look?
 
+{% raw %}
 #+BEGIN_SRC rust
   macro_rules! deduped_vec {
       // single element to show that we can have several rules!
@@ -255,6 +256,7 @@ To make our =deduped_vec= macro interesting, we will allow for optional commas b
   // prints:
   // Our deduped vec: [1, 2, 3]
 #+END_SRC
+{% endraw %}
 
 You will notice that we can have several possible match patterns in a macro! Pretty neat! We don't need to dedup or sort if we only have one element.
 
@@ -279,6 +281,7 @@ Let us first start with how we want to use our macro:
 
 Looks awful, but we want to show a point here. Like in the last example, we understand that we need to return a block (so the variables go out of scope after the block is executed if they are not returned from the block). For some of you, this may be straight forward, but you can actually use text directly in your patterns. A possible implementation will look like:
 
+{% raw %}
 #+BEGIN_SRC rust
   macro_rules! define_scope {
       (($($name:ident is defined to be $result:expr)*) $do:block) => {{
@@ -289,6 +292,7 @@ Looks awful, but we want to show a point here. Like in the last example, we unde
       }};
   }
 #+END_SRC
+{% endraw %}
 
 That actually took very little code! Even if the generated Rust code is less verbose, we proved that you can make the syntax you have always dreamed of (if you are insane)! With great power, comes great responsibility.
 
