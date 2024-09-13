@@ -198,7 +198,7 @@ Pretty neat! Even if it uses =if= under the hood, we have now extended the langu
 
 
 Like we discussed above, we need parentheses around the =cond= variable for it to work. What happens if we remove them? First of all, the compiler won't know where our expression ends! Let's see what it says:
-#+BEGIN_VERSE
+#+BEGIN_SRC text
 error: `$cond:expr` is followed by `$r#do:block`, which is not allowed for `expr` fragments
  --> src/main.rs:2:17
   |
@@ -206,7 +206,7 @@ error: `$cond:expr` is followed by `$r#do:block`, which is not allowed for `expr
   |                 ^^^^^^^^^ not allowed after `expr` fragments
   |
   = note: allowed there are: `=>`, `,` or `;`
-#+END_VERSE
+#+END_SRC
 
 
 *What about arbitrary amount of inputs?*
@@ -430,7 +430,8 @@ This will vary a bit on who you ask. Some people, especially those who are not f
 I originally fell in love with the concept of macros when I first started learning about Lisp (which is about 15 years ago). (the dialect was Scheme/Racket in the beginning, but went on to Common Lisp). In the beginning, they felt alien to me. Like much of the "black magic" in Lisp, I was instantly smitten. They were so expressive and powerful! You could make code that was almost incomprehensible to other people, but that did things they only could dream of. I did not care what others were thinking, I wanted it MY way. While my social skills at the time was awful, I like to think I have gotten slightly better... I think a quote from Robert C. Martin in The Clean Coder describes me and others perfectly:
 
 #+BEGIN_QUOTE
-"You see, programmers tend to be arrogant, self-absorbed introverts. We didn’t get into this business because we like people. Most of us got into programming because we prefer to deeply focus on sterile minutia, juggle lots of concepts simultaneously, and in general prove to ourselves that we have brains the size of a planet, all while not having to interact with the messy complexities of other people." (Robert C. Martin, The Clean Coder)
+"You see, programmers tend to be arrogant, self-absorbed introverts. We didn’t get into this business because we like people. Most of us got into programming because we prefer to deeply focus on sterile minutia, juggle lots of concepts simultaneously, and in general prove to ourselves that we have brains the size of a planet, all while not having to interact with the messy complexities of other people."
+ - (Robert C. Martin, The Clean Coder)
 #+END_QUOTE
 
 
