@@ -1,0 +1,440 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Declarative macros in Rust - a way of writing your own syntax"
+tags: rust programming
+---
+#+END_EXPORT
+
+Macros are a feature of Rust that some people find confusing. To me, macros are one of the main selling points of the language. Ever since I learned about Lisp many years ago, I fell in love with the concept of macros. The possibility of writing my own syntax has always intrigued me. In this article we will have a look at declarative macros in Rust, and I will share some insights on why I love them so much.
+
+
+
+This article will assume some familiarity with Rust, so if you are completely new you might want to read up on the basics first. I have [[https://themkat.net/2023/02/22/essential_rust_books.html][a post about the books I consider essential]] if you need tips on recommended resources.
+
+
+I go into detail on macros with some historical notes from C and Lisp below. If you do not find that as interesting, you can skim the text and continue reading in the next section that includes more Rust examples. 
+
+
+* What are Macros?
+If you search for information on macros, you will find many different definitions. Many of them are vague. I prefer the following definition:
+
+#+BEGIN_VERSE
+Macros are code that generate code.
+#+END_VERSE
+
+How is that less confusing?!?! If you have never worked with languages that have macros before, they probably make even less sense with a definition like that. Let's break it down a bit with some examples.
+
+*C language macros*
+The simplest style of macros are of the type we find in C. You have a pre-processor definition (i.e, a type of code that is executed before the actual compilation begin) where it simply replaces text in your code. Example:
+#+BEGIN_SRC c
+  // simple macro
+  #define SQUARE(x) x*x
+
+  // our call:
+  int num = 3;
+  int squared = SQUARE(num);
+
+  // during pre-process, this is translated to:
+  int num = 3;
+  int squared = num*num;
+#+END_SRC
+
+While they can be useful, they come with their own set of problems and limitations. Most of these stem from the fact that these macros are simply "string replacements"/"text substitutions". Some highlighted issues being:
+- No safety checks from the language itself. No checks for unbalanced parentheses and similar style issues. You will get confusing errors when compiling the usage site instead. 
+- No reasonable way to take arbitrary amount of parameters, and generate code dynamically for each parameter. In other words: you can't generate a dynamic amount of =myarray[0] = 2;=, =myarray[1] = 3=, ..., =myarray[n] = n + 2;= statements depending on the inputs. Again, the reason being that C style macros are simple text replacements...
+- Writing multi line macros require you to use backslash on the end of each line to escape the newline. This is due to C pre-processor macros being meant for single lines only. 
+
+
+
+*Lisp style macros*
+The Lisp family of programming languages have had macros since the 1960s. They are very powerful and gives us great control of many details, including controlling when input parameters are evaluated. Lisp languages work on lists, so macros return lists that are evaluated by the Lisp interpreter. Let us see a quick and simple example in Emacs Lisp:
+
+#+BEGIN_SRC emacs-lisp
+  (defmacro quarkus--set-text-field (field)
+    `(lambda (self &rest _ignore)
+       (setq-local ,field (widget-value self))))
+#+END_SRC
+(taken from code I wrote recently in [[https://github.com/themkat/emacs-quarkus/][my Emacs Quarkus package]])
+
+In essence: I needed to generate several lambdas that looked almost the same, which was setting a variable to the result of a function call. The code is quasi-quoted, meaning that the content is returned as a list. The input is an identifier, and is marked with a comma to evaluate it to get the real identifier name (identifiers evaluates to themselves). If we didn't have the comma, the name =field= would be used directly, and not the actual input variable name we gave it.
+
+
+The result of the code above? We generate a new lambda expression.
+#+BEGIN_SRC emacs-lisp
+  (quarkus--set-text-field my-variable)
+  ;; expands to:
+  (lambda (self &rest _ignore)
+    (setq-local my-variable (widget-value self)))
+  ;; which in turn is evaluated by the lisp interpreter
+#+END_SRC
+
+So no need to write many similar lambdas anymore.
+
+
+You will quickly notice that there are big improvements here compared to the C style text replacements:
+- Not possible to have a valid macro with unbalanced parentheses, brackets, or square brackets.
+- Newline is not a problem. Lisp has parenthesis to handle beginnings and ends! "They might look funny, but they have semantic power... that gives your program lots of brevity and punch!" (from [[https://www.youtube.com/watch?v=HM1Zb3xmvMc][The Land of Lisp music video]] :slightly_smiling_face: ) 
+- We can control how our arguments are evaluated. If we wanted to evaluate an expression that was not just an identifier as below, we could evaluate it during expansion (i.e, before the statement if actually executed!)
+  
+
+Quasi-quote vs quote, unquote, list operations, macro definitions and other details related to Lisp and this style of macros are a big topic on its own. Don't worry if you don't understand it completely. The main take-away here is that you have great semantic and syntactic power! They deserve their own article... :stuck_out_tongue_winking_eye:
+
+
+*Rust style macros*
+Rust macros are powerful, and almost in the style of Lisp. There are many discussions online on whether Rust macros are like the macros in Lisp, but for all intents and purposes they are similar. You can't do quoting, quasi-quoting and other Lispy things shown above, but you can generate new syntax in a way that is waaaaaaaay more powerful than simple text replacement.
+
+
+We have two types of macros in Rust: declarative and procedural. The focus of this article will be declarative macros, but we will discuss procedural macros briefly below. There is one big commonality between them: If you use a function style macro, it will always have =!= in its name (e.g, =println!=).
+
+
+You have probably already used several macros in your Rust code, some examples being:
+- =println!= for printing text to the standard output in a specified format.
+- =format!= for creating a string using the same formatters as =println!=.
+- =vec!= to create vectors in one single line. 
+- =#[derive(Debug)]= for deriving debug printing on your structs and enums. Adds an implementation of the =Debug= trait that is automatically implemented by the macro. Derive traits are procedural macros, but still worth mentioning.
+
+
+** Declarative macros
+The macros discussed above are declarative macros. They are declarative in the way that they are written as part of your code in a fairly high level way. You define them with their own keywords, which is =macro-rules!= (which is in itself a macro) in Rust. These types of macros always look like functions with an extra exclamation mark at the end.
+
+
+You will often see declarative macros referred to as "hygienic" in the Rust reference guides and documentation. What does it mean? In essence it means many of the same things as for the Lisp macros above. Macros have their own evaluation context, meaning that there is no way of using variables outside the macro declaration (i,e its inputs and internal structure). Variables don't bleed into the macro from its surroundings to shadow internal ones. This isn't as easy to show, as it is simply internal markers in the Rust compiler handling it. The Rust reference material calls this color-coding.
+
+
+The inputs are also evaluated as their own unit. Let us do a quick example of that in C:
+#+BEGIN_SRC c
+  #define ONE_TENTH_OF(X) X/10.0
+
+  // usage:
+  ONE_TENTH_OF(1 + 1);
+
+  // should evaluate to 2/10, but due to C being text replacement:
+  1 + 1/10
+  // X=1+1 is inserted verbatim
+#+END_SRC
+
+In Rust, it looks like:
+#+BEGIN_SRC rust
+  macro_rules! one_tenth_of {
+      ($x:expr) => ($x / 10);
+  }
+
+  // usage:
+  one_tenth_of(1 + 1);
+
+  // in essence becomes:
+  (1 + 1) / 10;
+  // due to the input being evaluated in its own context
+#+END_SRC
+(don't worry the macro looks a bit foreign here, we will discuss them more in detail in the next section!)
+
+Stupid example to show a point. You would probably create a function instead 99 % of the time...
+
+
+If you want more details, [[https://doc.rust-lang.org/1.30.0/book/first-edition/macros.html#hygiene][the first edition of the Rust Programming Language book (available online for free) has discussions and comparisons with C]]. 
+
+
+** Procedural macros
+In addition to declarative macros, we also have procedural macros in Rust. The main difference is that procedural macros must be in their own crates (aka Rust libraries) with a specified key turned on. You write them as functions, but they run during compilation time. You can think of them almost like a compiler plugin, with the difference being that it isn't called until it's used. They can do all sorts of effects, as almost arbitrary new code can be generated. Why are they used then?
+- More complex code generation not possible with declarative macros. Rare, but it does happen.
+- Sometimes, we want to create new derive attribute inputs. (attributes are almost like markers or annotations in other languages). You have probably been using =#[derive(Debug)]= on your structs to make it possible to print them to the console (or a log file). =Debug= an example of a derive macro. Derive macros reads the struct/enum and produces an implementation of a trait. In the case of =Debug=, it generates an impl-block with an implementation of the =fmt= function.
+- Our own attributes. Maybe you want to create your own Spring (or other web framework) variant in Rust (like [[https://github.com/spring-rs/spring-rs][this project]])? You may just want to mark your functions with the HTTP idiom (e.g, get, post, put etc.) you want, and let them behave as handler functions for a specific path and operation. Then your =#[get("/path")]= and similar attributes will need to be created as procedural macros. That library seems to link these functions to routes in [[https://github.com/tokio-rs/axum][the Axum web framework]], though that is just my educated guess. 
+
+
+I will admit that I rarely write this type of macros. As you might have guessed, they are a bit more complicated then declarative macros. [[https://doc.rust-lang.org/reference/procedural-macros.html][The Rust reference guide has a good section on them]]. I might make an article on them when I have experimented more with them.
+
+
+The rest of this article will talk about declarative macros.
+
+* Writing declarative macros in Rust
+** Basics
+We have already gotten a teaser for declarative macros above, but let's look at them in detail now.
+
+
+In essence, macros take the form:
+#+BEGIN_SRC rust
+  macro_rules! macro_name {
+      // rule: pattern -> rule-body
+      // (++ more rules if needed ++)
+  }
+#+END_SRC
+
+Patterns consist of what we want the syntax to look like. To define types of inputs, we use something called meta-variables. I rarely use all the different types of metavariables, so I understand that a full list can be confusing to beginners. Let us start with a smaller table of them that I find the most useful:
+
+| Metavariable | Description                                                                                                                                                                                                         |
+|--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ident        | Identifier or keyword. Examples: my-variable-name, MyName, and identifier-name.                                                                                                                                     |
+| literal      | A string, number or similar literals.                                                                                                                                                                               |
+| block        | A code block covered in curly brackets (i.e, ={= and =}=).                                                                                                                                                              |
+| expr         | Covers expressions (i.e, the language constructs that return a value). If you are unsure what an expression means in this case, read up on statements vs expressions. (general terms across programming languages). |
+A more complete list can be found in [[https://doc.rust-lang.org/reference/macros-by-example.html#metavariables][the Macros by example section in the Rust reference guide]].
+
+Some of you may be thinking: "Why do we need anything else than =expr=?" The main reason is that we want to discriminate on the type of input our macro takes. =expr= is quite all-encompassing to many different types of expressions, and also limits the patterns we can make. How will the compiler know how to match the rest of our pattern if we start with an =expr= type? The compiler can't read your mind, so you have to tell it what your macro needs. An expression can be many things, so the expressions need to be irrefutable for the compiler to understand them. You can work around the issue above by introducing parentheses around the expression.
+
+
+*Our own if-style statement: when*
+To make a simple example, we will start by defining our own if-style statement. We want to test if an expression is true, and evaluate a block if it is:
+
+#+BEGIN_SRC rust
+  macro_rules! when {
+      (($cond:expr) $do:block) => {
+          if $cond {
+              $do
+          }
+      };
+  }
+
+  // usage:
+  when!( (myval == 1) {
+      println!("Hello there");
+  });
+#+END_SRC
+
+Pretty neat! Even if it uses =if= under the hood, we have now extended the language with our own little extension! 
+
+
+Like we discussed above, we need parentheses around the =cond= variable for it to work. What happens if we remove them? First of all, the compiler won't know where our expression ends! Let's see what it says:
+#+BEGIN_VERSE
+error: `$cond:expr` is followed by `$r#do:block`, which is not allowed for `expr` fragments
+ --> src/main.rs:2:17
+  |
+2 |     ($cond:expr $do:block) => {
+  |                 ^^^^^^^^^ not allowed after `expr` fragments
+  |
+  = note: allowed there are: `=>`, `,` or `;`
+#+END_VERSE
+
+
+*What about arbitrary amount of inputs?*
+In the C macros above, I said that a major flaw was that they didn't allow processing of arbitrary amount of arguments. (well, technically do they, but the processing they can do is VERY limited). Our last Rust example was very basic, so let us now create our own set'ish (or deduplicated vector) implementation! We are referring to creating a vector without duplications here. How would we go about doing just that? Rust gives us a set of patterns for matching repetitions:
+
+| Repeater pattern | Description                                                                                                             |
+|------------------+-------------------------------------------------------------------------------------------------------------------------|
+| $()?             | The contents of the parentheses 0 or 1 times.                                                                           |
+| $()*             | The contents of the parentheses 0 or more times. Possibly infinite, or at least as many times our language let's us do. |
+| $()+             | Same as the =*= rule, but for 1 or more times.                                                                            |
+
+
+To make our =deduped_vec= macro interesting, we will allow for optional commas between elements. How would such a code look?
+
+#+BEGIN_SRC rust
+  macro_rules! deduped_vec {
+      // single element to show that we can have several rules!
+      ($elem:expr) => {{
+          let mut myvec = Vec::new();
+          myvec.push($elem);
+          myvec
+      }};
+
+      // multiple elements
+      ($($elem:expr $(,)?)*) => {{
+          let mut myvec = Vec::new();
+
+          $(
+              myvec.push($elem);
+          )*
+
+          myvec.sort();
+          myvec.dedup();
+          myvec
+      }};
+  }
+
+
+  // usage with no elements:
+  // (we still have to give the type, as the Rust compiler can't infer a type if we give it nothing to work with...)
+  let setish: Vec<u32> = deduped_vec!();
+
+  // usage with multiple elements:
+  let setish = deduped_vec!(1, 2, 2 1, 3 1 + 1);
+  println!("Our deduped vec: {:?}", setish);
+  // prints:
+  // Our deduped vec: [1, 2, 3]
+#+END_SRC
+
+You will notice that we can have several possible match patterns in a macro! Pretty neat! We don't need to dedup or sort if we only have one element.
+
+
+But wait... What about the extra curly brackets around our code this time? Would that just not be mentioned? No, I will talk about it now. Don't worry! It simply says that the macro returns a code block. Earlier we introduced simple expressions or statements, but not we return a block. Without it we couldn't write the code block we see above. It is just that simple. Might seem unnecessary to some, but makes sense when you think more about it (or get Stockholm syndrome from working too much with the language).
+
+
+
+*Let' personalize the syntax a bit!*
+To show more of the power of macros, let's make a more personal syntax! Screw everyone else who reads our code, right? We want it OUR way! (Yeah, I'm trying to be funny here. Not always a good idea to make super weird syntax unless if you want others to read your code though). In this example we will make our own syntax for defining variables local to a block of code. Almost like =let= in Lisps where the variables are only valid within the let-block. We will make the syntax slightly more verbose.
+
+
+Let us first start with how we want to use our macro:
+#+BEGIN_SRC rust
+  define_scope!(
+      (myval is defined to be 1
+       otherval is defined to be "sdfsdf") {
+          println!("Myval: {}", myval);
+      }
+  );
+#+END_SRC
+
+Looks awful, but we want to show a point here. Like in the last example, we understand that we need to return a block (so the variables go out of scope after the block is executed if they are not returned from the block). For some of you, this may be straight forward, but you can actually use text directly in your patterns. A possible implementation will look like:
+
+#+BEGIN_SRC rust
+  macro_rules! define_scope {
+      (($($name:ident is defined to be $result:expr)*) $do:block) => {{
+          $(
+              let $name = $result;
+          )*
+          $do
+      }};
+  }
+#+END_SRC
+
+That actually took very little code! Even if the generated Rust code is less verbose, we proved that you can make the syntax you have always dreamed of (if you are insane)! With great power, comes great responsibility.
+
+
+
+** Using built-in macros as helpers
+You may be asking: Can I use other macros in my own macros? Yes, you can! The standard library even have a lot of them that can help you write better declarative macros! You can even use procedural macros as helpers, so (almost) only your imagination is the limit here! You might already have guessed this to be the case, as we have used =println!= above. Let us quickly look at some examples of other macro usage.
+
+
+*Creating our own assert*
+Wouldn't it be neat to try to make our own assertion macro, and use it to print the filename and location where it failed? The Rust standard library actually provides some helpers for us to achieve this! The macro =file!= gives us the filename of the caller, and =line!= gives us the line number of the caller. In addition, an assertion is simply checking if a condition is met. That gives us a possible implementation:
+
+#+BEGIN_SRC rust
+  macro_rules! myassert {
+      ($cond:expr) => {
+          if !$cond {
+              eprintln!("Assertion failed at {}:{}", file!(), line!());
+          }
+      };
+  }
+
+  // usage:
+  myassert!(1 == 2);
+  // will obviously print:
+  // Assertion failed at src/main.rs:66
+  // (it was defined at line 66 in the example file)
+#+END_SRC
+(if you are unfamiliar with =eprintln!=: it prints to standard error instead of standard output).
+
+
+*Stringify*
+When you first start writing macros, you may want to stringify an input. Do you need to take the stringified identifiers in as additional arguments? [[https://doc.rust-lang.org/std/macro.stringify.html][The standard library to the rescue]]! To make a stupid simple example, let's just take in an identifier and print it as a string:
+
+#+BEGIN_SRC rust
+  macro_rules! print_ident {
+      ($name:ident) => {
+          println!("My-ident: {}", stringify!($name));
+      };
+  }
+
+  // usage:
+  print_ident!(MyIdentifier);
+  print_ident!(very_long_not_thing_not_in_quotes);
+  // prints:
+  // My-ident: MyIdentifier
+  // My-ident: very_long_not_thing_not_in_quotes
+#+END_SRC
+
+Now your dream of awkward print helpers without brackets is reality! There are obviously more useful uses of this, as we will see in upcoming examples...
+
+
+
+** Super-charging the macros with =paste!=
+=paste!= is a procedural macro written to get more advanced template functionality when you want to create new elements with concatenations of identifiers. =paste!= introduces a way of templating concatenation of names within =[<= and =>]=. One example is when you want to create simple new identifiers combined from several others:
+
+#+BEGIN_SRC rust
+  paste! {
+      let [<My New Shiny Vec>] = vec![1, 2, 3];
+  }
+  // equivalent to:
+  let MyNewShinyVec = vec![1,2,3];
+#+END_SRC
+
+In this example, it might seem a little bit unnecessary, but when introducing identifier input from our own macros, it really shines!
+
+
+NOTE: It is [[https://docs.rs/paste/latest/paste/][a separate crate]] you will have to include in your project. 
+
+
+To make this example a bit more interesting, we will use [[https://github.com/themkat/bincalc][code from a project I created a while ago]]. What required me to create a macro?
+- I had a function that took an input number and returned a label indicating the number system (e.g, Binary, Octal, Hexadecimal etc.). I wanted tests for several of them, and the tests were almost completely the same except for the function name, label and input number.
+- I DID NOT WANT CODE DUPLICATION EVERYWHERE!
+- Personalized syntax. "MY work done MY way, nothing else matters to me!" - Howard Roark, The Fountainhead (movie version).
+
+
+Instead of defining many test functions, I wanted something like this:
+#+BEGIN_SRC rust
+  base_name_test!(Binary with base 2);
+  base_name_test!(Octal with base 8);
+  base_name_test!(Decimal with base 10);
+  base_name_test!(Duodecimal with base 12);
+  base_name_test!(Hexadecimal with base 16);
+  base_name_test!(Base3 with base 3);
+  base_name_test!(Base32 with base 32);
+#+END_SRC
+
+This code will generate as many test functions as there are macro invocations. We could obviously have taken in an identifier, string and a number, but that would be boring! Why not just lowercase the input to make an test name, stringify the input and use the number directly?
+
+#+BEGIN_SRC rust
+  macro_rules! base_name_test {
+      ($name:ident with base $base:expr) => {
+          paste! {
+              #[test]
+              fn [<base_name_ $name:lower _test>]() {
+                  assert_eq!(Some(stringify!($name).to_string()), base_name($base));
+              }
+          }
+      };
+  }
+#+END_SRC
+(=paste!= also gives us operations to lowercase or uppercase our identifiers like shown in the example).
+
+
+This leads to us getting a new test function for each invocation of the macro. Example of macro expansion:
+#+BEGIN_SRC rust
+  // unexpanded
+  base_name_test!(Binary with base 2);
+
+  // expands to:
+  #[test]
+  fn base_name_binary_test() {
+      assert_eq!(Some("Binary".to_string()), base_name(2));
+  }
+#+END_SRC
+
+
+** Good resources to learn more about macros
+The various links inlined above are good places to learn more. Some summarized resources that I really enjoy are:
+- [[https://doc.rust-lang.org/reference/macros-by-example.html][Macros by example in the Rust reference guide]]
+- [[https://veykril.github.io/tlborm/][The Little book of Rust Macros]]
+
+* Problems with macros?
+There are a few problems with using macros:
+- The code can get a bit harder to read and reason about for users. Using standard Rust syntax makes your code easier to understand, so macros should be used more sparingly. There are obviously legitimate uses for them, as the next section will discuss.
+- Autocompletion in IDEs sometimes struggle a bit more with macros and specialized patterns you make. This problem is even bigger with procedural macros, but I've noticed that even examples above struggle a bit. =Binary with= followed by space will not complete to =base= most of the time. The main way to combat this is obviously to have very good documentation and examples when making new macros. [[https://blog.emi0x7d1.dev/improving-autocompletion-in-your-rust-macros/][There are also other blogs that have more into depth of improving your macros to help the IDEs]].
+  
+
+
+* When to use macros?
+This will vary a bit on who you ask. Some people, especially those who are not from a Lisp background, will not have the same love of macros. They will often tell you to avoid them. In my view, the legitimate uses of a macro is:
+
+- You want to generate new code. Examples include structs, classes, functions etc. (like we saw above in the =paste!= example).
+- You don't want the overhead of a function call, and want to just put the code inline. (yes, the compiler might optimize functions anyway, but I sometimes find macros easier on the mental overhead here).
+- Avoid repetition of code blocks. One notable example is wanting to create multiple deduped vectors like our earlier example showed us.
+- Screw the readers, you want YOUR OWN PERSONAL SYNTAX! On a more serious note: There are perfectly legitimate reasons for creating your own syntax as well. Domain Specific Languages can be very powerful for the right problems. Maybe a special language for working with accounts in banking? Or a code block where you render a 3D scene directly to a framebuffer or texture (=with-framebuffer framebuffer-obj {}=?
+
+
+* Why am I so fond of macros?
+I originally fell in love with the concept of macros when I first started learning about Lisp (which is about 15 years ago). (the dialect was Scheme/Racket in the beginning, but went on to Common Lisp). In the beginning, they felt alien to me. Like much of the "black magic" in Lisp, I was instantly smitten. They were so expressive and powerful! You could make code that was almost incomprehensible to other people, but that did things they only could dream of. I did not care what others were thinking, I wanted it MY way. While my social skills at the time was awful, I like to think I have gotten slightly better... I think a quote from Robert C. Martin in The Clean Coder describes me and others perfectly:
+
+#+BEGIN_QUOTE
+"You see, programmers tend to be arrogant, self-absorbed introverts. We didn’t get into this business because we like people. Most of us got into programming because we prefer to deeply focus on sterile minutia, juggle lots of concepts simultaneously, and in general prove to ourselves that we have brains the size of a planet, all while not having to interact with the messy complexities of other people." (Robert C. Martin, The Clean Coder)
+#+END_QUOTE
+
+
+There are few concepts that makes for the extreme expressiveness that macros do. While I had already seen C macros when I learned about Lisp, they were not as expressive or fun. When I first saw that Rust had macros, it was one of the concepts that really made me want to learn the language. I think it fit perfectly into the "High level feeling, low level compilation" mantra that many of us use for Rust. Having the option to define macros for code running on microcontrollers, in OS kernel code, game engines, retro computing projects, and similar seems almost magical to me. I use the term magical loosely obviously, as it is not hard to understand and reason about how the concepts of macros actually work...
+
+
+One other reason is obviously that I'm a super-fan of hardcore individualism. We have to focus on individuality before we can ever be happy in a society of other people. If you are unsure on what I mean by the term individualism, you can look into [[https://themkat.net/2021/09/22/essential_ayn_rand.html][the works of Ayn Rand]] (link is to my own article on recommended reading and some basics on what she stood for). 
