@@ -151,6 +151,8 @@ I will admit that I rarely write this type of macros. As you might have guessed,
 The rest of this article will talk about declarative macros.
 
 * Writing declarative macros in Rust
+*EDIT September 14th 2024: Some people might get the impression that procedural macros are needed for more powerful tasks, but that is far from the case! [[https://github.com/RyanWelly/lisp-in-rs-macros][lisp-in-rs-macros]] by RyanWelly implements a Lisp interpreter with only declarative Rust macros!*
+
 ** Basics
 We have already gotten a teaser for declarative macros above, but let's look at them in detail now.
 
