@@ -11,4 +11,4 @@
 fswatch --event Created --event Updated -l 3 org | xargs -n 1 sh -c 'echo "Converting org mode files to html..." && ./scripts/emacs_headless_publish.sh && ./scripts/create_tag_pages.sh' &
 
 # base setup and main jekyll process
-./scripts/emacs_headless_publish.sh && ./scripts/create_tag_pages.sh && bundle install && bundle exec jekyll serve
+./scripts/emacs_headless_publish.sh && ./scripts/create_tag_pages.sh && bundle install && bundle exec jekyll serve --drafts
