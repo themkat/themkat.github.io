@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Creates a new draft with populated header
+
+if [ -z $1 ] || [ -z $2 ]
+then
+    echo "Usage:\n./scripts/new_draft.sh name.org first-tag"
+    exit 1
+fi
+
+DRAFT=$1
+FIRST_TAG=$2
+
+mkdir -p org/_drafts
+touch org/_drafts/$DRAFT
+cat <<FILE_CONTENTS >> org/_drafts/$DRAFT
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "$DRAFT"
+tags: $FIRST_TAG
+---
+#+END_EXPORT
+
+Once upon a time there was...
+FILE_CONTENTS
