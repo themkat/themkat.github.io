@@ -156,8 +156,8 @@
 			</div>
 		</div>
 
-        {% if page.path contains '_posts' %}
 		<script>
+          {% if page.path contains '_posts' %}
 		  // Highlight Org mode exported source code blocks if any
 		  document.addEventListener('DOMContentLoaded', (event) => {
 			  document.querySelectorAll('pre.src').forEach((block) => {
