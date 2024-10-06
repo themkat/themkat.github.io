@@ -83,7 +83,7 @@ Like many other efforts, they have costs ranging from hosting to video editing s
 Not able to donate yourself? Help spread the word so we can have great platforms like Exercism in the future as well! Maybe it can even help a few more people avoid wasting time at college/university and can use their coding abilities earlier! (many of us did the official education because companies are super-horny for papers and credentials these days...).
 
 
-Sorta related, but... If you are in Norway or speak Norwegian, [[koding.no][koding.no]] is another site that needs some love. Though it does not need donations, you can help my making content! If you need an extra motivation: Employers in Norway LOVE if you use some time on Github! By contributing to that site, you can get some nice stats on your profile, and use it to show future employers how cool you are!
+Sorta related, but... If you are in Norway or speak Norwegian, [[https://koding.no][koding.no]] is another site that needs some love. Though it does not need donations, you can help my making content! If you need an extra motivation: Employers in Norway LOVE if you use some time on Github! By contributing to that site, you can get some nice stats on your profile, and use it to show future employers how cool you are!
 
 
 *Remember to support the sites and products you get joy from, as they might not be here tomorrow!*
