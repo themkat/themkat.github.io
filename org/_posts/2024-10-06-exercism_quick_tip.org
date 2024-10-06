@@ -1,0 +1,89 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Quick tip: Exercism - an interactive exercise platform for programmers of ALL skill levels"
+tags: programming
+related_tags_count: 1
+preview_image: assets/img/exercism/dashboard.png
+---
+#+END_EXPORT
+
+Exercism is interactive platform for programming exercises, which are made from volunteer work. That means that Exercism is indeed completely free to use. No subscriptions, or anything of the sort. 
+
+
+*First off, I'm NOT affiliated with them in any way. I just use the platform for fun where other people would have solved crosswords or sudoku, or to have some exercises to do when learning new languages. The reason I'm writing about it, is because they need donations to stay alive. More about that after the quick introduction.*
+
+* The platform and how to get started
+[[https://exercism.org/][Exercism is a website, hosted at exercism.org]]. It provides a free interactive way to solve exercises in many different programming and scripting languages. You can log in with your Github Account, and will be greeted with a dashboard like this:
+
+#+BEGIN_EXPORT html
+<img alt="Exercism dashboard" src="{{ "assets/img/exercism/dashboard.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+Pretty neat! You will get an overview of your current progress in the language tracks.
+
+** What type of exercises are we talking about?
+We are NOT talking big projects here, but smaller exercises. These are great for exploring programming languages, or to have smaller exercises to do when bored. If you are completely new to a language, you might start with "Learning exercises":
+
+#+BEGIN_EXPORT html
+<img alt="Exercism learning exercise example" src="{{ "assets/img/exercism/learning.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+You will gradually be introduced to the necessary topics, and learn by doing.
+
+
+If you, like me, just like to do exercises for fun, you can do practice mode. This means you just pick whatever you want, and solve exercises that have less spoon feeding of information. One example include:
+
+#+BEGIN_EXPORT html
+<img alt="Exercism isogram task on Java track" src="{{ "assets/img/exercism/isogram.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+
+Each exercise is accompanied by a set of tests to verify your solution, and is also verified on submission. New ones are also published by volunteers semi-regularly.
+
+
+There are exercises for many different languages. Some of the ones I have had fun with include: Rust, Zig, C, Kotlin, TCL, and recently Python.
+
+
+** What tooling do I need?
+If you are very new to programming, you can use only your browser if you want! So don't think you need a ton of setup to get started! If you want to, you can also install a CLI to use the tools you want locally, which is what I do. For me, everything else than my own Emacs setup feel like a straight-jacket.
+
+
+[[https://exercism.org/docs/using/solving-exercises][Exercism docs contains guides on doing both of the above]].
+
+** Why?
+There are several reasons you might want to try Exercism:
+- You are new to programming and want interactive ways to get familiar with the languages. With Exercism you get a hazzle free experience where you don't have to install any tooling, and can focus on the languages themselves.
+- Having some supplements to reading books and documentation when trying out new programming languages.
+- You want to brush up on a language you have not used for years. Did this recently with Python.
+- You want programming exercises instead of sudoku, crosswords and similar. This is my "camp" most of the time.
+  
+
+
+** Other opportunities?
+- Publishing your own solutions and looking at other peoples solutions. This helps a lot in seeing different ways to solve the various exercises. This often helps me in the Python track to learn about "hidden" functions in the standard library that can help me get cleaner solutions. (Example: Recently learned that Python had [[https://docs.python.org/3/library/collections.html#collections.Counter][built-in counting of occurrences in lists and iterables with Counter]]).
+- Some tasks have related videos you can watch with walkthroughs after submitting your own solutions.
+- If you want to, you can also get free mentoring. This means that another person can take a look at your solution and provide feedback.
+- Making new exercises for people and contributing to get nerd cred :sunglasses: Have not done so myself, but you get reputation points if you do!
+
+
+* Keeping it alive
+So, why did I chose to shill Exercism now? Why not earlier, as I have used Exercism for some time? The reason is that Exercism needs donations to stay alive! Like many volunteer led projects, they don't have many sources of income. 
+
+#+BEGIN_EXPORT html
+<img alt="Exercism needs you to donate to keep it alive!" src="{{ "assets/img/exercism/donate.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+Like many other efforts, they have costs ranging from hosting to video editing software for the videos they make (spoiler: a lot of multimedia related software is not free, sadly). 
+
+
+Not able to donate yourself? Help spread the word so we can have great platforms like Exercism in the future as well! Maybe it can even help a few more people avoid wasting time at college/university and can use their coding abilities earlier! (many of us did the official education because companies are super-horny for papers and credentials these days...).
+
+
+Sorta related, but... If you are in Norway or speak Norwegian, [[koding.no][koding.no]] is another site that needs some love. Though it does not need donations, you can help my making content! If you need an extra motivation: Employers in Norway LOVE if you use some time on Github! By contributing to that site, you can get some nice stats on your profile, and use it to show future employers how cool you are!
+
+
+*Remember to support the sites and products you get joy from, as they might not be here tomorrow!*
