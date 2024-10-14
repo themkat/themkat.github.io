@@ -1,0 +1,98 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Emacs tip: Use windmove to navigate open buffer windows"
+tags: emacs
+related_tags_count: 1
+preview_image: assets/img/emacs_windmove/example.png
+---
+#+END_EXPORT
+
+Do you also move between your Emacs buffer windows in an ineffective way? Always using =C-x o= to switch between them after opening several? Or maybe you are using the mouse (ugh)? Did you know that you could navigate to a buffer window in the direction you want, instead of just going randomly to the next one? 
+
+
+
+Some of you may be thinking: What the hell am I talking about here? Some of you may just have one buffer visible at the time. Let us set the stage a bit:
+#+BEGIN_EXPORT html
+<img alt="" src="{{ "assets/img/emacs_windmove/example.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+Like you can see, we have split the buffer into several windows. If you are unsure on how this is usually done, the default keys for splitting are =C-x 2= (horizontal split) and =C-x 3= (vertical split).
+
+
+How did I, and others, navigate this in the past? Some of us used the infamous =C-x o= to shift to the next buffer. This is all well and good if you only have two of them, but grows tedious when you have split your session into multiple open windows.
+
+#+BEGIN_EXPORT html
+<img alt="The classical way of moving almost randomly to the next buffer with C-x o." src="{{ "assets/img/emacs_windmove/cxo.gif" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+As you can see, the movement seems a bit random, so this approach leads to us spamming =C-x o= a lot.
+
+
+This may lead to some questions from the readers: Why did I continue using Emacs? Simply put, because everything else f**king sucks! I want my editor *MY* way, and I can live with some quirks. What lead me to discover this alternative approach? And what is the alternative? Recently I decided to experiment with the Sway window manager on my [[https://asahilinux.org/][Asahi Linux]] partition, and fell in love with the simplicity of moving between my open windows in a more controlled way. Suddenly, the approach with =C-x o = seemed arcane, as I wanted a controlled movement in a specific direction.
+
+
+*Introducing Windmove*
+
+The alternative is windmove, which is actually [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Window-Convenience.html][built-in to Emacs]] (the link covers it and other convenience for window navigation). Let us say that we start in the lower right quadrant of the screen, and want to navigate to the upper left, we can simply do 2 operations. The alternative would be to spam =C-x o= until we eventually come to the place we want. Sometimes we might skip ahead as well.
+ 
+#+BEGIN_EXPORT html
+<img alt="Controlled navigation with windmove in Emacs." src="{{ "assets/img/emacs_windmove/windmove.gif" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+(I have added printing to the minibuffer in this case to show which way we are moving more clearly. It is NOT something that happens by default).
+
+As you can see, we can have a completely deterministic way of navigating our windows. 
+
+
+*Configuration*
+
+You can easily activate set up the default behavior of windmove with:
+#+BEGIN_SRC lisp
+  (windmove-default-keybindings)
+#+END_SRC
+
+That being said, you probably don't use Emacs for any default behavior. In this case, I also actively dislike the default keybindings. Using shift and arrow keys?!? What?!? That is used for marking text in my view. Instead, we can set some custom keys. To simplify configuration, we will use [[https://www.gnu.org/software/emacs/manual/html_node/use-package/][use-package]]. In Emacs 29, it is built-in as well. If you are not already using it, you should! It simplifies configuration a lot!
+
+#+BEGIN_SRC lisp
+  (use-package windmove
+    ;; For readers: don't ensure means that we don't need to download it. It is built in
+    :ensure nil
+    :bind*
+    (("M-<left>" . windmove-left)
+     ("M-<right>" . windmove-right)
+     ("M-<up>" . windmove-up)
+     ("M-<down>" . windmove-down)))
+#+END_SRC
+(notice the star in =:bind*= which overrides any other bindings in other modes, which might cause problems if those modes do weird things with meta and arrow keys).
+
+As you can see, we simply binds the meta-key (usually ALT or similar) with the arrow keys to move to a specific direction. NOT just move to next buffer that you might be used to!
+
+If you for some reason want it to print the direction in the minibuffer as well, like the demo screen recording above, you can wrap the windmove functions in lambdas:
+#+BEGIN_SRC lisp
+  (use-package windmove
+    :ensure nil
+    :bind*
+    (("M-<left>" . (lambda ()
+                     (interactive)
+                     (message "Moving left!")
+                     (windmove-left)))
+     ("M-<right>" . (lambda ()
+                      (interactive)
+                      (message "Moving right")
+                      (windmove-right)))
+     ("M-<up>" . (lambda ()
+                   (interactive)
+                   (message "Moving up")
+                   (windmove-up)))
+     ("M-<down>" . (lambda ()
+                     (interactive)
+                     (message "Moving down")
+                     (windmove-down)))))
+#+END_SRC
+
+
+If you prefer to not use use-package, you could instead [[https://www.gnu.org/software/emacs/manual/html_node/efaq/Binding-keys-to-commands.html][set all of these manually with global-set-key]].
