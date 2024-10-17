@@ -1,0 +1,302 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Write your own Emacs Lisp macros - a small introduction"
+tags: emacs programming emacs-lisp
+---
+#+END_EXPORT
+
+Have you ever wondered how you can write your own macros in Emacs Lisp? Or what that even mean? Macros are a very powerful tool, and one that has long history in the Lisp family of programming languages. Writing your own syntax seems enticing, and that is indeed what we will look at. We will see simple examples, as well as creating your own syntax for anonymous functions (aka lambdas).
+
+
+
+To make it easier to follow, I might simplify some concepts. If you are an expert on Emacs Lisp and macros, it might seem too simplified. An expert might also not be the target audience here. Just a fair warning...
+
+
+* What are macros?
+If you have been reading this blog earlier, you may have read the article about [[https://themkat.net/2024/09/13/rust_simple_declarative_macros.html][Declarative Macros in Rust]]. That article covers the basics, as well as a brief historical overview. To repeat:
+
+#+BEGIN_VERSE
+Macros are code that generate code.
+#+END_VERSE
+
+In other words: we use macros to (sort of) write our own syntax. This can take many forms, ranging from the primitive text replacements in the C pre-processor, to the powerful macros we will soon see from the world of Lisp languages. In the Lisp world (and also Rust) we can use macros to write our own version of =if=-statements, anonymous function syntax, [[https://clojure.org/guides/threading_macros][Clojure style threading constructs/macros]], and other [[https://en.wikipedia.org/wiki/Syntactic_sugar][syntactic sugar]] (extended higher level syntax to make something easier to read) or otherwise new constructs in the language (within limits).
+
+
+If that sounds interesting, keep on reading. Hopefully I have not sold the idea too much so you will get dissapointed at the simplicity :slightly_smiling_face:
+
+
+* Emacs Lisp background
+Hopefully you are not new to the world of Emacs Lisp, as this will not be a complete introduction. If you are completely new to Emacs Lisp, [[https://www.gnu.org/software/emacs/manual/pdf/eintr.pdf][the official guide (PDF file)]] is a good place to start. [[https://lgmoneda.github.io/2017/03/15/elisp-summary.html][igmoneda.github.io also has a good guide that covers the basics more quickly]]. Some key concepts will still be covered below, so feel free to skim it if you are familiar with the bold keywords.
+
+
+*S-expressions*
+
+If you have programmed in any Lisp language for a hot minute, you will probably have heard the term s-expression. If not, I can guarantee that you have used them! What are they? s-expressions are either a single atomic element (e.g, number, string, nil/empty list) or a pair of s-expressions. Quickly turns recursive, I know. What does it mean? In essence, we are talking about single elements or lists! If you said "So, basically lisp code?", you would be right!
+
+
+Why do I even mention this? Everything, at least traditionally, in Lisp has been an empty element or a list! That is where the mantra of "Everything is lists!" comes from. I know I heard that when I was heavy into Lisp languages and philosophy in my early 20s. Our code is also a list! So the data we process and the code we execute are the same format. No wonder LISP stands for LISt Processing!
+
+
+To clarify, let us see how some of these examples look in Emacs lisp:
+#+BEGIN_SRC lisp
+  ;; 1. Single elements
+  1
+  "hello there"
+
+  ;; Empty list or nil (Clojure) is still considered a single element. At least here.
+  '()
+
+
+  ;; 2. A pair or s-expressions. A new s-expression is here either a pair or a single element.
+  (cons 1 2)
+
+
+  ;; A list is just a series of cons-cells terminated by the empty list
+  (cons 1 (cons 2 '()))
+  ;; equivalent to
+  (list 1 2)
+
+
+
+  ;; That leads to:
+  ;; All of the code we write is also s-expressions and data!
+  ;; Code is also data! This function is an s-expression!
+  (defun my-function ()
+    (message "hi"))
+  ;; It is simply a list of symbols that evaluate to functions. defun is a macro though, which executes slightly different from a regular function. Still a list of symbols and atoms!
+#+END_SRC
+
+*Note: Most data structures in Emacs Lisp are built on top of lists. This includes the hashmaps you might have used, associative lists and more.*
+
+
+Looks fairly simple, right? Important to have a grasp on the basics before we continue.
+
+
+*Quotes*
+
+Sometimes we want to make a list of symbols ourselves. If we tried verbatim to make a list like =(list my-symbol other-symbol)= it would fail due to the symbols being evaluated. A lightbulb moment might happen to you now:
+
+#+BEGIN_VERSE
+Can we stop evaluation of elements by need?
+#+END_VERSE
+
+We sure can! This is where quoting comes in. For the example above: =(list 'my-symbol 'other-symbol)=. This may look foreign if you are used to the quote symbol being a way to make strings or characters. In Lisp languages it is not. Here we indicate that the next element should be evaluated as a symbol, not evaluated directly. Oversimplified, it means we do NOT evaluate it (i.e, just treat it as data). This can be extended to complete lists as well! You might have seen the empty list symbol above, ='()=? It may look weird, but that is the way it is. Clojure chooses to instead use =nil= in this place for clarity.
+
+#+BEGIN_SRC lisp
+  ;; empty list:
+  '()
+
+  ;; Pairs
+  (cons 1 2)
+  ;; equivalent syntax:
+  '(1 . 2)
+
+  ;; List of 1 2 3 4
+  '(1 2 3 4)
+
+  ;; List of symbols
+  '(my-symbol other-symbol)
+
+  ;; Nested list
+  '((1 2) (3 4) (5 6 7))
+#+END_SRC
+
+
+*Quasi-Quotes???*
+
+You may have heard the term quasi-quote around, and probably wondered what it means? This is probably one of the terms that make people think Lispers are weird. The entire concept arises from the question:
+
+#+BEGIN_VERSE
+What if we want to evaluate an element inside of a quoted list?
+#+END_VERSE
+
+In Lisp, another type of quote is introduced in this case. The reason is that evaluation happens slightly differently in the compiler and interpreter. (Yes, some Lisps can be compiled!). Quasi-quote is its own symbol =`=. How do we "unquote"? With comma =,=.  Let's see a few examples again:
+
+#+BEGIN_SRC lisp
+  ;; Quasi-quote works like any other quote unless we unquote
+  `()
+  `(1 2 3)
+
+  ;; The difference is that our interpreter will check for unquotes to evaluate them
+  `(1 2 ,(+ 1 2))
+  ;; evaluates to the list:
+  ;; (1 2 3)
+#+END_SRC
+
+Now we know the basics, and can continue to the macro part of the article!
+
+
+* =defmacro= - writing macros in Emacs Lisp
+How would we even know how do write a macro? What is the goal here? Code, as well as the data we process, are just lists. That leads us to the conclusion that we want a "function-like" construct we can call to give the interpreter new code to evaluate.
+
+
+Oversimplification of the year:
+#+BEGIN_VERSE
+Macros return a list that is executed.
+#+END_VERSE
+
+
+** Your first macro
+
+# TODO: maybe a quick function call vs macro on a super simple one where no arguments are used? Eager vs lazy evaluation? (maybe that can be bold text?)
+To get used to the syntax of defining macros, we will create the simplest possible case: A macro that simply returns a number for evaluation:
+
+#+BEGIN_SRC lisp
+  (defmacro my-stupid-macro ()
+    1)
+#+END_SRC
+
+
+This is valid, but pointless. It still shows that the syntax is almost like a function calls at first glance. Let us instead see something being evaluated:
+
+#+BEGIN_SRC lisp
+  (defmacro my-stupid-macro ()
+    '(+ 1 2))
+#+END_SRC
+
+Now we see the difference to functions a bit better! If we evaluate this macro like a function call, =(my-stupid-macro)=, we notice that it evaluates to =3=. What happens here is that the interpreter first evaluates the macro to get the code, then evaluates the resulting code.
+
+
+Before we continue, I want to show another quick point: The point of lazy evaluation.
+
+#+BEGIN_SRC lisp
+  ;; Same macro, but with a body:
+  (defmacro my-stupid-macro (body)
+    '(+ 1 2))
+
+  ;; Call it with a function that outputs to the message buffer:
+  (my-stupid-macro (message "Will I be evaluated?"))
+  ;; If this was a function, we would see the message "Will I be evaluated?" in our *Messages* buffer.
+  ;; Now we see nothing there! The input is only data!
+#+END_SRC
+
+That leads us to the next example...
+
+
+** Your own version of =when=
+We have already covered not evaluating the arguments, which in essence stopped some eager evaluation. If we would have waited to evaluate elements only when needed, it would be called lazy evaluation. If you have ever read [[https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html][the fantastic book Structure and Interpretations of Computer Programs]], you will have heard this discussed in detail. This leads to many interesting opportunities for us, like using streams (in this context: lists that might be potentially infinite). [[https://github.com/NicolasPetton/stream][Someone has off course implemented that in Emacs Lisp as well]]! (not me this time!)
+
+
+With that tangent out of the day, let's look at this lazy evaluation in action! We want to make our own version of the classical =when=-statement (like an =if=, but with no else-clause). In essence, we want to evaluate our body just in the case that our test/predicate is true.
+
+#+BEGIN_SRC lisp
+  ;; Use quasi-quoting and unquoting to return a list of expressions.
+  ;; Evaluate the terms we want, when we want them.
+  ;; (unquoting here simply means that we put the data in the body arguments into its place. If we did not, it would simply be the symbol body, which does not exist outside of the macro definition.)
+  (defmacro my-when (pred body)
+    `(and ,pred
+          ,body))
+
+  ;; Evaluation:
+  (my-when (= 1 2)
+           "Hi")
+  ;; evaluates to nil, as the predicate failed
+
+  (my-when (= 1 1)
+           "Hi")
+  ;; evaluates to "Hi"
+
+
+  ;; You can also change the way Emacs indents the macro for us by giving it instructions:
+  (defmacro my-when (pred body)
+    ;; Tell Emacs that our first element is distinguished and that the rest is a normal body (like that of defun).
+    ;; (indent defun) would have the same effect.
+    (declare (indent 1))
+    `(and ,pred
+          ,body))
+
+  (my-when (= 1 2)
+    "Hi")
+
+  ;; If you want to verify the evaluation with message:
+  (my-when (= 1 2)
+    (message "Hi there"))
+#+END_SRC
+(you can read more about macro indentation in [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Indenting-Macros.html][the official guide]].)
+
+
+You have to control the flow to evaluate when needed. Here we rely on =and= which evaluates by need. Even if you are making new syntax, you still have to use what you already have as building blocks.
+
+
+** Your own syntax rules with custom keywords - =cl-destructuring-bind=
+To make things slightly more interesting, let's say we want to introduce our own syntax keywords/symbols. We want to make something like:
+#+BEGIN_SRC lisp
+  (my-lambda x -> (+ x 1))
+
+  ;; In action:
+  ((my-lambda x -> (+ x 1)) 2)
+#+END_SRC
+
+While not super useful, it makes for a concise syntax. How would we even start? There are multiple arguments here it. Even if we could collect them into one list, we still would need some processing. Do we need to write the parsing logic ourselves? No, you do not! This "parsing" is also called destructuring. 
+
+#+BEGIN_SRC lisp
+  ;; Require cl to get Common Lisp extensions
+  (require 'cl)
+
+  (defmacro my-lambda (param &rest arrow-and-body)
+    (cl-destructuring-bind (-> body)
+        arrow-and-body
+      `(lambda (,param)
+         ,body)))
+
+
+  ;; usage
+  (funcall (my-lambda x (+ x 1)) 2)
+
+  ;; in dash.el:
+  (-map (my-lambda x -> (* x x))
+        '(1 2 3))
+#+END_SRC
+
+You will notice that we collect the rest of the list into a single one called =arrow-and-body=. From here we destructure that list into body. If we knew the arguments were correct, we could also have just used =cdr= on the list to get the rest of the elements after =->=. We did not. This leads to some extra syntax checking, which we probably want. What happens if we don't follow the specified syntax?
+
+#+BEGIN_SRC lisp
+  ;; without arrow:
+  (funcall (my-lambda x (+ x 1)) 2)
+  ;; gives error:
+  ;; if: Wrong number of arguments: (-> body), 1
+#+END_SRC
+
+In this small macro, it is probably clear what is wrong. For a future user of our macro library, it is probably not! Let us improve the error handling a bit:
+
+#+BEGIN_SRC lisp
+  (defmacro my-lambda (param &rest arrow-and-body)
+    ;; &rest allows body to be potentially empty, so we can give a more clear error message
+    (cl-destructuring-bind (-> &rest body)
+        arrow-and-body
+      (if (null body)
+          (error "my-lambda takes the form: (my-lambda param -> body)")
+        `(lambda (,param)
+           ,body))))
+#+END_SRC
+
+Now our erroneous invocation gives:
+#+BEGIN_SRC lisp
+  ;; without arrow:
+  (funcall (my-lambda x (+ x 1)) 2)
+  ;; gives error:
+  ;; if: my-lambda takes the form: (my-lambda param -> body)
+#+END_SRC
+
+It is still not perfect, but you can always add more checks on the inputs before processing them. Or refactor the code. The code above should at least give you a starting point in seeing how you can give the user of your macro more clear errors. 
+
+
+While my examples uses =cl-destructuring-bind=, that is mostly our of muscle memory. It is from the Common Lisp extension package, and you can use [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Destructuring-with-pcase-Patterns.html][the various pcase patterns]] instead going forward. Still, in my view, =cl-destructuring-bind= has a clearer name when learning what it does.
+
+
+* Macro use cases
+The topic of when to use a macro was already covered in [[https://themkat.net/2024/09/13/rust_simple_declarative_macros.html][my Rust macro article]]. Mentioning them again here:
+- You need to control evaluation order or conditional evaluation of the arguments.
+- You don't want the overhead of a function call.
+- Avoid repetition of code blocks. You might use the same block of let-expressions, if-else, etc. all over your code. Make a macro to make the interpreter/compiler repeat it for you!
+- You want YOUR OWN PERSONAL SYNTAX! There are perfectly legitimate reasons for creating your own syntax as well. Domain Specific Languages can be very powerful for the right problems. Maybe a special language for working with accounts in banking? Or a code block where you render a 3D scene directly to a framebuffer or texture like =(with-framebuffer framebuffer-obj body)=? Maybe you want this to work like a threading macro of sorts? (in essence: passing the =framebuffer-obj= argument to relevant functions in body without the duplication). You can write it!
+
+
+
+*Why not just write a function?*
+
+If you need to control the evaluation order! If all arguments should not be evaluated at the same time. You could off course take functions as arguments, but that would sometimes make the syntax more convoluted. It would also add the overhead of a function call during execution. (No, modern developers, they are NOT free in terms of resources!). 
