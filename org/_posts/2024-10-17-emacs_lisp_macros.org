@@ -4,7 +4,7 @@
 #+BEGIN_EXPORT html
 ---
 layout: blogpost
-title: "Write your own Emacs Lisp macros - a small introduction"
+title: "Write your own Emacs Lisp macros - a short introduction"
 tags: emacs programming emacs-lisp
 ---
 #+END_EXPORT
