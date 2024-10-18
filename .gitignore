@@ -1,5 +1,6 @@
 _site
 _posts/*
+_drafts/*
 tags/*
 .jekyll-cache
 org/ltximg
