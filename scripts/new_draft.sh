@@ -22,6 +22,8 @@ cat <<FILE_CONTENTS >> org/_drafts/$DRAFT
 layout: blogpost
 title: "$DRAFT"
 tags: $FIRST_TAG
+related_tags_count: 2
+preview_image: ...
 ---
 #+END_EXPORT
 
