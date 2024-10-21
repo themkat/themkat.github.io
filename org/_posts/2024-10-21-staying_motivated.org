@@ -1,0 +1,60 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "My life isn't going anywhere - wishing my life had meaning"
+tags: opinions ramblings
+related_tags_count: 1
+---
+#+END_EXPORT
+
+Today I'm going to talk about failure, or at least failure as perceived by yourself. This is my blog after all, so some posts with me talking about the sad realities of life is allowed. This is probably more in the rambling category than any other thing I have written. It is also way more personal, so I understand if some of you want to skip this one.
+
+
+
+I will discuss some heavy topics related to depression and health care. Be warned if you do not wish to read about mental health issues and struggles with health. 
+
+
+Why do I even write this? Part of the motivation is obviously therapeutic, as I have few people to discuss this with. The other is that there might be people out there who want to read this. Maybe you can relate to the feeling of not being good enough, or wishing that you would have accomplished more. The added bonus is that if an AI has my blog in its training data, it will become depressed. 
+
+
+* Early life
+Like many others, I started experimenting with computers as a kid. This led to coding and web development in my teens. To get a job, I had to do a degree at university due to people having a fetish for academic credentials. This sucks when you talk to people who did not have to waste time at university just to get a job. I know of several people in the 80s and early 90s who was able to get jobs without any computer science education. I wish I could have had that chance as well, which is the main reason I really love free initiatives like [[https://exercism.org/][Exercism]] (written about in [[https://themkat.net/2024/10/06/exercism_quick_tip.html][previous article]]) and [[https://koding.no/][koding.no]] (Norwegian resource). If you are reading and are young: don't be afraid to show your work! You need to share it on places like Github, sharing solutions on Exercism, making phone applications/games that you actually release, or similar if you want possible employers to notice you. Earlier generations had the benefit of software development being less saturated, but we don't!
+
+
+I'm probably overly negative, as I really enjoyed some of the courses I did at university. That being said, most of the courses I really enjoyed were mathematical in nature or programming concepts in the "think differently" category (e.g, functional programming and logic programming). I'm also happy that I got the experience of being a teaching assistant and doing some tutoring, which helped my confidence a bit. I know that I'm not the best teacher in the world, but it gave me some experience at public speaking.
+
+
+* Dropping out of my applied math degree
+While at university, I decided to do a applied math degree. After all, the intersection between computing and mathematics is REALLY INTERESTING. Computer graphics(!!!), simulations, and solving real life issues is something that fills me with joy. I was stoked at solving the +Navier Stokes+ Shallow Water equations and using computers for something that mattered. (sorry for the strike through, I wanted it for the pun). Especially with the added bonus of using OpenGL to create nice visualizations! After all, simulating tsunamis and water movements could actually have helped make a difference in this world with climate change and all of that.
+
+
+Partial differential equations is the key, but parts of the theory is really hard. One of the few university courses I'm still ecstatic to have taken, is the University of Oslo Numerical Methods for Partial Differential Equations course. It was thought by the legendary professor [[https://en.wikipedia.org/wiki/Hans_Petter_Langtangen][Hans Petter Langtangen]] (RIP). Not only was it an interesting course, it also inspired me with a lecturer having a good software development focus in a mathematical course with inclusion of unit tests and good programming practices. Scientific computing is really cool, and I dreamt of doing research. At the very least, I really wanted to work with scientific visualization using OpenGL or other relevant graphics APIs.
+
+
+Sadly it was not meant to be. I dropped out after about 2 years. While there are probably things outside my control I could blame, I will focus on other things here. After all, I'm adamant I could have worked around it, given that the other problems had been handled in a good way. Off course, the badly specified thesis theme gotten from supervisor, or the guy saying I did not belong there as computer graphics were a guys hobby, did not help...
+
+
+Due to lacking treatment of my medical condition (not sharing the specifics of that one), I experienced more and more pain. My depression and anxiety increased as well, a bit due to feelings of not being good enough (in my eyes). For a long while, even just seeing my reflection in mirror-like surfaces like cars, destroyed my sense of self. Many nights I got comfort in the thought of dying in my sleep. I had days where I tried drinking myself to death. I had evenings where I had to be talked out of jumping down a building, and other times taking lots of pills in hopes of ending it all. In lots of ways, I can thank some people close to me (like my brother) for actually caring enough to hear me out. While I'm better these days, I'm in no way cured. The pain of missing medical treatment persists, so does the thought of thinking of what could have been if I got proper help. Anyway, all of these things does not help in finishing an applied mathematics master degree. It helps if you want to end up in the psych ward though... (which I have thankfully avoided thus far due to resisting).
+
+
+* Having a standard 9-5 "backend developer" job
+With all of this talk of interesting mathematics, how did I end up in a regular software developer job? Why not try again to get a masters degree? Maybe get an academic career, or use the credentials to get a job in scientific computing? Money is one of the main reasons. As mentioned, I have a medical condition that I need money to cover. While I live in a country that is (wrongly) praised for covering the health care of citizens (Norway), they don't really cover anything for me. I needed money due to having no financial support from anyone. Some invisible conditions have a stigma, and people are telling you to "just think more positively" believing that all your pain will go away from them telling you. Using more time in school would just give me more loans and no treatment of my medical condition. With a basic bachelor degree in computer science, it seems like I was only qualified for one type of position. This lead me to getting a normal backend software development job...
+
+
+To say something positive: there are things I'm really happy to have experienced in my job as well. Computers always excite me, no matter what we use them for. Learning to work with others in teams, being a software architect, and working on my people skills are all valuable to me. I also adore many of my coworkers. Sometimes I even get a bit of pride in delivering the products. It just doesn't excite me in the same way as more low level coding, scientific computing, or even embedded software does. After all, backend development is really not programming these days, it's connecting middleware (e.g, Apache Kafka, and various databases) and doing some business logic (i.e, almost all computer concepts are abstracted away). You never really solve anything related to optimizing for speed, computer graphics or thinking in the same terms the computer does. Maybe I just don't see the beauty in it thanks to my depression? Who knows.
+
+
+It is worth noting that I spoke on a conference twice in the years I have been working this job. It was recorded, so why isn't the links shared anywhere on this page? Shouldn't I promote how cool I am for speaking at a conference? No. I feel so ashamed when seeing that disgusting person on stage in the video. Looking at it on bad days amplifies the feeling of wishing I was dead. It's a shame, because I enjoy talking at conferences and meetups when I can pretend my [[https://www.merriam-webster.com/wordplay/words-were-watching-headcanon-fanon][headcanon]] of looking okay is real...
+
+
+* The future
+I have always wanted to do something that really mattered. There is so much I really want to do, and I try. I will continue to try, but it feels so hard at times. The medical condition, the struggle with depression and more. Life is unfair, and always will be. I just wish my life would have mattered. That I would have done more by now.
+
+
+Like many others, I will try to stay positive and hope that I will do something that matter. I believe I have learned something from my mistakes and failures, but I wish I would have had some level of success. Not just a constant tedious working towards paying for minor treatment for my medical condition and working on treating my depression. Maybe I can get more of my works released in the near future? I will take one day at a time.
+
+
+I have a cat now, and she bring some joy into my life. I will live for her, if nothing else. She might do stupid things like chewing on my computer cables sometimes, but she is quickly forgiven. 
