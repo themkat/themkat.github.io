@@ -323,7 +323,7 @@ If you have ever written a bash script before, you will probably figure out this
 #+BEGIN_SRC bash
   #!/bin/bash
 
-  TAGS=$(cat _posts/*.html | grep 'tags:' | sed -E 's/tags: (.)/\1/' | tr ' ' '\n' | sort -u)
+  TAGS=$(cat _posts/*.html | grep '^tags:' | sed -E 's/tags: (.)/\1/' | tr ' ' '\n' | sort -u)
 
   mkdir -p tags
 
