@@ -1,0 +1,410 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "How I blog with Emacs - Org-Mode, Jekyll, Github Actions and interesting tidbits"
+tags: emacs info automation
+related_tags_count: 1
+---
+#+END_EXPORT
+
+Sometimes I get asked by various people on how this blog works. How do I actually blog with the amazing sorcerous powers of Emacs? In my mission of knowledge sharing, I will show you my workflow and tricks today. Hopefully it can be useful for you as well.
+
+
+My blog has evolved through the years, and will probably continue doing so. More tasks can probably be automated, as I have already automated many menial tasks (e.g, promoting a draft by giving it a date in the filename). I know the blog is far from perfect, but it is a comfortable environment to work in. Being able to not leave my Emacs setup for long periods of time :heart:
+
+#+BEGIN_QUOTE
+"Emacs started out as an extensible text editor program that I had written, which become over the years a way of life for many users, as it was extended so much they could do all their computing without ever leaving Emacs." - Richard Stallman
+#+END_QUOTE
+([[https://www.youtube.com/watch?v=1jPmnDZ6ab8][video]])
+
+
+* The tech stack
+The tech stack used for this blog is:
+- [[https://jekyllrb.com/][Jekyll]]. A static site generator.
+  - HTML with SASS for styling. (in 2024 I could probably have just used plain CSS instead)
+  - Basic (old school) JavaScript
+  - [[https://shopify.github.io/liquid/][Liquid Templating]]
+- Emacs [[https://orgmode.org/][Org-Mode]]. A better "markup"ish syntax like Markdown, but more Emacs native.
+- Shell scripting using bash.
+- Github Actions
+- Github Pages
+
+
+I will not cover basic design of HTML pages, as that is probably not that interesting to read. In essence: You make HTML layouts and snippets, then make sites and blog posts which uses these layouts. The Jekyll documentation covers this in detail, and it is not really that interesting. I will focus on the interesting tidbits in this article, as well as how the breathtaking editor called Emacs fits into it.
+
+
+You are off course free to read [[https://github.com/themkat/themkat.github.io][the source code of this blog on Github]] :slightly_smiling_face: There is a small write-up of the basics in the readme. Do NOT use the site verbatim for any projects though, it is open for the purpose of knowledge sharing!
+
+
+
+* Short and sweet: The current path when making a post
+There are probably people reading that don't care about all the details, so let's start with a tl;dr (too long; didn't read) section. 
+
+
+1. Use the script =./scripts/new_draft.sh mytitle.org first-tag= to create a new draft. This will include headers and metadata. Essentially, it just creates a new file in the =org/_drafts= directory. 
+2. Edit =org/_drafts/mytitle.org= with all the details and extra metadata.
+3. While editing, use the script =./scripts/dev_mode.sh= to have a development mode loop running. The key part here is Jekyll running and generating the site. In the background, changes to org mode files are listened to, and when they happen, org mode files are published to HTML.
+4. Everything looks okay? Ready to publish? Run the script =./script/promote_draft.sh org/_drafts/mytitle.org=, which gives a nice new post in =org/_posts= which is ready to be committed with git. I commit it, and it is ready for the final part of the process.
+5. Github Actions publishes the org-mode files to HTML, and Jekyll bundles all of those together to a static site. The site is uploaded to Github Pages directly, and no automatic commits are done from the pipeline. Fast and simple. 
+
+
+* Anatomy of a blog post
+When I generate a new draft, it looks like the following:
+
+{% raw %}
+#+BEGIN_SRC text
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "mytest.org"
+tags: emacs
+related_tags_count: 2
+preview_image: ...
+---
+#+END_EXPORT
+
+Once upon a time there was...
+#+END_SRC
+{% endraw %}
+
+All of the meta-data at the top is simply for how the file should be rendered and published. This is basic org-mode. The important part is that we add a header on top when exporting to HTML. This will give Jekyll the information it needs to generate the site with the page on it. 
+
+
+It uses the layout for blogposts, which is just a HTML file describing how it should look. The title and tags fields are probably also pretty self-explanatory The next two fields are more interesting.
+- =related_tags_count= describes how many tags the page needs in common with other pages to be considered related. This is used to show the related posts list at the end of each blog post. If omitted, it defaults to 2. 
+- Preview image, which can be omitted, is used as an image when sharing the posts on social media. 
+
+At the end, where the text is, I start writing my post in standard [[https://orgmode.org/][org-mode]] "syntax". This includes headings, more HTML export blocks for images and more. Source blocks will be highlighted with [[https://highlightjs.org/][hljs]] when the page is loaded.
+
+
+The important part here is really that I can write my blog post in Emacs, while only briefly leaving it to look at the web browser :heart:
+
+
+* Publishing and pipeline
+There isn't really any magic to publishing a new blog post than what I've already mentioned. I promote a post to the =org/_posts= directory, and use org-mode to publish it to HTML. Jekyll takes care of making the rest of the site. To not have to do the org-mode publishing manually and commiting the generated files, I let the Github Actions pipeline do it. To accomplish that, I use Emacs in a sort of headless batch mode in the pipeline.
+
+
+** Emacs in headless batch mode??
+Yes, you read that right. To accomplish much of this blog, I run Emacs in a Github Actions pipeline. In many ways, it is used there as a Lisp interpreter first and foremost. That is also essentially what it is when you use it day to day: a Lisp interpreter with a built in text editor. Okay, I know I'm oversimplifying. I want to make a point that the environment you are used to in Emacs can be used in other places as well, like the pipeline of this blog. Or maybe even for writing stand alone scripts?
+
+
+To get started, I made a Org Mode project definition in a separate file:
+#+BEGIN_SRC lisp
+  ;; basic setup to get source code exports to work
+  (require 'package)
+  (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
+                           ("melpa" . "https://melpa.org/packages/")
+                           ("org"   . "https://orgmode.org/elpa/")))
+  (package-initialize)
+  (package-refresh-contents)
+  (package-install 'org)
+  (package-install 'htmlize)
+
+  (setq org-html-htmlize-output-type `nil)
+
+  (setq org-publish-project-alist
+        '(("main-site"
+           :base-directory "org"
+           :base-extension "org"
+
+           :publishing-directory "."
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           :headline-levels 4
+           :with-toc f
+           :html-extension "html"
+           :body-only t)
+
+
+          ("resources"
+           :base-directory "org"
+           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
+           :publishing-directory "."
+           :recursive t
+           :publishing-function org-publish-attachment)
+
+          ("themkat" :components ("main-site" "resources"))))
+  
+#+END_SRC
+
+This makes org mode publish the org mode documents to html, and copy the resources they need, when doing the publish operation on the defined project. Let's call this file =org_publish.el=. 
+
+
+The next step is simply to run Emacs in headless batch mode.
+
+#+BEGIN_SRC bash
+  emacs -Q --script org_publish.el --eval "(progn (require 'org)(org-publish-project \"themkat\" t))"
+#+END_SRC
+
+This runs Emacs without a window, loading in the definitions in the provided script, and then evaluates the expression given. 
+
+
+** Github Actions pipeline
+After covering the Emacs part above, you would probably guess that the rest of the Github Actions pipeline is not that advanced? You'd be right in guessing that. The steps are essentially:
+- Setup Emacs for use in a 
+- Do org-mode publish to get the html versions of posts.
+- Use my tag script to find all used tags, and create a page for each tag. This is to make it easy for users to view all posts with specific tags.
+- Use Jekyll to build the site.
+- Deploy to Github Pages.
+
+
+In addition to the above, I also have some additional tooling in place. The pipeline ends up as:
+
+#+BEGIN_SRC yaml
+  name: Jekyll site CI
+
+  on:
+    push:
+      branches: [ master ]
+    pull_request:
+      branches: [ master ]
+
+  permissions:
+    contents: write
+    pages: write
+    id-token: write
+
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      if: "!contains(github.event.head_commit.message, '[SKIP]')"
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name: Setup Ruby
+          uses: ruby/setup-ruby@v1.196.0
+          with:
+            ruby-version: '3.1'
+        - name: Setup Emacs
+          uses: purcell/setup-emacs@v7.0
+          with:
+            version: 28.1
+        - name: Run Emacs Org mode publish to convert Org mode files to HTML
+          run: ./scripts/emacs_headless_publish.sh
+        - name: Setup new tags if any
+          run: ./scripts/create_tag_pages.sh
+        - name: Create report on generated tag pages
+          run: |
+            echo -e "<h2>Tags made:</h2>\n<ul>" >> $GITHUB_STEP_SUMMARY
+            ls tags | sed -E 's/(.*)/<li>\1<\/li>/' >> $GITHUB_STEP_SUMMARY
+            echo "</ul>" >> $GITHUB_STEP_SUMMARY
+        - name: Setup Pages
+          id: pages
+          uses: actions/configure-pages@v5
+        - name: Build with Jekyll
+          run: |
+            bundle install
+            bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+          env:
+            JEKYLL_ENV: production
+        - name: Minify HTML to make the site as small as possible
+          if: github.event_name != 'pull_request'
+          run: |
+            npm install -g html-minifier
+            html-minifier --collapse-whitespace --minify-js --minify-css --remove-comments --file-ext html --input-dir _site --output-dir _site
+        - name: Upload artifact
+          if: github.event_name != 'pull_request'
+          uses: actions/upload-pages-artifact@v3
+    deploy:
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+      runs-on: ubuntu-latest
+      needs: build
+      if: "github.event_name != 'pull_request' && !contains(github.event.head_commit.message, '[SKIP]')"
+      steps:
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4
+
+#+END_SRC
+
+
+There are a few small things here you might be puzzled at. Doesn't Github Pages have built-in support for Jekyll? Then why do I need to do all this extra setup Ruby stuff?? That is because I want more control. I use some plugins (covered in a few sections) and also a script that minifies the HTML. Running Jekyll myself, as well as doing more setup, gives me more control of the process. If you wanted a more simple sites without any Ruby plugins, you could just use the built in support from Github with a far simpler pipeline.
+
+
+If you are new to Github Actions, [[https://themkat.net/2022/03/01/github_actions_intro.html][I have written a small write-up with links to useful resources]].
+
+* The Development Mode loop
+I LOOOOVE fast feedback, and a development loop gives me that. Knowing that the blog post continues to be verified by Org-Publish (built in publishing of org-mode to html) and Jekyll gives some security. If I made a dead link, I would get error messages in the terminal right away. I'm also able to interact with the page like it was published.
+
+=./scripts/dev_mode.sh=
+
+To make the development loop effective, it needs to listen to changes on the org-files in the background. How is this done? If I was only using GNU/Linux boxes, I would probably have just use fsnotify. To some peoples dismay, I also use Mac OS X. To maximize compatibility, I chose [[https://github.com/emcrisostomo/fswatch][fswatch]] for the job. If it detects that a file in the org directory is changed or created, it runs the Emacs Org Mode publishing operation, and creates any new tag pages in the background.
+
+
+Currently, the script looks as follows:
+
+#+BEGIN_SRC bash
+  #!/bin/bash
+
+  # Dev mode == live reloading of my stuff based on file changes
+  # publishes org mode files to html every time they are saved
+
+  # Listen to changes on org files in the background
+  fswatch --event Created --event Updated -l 3 org | xargs -n 1 sh -c 'echo "Converting org mode files to html..." && ./scripts/emacs_headless_publish.sh && ./scripts/create_tag_pages.sh' &
+
+  # base setup and main jekyll process
+  ./scripts/emacs_headless_publish.sh && ./scripts/create_tag_pages.sh && bundle install && bundle exec jekyll serve --drafts
+
+#+END_SRC
+
+
+While the script is far from perfect, it serves its purpose. Could I probably use more hours on only publishing single files and related assets? Yes. Would it be worth the hazzle? Probably not.
+
+ 
+* Small nuggets of (hopefully) useful information
+There are probably lots of minor information I don't cover. This last section is my attempt at picking out the most interesting topics. Feel free to ask in the comments if you feel like I should have covered something else!
+
+
+** Smileys (Jemojy) and other Ruby plugins 
+I use a Gemfile to keep track of Ruby dependencies. This is to have more control of the build process, and to be able to select more than [[https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#plugins][the standard Github Pages plugins]]. A Gemfile describes dependencies for a Ruby application using Bundle, like Jekyll really is. 
+
+#+BEGIN_SRC ruby
+  source "https://rubygems.org"
+
+  gem "jekyll"
+  gem "jekyll-gist"
+
+  group :jekyll_plugins do
+    gem "jekyll-sitemap"
+    gem "jekyll-paginate"
+    gem "jekyll-feed"
+    gem "jemoji"
+  end
+#+END_SRC
+
+It is used for the pagination plugin (to get multiple pages of blog posts), to generate a sitemap (for Search Engine Optimization), a RSS/Atom feed, and my beloved emojis. Simply adding JEmoji here, as well as adding it to Jekylls own config is enough for it to run automatically. My Jekyll config currently looks like the following:
+
+#+BEGIN_SRC yaml
+  url: "https://themkat.net" 
+  baseurl: ""
+  title: "TheMKat's blog" 
+  paginate: 10
+  include: [".well-known"]
+  exclude: ["org", "scripts", "*.org", "Gemfile", "Gemfile.lock"]
+  sass:
+    style: compressed
+  feed:
+    post_limit: 15
+    excerpt_only: true
+  plugins:
+    - jekyll-sitemap
+    - jekyll-paginate
+    - jekyll-feed
+    - jemoji
+#+END_SRC
+
+
+** Creating pages to show posts with a specific tag
+To create tag pages, I just make a simple HTML layout in Jekyll. Like all other pages, we can give metadata in a header that the layout can read. In other words, we simply need to generate pages like the following, and Jekyll will take care of the rest:
+#+BEGIN_VERSE
+---
+title: "Tag: emacs"
+layout: tag
+tag: emacs
+---
+#+END_VERSE
+(example is from the pages tagged with the Emacs tag)
+
+
+If you have ever written a bash script before, you will probably figure out this one quite easily. We simply parse all the posts, filter unique tags, then make a page like the above for each tag.
+
+#+BEGIN_SRC bash
+  #!/bin/bash
+
+  TAGS=$(cat _posts/*.html | grep 'tags:' | sed -E 's/tags: (.)/\1/' | tr ' ' '\n' | sort -u)
+
+  mkdir -p tags
+
+  for tag in $TAGS
+  do
+      if [ ! -f tags/$tag.html ]
+      then
+          echo -e "---\ntitle: \"Tag: $tag\"\nlayout: tag\ntag: $tag\n---" > tags/$tag.html
+      fi
+  done
+#+END_SRC
+
+This time you will probably have a harder time guessing how the HTML layout page looks. After all, what are we supposed to do there? If you think about it for a while, it is not that hard. We have the tag from the metadata, so we simply need to parse the Jekyll array structures and filter the posts that have the tag we are looking for. Fortunately, Jekyll keeps an array/list with all posts for a given tag:
+
+#+BEGIN_SRC html
+  ---
+  layout: default
+  ---
+
+  <h1>Posts with tag: {{page.tag}}</h1>
+  <hr />
+  {% for post in site.tags[page.tag] %}
+  {% include postlisting.html title=post.title date=post.date url=post.url excerpt=post.excerpt %}
+  <hr />
+  {% endfor %}
+#+END_SRC
+
+
+
+** My way of showing related pages in the bottom of each post
+I already mentioned the =related_tags_count= briefly above, which controls the number of tags two posts needs before they are considered related.
+
+The algorithm is as follows:
+- Go through all posts.
+   - Have a counter of tags in common.
+   - Go through all tags in the post p.
+      - Check if current page's tag list contains the tag from post p. If so, we increment the counter.
+      - If the counter is bigger than or equal to the =related_tags_count=, we include it in the list.
+      - Check if we have included more than the allowed number of related posts. To not have too much spam at the bottom, we avoid adding anymore links if we have gone above the threshold of 5 related posts.
+
+
+From there, we can create a simple Liquid template definition with some HTML to create links to the related posts.
+
+{% raw %}
+#+BEGIN_SRC html
+  <!-- Stupid simple algorithm for related posts. Just find those that share at least x tags (defaults to 2). Can be overriden by the post property related_tags_count. 
+  -->
+  {% assign tags_in_common = page.related_tags_count | default: 2 %}
+  {% assign max_related_posts = 5 %}
+  <h5>Other posts that might interest you:</h5>
+  <ul>
+      {% for post in site.posts %}
+      {% assign common_tags = 0 %}
+      {% for post_tag in post.tags %}
+
+      {% comment %}
+      Simple hack to avoid including oneself
+      {% endcomment %}
+      {% if post.url == page.url %}
+      {% break %}
+      {% endif %}
+
+      {% comment %}
+      Hacky solution to avoid adding new related posts after max_related_posts are added...
+      {% endcomment %}
+      {% if max_related_posts <= 0 %}
+      {% break %}
+      {% endif %}
+
+      {% if page.tags contains post_tag %}
+      {% assign common_tags = common_tags | plus: 1 %}
+      {% endif %}
+
+      {% if common_tags >= tags_in_common %}
+      <li><a href="{{post.url}}">{{post.title}}</a></li>
+      {% assign max_related_posts = max_related_posts | minus: 1 %}
+      {% break %}
+      {% endif %}
+      {% endfor %}
+      {% endfor %}
+  </ul>
+#+END_SRC
+{% endraw %}
+
+
+** Commento
+Not going to use much time on this, but the commenting system is from [[https://commento.io/][Commento]]. A simple HTML snippet is added, and I have comments which are easy to handle. (unless I get some unsane spambot lurking.).
+
