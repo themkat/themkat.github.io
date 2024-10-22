@@ -334,6 +334,7 @@ If you have ever written a bash script before, you will probably figure out this
 
 This time you will probably have a harder time guessing how the HTML layout page looks. After all, what are we supposed to do there? If you think about it for a while, it is not that hard. We have the tag from the metadata, so we simply need to parse the Jekyll array structures and filter the posts that have the tag we are looking for. Fortunately, Jekyll keeps an array/list with all posts for a given tag:
 
+{% raw %}
 #+BEGIN_SRC html
   ---
   layout: default
@@ -346,7 +347,7 @@ This time you will probably have a harder time guessing how the HTML layout page
   <hr />
   {% endfor %}
 #+END_SRC
-
+{% endraw %}
 
 
 ** My way of showing related pages in the bottom of each post
