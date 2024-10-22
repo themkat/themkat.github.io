@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: "My life isn't going anywhere - wishing my life had meaning"
-tags: opinions ramblings
+tags: opinions ramblings career
 related_tags_count: 1
 ---
 #+END_EXPORT
