@@ -4,7 +4,7 @@
 #+BEGIN_EXPORT html
 ---
 layout: blogpost
-title: My favorite personal finance books - Start your journey to become wealthy today as well!
+title: My favorite personal finance books
 tags: books
 related_tags_count: 1
 ---
@@ -24,6 +24,9 @@ Still not convinced? Here are a few more reasons a programmer (or anyone else) m
 - Work because you WANT to, not because you HAVE to. Your employer will NEED you, but you WANT them (i.e, not need them to be able to live your life). You can work in exciting projects and employers to learn instead of working their to be able to live. 
 
 
+*Edit 2024: While I'm not by any means rich, the knowledge from the books below has helped me a lot. I quit full time work a while ago, and only work part time these days. As I don't have a lot of money, I need to get the most out of the little money I have.*
+
+
 Many people will now be curious on my status on becoming wealthy... While I have yet to retire (many people will say that it is 38 years away, but f**k them!) or anything like that, the steady flow of passive income (dividends and others) makes my wealth grow much faster than it used to. I work on my goals every day, and these books have helped me grow and improve. Just doing what everyone else was doing (getting a loan for a car, buying makeup and clothes, tons of video games etc.) would just have made my spending grow, and my salary would have to grow to keep up with it. Same with a big house like many software developers does. I live quite cheaply and invest most of what I have, including using leverage where I can. There are off course many things I want, but I wait for most of those untill my assets pay for them.
 
 Moderation is key. I still buy a lot of things, but most give me either knowledge (books, courses etc.) or cashflow (assets like stocks and crypto currency using various schemes). I still think you should buy things you really want once in a while. Whether it's that new video game, an older computer (like I do sometimes, I want more Amigas!), or just having a beer with friends. Life is meant to be enjoyed, but don't waste money. Some sacrifices have to be made, at least untill you have assets that generate massive amounts of cash flow.
@@ -41,13 +44,9 @@ If you need some more inspiration to improve yourself, I think [[https://themkat
  
 
 
-* [[https://amzn.to/45gbVyF][Rich Dad Poor Dad by Robert Kiyosaki]]
+* [[https://amzn.to/3YCPeo7][Rich Dad Poor Dad by Robert Kiyosaki]]
 
-#+BEGIN_EXPORT html
-<a href="https://www.amazon.com/Rich-Dad-Poor-Teach-Middle-ebook/dp/B07C7M8SX9?_encoding=UTF8&qid=1691246609&sr=1-1&linkCode=li3&tag=themkat0f-20&linkId=0d3342ece9b92a24073b4d2cadb0676a&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B07C7M8SX9&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat0f-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat0f-20&language=en_US&l=li3&o=1&a=B07C7M8SX9" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-#+END_EXPORT
-
-[[https://amzn.to/45gbVyF][Rich Dad Poor Dad]] is a classic when it comes to personal finance, and for good reason! The book contains many key concepts that are essential to accumulating wealth. Everyone who thinks that there should be another way than just working a job for a salary should read this book! Some key take-aways you will learn more about:
+[[https://amzn.to/3YCPeo7][Rich Dad Poor Dad]] is a classic when it comes to personal finance, and for good reason! The book contains many key concepts that are essential to accumulating wealth. Everyone who thinks that there should be another way than just working a job for a salary should read this book! Some key take-aways you will learn more about:
 - *Assets vs liabilities*. An asset put money in your pocket, while a liability take money out of your pocket. Your house, car, consumer credit card debt etc. are all LIABILITIES! Real estate you rent out, bonds stocks, online businesses you own etc. are all assets. Assets can be bought, and they can be built (I like to believe that this website might one day take the step from hobby/passion project rambling to asset). Everyone will have some amount of liabilities, but we should try to minimize them.
 - *Poor vs rich is a lot about mindset*. Poor people often think things like "I can't afford that", "I don't have time for that", "That is too expensive", while rich people often think the opposite: "How can I afford that?". Questions open your mind, simple stupid answers closes your mind.
 - *Always continue to learn*. Grades isn't really what matters, it's how you apply your knowledge. Learn about finance, and what I said earlier, a bit of everything. Even if you take a job, can you take it to learn anything you can use later? Maybe you think sales are scary? It can probably be a good idea to challenge yourself and take the job to improve your skills. Work to learn - don't work for money!
@@ -62,13 +61,9 @@ Later books in the Rich Dad series also talks about the topic of good debt vs ba
 <br />
 #+END_EXPORT
 
-* [[https://amzn.to/45gL6KU][The Millionaire Next Door by William Danko and Thomas Stanley]]
+* [[https://amzn.to/3Up1tlv][The Millionaire Next Door by William Danko and Thomas Stanley]]
 
-#+BEGIN_EXPORT html
-<a href="https://www.amazon.com/Millionaire-Next-Door-Set-Book-ebook/dp/B07XB487HP?keywords=the+millionaire+next+door&qid=1691246778&s=digital-text&sprefix=the+million%2Cdigital-text%2C159&sr=1-1&linkCode=li3&tag=themkat0f-20&linkId=a0a6d491e57ec2e4c2d93ba38b288dcd&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B07XB487HP&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat0f-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat0f-20&language=en_US&l=li3&o=1&a=B07XB487HP" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-#+END_EXPORT
-
-Some people think that the rich are rich because they exploit workers or whatever. These people should especially read [[https://amzn.to/45gL6KU][The Millionaire Next Door]]! The book busts a lot of myths many people have about millionaires. In the book you will learn that:
+Some people think that the rich are rich because they exploit workers or whatever. These people should especially read [[https://amzn.to/3Up1tlv][The Millionaire Next Door]]! The book busts a lot of myths many people have about millionaires. In the book you will learn that:
 - *Most millionaires are self-made (especially in the US)*. In other words: they have not inherited their wealth! Many heirs waste their money within shorter amounts of time, as they do not have the money management skills their parents had. You still have to learn to manage money if you want to keep it. Allocating time to setting up and maintaining your financial plan is very important. 
 - *Abundant life-styles?* The people with the rich looking things like sports cars and big houses are often not wealthy. The average millionaire is often way more frugal. Investing in assets and your business makes for a greater reward than just flashy things. Many are small business owners who want to expand their business after all. 
 - *Income vs wealth*. Having a high income does not necessarily make you wealthy. What if you lose your job? If your spending is high, I can bet you that things will turn to sh*t. If you have wealth, that is accumulated assets (that produce cash flow), you are better off as you are not as tied down to your job. Like mentioned earlier, this include rental real estate, stocks, bonds, royalties etc. 
@@ -80,11 +75,7 @@ Some people think that the rich are rich because they exploit workers or whateve
 #+END_EXPORT
 
 
-* [[https://amzn.to/3qgpNKD][The 4 Hour Workweek by Timothy Ferriss]]
-
-#+BEGIN_EXPORT html
-<a href="https://www.amazon.com/4-Hour-Workweek-Escape-Live-Anywhere/dp/0307465357?_encoding=UTF8&qid=1691246855&sr=1-1&linkCode=li3&tag=themkat0f-20&linkId=3b620b716764a9d092a5e0250442f755&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0307465357&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat0f-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat0f-20&language=en_US&l=li3&o=1&a=0307465357" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-#+END_EXPORT
+* [[https://amzn.to/4eY2Gs8][The 4 Hour Workweek by Timothy Ferriss]]
 
 The 4 Hour Workweek presents different ways of living than the standard life we have all been sold. Timothy Ferriss travels a lot, and does new things all the time, and so can you! Key take aways:
 - *The dream life you want, can be achieved*. You can do several smaller adjustments to your finances, the way you live etc. to live your dream life. This is part planning, part financial literacy, and part attitude. In the information age, there are a ton of ways we can work remote, sell digital products, make youtube videos, freelance etc. 

@@ -28,11 +28,7 @@ You might also want to check out my other posts on Rust, like [[https://themkat.
 
 
 
-* [[https://amzn.to/3rVvON7][The Rust Programming Language]] by Steve Klabnik and Carol Nichols
-#+BEGIN_EXPORT html
-<a href="https://www.amazon.com/Rust-Programming-Language-2nd-ebook/dp/B0B7QTX8LL?_encoding=UTF8&qid=1691245088&sr=1-1&linkCode=li3&tag=themkat0f-20&linkId=b90fa561be0a5fa5fa0394a9b8e2a56d&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0B7QTX8LL&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat0f-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat0f-20&language=en_US&l=li3&o=1&a=B0B7QTX8LL" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-#+END_EXPORT
-
+* [[https://amzn.to/40ccJp8][The Rust Programming Language]] by Steve Klabnik and Carol Nichols
 
 *What is it about?* This book teaches you the complete basics of the language, its syntax and how to solve various problems. Concepts include the build tools, the ownership model, pattern matching and more.
 
@@ -53,13 +49,9 @@ You might also want to check out my other posts on Rust, like [[https://themkat.
 #+END_EXPORT
 
 
-* [[https://amzn.to/3OHmntI][Rust Brain Teasers]] by Herbert Wolverson
-#+BEGIN_EXPORT html
-<a href="https://www.amazon.com/Rust-Brain-Teasers-Herbert-Wolverson-ebook/dp/B09Z5T2CDP?keywords=rust+brain+teasers&qid=1691245171&s=digital-text&sprefix=rust+brain+teas%2Cdigital-text%2C158&sr=1-1&linkCode=li3&tag=themkat0f-20&linkId=524a80859f78f864063208895de95627&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B09Z5T2CDP&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat0f-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat0f-20&language=en_US&l=li3&o=1&a=B09Z5T2CDP" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-#+END_EXPORT
+* [[https://amzn.to/3BWVgH3][Rust Brain Teasers]] by Herbert Wolverson
 
-
-*What is it about?* Various small problems that might have unexpected results. If you have read something like [[https://amzn.to/3s3681m][Java Puzzlers]] there are certain similarities. While the title makes the book seem advanced, it is really not. That is also the main complaints people have with the book. If you are not super experienced with Rust, and fairly new to it, you will probably learn a thing or two. Some of the problems might be obvious, and if not you will hopefully learn something new.
+*What is it about?* Various small problems that might have unexpected results. If you have read something like [[https://amzn.to/4hged7T][Java Puzzlers]] there are certain similarities. While the title makes the book seem advanced, it is really not. That is also the main complaints people have with the book. If you are not super experienced with Rust, and fairly new to it, you will probably learn a thing or two. Some of the problems might be obvious, and if not you will hopefully learn something new.
 
 *Additional resources:* See the suggested resources for the previous and next entries :)
 
@@ -73,11 +65,7 @@ You might also want to check out my other posts on Rust, like [[https://themkat.
 #+END_EXPORT
 
 
-* [[https://amzn.to/3QmUF6N][Rust for Rustaceans]] by Jon Gjengset
-#+BEGIN_EXPORT html
-<a href="https://www.amazon.com/Rust-Rustaceans-Programming-Experienced-Developers-ebook/dp/B0957SWKBS?keywords=rust+for+rustaceans&qid=1691245284&s=digital-text&sprefix=rust+for+ru%2Cdigital-text%2C161&sr=1-1&linkCode=li3&tag=themkat0f-20&linkId=220cffff286c72daf088d653c0f9f5cb&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0957SWKBS&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat0f-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat0f-20&language=en_US&l=li3&o=1&a=B0957SWKBS" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-#+END_EXPORT
-
+* [[https://amzn.to/3YC1Z24][Rust for Rustaceans]] by Jon Gjengset
 *What is it about?* Now that you know the basics of Rust, it is time to go deeper! Yes, exactly that. This is a book for intermediates who want to learn more advanced concepts needed to be a more professional Rust developer. Some topics covered include:
 - Writing good idiomatic Rust code
 - Ideas on how the compiled code will look and behave, considerations to be made etc. Useful to understand that the compiler is in fact a compiler, and not magic...

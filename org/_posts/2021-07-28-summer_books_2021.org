@@ -14,12 +14,7 @@ Summer is a great time to read some books and releax! A lot of us have vacation 
 *NB! This article contains Amazon affiliate links, aka paid links. This means I earn from qualified purchases.*
 
 
-** [[https://amzn.to/45hXwCm][Hackers: Heroes of the computer revolution]]
-
-#+BEGIN_EXPORT html
-<a href="https://www.amazon.com/Hackers-Heroes-Computer-Revolution-Anniversary-ebook/dp/B003PDMKIY?_encoding=UTF8&qid=1691244571&sr=8-1&linkCode=li3&tag=themkat0f-20&linkId=a98b4006f61a1f008cd9a9c0da64f4bd&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B003PDMKIY&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat0f-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat0f-20&language=en_US&l=li3&o=1&a=B003PDMKIY" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-#+END_EXPORT
-
+** [[https://amzn.to/3BZin3M][Hackers: Heroes of the computer revolution]]
 To me, this book is two things: A history book about the early pioneers in software, and a proof to enthusiasts/nerds that you are not alone. This book is about the entusiast who think using and playing with computers are an end-goal in itself. From the early hackers in the Railroad club at MIT (60s) to the game developers at Sierra On-Line in the 80s and 90s. Common to all of them is the love for technical details and the want to do technologically awesome things! Many famous and less famous people are mentioned throughout the book, Richard Stallman, Bill Gosper, Mark Zuckerburg (updated edition), Ken Williams to name a few! Expect model trains with a twist, Conways Game of Life, PDP-1s, home computers, computer games, and more! Never feel alone as a rockstar programmer again!
 
 # Just getting some more space :)
@@ -29,13 +24,9 @@ To me, this book is two things: A history book about the early pioneers in softw
 #+END_EXPORT
 
 
-** [[https://amzn.to/3OTPSJ3][Game Engine Black Book: Wolfenstein 3D]]
+** [[https://amzn.to/4fdOviq][Game Engine Black Book: Wolfenstein 3D]]
 
-#+BEGIN_EXPORT html
-<a href="https://www.amazon.com/Game-Engine-Black-Book-Wolfenstein/dp/B0BMSKYV5R?_encoding=UTF8&pd_rd_w=Z9GlG&content-id=amzn1.sym.ed85217c-14c9-4aa0-b248-e47393e2ce12&pf_rd_p=ed85217c-14c9-4aa0-b248-e47393e2ce12&pf_rd_r=142-1744162-5144610&pd_rd_wg=s9pl7&pd_rd_r=f4de957d-6efd-4cf7-b615-441c7912dcc4&linkCode=li3&tag=themkat0f-20&linkId=b1e8faf6e52251464f38f1d1f4d68862&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0BMSKYV5R&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat0f-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat0f-20&language=en_US&l=li3&o=1&a=B0BMSKYV5R" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-#+END_EXPORT
-
-Love older game engines? Or maybe you are just fascinated with the early days of 3D graphics? Maybe you just also have a crush on John Carmack (and his code off course!)? No matter the reason, as long as you are fascinated by technical details, I would really recommend reading this book. The old ray casting algorithm is fascinating, and the hurdles of MS DOS and early X86 is intersting to read about. If you are less intersted in the technical details, but LOVE to hear about the story of Id Software then [[https://amzn.to/45aXpsF][Masters of Doom]] is also an excellent read :)
+Love older game engines? Or maybe you are just fascinated with the early days of 3D graphics? Maybe you just also have a crush on John Carmack (and his code off course!)? No matter the reason, as long as you are fascinated by technical details, I would really recommend reading this book. The old ray casting algorithm is fascinating, and the hurdles of MS DOS and early X86 is intersting to read about. If you are less intersted in the technical details, but LOVE to hear about the story of Id Software then [[https://amzn.to/48o5oFa][Masters of Doom]] is also an excellent read :)
 
 # Just getting some more space :)
 #+BEGIN_EXPORT html
@@ -44,11 +35,7 @@ Love older game engines? Or maybe you are just fascinated with the early days of
 #+END_EXPORT
 
 
-** [[https://amzn.to/43VMfq6][Spying on Whales]]
-
-#+BEGIN_EXPORT html
-<a href="https://www.amazon.com/Spying-Whales-Present-Awesome-Creatures-ebook/dp/B076GPY9LT?_encoding=UTF8&qid=1691244847&sr=1-1&linkCode=li3&tag=themkat0f-20&linkId=7332303a8bfa13ecd7dfa3351b9469cb&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" class="blogfloatleftimg" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B076GPY9LT&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=themkat0f-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=themkat0f-20&language=en_US&l=li3&o=1&a=B076GPY9LT" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-#+END_EXPORT
+** [[https://amzn.to/3AddweL][Spying on Whales]]
 
 I'm not a marine-biologist, but have always been fascinated by the ocean. Whales have an almost majestic beauty, and also have a lot of mystery surrounding them. Did you know that the earliest whales were land-dwelling creatures who habited close to lakes? Or the true extents on whaling on the whale-population? Or that certain rorquals have a sensory organ in their chin to control how much their jaws are able to open? (probably to not rapture their pouches, as they are baleen whales). Marine biologist Nick Pyenson tells his stories of excevations, research and more. If you need some different books than tech and fiction, then I would whole-heartedly recommend this one!
 
@@ -65,4 +52,9 @@ I'm not a marine-biologist, but have always been fascinated by the ocean. Whales
 
 ** Bonus..?
 *Update 2022: Nevermoor and its sequels are amazing! Can't wait for book 4 in October! Well worth the read. The mystery of the wundersmith is unraveled more and more in unexpected ways throughout the series :)*
-Considering including a fiction book above, but decided to postpone that to a future article :) If you still really want one from me, then this will do... I'm currently listening to the audiobook of [[https://amzn.to/44VXvUO][Nevermoor: The Trials of Morrigan Crow by Jessica Townsend]]. It's a childrens fantasy book, but is still a fun listen! (Gemma Whelan is a great reader/performer!). It is about a cursed child called Morrigan Crow who finds herself caught up in an magical adventure! (don't want to spoil too much, this isn't a book review after all ;) ).
+
+
+*Update 2024: The 4th book is postponed until May 2025 it seems.*
+
+
+Considering including a fiction book above, but decided to postpone that to a future article :) If you still really want one from me, then this will do... I'm currently listening to the audiobook of [[https://amzn.to/3NETqNJ][Nevermoor: The Trials of Morrigan Crow by Jessica Townsend]]. It's a childrens fantasy book, but is still a fun listen! (Gemma Whelan is a great reader/performer!). It is about a cursed child called Morrigan Crow who finds herself caught up in an magical adventure! (don't want to spoil too much, this isn't a book review after all ;) ).
