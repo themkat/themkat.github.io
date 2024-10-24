@@ -41,6 +41,8 @@ Due to lacking treatment of my medical condition (not sharing the specifics of t
 
 
 * Having a standard 9-5 "backend developer" job
+*EDIT October 24th: If it was not clear, this is not a new situation. Working towards money for medical treatment while working a normal job is a situation I've been in for about a decade now.*
+
 With all of this talk of interesting mathematics, how did I end up in a regular software developer job? Why not try again to get a masters degree? Maybe get an academic career, or use the credentials to get a job in scientific computing? Money is one of the main reasons. As mentioned, I have a medical condition that I need money to cover. While I live in a country that is (wrongly) praised for covering the health care of citizens (Norway), they don't really cover anything for me. I needed money due to having no financial support from anyone. Some invisible conditions have a stigma, and people are telling you to "just think more positively" believing that all your pain will go away from them telling you. Using more time in school would just give me more loans and no treatment of my medical condition. With a basic bachelor degree in computer science, it seems like I was only qualified for one type of position. This lead me to getting a normal backend software development job...
 
 
