@@ -1,0 +1,90 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Read documentation from the comfort of Emacs - man-pages, developer documentation and more"
+tags: emacs editor programming
+related_tags_count: 2
+---
+#+END_EXPORT
+
+Are you also tired of having to leave Emacs to read documentation? Whether be a simple command for your terminal (which you can run inside Emacs off course!), or information relating to the code you are working on? The good news it that you can read much of this documentation directly from inside of Emacs! No need to ever leave it again. By reading this post, I hope you will learn of a new way to get more of your information without ever leaving your favorite editor.
+
+
+* Man-pages in Emacs
+You probably know what we are referring to when mentioning man-pages? If not: man-pages, or manual pages, are documentation you can read directly in your command line using the =man= command. Most shell commands (e.g, curl, grep etc.) are documented, as well as close to all C header files. In general, you could document almost everything with it, but in my experience it works best with commands and code. I covered =man= briefly in [[https://themkat.net/2021/10/02/no_nonsense_command_line.html][my command line beginners guide article]] a few years ago.
+
+
+"What does a command used in the command line have to do with Emacs?" you may ask. The connection is that you can read this documentation directly from the comfort of Emacs! Simply run =M-x man= and write the documentation you want, like =curl= (which is a good example, because who remembers all the options by heart?!). Depending on your system, this may take a few short seconds. The reason is that Emacs is invoking the =man= command to render the contents. The end result will look something like this:
+
+#+BEGIN_EXPORT html
+<img alt="man page for curl rendered inside of Emacs." src="{{ "assets/img/emacs_docs/man.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+
+But wait.. These documentation files should be possible to read without invoking an external program, right? Yes! That is where the =woman= command comes in! In this case woman stands for WithOut MAN, or w.o man for short. This command renders the man-pages without relying on an external command.
+
+
+Why is man still kept as a command if we have woman? In any other setting, this question may seem extremely weird. You would probably guess that the authors had a lot of fun with the naming here...  The reason is that some more modern man-pages has features that woman does not support.
+
+
+To summarize the two interactive functions:
+
+| Interactive function | Description                                                                                 |
+|----------------------+---------------------------------------------------------------------------------------------|
+| =man=                  | Uses external command to render contents.                                                   |
+| =woman=                | Pure Emacs implementation to render man page. Some newer features might not be implemented. |
+
+
+[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Man-Page.html][The official documentation]] might also be a useful read if you need more details.
+
+
+If you like to use the Emacs package =helm=, there is a small utility included called =helm-man= which includes a new command called =helm-man-woman=. This utility uses (to my understanding) woman as the default, but fallbacks to man if it fails. You also get a very nice menu that is typical of =helm=. (time will tell if I end up switching to [[https://github.com/minad/vertico][Vertico]] like several other people I know has done).
+
+#+BEGIN_EXPORT html
+<img alt="helm giving us a nice search for man-pages." src="{{ "assets/img/emacs_docs/helm.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+
+* tldr - More concise version of man-pages
+Sometimes man-pages may a bit too long. You are searching for a very specific, often used, command. Scrolling through the man-pages takes time, and some of you end up searching Google/Duckduckgo/other instead. Did you know that there exist a short-form version of man-pages with the very fitting name [[https://github.com/tldr-pages/tldr][tldr]] (abbreviation for "too long; didn't read"). Again I'm mentioning a command line application, and yet again there is [[https://github.com/kuanyui/tldr.el][an Emacs extension]] you can use!
+
+
+Just like the command line application, you run =M-x tldr=, and then search for the command in question. For consistency, let's see the documentation for curl:
+
+#+BEGIN_EXPORT html
+<img alt="Using tldr in Emacs to get a short-form documentation page for curl." src="{{ "assets/img/emacs_docs/tldr.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+(please excuse the styling, as the package has some hard coded styling that my theme does not yet override)
+
+
+From the image, we see a short description, as well as many command examples.
+
+
+
+
+* DevDocs - More long-form documentation
+So far, the other examples have been single page documentation. What about more long-form content? Can we have the complete Rust Programming Guide book inside Emacs? Or the complete documentation pages for OpenGL? Yes, we can!
+
+
+You may have heard of the [[https://devdocs.io/][devdocs.io]] page from freecodecamp? If not, it is a page where you can read documentation for many different topics directly in your browser, as well as download for offline viewing. There is [[https://github.com/astoff/devdocs.el][a nice Emacs package for it]] as well! It's simple in use, and you only have to remember 3 commands:
+
+| Command         | Description                                                                                                                                                              |
+|-----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =devdocs-install= | Install a document/category. This can be rust, for the Rust Programming Guide book, or opengl~4 for the OpenGL documentation. This is needed to have anything to browse! |
+| =devdocs-peruse=  | Open a document/category for viewing. This will open the main page. You can use the i-key to navigate to another chapter or section, or use the next command...          |
+| =devdocs-lookup=  | Open an index entry, aka a chapter or section. This can for example be a chapter in the Rust book, or a specific GLSL function in the OpenGL documentation.              |
+
+
+If you use helm or another Emacs search engine, you will be able to navigate the possible options as you type. If looks like this in action:
+
+#+BEGIN_EXPORT html
+<img alt="DevDocs directly in Emacs instead of a webpage." src="{{ "assets/img/emacs_docs/devdocs.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+
+
+As you can see, there are more reasons than ever to NEVER leave Emacs! 
