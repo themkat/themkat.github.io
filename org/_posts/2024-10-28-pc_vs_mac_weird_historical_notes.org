@@ -40,7 +40,7 @@ Sorry to Apple Mac fans in advance, as the explanation is more clear cut here. T
 The [[https://en.wikipedia.org/wiki/Macintosh_128K][Macintosh]] was released in 1984 by Apple Computers. While Apple was not new to computer manufacturing, the Macintosh was a new beast in its own right. It uses the now legendary [[https://en.wikipedia.org/wiki/Motorola_68000][Motorola 68000 processor]]. From day one, probably thanks to Steve Jobs, it was marketed as a sharp contrast to the perceived dull world of IBM. The marketing focused on creativity, thinking differently, and other brash material to attract outsiders. While not an immediate success, it became a cultural icon.
 
 
-Compared to the Intel based IBM PC machines, the Motorola 68000 based Macintosh machines had their own standards. There were different kinds of expansion cards, different software (due to processor architecture and other hardware differences), and in general just different modes of operation. Some people might argue that the 3 $$\frac{1}{2}$$ floppy disk type was a commonality, they used wildly different file formats.
+Compared to the Intel based IBM PC machines, the Motorola 68000 based Macintosh machines had their own standards. There were different kinds of expansion cards, different software (due to processor architecture and other hardware differences), and in general just different modes of operation. Some people might argue that the 3 ½ floppy disk type was a commonality, they used wildly different file formats.
 
 
 
