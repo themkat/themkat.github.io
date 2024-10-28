@@ -1,0 +1,72 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "PC vs Mac? - The weird historical distinction that is for some reason still around"
+tags: macosx history retro-computing windows
+related_tags_count: 1
+---
+#+END_EXPORT
+
+If you are a millennial or younger, you have probably heard the someone say "It's NOT a PC, it's a Mac!" during your lifetime. It was most certainly said by a person who wanted to feel superior to you. The person in question was probably not a computer person either, but parroted terms they had heard from people who were actually intelligent. I heard it from those types, and it made me want to stay away from Apple for years. You may think it was just sheer arrogance from the Apple cult, but today we will discuss the historical reasons for the distinction. We will also discuss why it made less and less sense over the years, and why it might make some sense again now.
+
+
+This post will go through some computer history. Please understand that I won't be able to cover everything, and there are an abundance of trivia that will be left out. This is meant to be a shorter post about the "Mac VS PC" distinction after all.
+
+
+*Note: I've added links where you can read more about the topics inline.*
+
+
+* The original IBM PC
+The [[https://www.ibm.com/history/personal-computer][IBM Personal Computer]], IBM model 5150, or just simply IBM PC, was the first computer in the style that most people know them today. Originally released in 1981. While there were earlier computers like the 8 bit era computers (e.g, Commodore PET, Apple II etc.), this was the first one to use MS DOS and terms we still use today. It got popular in the business market, probably due to IBMs strong market share. In case you didn't now, [[https://en.wikipedia.org/wiki/IBM_mainframe][IBM have been a popular manufacturer of mainframes]] for years before and had built a name for themselves. You may have heard the slogan "Nobody gets fired for buying IBM"? If you don't know what a mainframe is, you can think of it as an oldschool server of sorts. It is built for transaction processing and throughput, which makes it ideal the banking industry and other industries with similar requirements (e.g, some airlines).
+
+
+The IBM PC used the now famous Intel 8088 processor, which is considered a forerunner to the x86 family of processors. This is still the reigning processor family in most computers! It's called x86, due to the earlier models in the family having model numbers like 808126, 808286, 808386, and 808486.
+
+
+Why is all of this important? Due to its popularity, it got successors like the IBM PCjr. Software developers saw that the machine was popular for business software. Hardware makers wanted in on the action. Eventually, the company Compaq hit the goalpost with their [[https://en.wikipedia.org/wiki/Compaq_Portable][Compaq Portable]], which was compatible with the IBM PC architecture. The reason for this being allowed was that only the [[https://en.wikipedia.org/wiki/BIOS][BIOS]] (oversimplified: the small program starting the operating system) was copyrighted. Compaq made their own free of IBM code. MS DOS from Microsoft, the Intel processor, and other parts was off-the-shelf products that anyone in theory could buy. IBM had done so due to seeing the fledgling computer market with the Apple II, Commodore PET and more, and wanted in on the action fast. 
+
+
+*IBM PC compatible*
+When Compaq made their own computer that was (almost) fully compatible with IBMs PC, it opened the floodgates for other manufacturers. As they could source the parts and license MS DOS, they would make machines that were for all intents and purposes compatible with all IBM PC software. This meant that they could piggy back off an existing market, and have a common platform, in a way that none of the earlier 8 bit era machines could. These machines were initially called IBM PC compatibles, or sometimes just PC compatibles. Later they were simply referred to as PCs. The defining factors to me is the processor architecture, the expansion features like the ISA cards (and much later PCI) etc. It was in other words its own ecosystem, which leads us to...
+
+
+* The Macintosh
+Sorry to Apple Mac fans in advance, as the explanation is more clear cut here. That means it will be shorter.
+
+
+The [[https://en.wikipedia.org/wiki/Macintosh_128K][Macintosh]] was released in 1984 by Apple Computers. While Apple was not new to computer manufacturing, the Macintosh was a new beast in its own right. It uses the now legendary [[https://en.wikipedia.org/wiki/Motorola_68000][Motorola 68000 processor]]. From day one, probably thanks to Steve Jobs, it was marketed as a sharp contrast to the perceived dull world of IBM. The marketing focused on creativity, thinking differently, and other brash material to attract outsiders. While not an immediate success, it became a cultural icon.
+
+
+Compared to the Intel based IBM PC machines, the Motorola 68000 based Macintosh machines had their own standards. There were different kinds of expansion cards, different software (due to processor architecture and other hardware differences), and in general just different modes of operation. Some people might argue that the 3 $$\frac{1}{2}$$ floppy disk type was a commonality, they used wildly different file formats.
+
+
+
+* Why was not just everything called a PC anyway?
+*The short answer:* The name PC, even if it stands for Personal Computer, was so heavily tied to the IBM PC compatible style of computers.
+
+
+A longer answer is, summarized from the previous sections:
+- Different CPU/processor architectures, Intel x86 vs Motorola 68000 family.
+- Different inner workings. Ranging from how they plot pixels on the screen, to how the processor communicated with the rest of the parts.
+- Different expansion card standards, which was highly incompatible with each other.
+- Incompatible software.
+- Fan bases for each of them being very different types of people.
+
+  
+There was also other computers on the market which did their own thing, and were not compatible with either of the above. Most notably, [[https://en.wikipedia.org/wiki/Amiga][the Amiga series of computers]], which is arguably the most fantastic piece of hardware ever released. (okay, I let my feelings shine a bit through here. Back to being more objective below).
+
+
+* Did that ever change?
+From the previous sections, we saw that the PC compatibles and the Mac computers were very different beasts. At least when they were first released... To make a long story short, the different styles of computers got closer and closer to each other in execution over the years. The PC compatibles got new standards, some that may have been inspired by Macintosh computers. Macs got support for standards most people thought of as PC standards, most notably [[https://apple.fandom.com/wiki/Peripheral_Component_Interconnect][PCI expansion cards in 1995]]. This continued for many years with more and more cables and standards being supported on both types of machines. While Apple didn't stay on Motorola 68000 processors, they did use PowerPC processors which were stilt not Intel x86 compatible. 
+
+
+Then, it all changed. [[https://en.wikipedia.org/wiki/Mac_transition_to_Intel_processors][Apple announced in 2005 that they would switch to Intel CPUs as well]]. With that change came opportunities to run Microsoft Windows on Macs, and much more. There were still differences, but they were minuscule in comparison to the ecosystems we had seen before. With the increased compatibility, we also saw rise to the Hackintosh installations (Mac OS installs on simple of-the-shelf PCs).
+
+
+Yes, a "Mac" was now basically just a glorified PC compatible.
+
+* Does it make sense again now that we have M1-M4 architecture Macs?
+As Apple has started to use a different processor architecture, this time ARM, does it make sense to start the PC vs Mac distinction again? You may think so if you want, but I don't have a strong opinion here. While the CPU is different, there are still shared standard like PCI expansion cards (at least on Mac Pro). The peripherals mostly use USB-C as well. The commonalities are still too many for the distinction to make sense to me.
