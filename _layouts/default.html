@@ -28,6 +28,13 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/languages/lisp.min.js" integrity="sha512-/opdFSi4yauKgOKsTeN7MPbPp2QnhX2y7WvaS682VYwmtSsTwM1qsePlN1Vn+iTWL3PvXI5vtFQFPLNrPphBJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         {% endif %}
 
+        <!-- Alternate tags for RSS autodiscovery -->
+        {% if paginator.page %}
+        <link rel="alternate" type="application/rss+xml" href="{{ site.url }}/feed.xml" title="TheMKats blog RSS/atom feed" />
+        {% elsif page.tag %}
+        <link rel="alternate" type="application/rss+xml" href="{{ site.url }}/feed/by_tag/{{ page.tag }}.xml" title="TheMKats blog {{ page.tag | capitalize }} RSS/atom feed" />
+        {% endif %}
+        
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-HLD6RM0SP3"></script>
 		<script>
