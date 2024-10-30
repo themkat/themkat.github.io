@@ -7,6 +7,7 @@ exclude: ["org", "scripts", "*.org", "Gemfile", "Gemfile.lock"]
 sass:
   style: compressed
 feed:
+  tags: true
   post_limit: 15
   excerpt_only: true
 plugins:
