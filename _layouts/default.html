@@ -107,10 +107,10 @@
 				   class="active"
 				   {% endif %}
 				   href="{{"tags/emacs.html" | relative_url }}">Emacs</a>
-				<a {% if page.url == "/tags/books.html" %}
+				<a {% if page.tab == "newsletter" %}
 				   class="active"
 				   {% endif %}
-				   href="{{"tags/books.html" | relative_url }}">Book club</a>
+				   href="{{"newsletter.html" | relative_url }}">Newsletter</a>
 				<a {% if page.tab == "about" %}
 				   class="active"
 				   {% endif %}
@@ -137,7 +137,9 @@
         </div>
         
 		<div class="content">
-            {% include searchbox.html %}
+          {% if page.tab != "newsletter" %}
+          {% include searchbox.html %}
+          {% endif %}
 			{{ content}}
 		</div>
 

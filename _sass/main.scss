@@ -444,6 +444,26 @@ body {
     }
 }
 
+.newsletter-form {
+    width: 60%;
+    margin: auto;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    
+    input {
+        font-size: 1.2em;
+        width: 70%;
+        border-radius: 5px;
+    }
+
+    button {
+        font-size: 1.2em;
+        font-weight: bold;
+        background-color: var(--menu-main-color);
+        border-radius: 5px;
+    }
+}
+
 // Experimental printing support
 @media print {
     .menu, .footer, .color-mode-toggle, .sharebuttons, .printbutton, .related_posts, #commento, .search-box {
