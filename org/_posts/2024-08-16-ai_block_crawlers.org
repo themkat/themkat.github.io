@@ -11,8 +11,9 @@ tags: ai opinions
 
 Have you ever wondered about how you can block "artificial intelligence" (AI) scrapers/crawlers/bots from stealing your web sites' content? So have I. Like many others, I have been annoyed at the misuse of these technological solutions. Ranging from big companies using our content without permission, to idiots on social media using generated ChatGPT text to sound profound. If you are curious on deranged ranting on AI, or more importantly how you can tell them to f**k off, then read on!
 
-
 In this article, I will refer to these scrapers, bots etc. as simply crawlers. This is the term that makes most sense to me. 
+
+*NOTE!!! Updated December 1st 2024.  This article is SPECIFICALLY ABOUT AI RELATED BOTS/CRAWLERS! Other crawlers like Planet RSS sites, scrapers used for sharing links on news sites etc. is almost always a good thing in comparison. I have nothing against you polling the RSS feed or doing anything related to automatically share links to my content. Copying entire articles to other places is where we have a problem, as well as you making a commercial closed source AI with my content that only serves you...*
 
 
 * The short answer
