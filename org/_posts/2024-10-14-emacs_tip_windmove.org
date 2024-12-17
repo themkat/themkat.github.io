@@ -32,7 +32,7 @@ How did I, and others, navigate this in the past? Some of us used the infamous =
 As you can see, the movement seems a bit random, so this approach leads to us spamming =C-x o= a lot.
 
 
-This may lead to some questions from the readers: Why did I continue using Emacs? Simply put, because everything else f**king sucks! I want my editor *MY* way, and I can live with some quirks. What lead me to discover this alternative approach? And what is the alternative? Recently I decided to experiment with the Sway window manager on my [[https://asahilinux.org/][Asahi Linux]] partition, and fell in love with the simplicity of moving between my open windows in a more controlled way. Suddenly, the approach with =C-x o = seemed arcane, as I wanted a controlled movement in a specific direction.
+This may lead to some questions from the readers: Why did I continue using Emacs? Simply put, because everything else f**king sucks! I want my editor *MY* way, and I can live with some quirks. What lead me to discover this alternative approach? And what is the alternative? Recently I decided to experiment with the Sway window manager on my [[https://asahilinux.org/][Asahi Linux]] partition, and fell in love with the simplicity of moving between my open windows in a more controlled way. Suddenly, the approach with =C-x o= seemed arcane, as I wanted a controlled movement in a specific direction.
 
 
 *Introducing Windmove*
