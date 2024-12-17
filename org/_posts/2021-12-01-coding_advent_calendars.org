@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: Coding themed Advent calendars
-tags: programming
+tags: programming christmas
 ---
 #+END_EXPORT
 
