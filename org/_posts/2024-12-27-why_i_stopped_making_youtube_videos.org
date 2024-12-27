@@ -1,0 +1,52 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Why I stopped making YouTube videos - at least for now"
+tags: ramblings opinions
+related_tags_count: 1
+---
+#+END_EXPORT
+
+
+If you followed my activity on YouTube, you might have seen that I suddenly stopped uploading any videos. Now it has been a few years since my last video. A few months ago I was asked why I stopped, and I did not give a clear answer. So.. what happened?
+
+
+
+* What did I actually want to accomplish?
+Like many people out there, I have always wanted to make YouTube videos. What attracts me to it? To be honest, I'm not really sure. Maybe it's the joy of sharing the awesomness of computers? The often playful tone and enthusiasm that only video with personality and charm can show? Learning and getting better at presenting computer content in a new medium? Making a little bit money to be less reliant on a corporate job? I would guess it is all of the above.
+
+
+Making some simple screen recorded videos of fun computer topics seemed like it would be a great way to start. At least I could learn the basics and take it from there.
+
+
+* What happened?
+I obviously started making a few videos, which some people decided to watch. Emacs and command line utilities were my topic of choice. I didn't really get that many nasty comments, unless you count the one guy asking if I was autistic. It's hard to know if those people try to be nasty or not. Maybe I'm autistic, but why does it matter to you?
+
+
+It went well for a short while, and some people tried to encourage me to continue. So far so good, right? What was the problem? I have always had the attitude of wanting to be perfect, and wanting to be the best. While making the YouTube videos, I was already fighting that instinct. Better to actually get videos released, than to overthink it and release nothing. One guy I work with at my day job noticed my video however, and tried to share some "tips" on how I should do it. You probably know the type of "tips" I'm talking about; The guy had never released any content in any form ever, but wanted to tell me that mine was not fit for release. Yes, I was told one of my videos was trash that should never have been released. I was also told that I needed to do several takes of my voice overs due to him thinking I stutter too much, but I already did. (You are free to believe otherwise). This was not the reason for me quitting, but I find such experiences draining.
+
+
+On top of that, I never really wanted to make screencasts. The reason for still doing it was to get my feet wet. Getting some experience making videos and editing. What's so bad about screencasts? Well, nothing really. I just don't enjoy watching pure screen recordings that much. If you mix it with some video of yourself and make it entertaining, I can watch it. If I wanted to see code, I would probably have read a blog or book instead. Hearing my own voice is also awful.
+
+
+So I stopped. The most important thing to me was that I was making content I did not really enjoy watching. I think programming tutorial videos fall into the same category. It is just so boring, and fits better in a book. (You are again free to disagree, as I know many of you enjoy that format).
+
+
+I've often been thinking of ways to improve the content. Maybe I could have become a VTuber ("Virtual Tuber", meaning using an avatar)? At the same time, it would alienate people. I've heard both love for that format, and dislike, from my closest circle. While I think anime girl avatars like those used by [[https://www.youtube.com/@AsahiLina][Asahi Lina]] can be cool, it seems like the people not into anime thinks it's weird. To me, the videos where the creators show their real faces are the best ones. In this cold hateful world, it's videos that give a glimpse of humanity that inspire me.
+
+
+After reading all of the ramblings above, you may wonder why I won't make videos like I describe? Meaning, to just mix and match screen recordings with filming myself talking. That is because I hate my looks with a burning passion. Maybe less than before, but still to an extreme degree. I briefly wrote about this in [[https://themkat.net/2024/10/21/staying_motivated.html][my earlier article on me feeling the meaninglessness of existence]]. While I work on that issue, I'm still far from ready to show my face. I wish for it to solve itself, but I'm tired. If it had just been self confidence issues, it would be so much easier to solve. Medical conditions always complicate matters.
+
+
+* The future?
+Do I still want to make YouTube videos? Yes, and I think there is a market for videos that are not what I call "overproduced". One of my favorite creators these days, [[https://www.youtube.com/@BreadOnPenguins][Bread on Penguins]], is basically just filming herself doing stuff without any fancy intros or angles. There is even a variation of videos! Linux, self help, music and probably other topics as well. One of the few creators that truly inspire me. If my confidence ever comes back, I hope to make videos like she do. Maybe even ditching my little intro. In the world of AI spam and over-edited "perfection", I miss that sense of humanity. To me, this is what I aspire to be if I ever start making videos again.
+
+-----
+
+For fun, I want to give a shout out to some of my favorite smaller YouTubers these days. The editing levels vary, but I think all of them have a sense of soul to them. The content is also interesting.
+- [[https://www.youtube.com/@lowlevelgamedev9330][Low Level Game Dev]]: Game development, graphics programming and more. The focus is on making games from scratch (i.e, NO Unreal Engine, Unity or whatever), and it is presented in a fun way.
+- [[https://www.youtube.com/@BreadOnPenguins][Bread on Penguins]]: The throned champion (by me) on Linux content these days. Fun, relatable, and interesting.
+- [[https://www.youtube.com/@chrisbiscardi][Chris Biscardi]]: One of the best content creators in the Rust programming language community in my view. Entertaining and interesting content teaching us about the Rust space. Lately, the Bevy game engine has been a big point of focus, but hopefully other Rust content will shine again soon.
