@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: "Why I stopped making YouTube videos - at least for now"
-tags: ramblings opinions
+tags: ramblings opinions youtube
 related_tags_count: 1
 ---
 #+END_EXPORT
