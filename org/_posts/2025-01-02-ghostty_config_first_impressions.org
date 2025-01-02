@@ -1,0 +1,104 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Ghostty - first impressions and Emacs-like split panes how-to"
+tags: cli linux macos ramblings
+related_tags_count: 1
+---
+#+END_EXPORT
+
+It seems like all content creators in the Linux space are covering Ghostty these days, so I decided to jump on the bandwagon. This post will be short and sweet ramblings based upon my first impressions. If you want a TheMKat flavored Ghostty post, read on.
+
+
+* What is this Ghostty you speak of?
+[[https://ghostty.org/][Ghostty]] is yet another terminal emulator. Wait... Don't leave! While that sounds incredibly dull when you say it out loud, it is worth looking into. Features include hardware acceleration (GPU) for rendering, as well as using native UI elements (e.g, file menus). To me, some other features worth pointing out are:
+- Reasonable resource usage. Like [[https://alacritty.org/][Alacritty]] (which has some commonalities), it is quite minimal and lightweight w.r.t resource usage. 
+- Dead-simple configuration. The configuration is easy to read, easy to understand, and do what is expected. Many other terminal emulators either have a GUI driven way of doing configurations (like iTerm2) or do not support sequences of bindings like Emacs (e.g, Alacritty if I'm not too stupid to find it).
+- Key-bindings actually support sequences!!!(!!!!!!!) This is incredible to me, as I use Emacs btw. I love using sequences of keys like =ctrl x 2 M-x 3= to do stuff that give other people the ick. Ghostty supports this, so I can use =ctrl-x 2= to split my windows into multiple terminals (yes, just like Emacs! weee).
+- Friendly to those people who prefer graphical gizmos. You can do most operations from the GUI, except the terminal commands themselves (duh!). While this is not me, I think having a diverse user base is a net positive.
+- It being a Zig codebase. Probably not important to most of you, but I think it is awesome that there is a Zig project getting this much coverage! Zig is a cool programming language that has some really neat ideas (e.g, sending allocator objects as parameters where you need memory allocation. Makes for really flexible use cases in different platforms. Maybe you want to use the standard heap allocator one place, and maybe an arena allocator with a pre-defined memory area for another place? Or make your own custom weird allocator? Anyway, these parenthesis is getting too long with me just mentioning how cool Zig is. You should probably check out Zig if you have not tried it already! And no, my favorite language these days is still Rust :slightly_smiling_face: )
+
+
+* Configuration
+You are reading my blog for some reason, and not the official docs, so my guess is that you want to hear about my configuration. Reading other peoples configurations is what usually helps me when experimenting with new applications like this.
+
+** Theme
+While I'm not super-pleased with it yet, I made a quick theme based upon my [[https://github.com/themkat/pink-bliss-uwu][pink-bliss-uwu]] theme for Emacs (which is based upon the earlier pink-bliss theme by someone else).
+
+#+BEGIN_SRC text
+  background = ffe4e1
+  foreground = 8b008b
+  cursor-color = ffc0cb
+  selection-background = ffc0cb
+  selection-foreground = 942092
+#+END_SRC
+
+It ends up looking like the following:
+
+#+BEGIN_EXPORT html
+<img alt="Ghostty with a taste of pink bliss UwU" src="{{ "assets/img/ghostty/theme.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+** Emacs like window splitting and Windmove-like navigation
+
+In Ghostty we use the keybind configuration item to create keybindings. As Ghostty supports sequences, we can easily make =C-x 2= and the rest of the window splitting work like in Emacs. We simply use =+= to combine keys, and =>= to mark the separation of each part of the sequence. =ctrl+x>2= would therefore be the same as the =C-x 2= notation that Emacs users are familiar with. Window splitting horizontally and vertically, with [[https://themkat.net/2024/10/14/emacs_tip_windmove.html][Windmove navigation]], would therefore translate to:
+
+#+BEGIN_SRC text
+  keybind = ctrl+x>2=new_split:right
+  keybind = ctrl+x>3=new_split:up
+  keybind = super+left=goto_split:left
+  keybind = super+right=goto_split:right
+  keybind = super+up=goto_split:top
+  keybind = super+down=goto_split:bottom
+#+END_SRC
+
+This ends up behaving like the following:
+
+#+BEGIN_EXPORT html
+<img alt="Ghostty with Emacs like splits" src="{{ "assets/img/ghostty/emacssplit.gif" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+The sudden right-up movement instead if straight up might be a bug. Unsure, as I'm in the process of tweaking and testing many weird configuration options at the moment :slightly_smiling_face:
+
+** The rest of the configuration
+My current configuration with comments is found below:
+
+#+BEGIN_SRC text
+  # getting a blocky cursor instead of the simple dash
+  adjust-cursor-thickness=5000%
+
+  window-theme = light
+  # The theme pasted above
+  theme = /Users/marie/pink-bliss-ghost
+
+  # Use a cutesy font
+  font-family = Monaspace Radon Var
+
+  unfocused-split-opacity = 0.35
+  unfocused-split-fill = ffc0cb
+
+  mouse-hide-while-typing = true
+
+  window-padding-x = 50
+  window-padding-y = 50
+
+  # Emacs like splits and Windmove navigation
+  keybind = ctrl+x>2=new_split:right
+  keybind = ctrl+x>3=new_split:up
+  keybind = super+left=goto_split:left
+  keybind = super+right=goto_split:right
+  keybind = super+up=goto_split:top
+  keybind = super+down=goto_split:bottom
+
+  keybind = alt+up=scroll_page_lines:-2
+  keybind = alt+down=scroll_page_lines:2
+
+  keybind = super+r=reload_config
+#+END_SRC
+
+-----
+
+Have you tried Ghostty? Feel free to share your initial ramblings in the comments :smile:
