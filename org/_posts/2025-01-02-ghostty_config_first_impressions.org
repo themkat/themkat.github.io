@@ -96,6 +96,9 @@ My current configuration with comments is found below:
   keybind = alt+up=scroll_page_lines:-2
   keybind = alt+down=scroll_page_lines:2
 
+  keybind = super+shift+left=previous_tab
+  keybind = super+shift+right=next_tab
+
   keybind = super+r=reload_config
 #+END_SRC
 
