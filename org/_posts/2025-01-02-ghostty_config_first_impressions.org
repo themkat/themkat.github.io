@@ -19,7 +19,7 @@ It seems like all content creators in the Linux space are covering Ghostty these
 - Dead-simple configuration. The configuration is easy to read, easy to understand, and do what is expected. Many other terminal emulators either have a GUI driven way of doing configurations (like iTerm2) or do not support sequences of bindings like Emacs (e.g, Alacritty if I'm not too stupid to find it).
 - Key-bindings actually support sequences!!!(!!!!!!!) This is incredible to me, as I use Emacs btw. I love using sequences of keys like =ctrl x 2 M-x 3= to do stuff that give other people the ick. Ghostty supports this, so I can use =ctrl-x 2= to split my windows into multiple terminals (yes, just like Emacs! weee).
 - Friendly to those people who prefer graphical gizmos. You can do most operations from the GUI, except the terminal commands themselves (duh!). While this is not me, I think having a diverse user base is a net positive.
-- It being a Zig codebase. Probably not important to most of you, but I think it is awesome that there is a Zig project getting this much coverage! Zig is a cool programming language that has some really neat ideas (e.g, sending allocator objects as parameters where you need memory allocation. Makes for really flexible use cases in different platforms. Maybe you want to use the standard heap allocator one place, and maybe an arena allocator with a pre-defined memory area for another place? Or make your own custom weird allocator? Anyway, these parenthesis is getting too long with me just mentioning how cool Zig is. You should probably check out Zig if you have not tried it already! And no, my favorite language these days is still Rust :slightly_smiling_face: )
+- It being a Zig codebase. Probably not important to most of you, but I think it is awesome that there is a Zig project getting this much coverage! Zig is a cool programming language that has some really neat ideas (e.g, sending allocator objects as parameters where you need memory allocation. Makes for really flexible use cases in different platforms. Maybe you want to use the standard heap allocator one place, and maybe an arena allocator with a pre-defined memory area for another place? Or make your own custom weird allocator? Anyway, these parenthesis is getting too long with me just mentioning how cool Zig is. You should probably check out Zig if you have not tried it already! And no, my favorite language these days is still Rust :smile: )
 
 
 * Configuration
@@ -61,7 +61,7 @@ This ends up behaving like the following:
 <img alt="Ghostty with Emacs like splits" src="{{ "assets/img/ghostty/emacssplit.gif" | relative_url}}" class="blogpostimg" />
 #+END_EXPORT
 
-The sudden right-up movement instead if straight up might be a bug. Unsure, as I'm in the process of tweaking and testing many weird configuration options at the moment :slightly_smiling_face:
+The sudden right-up movement instead if straight up might be a bug. Unsure, as I'm in the process of tweaking and testing many weird configuration options at the moment :smile:
 
 ** The rest of the configuration
 My current configuration with comments is found below:
