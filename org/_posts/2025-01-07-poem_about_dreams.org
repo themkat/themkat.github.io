@@ -1,0 +1,48 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "A poem of sorts - I dream of the day"
+tags: ramblings
+related_tags_count: 1
+---
+#+END_EXPORT
+
+I've been feeling down lately, even though I don't know why. Most things, even computers, have seemed dull and meaningless. Maybe it's all the generative AI coverage in news that makes me have a bleak outlook on the future of technology. Waking up and seeing people hate on each other for stupid reasons on social media is also depressing. All the vile racism, hate against people who are part of the LGBT spectrum/community (or whatever people like to call it), hate against people who struggle etc. is not exactly uplifting. All of these combined turn into a torturous cacophony of hate and misery. Unsure on why I've been spending time on social media at all, but I guess my brain craved the dopamine rush that it is supposed to give. So I have been spending more time in the kitchen, and now with this weird poem of sorts. Consider it evening therapy...
+
+
+
+"I dream of the day"
+
+
+#+BEGIN_VERSE
+The darkness is a strain
+I'm in pain
+Give me a hope
+That it's not all in vain
+At least let me feel
+The joy I once had
+When the struggle had meaning
+and it was all less bad
+I dream of the day
+The day of haleness
+
+
+Why do you hate others?
+I fail to see how it bother
+A beautiful medley of souls
+How can we recover?
+The repugnant outlook
+That gives you away
+It gives nothing but misery
+I wish it could be swayed
+I dream of the day
+The day of love
+The day positive emotion embraces us all
+
+
+I dream of the day
+But it might never come...
+#+END_VERSE
