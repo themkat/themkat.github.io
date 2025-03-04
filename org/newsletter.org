@@ -14,7 +14,7 @@ title: Newsletter
 Enjoy my blog? Bad at checking in regurarly? Want email updates? Then you should subscribe to my newsletter :) It's sent automatically every Saturday when there is new content.
 
 #+BEGIN_EXPORT html
-<form action="https://rssfeedpulse.com/campaign/716ded84-d049-4f07-a92b-bc7d84d7f17c/subscribe" method="get" class="newsletter-form">
+<form action="https://blogtally.com/campaign/716ded84-d049-4f07-a92b-bc7d84d7f17c/subscribe" method="get" class="newsletter-form">
   <input name="email" autocomplete="email" type="email" placeholder="Your email" required>
   <button>
     Subscribe
