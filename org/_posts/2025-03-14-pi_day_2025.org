@@ -1,0 +1,188 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Pi Day 2025 - Let's have fun with numbers!"
+tags: math python pi piday
+related_tags_count: 1
+---
+#+END_EXPORT
+
+Today is Pi day! March 14th has become known as Pi day, probably because of the American way of displaying dates (3/14). It is also the birthday of Albert Einstein. Use this day to have fun with numbers and mathematics, or maybe read about famous mathematicians. This article will give you a bit of both!
+
+
+I will show two math tricks in this article. One that everyone can do. Maybe you can show it at a party? (if you have friends that is). The second require a computer. 
+
+* Party trick: Rule of 37
+This is a trick I first saw in the book Things to make and Do in the Fourth Dimension by Matt Parker. The main idea is to take a digit from 1 to 9 (inclusive), and then use that in a fraction. First, make a new number with the digit repeated three times (e.g, pick digit 9 and get number 999). Second, we multiply the digit by 3. Take the first part and divide by the second. Best explained when seeing it visually with a few examples:
+
+{% raw %}
+#+BEGIN_EXPORT html
+<!-- htmlmin:ignore -->
+\begin{equation}
+\frac{111}{1 + 1 + 1} = ?
+\end{equation}
+\begin{equation}
+\frac{222}{2 + 2 + 2} = ?
+\end{equation}
+\begin{equation}
+\frac{999}{9 + 9 + 9} = ?
+\end{equation}
+<!-- htmlmin:ignore -->
+#+END_EXPORT
+{% endraw %}
+
+What is the point I'm trying to prove here? Calculate the example equations above. You calculate the first one, and get 37. Same with the next two. A thought may occur: "This can't be right for all digits, right?". Yes! It's valid for all digits 1 to 9 (inclusive)!  
+
+
+A more formal definition might look like:
+{% raw %}
+#+BEGIN_EXPORT html
+<!-- htmlmin:ignore -->
+\begin{equation}
+\frac{10^{2}n + 10^{1}n + n}{3n} = 37 \quad \forall n \in [1,9]
+\end{equation}
+<!-- htmlmin:ignore -->
+#+END_EXPORT
+{% endraw %}
+(If you don't read much math: The symbols on the right means: "For all values of n in range 1 to 9 inclusive")
+
+
+That's pretty cool, right? :smile: 
+
+
+* Calculating Pi!
+Pi day would not be the same without us calculating digits of Pi! This year I have implemented the famous Ramanujan formula for your viewing pleasure. Srinivasa Ramanujan was a famous Indian mathematician, who ended up at Cambridge. He produced many theorems during his time, and was known to be a bit eccentric. Other than the Pi formula showed here, one of my favorite number theory topics from him are [[https://en.wikipedia.org/wiki/Taxicab_number][the Taxicab numbers]] (which may be a topic for a future Pi day!).
+
+
+Ramanujan's formula for calculating Pi reads as follows:
+
+{% raw %}
+#+BEGIN_EXPORT html
+<!-- htmlmin:ignore -->
+\begin{equation}
+\frac{1}{\pi} = \frac{2\sqrt{2}}{99^2} \sum_{k=0}^{\infty} \frac{(4k)!}{k!^4} \frac{26390k + 1103}{396^{4k}} 
+\end{equation}
+<!-- htmlmin:ignore -->
+#+END_EXPORT
+{% endraw %}
+
+My first thought when I saw this a few years ago was: "Wtf?!? How did Ramanujan come up with these magic numbers?!". The answer is clear; Ramanujan was the biggest math wizard this world has ever seen. He could see deep truths of the universe in a way us mortals could only dream of. I like to think that he lives on as cosmic energy.
+
+
+We can solve the above formula for $\pi$. To make the code easier to read, we do a naive split of the terms in the equation above. The first one outside the sum is simply a constant, while we have two terms inside the sum (called first and second in the code below).  In other words:
+
+{% raw %}
+#+BEGIN_EXPORT html
+<!-- htmlmin:ignore -->
+\begin{equation}
+constant = \frac{2\sqrt{2}}{99^2}
+\end{equation}
+\begin{equation}
+first = \frac{(4k)!}{k!^4} \newline
+\end{equation}
+\begin{equation}
+second = \frac{26390k + 1103}{396^{4k}} 
+\end{equation}
+
+\begin{equation}
+\frac{1}{\pi} = constant \sum_{k=0}^{\infty} first * second
+\end{equation}
+
+<!-- htmlmin:ignore -->
+#+END_EXPORT
+{% endraw %}
+
+(There are waaaay better way to split these if you want more efficient calculations. In this article I wanted to show the formula directly, to make it as easy to understand as possible.)
+
+
+You might try to calculate the formula directly with floating point numbers, and you will probably get disappointed. Floats have limited precision, which would not work here. We need arbitrary precision numbers, which most languages have a type for these days. Python have a type called =Decimal= which we can use here.
+
+
+The script below takes an optional number as an argument. This argument is used to tune the precision, as well as the number of iterations. We have to set a limit after all; Did you think we could sum an infinite number of times? :scream: The calculation for the precision is picked by me after tuning it a bit. You could probably find that another number works better. My idea was that each subsequent iteration will produce 8 more correct digits, so tuned precision based upon that idea.
+
+
+#+BEGIN_SRC python
+  from sys import argv
+  from decimal import Decimal, getcontext
+
+  # decimal factorial
+  def factorial(k):
+      if k <= 0:
+          return Decimal(1)
+      i = k - Decimal(1)
+      res = k
+      while i > 0:
+          res = res * i
+          i = i - Decimal(1)    
+      return res
+
+  try:
+      num_iterations = int(argv[1])
+  except IndexError:
+      num_iterations = 5
+
+  num_digits = (num_iterations + 1) * 10
+
+  # guess of the precision needed
+  getcontext().prec = num_digits
+
+  # splitting up into parts
+  constant =  (Decimal(2) * Decimal(2).sqrt()) / (Decimal(99) ** Decimal(2))
+
+  pi_sum = Decimal(0)
+  for k in range(0, num_iterations + 1):
+      first = factorial(Decimal(4) * Decimal(k)) / (factorial(k) ** Decimal(4))
+      second =  (Decimal(26390) * Decimal(k) + Decimal(1103)) / (Decimal(396) ** (Decimal(4) * Decimal(k)))
+
+      pi_sum = pi_sum + (first * second)
+
+  pi = Decimal(1) / (pi_sum * constant)
+
+  print('pi: ' + str(pi))
+#+END_SRC
+
+
+Let's run it a few times with varying number of iterations. Below you will see printing the script does, with the exact solution below.
+#+BEGIN_SRC text
+  todo: update code above, 
+
+  num_iterations = 0
+  pi: 3.141592731
+      3.141592653...
+              xxx
+
+  num_iterations = 1
+  pi: 3.1415926535897938781
+      3.1415926535897932384...
+                       xxxx
+
+  num_iterations = 2
+  pi: 3.14159265358979323846264906569
+      3.14159265358979323846264338327...
+                               xxxxxx
+
+  num_iterations = 4
+  pi: 3.1415926535897932384626433832795028841976638181332
+      3.1415926535897932384626433832795028841971693993751...
+                                               xxxxxxxxxx
+
+  num_iterations = 10
+  pi: 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280352623021979718763295702
+      3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865...
+                                                                                              xxxxxxxxxxxxxxxxxxxxxxx
+#+END_SRC
+(the =pi:= prints are from the application above, and the line below is the exact solution. The xs marks the difference between them. If you are on a mobile phone, you can count these xs from the back)
+
+
+We could probably continue for all eternity here. The only limit here is really the memory and compute capabilities of your computer. The calculations are fast on my Macbook Air M1. For 10 iterations, we already have Pi down to a bit more than 100 digits. If we continued for around 1200 iterations, we would get fairly close to 10 000 correct digits. After iteration 2, each successive iteration produce 8 more correct digits. Pretty neat!
+
+
+There are off course other algorithms that are even more efficient (like the [[https://en.wikipedia.org/wiki/Chudnovsky_algorithm][Chudnovsky algorithm]] based upon Ramanujans formula), but this should be a start if you have not dabbled in Pi algorithms before. Hopefully, you now also know of the math god that was Srinivasa Ramanujan!
+
+-----
+
+
+Some of you may be thinking: Why is the code not in your beloved Rust, Marie? The answer is simple. I would not get the desired precision for divisions when using the bigdecimal crate. This might be caused by [[https://github.com/akubera/bigdecimal-rs/issues/19][an open issue]] or  due to me not fiddling enough with their =Context= objects. There seems to be some open issues on precision for that crate, so hopefully I'm not too stupid.
