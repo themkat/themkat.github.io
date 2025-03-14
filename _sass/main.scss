@@ -424,6 +424,7 @@ body {
 .org-src-container {
 	pre {
 		white-space: pre-wrap;
+        overflow-wrap: break-word;
 	}
 }
 
