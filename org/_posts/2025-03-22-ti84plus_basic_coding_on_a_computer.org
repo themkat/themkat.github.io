@@ -1,0 +1,109 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+OPTIONS: ^:{}
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Code your TI84Plus BASIC programs on a computer (using your favorite editor!)"
+tags: ti84plus programming basic math
+related_tags_count: 1
+preview_image: assets/img/ti84plus/example.png
+---
+#+END_EXPORT
+
+
+Have you ever programmed your TI84 Plus calculator? You have probably seen that you can code BASIC directly on it, but did you know that you could make those programs on your computer and transfer them instead? That is way more convenient. More importantly, it is way more fun that way! It enables you to give the computer more 
+
+
+Some of you might think of the official TI Connect software, and that it has a built in BASIC editor. Sure, you can always make BASIC programs in that editor. You will have to click on the special symbols in a GUI though, which is slooooow and tedious. What if we could encode these symbols as plain text? That is the idea of [[https://github.com/miselin/tibasic][the TIBasic compiler]]! The added bonus is obviously that you can code them in +your favorite editor+ Emacs. You can even convert (or "disassemble") BASIC programs made on the calculator back to plain text! (one way of doing this is transferring programs from your calculator to your computer using TI Connect). We will not cover that part here, but it is done by a simple =-d= command line argument.
+
+
+* A simple example - full workflow
+First, you will need to have the tibasic executable on your computer. You can either build it yourself, or download it from [[https://github.com/miselin/tibasic/releases/tag/v1.6.0][the releases page on Github]]. The easiest way is to have it in a path you can remember on your computer, most preferably your path environment variable. 
+
+
+Let's make a super simple program to see it in action. For simplicity, we will make a simple program that interactively takes in two numbers and adds them. The commands for displaying something on the screen is =Disp=, and interactively taking input is =Input=. That gives us a simple program:
+
+
+#+BEGIN_SRC basic
+  ClrHome
+  Disp "ADD 2 NUMBERS"
+  Input "NUM1: ",A
+  Input "NUM2: ",B
+  (A+B)
+  Disp Ans
+#+END_SRC
+(the =ClrHome= operation clears the screen, so it starts at a blank slate at the rest of the program execution.)
+
+
+I usually save these with the =.bas= extension, but you can use any file extension you want. Now we simple run this program through tibasic, and we will get a =.8xp= file. =tibasic addition.bas=.
+
+
+Now it is time to transfer the program to your calculator. Connect it with a USB cable, and navigate to [[https://ticalc.link/][ticalc.link]]. Select your calculator and your =.8xp= file, and let the transfer commence. Thanks to web serial, we can transfer the file directly from our browsers. If the transfer was a success, you can run it on your calculator without issue.
+
+
+#+BEGIN_EXPORT html
+<img src="{{ "assets/img/ti84plus/example.png" | relative_url}}" alt="TI84Plus example program coded on a computer, and now running on the calculator." class="blogpostimg" />
+#+END_EXPORT
+
+
+I have made [[https://github.com/themkat/ti84plus_programs][a repo with programs I made for the TI84 Plus]]. They are by no means the best programs ever, but are mathematical operations I find useful. If you want some examples of programs compatible with TIBasic, it might be useful to you as well. 
+
+
+* Some useful operations
+If you are new to BASIC programming on a TI84 Plus, the best place to start is [[http://tibasicdev.wikidot.com/starter-kit][TI BASIC dev wikidot]]. They even have [[http://tibasicdev.wikidot.com/command-index-bw][an alphabetical index of operations]]. Most operations are pretty self explanatory, but a few requires certain symbols. How do we write these in a plain text format? TIBasic compiler provides a few ways of writing these operations. Below you will find some of the most useful ones, at least in my view.
+
+*NOTE! Remember that variables consist of a single letter on the TI84 Plus! No longer names, just letters A to Z.*
+
+** Basic arithmetic and boolean operations
+Most of these are probably self explanatory, but mentioning them just in case. 
+
+{% raw %}
+| Operator     | TI Basic notation | Notes                                        |
+|--------------+-------------------+----------------------------------------------|
+| a+b          | a+b               | Addition                                     |
+| a-b          | a-b               | Subtraction                                  |
+| a*b          | a*b               | Multiplication                               |
+| a/b          | a/b               | Division                                     |
+| a=b          | a=b               | Check if a equals b. 0 is false, 1 i s true. |
+| $a\neq b$    | a!=b              | Check if a is NOT equal to b.                |
+| $a < b$      | a<b               | Check if a is less than b.                   |
+| $a > b$      | a>b               | Check if a is bigger than b.                 |
+| $a\leq b$    | a<=b              | Check if a is less than or equal to b.       |
+| $a \geq b$   | a>=b              | Check if a is bigger than or equal to b.     |
+| $a \land b$  | a and b           | Logical and                                  |
+| $a \lor b$   | a or b            | Logical or                                   |
+| $a \oplus b$ | a xor b           | Logical xor                                  |
+| $-a$         | not(a)            | Logical negation                             |
+{% endraw %}
+
+
+** Matrix operations
+{% raw %}
+| Operation | TI Basic notation | Notes                              |
+|-----------+-------------------+------------------------------------|
+| $A^{-1}$  | [A]^-1            | Matrix inverse                     |
+| $A^T$     | [A][transpose]    | Matrix transpose                   |
+|           | dim([A])          | Get dimensions of matrix A.        |
+|           | {2,2}->dim([A])   | Set dimensions of matrix A to 2x2. |
+| $A[i][j]$ | [A](i,j)          | Get element at row i, column j.    |
+{% endraw %}
+
+** Other common  operations
+| Operation       | TI Basic notation | Notes                                      |
+|-----------------+-------------------+--------------------------------------------|
+| $op\rightarrow X$ | op->X             | Store result of operation op in variable X |
+| $\sqrt{(x)}$    | [root]^2x)        | Square root of a number x.                 |
+| $\sqrt[n]{(x)}$ | [root]^nx)        | n root of a number x.                      |
+
+
+** Symbols
+| Symbol     | TI Basic notation | Notes                                                                                                                                                                         |
+|------------+-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| $\pi$      | [pi]              |                                                                                                                                                                               |
+| $\theta$   | [theta]           |                                                                                                                                                                               |
+| e          | [e]               | Eulers number / Exponential                                                                                                                                                   |
+| i          | [i]               | Imaginary part in complex numbers                                                                                                                                             |
+| $60^\circ$ | 60[degrees]       | The given number or expression in degrees. Useful to refer to degrees if calculator is in radians mode. No effect if calculator is in degrees mode. 60 is used as an example. |
+| $2^r$      | 2[radians]        | The given number or expression in radians. Useful to refer to radians if calculator is in degrees mode. No effect if calculator is in radians mode. 2 is used as an example.  |
