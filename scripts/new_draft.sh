@@ -17,6 +17,7 @@ cat <<FILE_CONTENTS >> org/_drafts/$DRAFT
 #+OPTIONS: toc:nil num:nil
 #+STARTUP: showall indent
 #+STARTUP: hidestars
+#+OPTIONS: ^:{}
 #+BEGIN_EXPORT html
 ---
 layout: blogpost
