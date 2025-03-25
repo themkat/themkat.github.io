@@ -8,3 +8,5 @@ tags/*
 org/ltximg
 *.*~
 **/*.DS_STORE
+assets/img/**
+!assets/img/*.*
