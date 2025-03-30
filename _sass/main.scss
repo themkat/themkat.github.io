@@ -118,6 +118,13 @@ body {
 	margin-right: auto;
 }
 
+.content .adblockermessage {
+    width: 50vw;
+    margin: auto;
+    color: red;
+    font-weight: bold;
+}
+
 .content a {
     color: var(--link-color);
 }
