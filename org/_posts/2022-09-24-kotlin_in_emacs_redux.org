@@ -14,6 +14,8 @@ related_tags_count: 3
 Last year I wrote a blog post about the basics of using Kotlin in Emacs. Since then, some new developments have happened, including some new features have been added to the Kotlin langauge server. I also got some questions regarding which Eamcs packages I like using when developing Kotlin code. Let's answer some of the questions not answered last time, and see what Kotlin Language Server and Kotlin Debug Adapter can do!
 
 
+*EDIT March 30th 2025: In retrospect, there is one obvious thing I should have mentioned: Yes, Kotlin in Emacs might be slow. It will NEVER be as fast as IntellIJ is for a lot of users. During the years I have gotten comments about this from people, who assume it is NOT slow for me. It is slow, but at least it is miles better than IntelliJ. Emacs will always be better in every other way, even if the language server is a bit slow. It will hog RAM as well. When I wrote this article, I assumed many users were already familiar with how slow most JVM things were in Emacs. In retrospect, I should have been more clear on this. The same obviously goes for the YouTube video linked below. I was just so happy that I could use Emacs to do all my day-to-day work, so that joy lifted me up. To mention it: I have used it for larger code bases. You just need a machine with at least 16GB RAM, and a bit of patience. Grab yourself a coffee while you wait for the language server to complete the setup. Even with this wait time, it feels miles better than any bloated IDE product.*
+
 
 *EDIT October 17th 2022: There is now [[https://youtu.be/J4s3T0dd5CY][a YouTube video about this topic]]! It doesn't cover everything in this article, but shows off the most important features and recommended packages.*
 
