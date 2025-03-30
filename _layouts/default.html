@@ -212,6 +212,14 @@
              document.body.setAttribute('data-mode', 'dark');
              mode.classList.add('color-mode-toggle-dark');
          }
+
+         window.addEventListener('load', (event) => {
+             // add a quick message if the user has disabled adblocker
+             if (!window.adsbygoogle.pageState) {
+                 const content = document.getElementsByClassName('content')[0];
+                 content.innerHTML = '<p class="adblockermessage">Hi there! It seems like you are using an Ad Blocker. I would be very happy if you could turn it off, as the ads are just a small bar at the top. Even small sites like these have costs, like for the domain name. Helping cover some of these costs helps small creators like me keep the motivation to keep going :)</p><br />' + content.innerHTML;
+             }
+         });
           
 		 console.log('Hello there');
 		</script>
