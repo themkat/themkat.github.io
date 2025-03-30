@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: "Want to get a job as a backend developer? - Learn these topics now!"
-tags: programming career java enterprise
+tags: programming career java kotlin enterprise
 related_tags_count: 1
 preview_image: assets/img/backenddev/backend.png
 ---
