@@ -5,7 +5,7 @@
 ---
 layout: blogpost
 title: "Write your own Emacs Lisp macros - a short introduction"
-tags: emacs programming emacs-lisp
+tags: emacs programming emacs-lisp lisp
 ---
 #+END_EXPORT
 
