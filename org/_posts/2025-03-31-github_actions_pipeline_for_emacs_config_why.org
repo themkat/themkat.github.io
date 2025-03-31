@@ -1,0 +1,140 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+OPTIONS: ^:{}
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Github Actions workflow for my Emacs config?! - Why would I even do that?"
+tags: emacs automation devops
+related_tags_count: 1
+---
+#+END_EXPORT
+
+Everyone and their grandma have a Github Actions workflow these days, so it should come as no shock that even my Emacs config have one. I believe having one helps you find errors quicker, and helps you avoid some of the worst pitfalls. In this article I share my experience, which might help you decide if you should have an automation pipeline for your Emacs configuration as well.
+
+
+If you are completely new to Github Actions, I suggest you read up on the main concepts first. A good place to start is [[https://themkat.net/2022/03/01/github_actions_intro.html][my earlier introduction article]].
+
+
+* Workflow, pipeline and other terms
+I often use the words workflow and pipeline a bit interchangeably. In essence, a pipeline can contain many workflows, but it has traditionally been used as a single workflow with a "pipeline of steps" as well. In this article, they will both mean the same; A single workflow with several jobs containing multiple steps.
+
+
+*In case you aren't familiar with words like automation pipeline:* In essence, it means that for each commit we push, code is executed on a server. This is usually done to make sure a code project builds, tests run successfully, formatting is correct etc. It can also be used to automate tasks like deploying code to a server (e.g, Heroku, Github Pages etc.).
+
+
+* The workflow
+Let's start by seeing the workflow definition:
+
+#+BEGIN_SRC yaml
+  name: Run setup through Emacs and see if it gives errors
+
+  on:
+    push:
+    pull_request:
+    workflow_dispatch:
+    schedule:
+      - cron: '0 10 1 * *'
+
+  jobs:
+    build-linux:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            submodules: 'true'
+        - uses: purcell/setup-emacs@master
+          with:
+            version: 29.4
+        - name: Install dependency needed for some Emacs packages
+          run: |
+            sudo apt-get update
+            sudo apt-get install -y libtool-bin cmake
+        - name: Tangle, byte-compile (replaces old init.el) and run new setup
+          run: |
+            RUN_DATA=$(HOME=$GITHUB_WORKSPACE/.. emacs --no-window-system --batch --script init.el 2>&1 | cat)
+            echo "$RUN_DATA"
+            WARNINGS=$(echo "$RUN_DATA" | sed '{/Warning/N;s/\n//;}' |  grep Warning | sed -E 's/^(.*\.el)/- \*\*\1\*\*/')
+            LOAD_ERRORS=$(echo "$RUN_DATA" | grep -E "(Cannot load)|(Not found)" | sed 's/^/- /')
+            MISSING_FILES=$(echo "$RUN_DATA" | grep "(file-missing" || : )
+            echo -e "# Tangle and byte-compile report\n## Errors\n$LOAD_ERRORS\n## Warnings\n$WARNINGS" >> $GITHUB_STEP_SUMMARY
+            [ -z "$MISSING_FILES" ] || exit 1
+            [ -z "$LOAD_ERRORS" ] || exit 1
+
+
+    build-osx:
+      runs-on: macos-latest
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            submodules: 'true'
+        - name: Setup Emacs
+          run: |
+            brew install emacs libtool
+        - name: Tangle, byte-compile (replaces old init.el) and run new setup
+          run: |
+            RUN_DATA=$(HOME=$GITHUB_WORKSPACE/.. emacs --no-window-system --batch --script init.el 2>&1 | cat)
+            echo "$RUN_DATA"
+            WARNINGS=$(echo "$RUN_DATA" | sed '{/Warning/N;s/\n//;}' |  grep Warning | sed -E 's/^(.*\.el)/- \*\*\1\*\*/')
+            LOAD_ERRORS=$(echo "$RUN_DATA" | grep -E "(Cannot load)|(Not found)" | sed 's/^/- /')
+            MISSING_FILES=$(echo "$RUN_DATA" | grep "(file-missing" || : )
+            echo -e "# Tangle and byte-compile report\n## Errors\n$LOAD_ERRORS\n## Warnings\n$WARNINGS" >> $GITHUB_STEP_SUMMARY
+            [ -z "$MISSING_FILES" ] || exit 1
+            [ -z "$LOAD_ERRORS" ] || exit 1
+
+    # verify that setup loads on Windows. Just in case I ever have to use it...
+    build-windows:
+      runs-on: windows-latest
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            submodules: 'true'
+        - name: Setup Emacs
+          run: |
+            choco install emacs
+        - name: Tangle, byte-compile (replaces old init.el) and run new setup
+          run: |
+            $env:HOME = "D:\a\.emacs.d\"
+            emacs --no-window-system --batch --script init.el
+
+#+END_SRC
+
+If you are used to reading Github Actions YAML files, you will probably notice that it is 3 jobs; One job for each platform. Each one does the following:
+- Clones the repo.
+- Sets up dependencies (like installing relevant packages using apt) and Emacs.
+- Runs Emacs in window-less mode to byte-compile my setup. This will also run the org-mode tangling (i.e, extraction of Emacs Lisp source code) in the process.
+- Produce a report on any warnings and errors that might have happened. This relies on matching specific strings a lot, which may cause some false positives. Had one of those recently due to =file-missing= being referred to as a symbol. (NOT being done on Windows).
+
+
+Before we continue, I probably have to address the elephant in the room: Why run on Windows? I sometimes think about that myself. I never use Windows, and [[https://themkat.net/2024/01/27/reasons_i_hate_modern_windows.html][have publicly hated on it]]. It is just in case of the small possibility of being forced to use Windows for work. It has happened before... Better safe than sorry.
+
+
+The push-, pull request-, and "manual run by clicking a button" events (aka =workflow_dispatch=) is probably pretty self-explanatory. I want to check that the code I push can be byte compiled successfully, and that any packages can be installed. The scheduled run might be a bit harder to understand. This part runs the code at 10:00 every first day of every month. If you are not used to read cron-expressions, they can easily be visualized by tools like [[https://crontab.guru/][CronTab.guru]]). Having it run regularly makes sure that all packages are installable. Sometimes packages are removed, and without a workflow (or running your setup on multiple machines), it may take time for you to find out. More on that in the positives and negatives sections below.
+ 
+
+
+There are off course always room for improvement, so I don't claim that this is the best automation pipeline ever. It helps me find potential issues quicker. That is good enough for me. 
+
+
+* The positives
+- To see that quick pushes don't break anything. Maybe some local circumstances (e.g, load-paths) caused me to believe a package was installable? Or a variable was available during load? Many such things give quick errors on Github Actions instead of finding them later. Finding them sooner, while I'm still in the same headspace, will make fixing these errors easier.
+- Documentation on possible setup needed to use my Emacs configuration. vterm needing compilation during setup, a reminder that my configuration uses a git submodule etc. 
+- (Older) packages might be deleted from Melpa. This happened for me with Pretty-Lambdada (which probably changed names). I found this error much later, due to me having the package locally for quite some time. Never really noticed it before getting a new computer. (this was long ago, I'm better at reinstalling and updating these days!!!). With a scheduled workflow, I can notice these earlier. Instead of noticing it years after a package is removed, I notice it the same month! That is indeed neat! :heart: Same goes for missing files error like [[https://github.com/michaelklishin/cucumber.el/issues/98][the feature-mode/cucumber.el package had recently]]. (screenshot of failing pipeline below this bullet point list!).
+- See that the changes will work on any machine and don't depend on local circumstances. Sometimes I have some local setup that should have been committed, or that I failed to take into account. Stuck files in package archives etc. Having an automation pipeline testing a clean slate lets me more clearly see errors earlier.
+
+
+#+BEGIN_EXPORT html
+<img alt="Emacs Github Actions pipeline failing due to a missing file." src="{{ "assets/img/emacs_ga/featuremode.png" | relative_url}}" class="blogpostimg" />
+#+END_EXPORT
+
+
+* Negatives..?
+After presenting the positives above, you might wonder if there are any negatives? Sure, but they are outweighed by the positives by a long shot. Most can either be tweaked going forward, or are negligible.
+
+- False positives due to my "clever" matching. You probably noticed all the grepping done above to produce the report. Well, sometimes it gives some false positives. One example being a build failure on the Mac OS X runner because of the aforementioned issue of =file-missing= being referred to as a symbol. Unsure on why only Mac OS X was affected, but inconsistencies with platform outputs happens. 
+- Waaaaay too many warnings from packages like Helm and yasnippet-snippets. In the beginning, I read all of the warnings and tried to fix as many as possible. After a while, probably due to function deprecation and fixes in newer Emacs versions, they got multiplied. Now there are too many to tell me anything useful, as the important details get drowned in these other warnings. I haven't found a clever way of handling this yet. Most, or at least 99 %, of the warnings are from external packages.
+- Network errors connecting to package repos causing build failures. This happens once in a while, especially with the scheduled builds. Not really a big issue, just a bit annoying the few times it happens.
+
+
+So, I would still say having a Github Actions workflow for your Emacs configuration is worth it. This is, after all, just issues most automation pipelines have to deal with.
