@@ -31,7 +31,7 @@ Sometimes, we may want to unset a keybinding for a specific mode instead. Maybe 
 ** Pre Emacs 29 (built-in)
 Before Emacs 29, we have the function =local-unset-key= available. The article you are reading does not seem to end here, so what is the issue? If this solution worked, we wouldn't need the alternative solutions presented next, right? =local-unset-key= only takes in the key binding and removes it from the local map that is currently used. That means the mode map you want to remove from have to be active, and you can't just remove it with a single line. It makes for easy usage in a hook though:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (add-hook 'org-mode-hook (lambda ()
                              (local-unset-key (kbd "S-<down>"))))
 #+END_SRC
@@ -43,7 +43,7 @@ The previous solution gets the job done, but it gets a bit clunky. We may want s
 
 Instead of needing a hook, we now have a more clear way of unsetting it!
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   (keymap-unset org-mode-map "S-<up>")
 #+END_SRC
 
@@ -59,7 +59,7 @@ This is getting out of hand! Now, there are two of them!
 
 The package bind-key, from use-package (but can be used standalone!), also provides some functionality for unsetting keys in local mode maps! It can unset both global and local bindings:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC lisp
   ;; Unbind in global map
   (unbind-key "S-<up>")
 
