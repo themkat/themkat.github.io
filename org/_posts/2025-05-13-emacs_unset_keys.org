@@ -1,0 +1,70 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+OPTIONS: ^:{}
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Emacs Quick Tip: Disable key bindings with global-unset-key"
+tags: emacs
+related_tags_count: 1
+---
+#+END_EXPORT
+
+Do you also hate some of Emacs' default keybindings? Some of the default key bindings in Emacs don't really feel right for me, so I unset/remove them. Sometimes I override them with new operations. In this short article, I will show you how to yeet (remove) your unwanted keybindings. 
+
+* global-unset-key
+Emacs have a few global keybindings, like the navigation between open buffer windows (i.e, =C-x o=). Some can be quite useful, such as killing buffers with =C-x k=. Others are just a pain in my view. One example is =C-z=, which suspends Emacs. I have to admit I don't use Emacs as a terminal text editor. The few times I need it, I just use =M-x suspend-emacs=. (Suspending essentially stops the program temporarily, and let's us resume it once we want to). We can easily disable =C-z= with =global-unset-key=:
+
+#+BEGIN_SRC lisp
+  (global-unset-key (kbd "C-z"))
+#+END_SRC
+(=kbd= translates the string to an internal Emacs key binding representation)
+
+
+We can now either set a new operation for this keybinding, or let it do nothing (like I do!). 
+
+
+* Unset keys in specific modes
+Sometimes, we may want to unset a keybinding for a specific mode instead. Maybe you want to remove the shift-up and shift-down bindings on org-mode headers? That will be the example going forward in the coming sections.
+
+** Pre Emacs 29 (built-in)
+Before Emacs 29, we have the function =local-unset-key= available. The article you are reading does not seem to end here, so what is the issue? If this solution worked, we wouldn't need the alternative solutions presented next, right? =local-unset-key= only takes in the key binding and removes it from the local map that is currently used. That means the mode map you want to remove from have to be active, and you can't just remove it with a single line. It makes for easy usage in a hook though:
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook (lambda ()
+                             (local-unset-key (kbd "S-<down>"))))
+#+END_SRC
+
+** Emacs 29 (built-in)
+The previous solution gets the job done, but it gets a bit clunky. We may want something that is more clear on which mode map we are removing from. Emacs 29 to the rescue; =keymap-unset= is available. It takes two arguments: a mode map and a string describing the keybinding.
+
+*NOTE: This function takes in a STRING representation, not an internal key representation like the previous entries. This can cause some confusing if you suddenly try to wrap =kbd= around your keybinding arguments!*
+
+Instead of needing a hook, we now have a more clear way of unsetting it!
+
+#+BEGIN_SRC emacs-lisp
+  (keymap-unset org-mode-map "S-<up>")
+#+END_SRC
+
+*NOTE 2: The Emacs user guide (as well as eldoc) will probably tell you that an extra argument REMOVE exists. This is useful for mode maps that have a parent. Without the argument, the key binding is unset for all parents as well. If we want to use the binding in the parent map, we should use the remove argument. To my understanding it will take both ='remove= and =t=)*
+
+** bind-key package which is also used in use-package (separate package version)
+The global variant had only one simple function to do our bidding; The same is obviously not the case for unsetting keys from local mode maps. Now I'm going to show you one more, which brings to mind the following quote:
+
+#+BEGIN_QUOTE
+This is getting out of hand! Now, there are two of them!
+- Nute Gunray, Star Wars Episode I: The Phantom Menace
+#+END_QUOTE
+
+The package bind-key, from use-package (but can be used standalone!), also provides some functionality for unsetting keys in local mode maps! It can unset both global and local bindings:
+
+#+BEGIN_SRC emacs-lisp
+  ;; Unbind in global map
+  (unbind-key "S-<up>")
+
+  ;; Unbind in specific mode map
+  (unbind-key "S-<down>" org-mode-map)
+#+END_SRC
+
+(there will probably be one or two readers going full on "achcually!!!" on the use of the word functionality above. NOT saying they are functions. They are macros. The word functionality is used in the broad meaning here.)
