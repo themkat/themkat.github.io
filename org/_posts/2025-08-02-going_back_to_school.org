@@ -1,0 +1,42 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+OPTIONS: ^:{}
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Going back to school to study math"
+tags: ramblings info career
+related_tags_count: 1
+---
+#+END_EXPORT
+
+I'm going back to school to study mathematics! In this ramblings-style article I will talk a bit about the what, why and so on.
+
+
+* What am I studying this time?
+I'm going back to studying applied mathematics. Wait.. back is probably not the right word here. Last time I was studying for a masters degree with none of the prerequisites. I learned everything as I went along. That worked okay until it didn't. Why is "back" not the right word, like I mentioned initially here? Because this time I will focus on getting the prerequisites right. This is a bachelors degree in mathematics (under-graduate if you are in the US?) at the University of Oslo, so I will get a real mathematics education this time. In Norwegian the study program is called "Matematikk: Teoretisk og anvendt matematikk", which loosely translates to "Mathematics: Theoretical and applied mathematics". I already know calculus and linear algebra, but look really forward to diving deeper into numerical analysis, fluid mechanics, new exciting partial differential equations, and more! Complex analysis also sounds interesting. Let me know in the comments if you have a particular cool topic I should explore while I'm there!
+
+
+What is my end goal here? I will take one day at a time, and have fun with the various aspects of mathematics that are new. Some will off course not be new due to doing lots of learning on my own, but I might get a more academic understanding of it. Maybe I will get an academic career in the future? Or just use what I learn for personal projects, startups or open source projects? Maybe I will just be happy that I have learned it, and be a house wife instead? Who knows. No matter what, I want to make many personal projects throughout my life. Those are what matters most to me. 
+
+
+* Why?!
+My dream has always been to work on the more mathematical parts of computer programming. One of my first loves was computer graphics, especially after seeing all the [[https://en.wikipedia.org/wiki/Demoscene][demoscene]] productions when I was younger. Sadly I was never as artistically inclined as them, but I LOVE scientific visualization like volume rendering. (hopefully I can open source one of my personal projects in that niche sometime™ in the near future.).
+
+
+
+What about AI? I don't enjoy statistics AT ALL, so I will keep away from that field. I also despise most of what genAI is currenly doing to the world around us. Lazy people claiming they do real work or "trailer park trash" being intellectual comes to mind.
+
+
+Will AI replace any job I could get with this education? I don't give a shit, I do it for my own satisfaction. That being said, I still believe you need to know a field to be able to use tools to advance that field. genAI does not make any trailer park dipshit an expert in a scientific field.
+
+* Follow up to "My life isn't going anywhere - wishing my life had meaning"
+In case anyone cares: Last year I shared a rambling post that in retrospect seems a bit dark. [[https://themkat.net/2024/10/21/staying_motivated.html][My life isn't going anywhere - wishing my life had meaning]]. It was written when I got a bit extra emotional due to my situation in life. About me wanting to live an actual life of accomplishments, fun and not being in pain all the time. I will not dwell too much on this, but my situation has improved. All thanks to me getting treatment for my pain and medical issues. I live in a country with supposed socialized medicine, which is a scam that has not helped in any way. I paid for all my medical treatments out of pocket (as well as the insane levels of taxes in my country!). The only reason I still have any money is that I'm decent at investing, all thanks to the power of semi-free markets. Even people around me, who could have helped, did nothing. Family should help each other here. If someone in your family need help, and you have the money without issue, you should help them. No matter if the medical condition is ME, multiple sclerosis, cancer, gender dysphoria, various chronic pains, psychiatric in nature, or whatever the hell else. Be a decent human being and don't let people suffer without reason.
+
+
+In that earlier article, it might have seemed that I thought my backend programmer job was unfavorable (if you read between the lines). This was extremely colored by my depression. I'm HAPPY that I have some professional software developer experience. I'm HAPPY I have mentored several bright young minds and expanded their skillsets with challenging tasks. I'm HAPPY I've met some great people as well. I'm SUPER HAPPY I've had business trips to Bangalore in India several times (I miss the people and the food!). I've had days of fun, and days of less fun in my job. Even if I might have studied mathematics earlier without my medical condition, I will try to think of the extra time on my job as positive. I will also continue in that job part-time while I study.
+
+
+
+Some days I struggle to stay positive, but I have to try.
