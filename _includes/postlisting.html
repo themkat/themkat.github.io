@@ -1,8 +1,13 @@
 <div class="bloglisting">
-	<h2><a href="{{include.url}}">{{include.title}}</a></h2>
+    <h2><a href="{{include.url}}">{{include.title}}</a></h2>
 	<small>{{include.date | date: "%a %b %d %Y"}}</small>
 	<small><a href="{{include.url}}#commento"></a></small>
-	
-	<p>{{include.excerpt}}</p>
+    <small class="tags">~ Tags:
+	  {%for tag in include.tags %}
+	  <a href="{{ "tags" | relative_url }}/{{tag}}.html">{{tag}}</a>
+	  {%endfor%}
+    </small>
+    
+	<p>{{include.excerpt | strip_html }}</p>
 	<a href="{{include.url}}">Read more..</a>
 </div>

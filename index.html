@@ -48,7 +48,7 @@ tab: home
 
 <!-- Posts  -->
 {% for post in paginator.posts %}
-{% include postlisting.html title=post.title date=post.date url=post.url excerpt=post.excerpt %}
+{% include postlisting.html title=post.title date=post.date url=post.url excerpt=post.excerpt tags=post.tags %}
 <hr />
 {% endfor %}
 

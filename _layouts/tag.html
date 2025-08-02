@@ -7,7 +7,7 @@ layout: default
 <a href="{{ site.url }}/feed/by_tag/{{ page.tag }}.xml">RSS feed for tag</a>
 <hr />
 {% for post in site.tags[page.tag] %}
-{% include postlisting.html title=post.title date=post.date url=post.url excerpt=post.excerpt %}
+{% include postlisting.html title=post.title date=post.date url=post.url excerpt=post.excerpt tags=post.tags %}
 <hr />
 {% endfor %}
 
