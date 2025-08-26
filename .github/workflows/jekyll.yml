@@ -51,7 +51,7 @@ jobs:
           html-minifier --collapse-whitespace --minify-js --minify-css --remove-comments --file-ext html --input-dir _site --output-dir _site
       - name: Upload artifact
         if: github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
   deploy:
     environment:
       name: github-pages
