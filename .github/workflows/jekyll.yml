@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.255.0
+        uses: ruby/setup-ruby@v1.263.0
         with:
           ruby-version: '3.1'
       - name: Setup Emacs
