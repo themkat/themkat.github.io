@@ -85,6 +85,11 @@ body {
 
 .menu nav .rss {
 	float: right;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGlkPSJSU1NpY29uIiB2aWV3Qm94PSIwIDAgOCA4IiB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiI+PHN0eWxlPi5zeW1ib2x7c3Ryb2tlOm5vbmU7ZmlsbDojZmZmfTwvc3R5bGU+PHJlY3Qgd2lkdGg9IjgiIGhlaWdodD0iOCIgcng9IjEuNSIgc3R5bGU9InN0cm9rZTpub25lO2ZpbGw6I2ZlNjUwMCIvPjxjaXJjbGUgY2xhc3M9InN5bWJvbCIgY3g9IjIiIGN5PSI2IiByPSIxIi8+PHBhdGggY2xhc3M9InN5bWJvbCIgZD0iTTEgNGEzIDMgMCAwIDEgMyAzaDFhNCA0IDAgMCAwLTQtNHoiLz48cGF0aCBjbGFzcz0ic3ltYm9sIiBkPSJNMSAyYTUgNSAwIDAgMSA1IDVoMWE2IDYgMCAwIDAtNi02eiIvPjwvc3ZnPg==");
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: rgba(0,0,0,0);
 }
 
 .color-mode-toggle {
