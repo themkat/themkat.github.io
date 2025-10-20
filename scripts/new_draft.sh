@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Creates a new draft with populated header
 
 if [ -z $1 ] || [ -z $2 ]
@@ -13,7 +15,7 @@ FIRST_TAG=$2
 
 mkdir -p org/_drafts
 touch org/_drafts/$DRAFT
-cat <<FILE_CONTENTS >> org/_drafts/$DRAFT
+cat <<FILE_CONTENTS > org/_drafts/$DRAFT
 #+OPTIONS: toc:nil num:nil
 #+STARTUP: showall indent
 #+STARTUP: hidestars
@@ -30,3 +32,5 @@ preview_image: ...
 
 Once upon a time there was...
 FILE_CONTENTS
+
+echo "Created new draft in org/_drafts/$DRAFT"
