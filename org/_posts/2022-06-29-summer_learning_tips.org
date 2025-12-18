@@ -11,9 +11,6 @@ tags: programming books devops retro-computing rust cli
 
 Summer means that time off work are coming closer and closer for some of us! In my off time I enjoy using extra time on learning and reading. Today, I will share with you some tips for topics that I enjoy, that you could look into if you want to look at something new. 
 
-
-If you want more relaxing summer reading, there are other blog posts you can check out. Maybe you want to read [[https://themkat.net/2021/11/27/biographies_about_tech.html][a biography about a person in the tech industry]]? Or maybe [[https://themkat.net/2022/02/12/more_scifi_books.html][science fiction is more your thing]]? There are many more recommendations in many different genres available [[https://themkat.net/tags/books.html][in the books-tag]], ranging from what was previously mentioned to personal finance.
-
 *NB! Article contains Amazon affiliate links, which means I earn commissions on qualifying purchases..*
 
 
