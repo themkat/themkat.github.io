@@ -1,0 +1,53 @@
+#+OPTIONS: toc:nil num:nil
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+OPTIONS: ^:{}
+#+BEGIN_EXPORT html
+---
+layout: blogpost
+title: "Finding meaning vs finding motivation"
+tags: ramblings
+related_tags_count: 1
+---
+#+END_EXPORT
+
+Recently I was thinking back to a conversation I had years ago. While the conversation was had in the context of depressive feelings, I still think it highlights how different we all think about topics relating to our purpose in life. Some people don't have this deep sense of wanting to have a meaning of doing the things they do; They simply go day by day trying to make the best of their lives. They still have motivation, but they might not have meaning. (I will define it in my terms later! Read on!). So... This conversation I had...?
+
+
+Before I define what I mean by meaning and motivation, let's quickly get back to the conversation I had. The topic was had due to me feeling trapped and stuck in a situation I hated, and my disillusionment with my life at the time. (It came from a place of being in pain, part of it due to a medical condition.). It will be a bit paraphrased, as it is hard to remember all conversations I've had word for word.
+
+#+BEGIN_VERSE
+Me: I struggle to find any sort of meaning to do almost anything. It feels like I will never achieve anything that is good enough, or be good enough, no matter how hard I try. Like being stuck in a dead end job or even just simple things like doing my makeup.
+
+Them: Well, I feel like motivation is a very day-to-day thing. Some days I feel very motivated to do all sorts of things.
+#+END_VERSE
+("dead end job" in this case is not really what most people call a dead end job. In this case, it is simply something that does not further the goals you have in any meaningful way.)
+
+
+To some of you, this distinction is subtle. To others, it seems like a complete change in topic. I'm of the latter camp. Depending on how you think about life, and whether your motivation ties directly into a deeper sense of meaning or purpose. Before we continue, let's define the terms meaning and motivation.
+
+
+[[https://www.britannica.com/dictionary/meaning][Meaning (according to Britannica)]]:
+
+#+BEGIN_VERSE
+a: the true purpose of something
+b: a quality that gives something real value and importance
+c: the reason or explanation for something
+#+END_VERSE
+
+
+[[https://www.britannica.com/dictionary/motivation][Motivation (Britannica)]]:
+
+#+BEGIN_VERSE
+a: the act or process of giving someone a reason for doing something : the act or process of motivating someone
+b: the condition of being eager to act or work : the condition of being motivated
+#+END_VERSE
+
+
+It should be clearer now that what I intend to convey with meaning is deeper than just having motivation to do something. You can have motivation to do something without it coming from a sense of deeper purpose. It might just be that you got a sudden burst of energy, which caused you to suddenly want to read a book or watch a movie. Meaning on the other hand relates more to your deeper sense of *why* you are doing something. Let's take my own situation as an example. I want to do something that *I* feel matter in life, whether that is making cool computer programs that I actually feel proud of, or doing research. That drives everything I do. If you are driven by a deeper sense of purpose like that, you need to feel like your life is actually going anywhere; That you are not stuck doing menial things that gets you nowhere. Being stuck in your situation therefore feels extra painful. While someone living more in the moment would find enjoyment in their situation from other sources. 
+
+
+Above, I related meaning to a sense of doing something. To me, that is doing research or creating things, while it might be "simpler" things like having a family for other people. Then having a family gives them the meaning they need, and a job that doesn't change the world is a less important aspect. These people might be super happy in a job like I've had, as the life outside the job is what is important to them. Some days, I wish I could have an outlook on life like that. 
+
+
+To summarize my view a little bit: These days I study mathematics with the hope of eventually doing computational math research. While my day-to-day motivation might vary, the deeper sense of where I'm going (aka meaning) stays with me.
