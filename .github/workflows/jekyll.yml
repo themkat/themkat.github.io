@@ -17,7 +17,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[SKIP]')"
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.299.0
         with:
