@@ -8,6 +8,7 @@ layout: blogpost
 title: "Finding meaning vs finding motivation"
 tags: ramblings
 related_tags_count: 1
+published: false
 ---
 #+END_EXPORT
 
@@ -17,12 +18,10 @@ Recently I was thinking back to a conversation I had years ago. While the conver
 Before I define what I mean by meaning and motivation, let's quickly get back to the conversation I had. The topic was had due to me feeling trapped and stuck in a situation I hated, and my disillusionment with my life at the time. (It came from a place of being in pain, part of it due to a medical condition.). It will be a bit paraphrased, as it is hard to remember all conversations I've had word for word.
 
 #+BEGIN_VERSE
-Me: I struggle to find any sort of meaning to do almost anything. It feels like I will never achieve anything that is good enough, or be good enough, no matter how hard I try. Like being stuck in a dead end job or even just simple things like doing my makeup.
+Me: I struggle to find any sort of meaning to do almost anything. It feels like I will never achieve anything that is good enough, or be good enough, no matter how hard I try.
 
 Them: Well, I feel like motivation is a very day-to-day thing. Some days I feel very motivated to do all sorts of things.
 #+END_VERSE
-("dead end job" in this case is not really what most people call a dead end job. In this case, it is simply something that does not further the goals you have in any meaningful way.)
-
 
 To some of you, this distinction is subtle. To others, it seems like a complete change in topic. I'm of the latter camp. Depending on how you think about life, and whether your motivation ties directly into a deeper sense of meaning or purpose. Before we continue, let's define the terms meaning and motivation.
 
