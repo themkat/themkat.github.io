@@ -13,6 +13,9 @@ related_tags_count: 1
 It seems like all content creators in the Linux space are covering Ghostty these days, so I decided to jump on the bandwagon. This post will be short and sweet ramblings based upon my first impressions. If you want a TheMKat flavored Ghostty post, read on.
 
 
+*NOTE: In 2026, I can no longer recommend Ghostty. While the experience have been great in many ways, I feel like it might deteriorate in the future due to non-existent anti generative AI policy. Some LLM slop (Claude) commits have also been let into the project. All contributions from Claude is genAI slop. This is about morals, and I truly believe Anthropic is one of the most evil companies in existence.*
+
+
 * What is this Ghostty you speak of?
 [[https://ghostty.org/][Ghostty]] is yet another terminal emulator. Wait... Don't leave! While that sounds incredibly dull when you say it out loud, it is worth looking into. Features include hardware acceleration (GPU) for rendering, as well as using native UI elements (e.g, file menus). To me, some other features worth pointing out are:
 - Reasonable resource usage. Like [[https://alacritty.org/][Alacritty]] (which has some commonalities), it is quite minimal and lightweight w.r.t resource usage. 
