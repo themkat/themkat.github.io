@@ -5,6 +5,7 @@
 ---
 layout: blogpost
 title: Should you read Designing Data-Intensive Applications? - A short book review
+published: false
 tags: programming kotlin java books
 ---
 #+END_EXPORT
