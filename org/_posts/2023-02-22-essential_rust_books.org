@@ -18,9 +18,6 @@ You might also want to check out my other posts on Rust, like [[https://themkat.
 
 
 
-*As an Amazon Affiliate I make commissions on qualifying purchases. The links to the books below are affiliate links (images and titles).*
-
-
 #+BEGIN_EXPORT html
 <br />
 <br />
@@ -28,7 +25,7 @@ You might also want to check out my other posts on Rust, like [[https://themkat.
 
 
 
-* [[https://amzn.to/40ccJp8][The Rust Programming Language]] by Steve Klabnik and Carol Nichols
+* The Rust Programming Language by Steve Klabnik and Carol Nichols
 
 *What is it about?* This book teaches you the complete basics of the language, its syntax and how to solve various problems. Concepts include the build tools, the ownership model, pattern matching and more.
 
@@ -49,9 +46,9 @@ You might also want to check out my other posts on Rust, like [[https://themkat.
 #+END_EXPORT
 
 
-* [[https://amzn.to/3BWVgH3][Rust Brain Teasers]] by Herbert Wolverson
+* Rust Brain Teasers by Herbert Wolverson
 
-*What is it about?* Various small problems that might have unexpected results. If you have read something like [[https://amzn.to/4hged7T][Java Puzzlers]] there are certain similarities. While the title makes the book seem advanced, it is really not. That is also the main complaints people have with the book. If you are not super experienced with Rust, and fairly new to it, you will probably learn a thing or two. Some of the problems might be obvious, and if not you will hopefully learn something new.
+*What is it about?* Various small problems that might have unexpected results. If you have read something like Java Puzzlers there are certain similarities. While the title makes the book seem advanced, it is really not. That is also the main complaints people have with the book. If you are not super experienced with Rust, and fairly new to it, you will probably learn a thing or two. Some of the problems might be obvious, and if not you will hopefully learn something new.
 
 *Additional resources:* See the suggested resources for the previous and next entries :)
 
@@ -65,7 +62,7 @@ You might also want to check out my other posts on Rust, like [[https://themkat.
 #+END_EXPORT
 
 
-* [[https://amzn.to/3YC1Z24][Rust for Rustaceans]] by Jon Gjengset
+* Rust for Rustaceans by Jon Gjengset
 *What is it about?* Now that you know the basics of Rust, it is time to go deeper! Yes, exactly that. This is a book for intermediates who want to learn more advanced concepts needed to be a more professional Rust developer. Some topics covered include:
 - Writing good idiomatic Rust code
 - Ideas on how the compiled code will look and behave, considerations to be made etc. Useful to understand that the compiler is in fact a compiler, and not magic...
