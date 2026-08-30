@@ -95,7 +95,6 @@ If you take a look at the html files on this blog, you will notice that they fol
   _posts/2021-11-03-kotlin_in_emacs.html
   _posts/2021-11-10-jvm_scripting.html
   _posts/2021-11-15-emacs_small_tips.html
-  _posts/2021-11-17-favorite_personal_finance_books.html
   _posts/2021-11-20-emacs_package_highlight_try.html
   _posts/2021-11-27-biographies_about_tech.html
   _posts/2021-11-30-emacs_fun_useless.html
@@ -245,7 +244,6 @@ In the previous version of this matcher, we matched every possible character aft
   _posts/2021-11-03-kotlin_in_emacs.html
   _posts/2021-11-10-jvm_scripting.html
   _posts/2021-11-15-emacs_small_tips.html
-  _posts/2021-11-17-favorite_personal_finance_books.html
   _posts/2021-11-20-emacs_package_highlight_try.html
   _posts/2021-11-27-biographies_about_tech.html
   _posts/2021-11-30-emacs_fun_useless.html
@@ -285,7 +283,6 @@ If we assumed that all blog posts are from the 2020 decade, then this one is sim
   _posts/2021-11-03-kotlin_in_emacs.html
   _posts/2021-11-10-jvm_scripting.html
   _posts/2021-11-15-emacs_small_tips.html
-  _posts/2021-11-17-favorite_personal_finance_books.html
   _posts/2021-11-20-emacs_package_highlight_try.html
   _posts/2021-11-27-biographies_about_tech.html
   _posts/2021-11-30-emacs_fun_useless.html
@@ -323,7 +320,6 @@ We could also easily have done a positive match:
   _posts/2021-11-03-kotlin_in_emacs.html
   _posts/2021-11-10-jvm_scripting.html
   _posts/2021-11-15-emacs_small_tips.html
-  _posts/2021-11-17-favorite_personal_finance_books.html
   _posts/2021-11-20-emacs_package_highlight_try.html
   _posts/2021-11-27-biographies_about_tech.html
   _posts/2021-11-30-emacs_fun_useless.html
