@@ -5,6 +5,7 @@ _posts/*
 _drafts/*
 tags/*
 .jekyll-cache
+org/_drafts
 org/ltximg
 *.*~
 **/*.DS_STORE
