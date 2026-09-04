@@ -6,6 +6,7 @@
 layout: blogpost
 title: Summer learning tips! - Programming, DevOps and retro
 tags: programming books devops retro-computing rust cli
+published: false
 ---
 #+END_EXPORT
 

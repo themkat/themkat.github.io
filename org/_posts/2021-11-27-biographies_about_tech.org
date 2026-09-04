@@ -13,9 +13,6 @@ Sometimes I enjoy reading a biography about a person I find interesting. There i
 
 
 
-*NB! This post contains Amazon affiliate links. This means I earn from qualifying purchases.*
-
-
 If you prefer to listen to audiobooks, I have used Audible myself.
 
 
@@ -25,7 +22,7 @@ If you prefer to listen to audiobooks, I have used Audible myself.
 #+END_EXPORT
 
 
-* [[https://amzn.to/4eT5fvC][Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future by Ashlee Vance]]
+* Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future by Ashlee Vance
 *Edit 2024: While I stand behind some of the things mentioned below, I have lost most of my admiration for Elon Musk. There are many reasons, including his public behavior in the last few years, and his vile treatment of his daughter who just happens to have a medical condition (that people hate for some reason these days). The book is still interesting in some ways, but for me it is tainted by his public image.*
 
 Elon Musk is an interesting person in many ways. Not only is he now the richest man in the world, but also goes into new things with strong passion. He has been programming from a young age, and is continuously learning new things. In the biography, we follow his early years, his adventures with PayPal, and off course SpaceX and Tesla. We also hear from his closest relatives, ex-wives and more. After reading this book, you will get a unique insight into his non-conforming views and different way of thinking (and his different way of doing things!). 
@@ -36,7 +33,7 @@ Elon Musk is an interesting person in many ways. Not only is he now the richest 
 #+END_EXPORT
 
 
-* [[https://amzn.to/40dit1S][Steve Jobs by Walter Isaacson]]
+* Steve Jobs by Walter Isaacson
 
 Steve Jobs is a very colorful character. His unique management style was a topic of debate, and he lived his life in a way that got him insights few others get. From his travels to India to meet a guru, his unique thoughts on hygiene (it is said he stopped showering for a while), to his unique ways of seeing things. He was a visionary who saw possibilities where few others did, ranging from the uses of personal computers to computer graphics at Pixar. His unique vision made many products possible: the Macintosh, NeXT Computers, the iPhone and more. While there are a few negative sides, like his relationship with his daughter (who he claimed was not his for many years), it is part of the experience of reading about his life. He was bold and lived life with his passion and vision, and that is something we can all take inspiration from!
 
@@ -46,6 +43,6 @@ Steve Jobs is a very colorful character. His unique management style was a topic
 #+END_EXPORT
 
 
-* [[https://amzn.to/40ccJp8][Idea Man: A Memoir by the Cofounder of Microsoft by Paul Allen (autobiography)]]
+* Idea Man: A Memoir by the Cofounder of Microsoft by Paul Allen (autobiography)
 
 Paul Allen is probably most notably known as the cofounder of Microsoft, where he made unique contributions to the early history of personal computers. That is probably, at least to me, the most interesting thing to read about in this book. His early visions for computers, seeing the opportunities in early processors, and making the BASIC implementation for the Altair 8800 machine. A little depressing to read about the ownership situation of Microsoft and how that came to be, but Allen did not let that ruin his life in any way. I also got to know that Paul Allen and I had other things in common, like the many different interests and passions we have. During his life [[http://underthinkers.paulallen.com/][he produced a music album]] (where he wrote songs and played guitar), took an active investor role in many projects, owned sports clubs (football and basketball), started education projects, scientific endeavors like mapping the brain, traveling the world, philanthropy, and more. In my view he had a rich life in experiences, learning new things and getting new impulses! I got a new appreciation for him after reading this book as I dream of doing many of the same things (like releasing an album!). It is very sad to think about him struggling so much with cancer and dying young (65 is too young!)... Still, I hope you might get as much joy out of reading about the amazing things he did in his life as I did.

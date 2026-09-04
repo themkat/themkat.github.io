@@ -11,10 +11,8 @@ tags: books retro-computing
 
 Summer is a great time to read some books and releax! A lot of us have vacation time or similar where we can enjoy our time in the sun, or inside on a rainy day. So without further ado, today I will give you ideas for some fun books to read this summer!
 
-*NB! This article contains Amazon affiliate links, aka paid links. This means I earn from qualified purchases.*
 
-
-** [[https://amzn.to/3BZin3M][Hackers: Heroes of the computer revolution]]
+** Hackers: Heroes of the computer revolution
 To me, this book is two things: A history book about the early pioneers in software, and a proof to enthusiasts/nerds that you are not alone. This book is about the entusiast who think using and playing with computers are an end-goal in itself. From the early hackers in the Railroad club at MIT (60s) to the game developers at Sierra On-Line in the 80s and 90s. Common to all of them is the love for technical details and the want to do technologically awesome things! Many famous and less famous people are mentioned throughout the book, Richard Stallman, Bill Gosper, Mark Zuckerburg (updated edition), Ken Williams to name a few! Expect model trains with a twist, Conways Game of Life, PDP-1s, home computers, computer games, and more! Never feel alone as a rockstar programmer again!
 
 # Just getting some more space :)
@@ -24,9 +22,9 @@ To me, this book is two things: A history book about the early pioneers in softw
 #+END_EXPORT
 
 
-** [[https://amzn.to/4fdOviq][Game Engine Black Book: Wolfenstein 3D]]
+** Game Engine Black Book: Wolfenstein 3D
 
-Love older game engines? Or maybe you are just fascinated with the early days of 3D graphics? Maybe you just also have a crush on John Carmack (and his code off course!)? No matter the reason, as long as you are fascinated by technical details, I would really recommend reading this book. The old ray casting algorithm is fascinating, and the hurdles of MS DOS and early X86 is intersting to read about. If you are less intersted in the technical details, but LOVE to hear about the story of Id Software then [[https://amzn.to/48o5oFa][Masters of Doom]] is also an excellent read :)
+Love older game engines? Or maybe you are just fascinated with the early days of 3D graphics? Maybe you just also have a crush on John Carmack (and his code off course!)? No matter the reason, as long as you are fascinated by technical details, I would really recommend reading this book. The old ray casting algorithm is fascinating, and the hurdles of MS DOS and early X86 is intersting to read about. If you are less intersted in the technical details, but LOVE to hear about the story of Id Software then Masters of Doom is also an excellent read :)
 
 # Just getting some more space :)
 #+BEGIN_EXPORT html
@@ -35,9 +33,9 @@ Love older game engines? Or maybe you are just fascinated with the early days of
 #+END_EXPORT
 
 
-** [[https://amzn.to/3AddweL][Spying on Whales]]
+** Spying on Whales
 
-I'm not a marine-biologist, but have always been fascinated by the ocean. Whales have an almost majestic beauty, and also have a lot of mystery surrounding them. Did you know that the earliest whales were land-dwelling creatures who habited close to lakes? Or the true extents on whaling on the whale-population? Or that certain rorquals have a sensory organ in their chin to control how much their jaws are able to open? (probably to not rapture their pouches, as they are baleen whales). Marine biologist Nick Pyenson tells his stories of excevations, research and more. If you need some different books than tech and fiction, then I would whole-heartedly recommend this one!
+I'm not a marine-biologist, but have always been fascinated by the ocean. Whales have an almost majestic beauty, and also have a lot of mystery surrounding them. Did you know that the earliest whales were land-dwelling creatures who habited close to lakes? Or the true extents on whaling on the whale-population? Or that certain rorquals have a sensory organ in their chin to control how much their jaws are able to open? (probably to not rapture their pouches, as they are baleen whales). Marine biologist Nick Pyenson tells his stories of excavations, research and more. If you need some different books than tech and fiction, then I would whole-heartedly recommend this one!
 
 
 [[https://www.npr.org/2018/08/01/634456181/scientists-are-spying-on-whales-to-learn-how-they-eat-talk-and-walked][Bonus news article about the book and some discoveries]]
@@ -57,4 +55,4 @@ I'm not a marine-biologist, but have always been fascinated by the ocean. Whales
 *Update 2024: The 4th book is postponed until May 2025 it seems.*
 
 
-Considering including a fiction book above, but decided to postpone that to a future article :) If you still really want one from me, then this will do... I'm currently listening to the audiobook of [[https://amzn.to/3NETqNJ][Nevermoor: The Trials of Morrigan Crow by Jessica Townsend]]. It's a childrens fantasy book, but is still a fun listen! (Gemma Whelan is a great reader/performer!). It is about a cursed child called Morrigan Crow who finds herself caught up in an magical adventure! (don't want to spoil too much, this isn't a book review after all ;) ).
+Considering including a fiction book above, but decided to postpone that to a future article :) If you still really want one from me, then this will do... I'm currently listening to the audiobook of Nevermoor: The Trials of Morrigan Crow by Jessica Townsend. It's a childrens fantasy book, but is still a fun listen! (Gemma Whelan is a great reader/performer!). It is about a cursed child called Morrigan Crow who finds herself caught up in an magical adventure! (don't want to spoil too much, this isn't a book review after all ;) ).

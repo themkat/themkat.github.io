@@ -13,11 +13,8 @@ tags: programming kotlin java books
 You may have seen the book Designing Data-Intensive Applications mentioned several places, and wondered if you should read it. I have to admit I bought it years ago, and read parts of it (got side-tracked and researched graph databases further, and read something else). Last Christmas holiday I picked it up again, and this time I finished it. It covers many topics, ranging from how databases are designed, to how we can design good stream processing systems. Should you read it? Continue reading the review to find out!
 
 
-*NB! This post contains paid links, aka Amazon Affiliate links. That means I earn commissions on qualified purchases.*
-
-
 * What is it about?
-I shortened the name in the title, or else the complete one would probably be several lines(!!). The complete title is: [[https://amzn.to/48m7wNx][Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems, and it is written by Martin Kleppmann]]. Quite a mouthful! Like the name implies, the book is a about designing applications where the way we handle data is the main challenge, NOT how compute intensive they are. The title describes it pretty well. Reliability, Scalability and Maintainability are key concepts. In short the books main goal is to guide you in the topic of data systems, especially the design of them at extreme scales (think Amazon/Google/Facebook/Microsoft and bigger companies).
+I shortened the name in the title, or else the complete one would probably be several lines(!!). The complete title is: Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems, and it is written by Martin Kleppmann. Quite a mouthful! Like the name implies, the book is a about designing applications where the way we handle data is the main challenge, NOT how compute intensive they are. The title describes it pretty well. Reliability, Scalability and Maintainability are key concepts. In short the books main goal is to guide you in the topic of data systems, especially the design of them at extreme scales (think Amazon/Google/Facebook/Microsoft and bigger companies).
 
 
 The book is split into 3 parts:

@@ -15,17 +15,14 @@ Today JavaScript (JS) has evolved a lot and has many modern features we associat
 What I refer to as classic JavaScript is the basic language before classes and other modern features. A lot of these older features still exists, so it is useful to know them if you program in JavaScript (JS). Some things might be obsolete, but it can't hurt knowing more about the core language.
 
 
-*NB! Post contains Amazon Affiliate links. This means I earn commissions from qualified purchases.*
-
 #+BEGIN_EXPORT html
 <br />
 <br />
 #+END_EXPORT
 
-* [[https://amzn.to/48BUifT][JavaScript: The Good Parts by Douglas Crockford]]
+* JavaScript: The Good Parts by Douglas Crockford
 
-
-[[https://amzn.to/48BUifT][JavaScript: The Good Parts]] is an older book by todays standard, so you might wonder if it can help you in the ever changing web development landscape? It might or it might not. To me it helps to know a lot about the core language to find clever solutions and to see patterns in the libraries I might use. I also think it is useful for learning small tips and tricks for smaller inline scripts on websites. You might just think it is a deprecated book, like some Amazon reviewers certainly does. 
+JavaScript: The Good Parts is an older book by todays standard, so you might wonder if it can help you in the ever changing web development landscape? It might or it might not. To me it helps to know a lot about the core language to find clever solutions and to see patterns in the libraries I might use. I also think it is useful for learning small tips and tricks for smaller inline scripts on websites. You might just think it is a deprecated book, like some Amazon reviewers certainly does. 
 
 
 So what kinds of topics does it cover?

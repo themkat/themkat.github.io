@@ -16,16 +16,14 @@ There is probably no secret that I love science fiction books and dream of the m
 [[https://themkat.net/2021/09/26/scifi_books_to_unwind.html][Love science fiction? Take a look at the list I made last year that contains several classic books.]]
 
 
-*NB! Amazon affiliate links below in the images, titles and more. This means I earn commissions on qualifying purchases.*
-
 #+BEGIN_EXPORT html
 <br />
 <br />
 #+END_EXPORT
 
 
-* [[https://amzn.to/3NBr3jx][Project Hail Mary by Andy Weir]]
-Last month I finally  got around to reading this gem! [[https://amzn.to/3NBr3jx][Project Hail Mary]] follows astronaut Ryland Grace who wakes up in a spaceship without any memory of why he's there. It becomes clear that he is humanity's last hope for survival, and is far away from Earth. The mystery is unraveled by his memories coming to the surface. The book contains mystery, character development, friendship and more. It also has great twist and turns. This is a classic hard sci-fi story that gives a real sense of space exploration, and I was very pleasantly surprised by it. The mystery of what is happening is what makes it so great, so I don't think much should be spoiled here.
+* Project Hail Mary by Andy Weir
+Last month I finally  got around to reading this gem! Project Hail Mary follows astronaut Ryland Grace who wakes up in a spaceship without any memory of why he's there. It becomes clear that he is humanity's last hope for survival, and is far away from Earth. The mystery is unraveled by his memories coming to the surface. The book contains mystery, character development, friendship and more. It also has great twist and turns. This is a classic hard sci-fi story that gives a real sense of space exploration, and I was very pleasantly surprised by it. The mystery of what is happening is what makes it so great, so I don't think much should be spoiled here.
 
 
 Something that gave me lots of joy was to see (at least in my view) programming being used to solve a problem realistically! Many books have very weird ways of portraying programming and solving problems with computers. In general the technology seems plausible'ish, even though some parts of it is far from what we have available at the moment (relax, this is made clear very early in the book). 
@@ -38,7 +36,7 @@ The audio book (audible) is the recommended way to enjoy it, as the narration by
 <br />
 #+END_EXPORT
 
-* [[https://amzn.to/4hmssb9][Children of Time by Adrian Tchaikovsky]]
+* Children of Time by Adrian Tchaikovsky
 Children of Time follows two civilizations through thousands of years; humans traveling in their spaceship in cryo sleep, and a spider civilization evolving through that same time. The basic premise for this story is that a team of scientists wanting to colonize a planet of monkey servants planned to be released, evolving them through a nanovirus. This plan is sabotaged, and humanity seems end up at war that sets them back many years and destroys Earth. This leads to two things; a spaceship traveling to find a new suitable home, and the nanovirus being released without the monkeys being on the planet (evolving the spiders and other insectoid wildlife instead).
 
 
@@ -62,9 +60,9 @@ During this story we again hear about places we have seen in other Star Wars lit
 
 
 The trilogy consists of these books:
-- [[https://amzn.to/40k32VO][Path of Destruction]]
-- [[https://amzn.to/3YzEA1k][Rule of Two]]
-- [[https://amzn.to/48lhYom][Dynasty of Evil]]
+- Path of Destruction
+- Rule of Two
+- Dynasty of Evil
 
 
 Another book that works perfectly as an audiobook! The sound effects, like lightsabers and spaceship sounds make it near perfect. It's always awkward sitting outside by yourself making lightsaber sounds while reading a book, so now you don't have to anymore :) (that was a joke...)
