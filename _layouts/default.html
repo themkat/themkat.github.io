@@ -113,24 +113,10 @@
 				<a class="rss" href="/feed.xml">RSS</a>
 			</nav>
 		</div>
-
-        <div class="adbanners">
-            <div class="aligncenter" align="center">
-                <script src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1505828284633053"
-     crossorigin="anonymous"></script>
-<!-- themkat_toptest -->
-                <ins class="adsbygoogle"
-                     style="display:block;height: max(75px,15vh);"
-                     data-ad-client="ca-pub-1505828284633053"
-                     data-ad-slot="4185369975"
-                     data-ad-format="fluid"></ins>
-                <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-        </div>
         
 		<div class="content">
+          <p class="support-message">Hi there! Even small sites like these have costs, like for the domain name. Helping cover some of these costs by donating  will help in keeping small sites alive! :) (see footer or About Me for links). It also helps us in avoiding having ads on our sites. If not me, there are other creators out there who probably could use the support! :) </p>
+          
           {% if page.tab != "newsletter" %}
           {% include searchbox.html %}
           {% endif %}
@@ -202,14 +188,6 @@
              document.body.setAttribute('data-mode', 'dark');
              mode.classList.add('color-mode-toggle-dark');
          }
-
-         window.addEventListener('load', (event) => {
-             // add a quick message if the user has disabled adblocker
-             if (!(window.adsbygoogle.pageState || window.adsbygoogle.pageStateTs)) {
-                 const content = document.getElementsByClassName('content')[0];
-                 content.innerHTML = '<p class="adblockermessage">Hi there! It seems like you are using an Ad Blocker. I would be very happy if you could turn it off, as the ads are just a small bar at the top. Even small sites like these have costs, like for the domain name. Helping cover some of these costs helps small creators like me keep the motivation to keep going :)</p><br />' + content.innerHTML;
-             }
-         });
           
 		 console.log('Hello there');
 		</script>
