@@ -6,7 +6,7 @@
 ---
 layout: blogpost
 title: "One of the projects I regret doing: AITales"
-tags: ramblings
+tags: ramblings ai
 related_tags_count: 1
 ---
 #+END_EXPORT
